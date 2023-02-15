@@ -1,0 +1,119 @@
+
+import 'package:fenix/helpers/widgets.dart';
+import 'package:fenix/icons/arrow_back_icon_icons.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/src/size_extension.dart';
+import 'package:get/get.dart';
+
+import 'account_creation_success.dart';
+import 'constants.dart';
+
+class Agreement extends StatelessWidget {
+
+  Agreement({Key? key}) : super(key: key);
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xFFE4F0FA),
+      body: ListView(
+        children: [
+          WidgetsPad(
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+
+                    Column(
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.1,
+                          child: Image.asset("assets/images/logoFrame.png",fit: BoxFit.fill,),
+                        ),
+                        kSpacing,
+
+                        Text("Agreement and Terms Condition",
+                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                              fontSize: 21,
+                              color: Color(0xFF1784DB),
+                              shadows: [
+                                Shadow(color: Colors.black.withOpacity(0.25), offset: Offset(0,1), blurRadius: 4)
+                              ]
+                          ),),
+                        kSpacing,
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.35,
+                          padding: EdgeInsets.symmetric(vertical: 12.w, horizontal: 5.w),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Color(0xFF18849B).withOpacity(0.15)),
+                            borderRadius: BorderRadius.circular(10.w)
+                          ),
+                          child: Text("vnsdkjvsdjv hdvbsjhdvbshjdhvsdsss"
+                              "snjkvnsdkvnskjdv jshdvhjds vhjsvsvs"
+                              "kdnckdnscjkndkdsjncjksdnvjknsdjvns"
+                              "vskdnvkldsnvklsdnklvnskldnvklsdnvk"
+                              "vskdnvkldsnvklsdnklvnskldnvklsdnvk"
+                              "sdvnlkdsnvklnsdlkvnsdklvnklsdnvklsndvk"
+                              "sdvnlkdsnvklnsdlkvnsdklvnklsdnvklsndvk"
+                              "sdvnlkdsnvklnsdlkvnsdklvnklsdnvklsndvk"
+                              "sdvnlkdsnvklnsdlkvnsdklvnklsdnvklsndvk"
+                              "vknsdklvnskldnvklsdnvklnsdlkvnskldnvklsd"
+                              "vnsdkvnsdkjvnkjsdnvkjsndvkjsndvkjnsdkjv"
+                              "vknsdkvnkjsdvnkjsdnvkjsdnvjknsjdkvnjksd",
+                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            fontSize: 15.w
+                          ),),
+                        ),
+                        kSpacing, kSpacing,
+                        Row(
+                          children: [
+                            Checkbox(value: false, onChanged: (v){}, side: BorderSide(color: Colors.white),),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.65,
+                                child: TextFieldWidget(hint: "Agree to Terms and Conditions",)),
+                          ],
+                        ),
+
+                        kSpacing, kSpacing,
+                      ],
+                    ),
+
+
+
+
+                    InkWell(
+                      onTap:(){
+                        Get.to(() => AcctCreationSuccess());
+                      },
+                      child: ButtonWidget(title: "Next"),
+                    ),
+
+                  ],
+                ),
+              )),
+          SizedBox(height:  MediaQuery.of(context).size.height * 0.025,),
+
+          InkWell(
+            onTap: (){
+              Get.back();
+            },
+            child: Align(
+              alignment:Alignment.bottomLeft,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: SwipeToggleButton(child: Icon(Icons.arrow_back_ios_outlined)),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+
+
+// margin: EdgeInsets.symmetric(vertical: 17.w, horizontal: 24.w),
+
