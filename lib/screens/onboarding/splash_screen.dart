@@ -49,7 +49,8 @@ class _SplashScreenState extends State<SplashScreen> {
                 Text("Developed by Khasan.A",
                   style: TextStyle(
                       color: Colors.grey.shade800,
-                      fontSize: 16.w
+                      fontSize: 16.w,
+                    fontWeight: FontWeight.w200
                   ),)
               ],
             ),

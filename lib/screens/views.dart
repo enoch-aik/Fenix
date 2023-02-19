@@ -10,6 +10,8 @@ import 'package:fenix/screens/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 
+import 'data_Screen/chart_Screen.dart';
+
 class Views extends StatefulWidget {
   const Views({Key? key}) : super(key: key);
 
@@ -51,7 +53,7 @@ class _HomeState extends State<Views> with TickerProviderStateMixin {
           Map(),
           Home(),
           UserProfile(),
-          UserProfile(),
+          Charts(),
           MenuCategory(),
         ],
       ),
@@ -66,30 +68,33 @@ class _HomeState extends State<Views> with TickerProviderStateMixin {
           type: BottomNavigationBarType.fixed,
           items:  <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.map,color: Colors.black.withOpacity(0.38), size: 40,),
+              icon: Icon(Icons.map_outlined,color: Colors.black.withOpacity(0.38), size: 25,),
+              activeIcon: Icon(Icons.map,color: Color(0xFF0148B3), size: 25,),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined,color: Colors.black.withOpacity(0.38), size: 37,),
+              icon: Icon(Icons.home_outlined,color: Colors.black.withOpacity(0.38), size: 25,),
+              activeIcon: Icon(Icons.home,color: Color(0xFF0148B3), size: 25,),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(ProfileIconBlack.vector__1_, size: 27.w, color: Colors.black.withOpacity(0.38),),
+              icon: Icon(Icons.account_circle_outlined, size: 25.w, color: Colors.black.withOpacity(0.38),),
+              activeIcon: Icon(Icons.account_circle, size: 25.w, color: Color(0xFF0148B3),),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(CustomIcons.hammer,color: Colors.black.withOpacity(0.38),),
+              icon: Icon(CustomIcons.hammer,color: Colors.black.withOpacity(0.38),size: 25),
+              activeIcon: Icon(CustomIcons.hammer,color:Color(0xFF0148B3),size: 25),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.menu,color: Colors.black.withOpacity(0.38), size: 37,),
+              icon: Icon(Icons.menu_outlined,color: Colors.black.withOpacity(0.38), size: 25,),
+              activeIcon: const Icon(Icons.menu,color: Color(0xFF0148B3), size: 25,),
               label: '',
             ),
           ], // This trailing comma makes auto-formatting nicer for build methods.
           currentIndex: _selectedIndex,
           selectedItemColor: Colors.white,
-          selectedLabelStyle:
-          const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
           onTap: _onItemTapped,
         ),
       ),
@@ -112,7 +117,7 @@ class MenuTitle extends StatelessWidget {
       padding:  EdgeInsets.only(right: 24.w),
       child: Row(
         children: [
-          Image.asset("assets/images/icons/$icon",fit: BoxFit.fill,),
+          Image.asset("assets/images/icons/$icon",height: 20),
           SizedBox(width: 5.w,),
           Text(title,
           style: Theme.of(context).textTheme.bodyText2!.copyWith(

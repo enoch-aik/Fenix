@@ -36,14 +36,10 @@ class _HomeState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Align(
-                alignment: Alignment.center,
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.055,
-                  child: Image.asset("assets/images/fenixWhite2.png",fit: BoxFit.fill,),
-                ),
+                alignment: Alignment.centerLeft,
+                child: Image.asset("assets/images/fenix_c.png",),
               ),
-
-              SizedBox(width: 10,),
+              SizedBox(width: 10),
               Container(
                 height: MediaQuery.of(context).size.height * 0.050,
                 width: MediaQuery.of(context).size.width,

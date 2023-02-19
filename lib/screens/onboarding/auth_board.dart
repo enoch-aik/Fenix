@@ -1,4 +1,3 @@
-
 import 'package:fenix/auth_screens/create_account.dart';
 import 'package:fenix/helpers/widgets.dart';
 import 'package:fenix/icons/arrow_back_icon_icons.dart';
@@ -10,8 +9,7 @@ import 'package:get/get.dart';
 import 'constants.dart';
 
 class AuthBoard extends StatelessWidget {
-
-   AuthBoard({Key? key}) : super(key: key);
+  AuthBoard({Key? key}) : super(key: key);
 
   PageController pageController = PageController();
 
@@ -101,14 +99,13 @@ class AuthBoard extends StatelessWidget {
                         ],
                       ),
                   ),
-
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       Get.back();
                     },
                     child: Align(
-                        alignment:Alignment.bottomLeft,
-                        child: backButtonTwo,
+                      alignment: Alignment.bottomLeft,
+                      child: backButtonTwo,
                     ),
                   )
                 ],
@@ -122,8 +119,4 @@ class AuthBoard extends StatelessWidget {
   }
 }
 
-
-
-
 // margin: EdgeInsets.symmetric(vertical: 17.w, horizontal: 24.w),
-

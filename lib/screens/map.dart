@@ -44,7 +44,8 @@ class _MapState extends State<Map> {
             color: Colors.black,
             fontWeight: FontWeight.w800,
           ),),
-          leading: Icon(Icons.arrow_back_ios_outlined, color: Colors.black,),
+          automaticallyImplyLeading: false,
+          // leading: Icon(Icons.arrow_back_ios_outlined, color: Colors.black,),
           centerTitle: true,
           flexibleSpace: Container(
             decoration: BoxDecoration(

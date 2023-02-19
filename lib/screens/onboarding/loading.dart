@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:fenix/helpers/widgets.dart';
@@ -20,7 +19,6 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-
   @override
   void initState() {
     // TODO: implement initState
@@ -35,45 +33,51 @@ class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE4F0FA),
+      backgroundColor: const Color(0xFFE4F0FA),
       body: Stack(
         alignment: Alignment.center,
         children: [
-
-
           Padding(
             padding: EdgeInsets.symmetric(vertical: 78.w),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image.asset("assets/images/logoFrame.png",fit: BoxFit.fill,),
-
-
-
+                Container(
+                  // child: Center(
+                  //     child: Image.asset(
+                  //   "assets/images/logoFrame.png",
+                  //   width: Get.height * 0.2,
+                  //   height: Get.width * 0.48,
+                  // )),
+                  width: Get.height * 0.4,
+                  height: Get.width * 0.9,
+                  decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: AssetImage('assets/images/circle_sh.png'))),
+                ),
                 Column(
                   children: [
-                    SizedBox(
-                      height:100,
+                    const SizedBox(
+                      height: 100,
                       child: LoadingIndicator(
                         indicatorType: Indicator.ballPulseSync,
-                        colors: [Colors.green],
+                        colors: [Color(0xFF28D7AD)],
                       ),
                     ),
-                    Text("Developed by Khasan.A",
+                    Text(
+                      "Developed by Khasan.A",
                       style: TextStyle(
-                          color: Colors.grey.shade800,
-                          fontSize: 16.w
-                      ),),
+                          color: Colors.grey.shade800, fontSize: 16.w),
+                    ),
                   ],
                 )
               ],
             ),
           ),
-
-          BottomHillsWidget()
+          const BottomHillsWidget()
         ],
       ),
     );
   }
 }
-
