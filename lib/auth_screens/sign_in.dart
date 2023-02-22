@@ -1,4 +1,5 @@
 
+import 'package:fenix/const.dart';
 import 'package:fenix/helpers/widgets.dart';
 import 'package:fenix/icons/arrow_back_icon_icons.dart';
 import 'package:fenix/screens/onboarding/loading.dart';
@@ -11,6 +12,9 @@ import 'package:fenix/screens/onboarding/reset_password.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:get/get.dart';
+
+import '../neumorph.dart';
+import '../theme.dart';
 
 class SignIn extends StatelessWidget {
 
@@ -55,29 +59,49 @@ class SignIn extends StatelessWidget {
                   kSpacing,
                   kSpacing,
 
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Row(
-                      children: [
-                        Checkbox(
-                            value: false,
-                            onChanged: (v){},
-                          side: BorderSide(color: Colors.white),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                          decoration: depressNeumorph(),
+                          child: SizedBox(
+                            height: 25,
+                            width: 25,
+                            child: Theme(
+                              data: ThemeData(
+                                unselectedWidgetColor:
+                                Colors.transparent, // Your color
+                              ),
+                              child: Checkbox(
+                                value: false,
+                                onChanged: (v) {},
+                              ),
+                            ),
+                          )),
+                      tinyHSpace(),
+                      Container(
+                        decoration: depressNeumorph().copyWith(
+                            border:
+                            Border.all(color: white.withOpacity(0.1))),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
+                          child: Text(
+                            "Remember me",
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: textColor.withOpacity(0.2)),
+                          ),
                         ),
-
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.4,
-                          child: TextFieldWidget(hint: "Remember me",),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
+
 
                   SizedBox(height:  MediaQuery.of(context).size.height * 0.07,),
 
                   InkWell(
                     onTap: (){
-                      Get.to(() => Loading());
+                      Get.to(() => const Loading(navigateScreen: Views(),));
                     },
                       child: ButtonWidget(title: "Sign In"),
                   ),
@@ -99,7 +123,8 @@ class SignIn extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.lock, color: Color(0xFF414B5A)),
+                              Icon(Icons.lock, color: Color(0xFF414B5A),size: 15,),
+                              tinyH5Space(),
                               Text("Forgot Password", style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                   color: Color(0xFF414B5A).withOpacity(0.8),
                                   fontSize: 12.w,
@@ -142,7 +167,9 @@ class SignIn extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.person, color: Color(0xFF414B5A),),
+                              Icon(Icons.person, color: Color(0xFF414B5A),size: 15,),
+                              tinyH5Space(),
+
                               Text("Forgot Email", style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                   color: Color(0xFF414B5A).withOpacity(0.8),
                                   fontSize: 12.w,

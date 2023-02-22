@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:get/get.dart';
 
 import 'constants.dart';
+import 'loading.dart';
 
 class ResetPasswordNext extends StatelessWidget {
 
@@ -60,7 +61,8 @@ class ResetPasswordNext extends StatelessWidget {
 
                     InkWell(
                       onTap: (){
-                        Get.to(() => ResetSuccess(page: "Password",));
+                        Get.to(() => Loading(navigateScreen: ResetSuccess(page: "Password",)));
+
                       },
                         child: ButtonWidget(title: "Reset Password", ),
                     ),

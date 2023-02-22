@@ -1,4 +1,5 @@
 import 'package:fenix/screens/profile/selling_list.dart';
+import 'package:fenix/screens/profile/wish_list.dart';
 import 'package:fenix/screens/views.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -80,7 +81,7 @@ class _UserProfileState extends State<UserProfile> {
                     ]
                   ),),
 
-                  Image.asset("assets/images/icons/personIcon.png",fit: BoxFit.fill, height: 60, width: 60,),
+                  Image.asset("assets/images/icons/personIcon.png", height: 60, width: 60,),
                 ],
               ),
             ),
@@ -89,7 +90,7 @@ class _UserProfileState extends State<UserProfile> {
             GridView.builder(
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: 200,
-                    childAspectRatio: 3.2 / 1,
+                    childAspectRatio: 3 / 1,
                     crossAxisSpacing: 20,
                     mainAxisSpacing: 10),
                 itemCount:7,
@@ -97,9 +98,10 @@ class _UserProfileState extends State<UserProfile> {
                 itemBuilder: (BuildContext ctx, index) {
                   return InkWell(
                     onTap: (){
-                      if(index == 5){
-                        Get.to(() => SellingList());
-                      }
+                      if(index == 5)
+                        Get.to(() => SellingList());  if(index == 4)
+                        Get.to(() => WishList());
+
                     },
                     child: Container(
                       alignment: Alignment.center,

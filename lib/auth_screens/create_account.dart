@@ -1,4 +1,5 @@
 
+import 'package:fenix/const.dart';
 import 'package:fenix/helpers/widgets.dart';
 import 'package:fenix/icons/arrow_back_icon_icons.dart';
 import 'package:fenix/screens/onboarding/agreement.dart';
@@ -97,7 +98,7 @@ class SignUp extends StatelessWidget {
                                 color: Color(0xFFE4F0FA).withOpacity(0.9),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.grey,
+                                    color: Colors.grey.shade400,
                                   ),
                                   BoxShadow(
                                     color: Colors.white.withOpacity(0.9),
@@ -182,8 +183,7 @@ class SignUp extends StatelessWidget {
                             child: ButtonWidget(title: "Next")),
 
 
-                        SizedBox(height:  MediaQuery.of(context).size.height * 0.07,),
-
+verticalSpace(0.04),
                         InkWell(
                           onTap: (){
                             Get.back();

@@ -1,6 +1,7 @@
 
 import 'package:fenix/helpers/widgets.dart';
 import 'package:fenix/icons/arrow_back_icon_icons.dart';
+import 'package:fenix/screens/onboarding/loading.dart';
 import 'package:fenix/screens/onboarding/reset_success.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
@@ -60,7 +61,7 @@ class ResetEmailNext extends StatelessWidget {
 
                     InkWell(
                         onTap: (){
-                          Get.to(() => ResetSuccess(page: "Email",));
+                          Get.to(() => Loading(navigateScreen: ResetSuccess(page: "Email",)));
                           },
                         child: ButtonWidget(title: "Reset Email", )),
 

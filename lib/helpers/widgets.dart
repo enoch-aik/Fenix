@@ -30,8 +30,8 @@ class BottomHillsWidget extends StatelessWidget {
 
 ThemeData theme = ThemeData(
   primarySwatch: Colors.blue,
-  backgroundColor: Color(0xFFE4F0FA),
-  textTheme: TextTheme(
+  backgroundColor: const Color(0xFFE4F0FA),
+  textTheme: const TextTheme(
       bodyText1: TextStyle(
     fontSize: 20,
     color: Color(0xFF31456A),
@@ -66,9 +66,9 @@ class ButtonWidget extends StatelessWidget {
             height: 37.w,
             width: 185.w,
             alignment: Alignment.center,
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             child: Text(title, style: Theme.of(context).textTheme.bodyText1!.copyWith(
-              color: Color(0xFF31456A).withOpacity(0.8),
+              color: const Color(0xFF31456A).withOpacity(0.8),
               fontSize: 15.w
             ),),
             decoration: BoxDecoration(
@@ -79,13 +79,13 @@ class ButtonWidget extends StatelessWidget {
                   color: Colors.grey.withOpacity(0.3),
                   spreadRadius: 1,
                   blurRadius: 5,
-                  offset: Offset(0, 1), // changes position of shadow
+                  offset: const Offset(0, 1), // changes position of shadow
                 ),
                 BoxShadow(
                   color: Colors.white.withOpacity(0.3),
                   spreadRadius: 2,
                   blurRadius: 3,
-                  offset: Offset(-3, -6), // changes position of shadow
+                  offset: const Offset(-3, -6), // changes position of shadow
                 ),
 
 
@@ -100,20 +100,20 @@ class ButtonWidget extends StatelessWidget {
               width: 25,
               child: Center(child: Icon(Icons.arrow_forward_ios, size: 12.w, color: Colors.red)),
               decoration: BoxDecoration(
-                color: Color(0xFFE3EDF7),
+                color: const Color(0xFFE3EDF7),
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.6),
                     spreadRadius: 0.5,
                     blurRadius: 2,
-                    offset: Offset(2, 1), // changes position of shadow
+                    offset: const Offset(2, 1), // changes position of shadow
                   ),
                   BoxShadow(
                     color: Colors.white.withOpacity(0.5),
                     spreadRadius: 1,
                     blurRadius: 3,
-                    offset: Offset(-3, 1), // changes position of shadow
+                    offset: const Offset(-3, 1), // changes position of shadow
                   ),
 
 
@@ -140,13 +140,13 @@ class SwipeToggleButton extends StatelessWidget {
         height: 48.w,
         width: 48.w,
         decoration: BoxDecoration(
-            color: Color(0xFFE3EDF7),
+            color: const Color(0xFFE3EDF7),
             borderRadius: BorderRadius.circular(12), boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.3),
             spreadRadius: 6,
             blurRadius: 12,
-            offset: Offset(1, 1), // changes position of shadow
+            offset: const Offset(1, 1), // changes position of shadow
           ),
 
         ]
@@ -192,15 +192,15 @@ class WelcomeCards extends StatelessWidget {
                       decoration:  BoxDecoration(
                         border: Border.all(color: Colors.white.withOpacity(0.511), width: 0.85),
                         borderRadius: BorderRadius.circular(8.53.w),
-                        color: Color(0xFFEBF2F9),
+                        color: const Color(0xFFEBF2F9),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(0.6),
                             spreadRadius: 0,
                             blurRadius: 1,
-                            offset: Offset(1, 1), // changes position of shadow
+                            offset: const Offset(1, 1), // changes position of shadow
                           ),
-                          BoxShadow(
+                          const BoxShadow(
                             color: Colors.white,
                             spreadRadius: 0,
                             blurRadius: 1,
@@ -226,12 +226,12 @@ class WelcomeCards extends StatelessWidget {
                       children: [
                         InkWell(
                           onTap: (){
-                          if(pageController.page != 0.0)
+                          if(pageController.page != 0.0) {
                             pageController.previousPage(
-                                duration: Duration(milliseconds: 500),
+                                duration: const Duration(milliseconds: 500),
                                 curve: Curves.easeIn
                             );
-                          else{
+                          } else{
                             Get.back();
                           }
                           },
@@ -239,13 +239,14 @@ class WelcomeCards extends StatelessWidget {
                         ),
                         InkWell(
                           onTap: (){
-                            if(pageController.page != 2.0)
+                            if(pageController.page != 2.0) {
                               pageController.nextPage(
-                                  duration: Duration(milliseconds: 500),
+                                  duration: const Duration(milliseconds: 500),
                                   curve: Curves.easeIn
                               );
-                            else
+                            } else {
                               Get.to(()=> AuthBoard());
+                            }
 
                           },
                           child: forwardButton,),
@@ -283,16 +284,16 @@ class WidgetsPad extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 12.w),
           decoration: BoxDecoration(
-            color: Color(0xFFE3EDF7),
+            color: const Color(0xFFE3EDF7),
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.5),
                 spreadRadius: 0,
                 blurRadius: 1,
-                offset: Offset(0.8, 0.5), // changes position of shadow
+                offset: const Offset(0.8, 0.5), // changes position of shadow
               ),
-              BoxShadow(
+              const BoxShadow(
                 color: Colors.white,
                 spreadRadius: 0,
                 blurRadius: 1,
@@ -304,16 +305,78 @@ class WidgetsPad extends StatelessWidget {
             child: child,
             padding: EdgeInsets.all(13.w),
             decoration: BoxDecoration(
-              color: Color(0xFFE3EDF7),
+              color: const Color(0xFFE3EDF7),
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.5),
                   spreadRadius: 0,
                   blurRadius: 1,
-                  offset: Offset(0.5, 0.1), // changes position of shadow
+                  offset: const Offset(0.5, 0.1), // changes position of shadow
                 ),
+                const BoxShadow(
+                  color: Colors.white,
+                  spreadRadius: 0,
+                  blurRadius: 1,
+                  offset: Offset(-0.5, -0.5), // changes position of shadow
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+class CustomWidgetsPad extends StatelessWidget {
+
+  Widget child;
+  CustomWidgetsPad({
+    Key? key,required this.child
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 17.w, horizontal: 24.w),
+      child: Center(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 12.w),
+          decoration: BoxDecoration(
+            color: const Color(0xFFE3EDF7),
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 0,
+                blurRadius: 1,
+                offset: const Offset(0.8, 0.5), // changes position of shadow
+              ),
+              const BoxShadow(
+                color: Colors.white,
+                spreadRadius: 0,
+                blurRadius: 1,
+                offset: Offset(-1, -1), // changes position of shadow
+              ),
+            ],
+          ),
+          child: Container(
+            child: child,
+            padding: EdgeInsets.all(13.w),
+            decoration: BoxDecoration(
+              color: const Color(0xFFE3EDF7),
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
                 BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 0,
+                  blurRadius: 1,
+                  offset: const Offset(0.5, 0.1), // changes position of shadow
+                ),
+                const BoxShadow(
                   color: Colors.white,
                   spreadRadius: 0,
                   blurRadius: 1,
@@ -345,16 +408,16 @@ class TextFieldWidget extends StatelessWidget {
       height: 45,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(17.w),
-        color: Color(0xFFE4F0FA).withOpacity(0.9),
+        color: const Color(0xFFE4F0FA).withOpacity(0.9),
         boxShadow: [
-          BoxShadow(
+          const BoxShadow(
             color: Colors.grey,
           ),
           BoxShadow(
             color: Colors.white.withOpacity(0.9),
             spreadRadius: -3,
             blurRadius: 3,
-            offset: Offset(3, 5), // changes position of shadow
+            offset: const Offset(3, 5), // changes position of shadow
           ),
 
         ],
@@ -366,7 +429,7 @@ class TextFieldWidget extends StatelessWidget {
         decoration: InputDecoration(
             enabledBorder: InputBorder.none,
             focusedBorder: InputBorder.none,
-            contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             hintText: hint,
             hintStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
                 fontSize: 15.w,

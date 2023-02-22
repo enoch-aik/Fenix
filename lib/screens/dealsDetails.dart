@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 
 import '../helpers/icons/custom_icons_icons.dart';
 import '../helpers/widgets/top_rated_Items.dart';
+import 'home/search.dart';
 import 'onboarding/constants.dart';
 
 class DealsDetails extends StatefulWidget {
@@ -51,27 +52,32 @@ class _DealsDetailsState extends State<DealsDetails> {
                       Get.back();
                     },
                       child: Icon(Icons.arrow_back_ios,  color: Colors.white,)),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.050,
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(13.w),
-                      color: Colors.white,
-                    ),
-                    child: TextField(
-                      style: TextStyle(
-                        fontSize: 16.w,
+                  InkWell(
+                    onTap: ()=>Get.to(()=>SearchScreen()),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.050,
+                      width: MediaQuery.of(context).size.width * 0.85,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(13.w),
+                        color: Colors.white,
                       ),
-                      decoration: InputDecoration(
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: MediaQuery.of(context).size.height * 0.015),
-                        hintText: "Search Fenix",
-                        hintStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            fontSize: 15.w,
-                            color: Colors.grey.shade500
+                      child: TextField(
+                        style: TextStyle(
+                          fontSize: 16.w,
                         ),
-                        prefixIcon: Icon(Icons.search),
+                        enabled: false,
+
+                        decoration: InputDecoration(
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: MediaQuery.of(context).size.height * 0.015),
+                          hintText: "Search Fenix",
+                          hintStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
+                              fontSize: 15.w,
+                              color: Colors.grey.shade500
+                          ),
+                          prefixIcon: Icon(Icons.search),
+                        ),
                       ),
                     ),
                   ),
@@ -128,9 +134,8 @@ class _DealsDetailsState extends State<DealsDetails> {
             width: MediaQuery.of(context).size.width,
             child: PageView(
               children: [
+                Image.asset("assets/images/card.png",fit: BoxFit.fitWidth,),
                 Image.asset("assets/images/cokeAd.png",fit: BoxFit.fitWidth,),
-                Image.asset("assets/images/logoFrame.png",fit: BoxFit.fill,),
-                Image.asset("assets/images/logoFrame.png",fit: BoxFit.fill,),
                 Image.asset("assets/images/logoFrame.png",fit: BoxFit.fill,),
               ],
             ),

@@ -2,7 +2,7 @@
 import 'package:fenix/helpers/icons/custom_icons_icons.dart';
 import 'package:fenix/helpers/icons/profile_icon_black_icons.dart';
 import 'package:fenix/helpers/widgets.dart';
-import 'package:fenix/screens/home.dart';
+import 'package:fenix/screens/home/home.dart';
 import 'package:fenix/screens/map.dart';
 import 'package:fenix/screens/categories/menu_category.dart';
 import 'package:fenix/screens/onboarding/constants.dart';
@@ -10,6 +10,7 @@ import 'package:fenix/screens/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 
+import '../theme.dart';
 import 'data_Screen/chart_Screen.dart';
 
 class Views extends StatefulWidget {
@@ -103,29 +104,33 @@ class _HomeState extends State<Views> with TickerProviderStateMixin {
 }
 
 class MenuTitle extends StatelessWidget {
-
+  void Function()? onTap;
   String icon;
   String title;
+  Color? color;
 
   MenuTitle({
-    Key? key, required this.title, required this.icon
+    Key? key, required this.title, required this.icon,this.color,this.onTap
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding:  EdgeInsets.only(right: 24.w),
-      child: Row(
-        children: [
-          Image.asset("assets/images/icons/$icon",height: 20),
-          SizedBox(width: 5.w,),
-          Text(title,
-          style: Theme.of(context).textTheme.bodyText2!.copyWith(
-            fontSize: 15.w,
-            fontWeight: FontWeight.w600,
-            color: Colors.black
-          ),),
-        ],
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding:  EdgeInsets.only(right: 24.w),
+        child: Row(
+          children: [
+            Image.asset("assets/images/icons/$icon",height: 18,color: color??black),
+            SizedBox(width: 5.w,),
+            Text(title,
+            style: Theme.of(context).textTheme.bodyText2!.copyWith(
+              fontSize: 15.w,
+              fontWeight: FontWeight.w600
+                ,color: color??black
+            ),),
+          ],
+        ),
       ),
     );
   }

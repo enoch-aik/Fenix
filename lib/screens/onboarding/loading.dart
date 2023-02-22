@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:fenix/helpers/widgets.dart';
-import 'package:fenix/screens/home.dart';
+import 'package:fenix/screens/home/home.dart';
 import 'package:fenix/screens/onboarding/onboarding_one.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
@@ -12,7 +12,8 @@ import '../views.dart';
 import 'onboarding_two.dart';
 
 class Loading extends StatefulWidget {
-  const Loading({Key? key}) : super(key: key);
+  const Loading({Key? key,required this.navigateScreen}) : super(key: key);
+  final Widget navigateScreen;
 
   @override
   State<Loading> createState() => _LoadingState();
@@ -25,7 +26,7 @@ class _LoadingState extends State<Loading> {
     super.initState();
     Timer(Duration(seconds: 3),
             (){
-              Get.off(() =>  Views());
+              Get.off(() =>  widget.navigateScreen);
             }
     );
   }

@@ -1,0 +1,11 @@
+import 'dart:ui';
+
+const Color primary = Color(0xFF31456A);
+const Color dark = Color(0xFF334669);
+const Color textColor = Color(0xFF31456A);
+const Color white = Color(0xFFFFFFFF);
+const Color grey = Color(0xFF5B80A3);
+const Color black = Color(0xFF000000);
+const Color blue = Color(0xFF1994F5);
+const Color lightGrey = Color(0xFF8F9FAE);
+const Color peach = Color(0xFFEE9378);

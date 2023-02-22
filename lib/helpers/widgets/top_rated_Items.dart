@@ -7,8 +7,9 @@ import '../../screens/onboarding/constants.dart';
 
 class RatedItemsWidget extends StatelessWidget {
   const RatedItemsWidget({
-    Key? key,
+    Key? key,this.actionText,
   }) : super(key: key);
+final String? actionText;
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +20,12 @@ class RatedItemsWidget extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(13.w),
           color: Colors.red,
-          image: DecorationImage(image: AssetImage("assets/images/house.png",),fit: BoxFit.fitWidth)
+          image: const DecorationImage(image: AssetImage("assets/images/house.png",),fit: BoxFit.fitWidth)
       ),
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          Positioned(
+       if(actionText==null)   Positioned(
             right:0,
             child: Image.asset("assets/images/icons/favorite_icon.png"),
           ),
@@ -68,7 +69,7 @@ class RatedItemsWidget extends StatelessWidget {
                           height: 71.h,
                           width: MediaQuery.of(context).size.width *0.92,
                           padding: EdgeInsets.only(top: 7.w, left: 10.w),
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             gradient: LinearGradient(
                                 colors: [
                                   Colors.transparent,
@@ -106,19 +107,19 @@ class RatedItemsWidget extends StatelessWidget {
                           padding: EdgeInsets.only(top: 12.w, left: 10.w, right: 10.w),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(bottomLeft: Radius.circular(13.w), bottomRight:  Radius.circular(13.w)),
-                            color:  Color(0xFFE4EFF9),
+                            color:  const Color(0xFFE4EFF9),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.3),
                                 spreadRadius: 4,
                                 blurRadius: 9,
-                                offset: Offset(3, 4), // changes position of shadow
+                                offset: const Offset(3, 4), // changes position of shadow
                               ),
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.3),
                                 spreadRadius: 4,
                                 blurRadius: 9,
-                                offset: Offset(-3, 0), // changes position of shadow
+                                offset: const Offset(-3, 0), // changes position of shadow
                               ),
                             ],
                           ),
@@ -132,14 +133,14 @@ class RatedItemsWidget extends StatelessWidget {
                                     children: [
                                       Text("COST",
                                         style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                                            color: Color(0xFF334669),
+                                            color: const Color(0xFF334669),
                                             fontSize: 10.5.w,
                                             fontWeight: FontWeight.w600
                                         ),),
                                       SizedBox(height: 7.w,),
                                       Text("1500 so’m  / night",
                                         style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                                            color: Color(0xFF334669),
+                                            color: const Color(0xFF334669),
                                             fontSize: 10.5.w,
                                             fontWeight: FontWeight.w500
                                         ),),
@@ -150,14 +151,14 @@ class RatedItemsWidget extends StatelessWidget {
                                     children: [
                                       Text("DISTANCE",
                                         style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                                            color: Color(0xFF334669),
+                                            color: const Color(0xFF334669),
                                             fontSize: 10.5.w,
                                             fontWeight: FontWeight.w600
                                         ),),
                                       SizedBox(height: 7.w,),
                                       Text("257km",
                                         style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                                            color: Color(0xFF334669),
+                                            color: const Color(0xFF334669),
                                             fontSize: 10.5.w,
                                             fontWeight: FontWeight.w500
                                         ),),
@@ -170,14 +171,14 @@ class RatedItemsWidget extends StatelessWidget {
                                         children: [
                                           Text("AVAILABLE",
                                             style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                                                color: Color(0xFF334669),
+                                                color: const Color(0xFF334669),
                                                 fontSize: 10.5.w,
                                                 fontWeight: FontWeight.w600
                                             ),),
                                           SizedBox(height: 7.w,),
                                           Text("Oct 24 - 26",
                                             style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                                                color: Color(0xFF334669),
+                                                color: const Color(0xFF334669),
                                                 fontSize: 10.5.w,
                                                 fontWeight: FontWeight.w500
                                             ),),
@@ -212,11 +213,11 @@ class RatedItemsWidget extends StatelessWidget {
                                     height: 28.w,
                                     width: 85.w,
                                     decoration: BoxDecoration(
-                                        gradient: gradient(Color(0xFF9DDFF3), Color(0xFf0F55E8)),
+                                        gradient: gradient(const Color(0xFF9DDFF3), const Color(0xFf0F55E8)),
                                         borderRadius: BorderRadius.circular(8.53.w)
                                     ),
                                     child: Center(
-                                      child: Text("Book Now",
+                                      child: Text(actionText??"Book Now",
                                         style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                             color: Colors.white,
                                             fontSize: 13.5.w,

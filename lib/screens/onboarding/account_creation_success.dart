@@ -42,7 +42,6 @@ class AcctCreationSuccess extends StatelessWidget {
                       child: Container(
                         height: 33.w,
                         width: 187.w,
-
                         decoration:  BoxDecoration(
                           borderRadius: BorderRadius.circular(16.w),
                           color: Color(0xFF03924A),
