@@ -69,28 +69,28 @@ class _HomeState extends State<Views> with TickerProviderStateMixin {
           type: BottomNavigationBarType.fixed,
           items:  <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.map_outlined,color: Colors.black.withOpacity(0.38), size: 25,),
-              activeIcon: Icon(Icons.map,color: Color(0xFF0148B3), size: 25,),
+              icon: Icon(Icons.map_outlined,color: Colors.black.withOpacity(0.38), size: 35.w,),
+              activeIcon: Icon(Icons.map,color: Color(0xFF0148B3), size: 35.w,),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined,color: Colors.black.withOpacity(0.38), size: 25,),
-              activeIcon: Icon(Icons.home,color: Color(0xFF0148B3), size: 25,),
+              icon: Icon(Icons.home_outlined,color: Colors.black.withOpacity(0.38), size: 35.w,),
+              activeIcon: Icon(Icons.home,color: Color(0xFF0148B3), size: 35.w,),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_outlined, size: 25.w, color: Colors.black.withOpacity(0.38),),
-              activeIcon: Icon(Icons.account_circle, size: 25.w, color: Color(0xFF0148B3),),
+              icon: Icon(Icons.account_circle_outlined, size: 30.w, color: Colors.black.withOpacity(0.38),),
+              activeIcon: Icon(Icons.account_circle, size: 30.w, color: Color(0xFF0148B3),),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(CustomIcons.hammer,color: Colors.black.withOpacity(0.38),size: 25),
-              activeIcon: Icon(CustomIcons.hammer,color:Color(0xFF0148B3),size: 25),
+              icon: Icon(CustomIcons.hammer,color: Colors.black.withOpacity(0.38),size: 30.w),
+              activeIcon: Icon(CustomIcons.hammer,color:Color(0xFF0148B3),size: 30.w),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.menu_outlined,color: Colors.black.withOpacity(0.38), size: 25,),
-              activeIcon: const Icon(Icons.menu,color: Color(0xFF0148B3), size: 25,),
+              icon: Icon(Icons.menu_outlined,color: Colors.black.withOpacity(0.38), size: 30.w,),
+              activeIcon:  Icon(Icons.menu,color: Color(0xFF0148B3), size: 30.w,),
               label: '',
             ),
           ], // This trailing comma makes auto-formatting nicer for build methods.
