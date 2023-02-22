@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../onboarding/constants.dart';
+import 'account.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({Key? key}) : super(key: key);
@@ -98,8 +99,11 @@ class _UserProfileState extends State<UserProfile> {
                 itemBuilder: (BuildContext ctx, index) {
                   return InkWell(
                     onTap: (){
+                      if(index == 0)
+                        Get.to(() => Account());
                       if(index == 5)
-                        Get.to(() => SellingList());  if(index == 4)
+                        Get.to(() => SellingList());
+                      if(index == 4)
                         Get.to(() => WishList());
 
                     },
