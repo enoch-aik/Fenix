@@ -1,4 +1,5 @@
 import 'package:fenix/screens/profile/selling_list.dart';
+import 'package:fenix/screens/profile/wishlist.dart';
 import 'package:fenix/screens/views.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -99,6 +100,9 @@ class _UserProfileState extends State<UserProfile> {
                     onTap: (){
                       if(index == 5){
                         Get.to(() => SellingList());
+                      }
+                      if(index == 4){
+                        Get.to(() => Wishlist());
                       }
                     },
                     child: Container(

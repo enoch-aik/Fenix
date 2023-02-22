@@ -1,3 +1,4 @@
+import 'package:fenix/screens/categories/menu_category.dart';
 import 'package:fenix/screens/profile/product_list_widget.dart';
 import 'package:fenix/screens/views.dart';
 import 'package:flutter/material.dart';
@@ -6,14 +7,14 @@ import 'package:get/get.dart';
 
 import '../onboarding/constants.dart';
 
-class SellingList extends StatefulWidget {
-  const SellingList({Key? key}) : super(key: key);
+class Wishlist extends StatefulWidget {
+  const Wishlist({Key? key}) : super(key: key);
 
   @override
-  State<SellingList> createState() => _SellingListState();
+  State<Wishlist> createState() => _WishlistState();
 }
 
-class _SellingListState extends State<SellingList> {
+class _WishlistState extends State<Wishlist> {
 
   List title = [
     "Your Account",
@@ -38,26 +39,27 @@ class _SellingListState extends State<SellingList> {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.w),
               child: Align(
-                alignment: Alignment.centerLeft,
-                child: Row(
-                  children: [
-                    InkWell(
-                      onTap: (){
-                        Get.back();
-                      },
-                      child: Icon(Icons.arrow_back_ios, color: Colors.white,),
-                    ),
-                    Text("Your Selling List",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 25.w,
-                          fontWeight: FontWeight.w500,
-                          shadows: [
-                            Shadow(color: Colors.black.withOpacity(0.2), offset: Offset(2,2))
-                          ]
-                      ),),
-                  ],
-                )
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children: [
+                      InkWell(
+                        onTap: (){
+                          Get.back();
+                        },
+                        child: Icon(Icons.arrow_back_ios, color: Colors.white,),
+                      ),
+
+                      Text("Wishlist",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 25.w,
+                            fontWeight: FontWeight.w500,
+                            shadows: [
+                              Shadow(color: Colors.black.withOpacity(0.2), offset: Offset(2,2))
+                            ]
+                        ),),
+                    ],
+                  )
               ),
             ),
           ),
@@ -96,14 +98,15 @@ class _SellingListState extends State<SellingList> {
                 gridDelegate:
                 SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.5,
-                  childAspectRatio: 1 / 2.7,
+                  childAspectRatio: 1 / 2.0,
                   mainAxisSpacing: 0,
                   crossAxisSpacing: 0,
                 ),
                 itemCount: 10,
                 itemBuilder: (context, c){
-                  return ProductListWidget();
+                  return ProductWidget();
                 }),
+
 
 
 
