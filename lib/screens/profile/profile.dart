@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import '../onboarding/constants.dart';
 import 'account.dart';
 import 'message.dart';
+import 'selling_post.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({Key? key}) : super(key: key);
@@ -123,8 +124,10 @@ class _UserProfileState extends State<UserProfile> {
                     onTap: () {
                       if (index == 0) Get.to(() => const Account());
                       if (index == 1) Get.to(() => const Messages());
-                      if (index == 5) Get.to(() => const SellingList());
+                      if (index == 2) Get.to(() => const SellingPost());
                       if (index == 4) Get.to(() => const WishList());
+
+                      if (index == 5) Get.to(() => const SellingList());
                     },
                     child: Container(
                       alignment: Alignment.center,
@@ -133,8 +136,8 @@ class _UserProfileState extends State<UserProfile> {
                       decoration: BoxDecoration(
                         color: const Color(0xFFE4EFF9),
                         borderRadius: BorderRadius.circular(17.w),
-                        border:
-                            Border.all(color: const Color(0xFf334669), width: 0.1),
+                        border: Border.all(
+                            color: const Color(0xFf334669), width: 0.1),
                         gradient: LinearGradient(
                             colors: [
                               Colors.white,
@@ -154,13 +157,15 @@ class _UserProfileState extends State<UserProfile> {
                             color: Colors.grey.withOpacity(0.3),
                             spreadRadius: 0,
                             blurRadius: 5,
-                            offset: const Offset(1, 0), // changes position of shadow
+                            offset: const Offset(
+                                1, 0), // changes position of shadow
                           ),
                           BoxShadow(
                             color: Colors.white.withOpacity(0.4),
                             spreadRadius: 1,
                             blurRadius: 3,
-                            offset: const Offset(1, 1), // changes position of shadow
+                            offset: const Offset(
+                                1, 1), // changes position of shadow
                           ),
                         ],
                       ),
@@ -220,8 +225,8 @@ class _UserProfileState extends State<UserProfile> {
                         decoration: BoxDecoration(
                           color: const Color(0xFFE4EFF9),
                           borderRadius: BorderRadius.circular(17.w),
-                          border:
-                              Border.all(color: const Color(0xFf334669), width: 0.1),
+                          border: Border.all(
+                              color: const Color(0xFf334669), width: 0.1),
                           gradient: LinearGradient(
                               colors: [
                                 Colors.white,
@@ -241,15 +246,15 @@ class _UserProfileState extends State<UserProfile> {
                               color: Colors.grey.withOpacity(0.3),
                               spreadRadius: 0,
                               blurRadius: 5,
-                              offset:
-                                  const Offset(1, 0), // changes position of shadow
+                              offset: const Offset(
+                                  1, 0), // changes position of shadow
                             ),
                             BoxShadow(
                               color: Colors.white.withOpacity(0.4),
                               spreadRadius: 1,
                               blurRadius: 3,
-                              offset:
-                                  const Offset(1, 1), // changes position of shadow
+                              offset: const Offset(
+                                  1, 1), // changes position of shadow
                             ),
                           ],
                         ),
@@ -310,8 +315,8 @@ class _UserProfileState extends State<UserProfile> {
                         decoration: BoxDecoration(
                           color: const Color(0xFFE4EFF9),
                           borderRadius: BorderRadius.circular(17.w),
-                          border:
-                              Border.all(color: const Color(0xFf334669), width: 0.1),
+                          border: Border.all(
+                              color: const Color(0xFf334669), width: 0.1),
                           gradient: LinearGradient(
                               colors: [
                                 Colors.white,
@@ -331,15 +336,15 @@ class _UserProfileState extends State<UserProfile> {
                               color: Colors.grey.withOpacity(0.3),
                               spreadRadius: 0,
                               blurRadius: 5,
-                              offset:
-                                  const Offset(1, 0), // changes position of shadow
+                              offset: const Offset(
+                                  1, 0), // changes position of shadow
                             ),
                             BoxShadow(
                               color: Colors.white.withOpacity(0.4),
                               spreadRadius: 1,
                               blurRadius: 3,
-                              offset:
-                                  const Offset(1, 1), // changes position of shadow
+                              offset: const Offset(
+                                  1, 1), // changes position of shadow
                             ),
                           ],
                         ),
