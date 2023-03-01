@@ -8,6 +8,7 @@ import '../onboarding/constants.dart';
 import 'account.dart';
 import 'message.dart';
 import 'selling_post.dart';
+import 'subscribe.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({Key? key}) : super(key: key);
@@ -125,6 +126,7 @@ class _UserProfileState extends State<UserProfile> {
                       if (index == 0) Get.to(() => const Account());
                       if (index == 1) Get.to(() => const Messages());
                       if (index == 2) Get.to(() => const SellingPost());
+                      if (index == 3) Get.to(() => const Subscribe());
                       if (index == 4) Get.to(() => const WishList());
 
                       if (index == 5) Get.to(() => const SellingList());
