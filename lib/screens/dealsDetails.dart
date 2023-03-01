@@ -24,12 +24,12 @@ class _DealsDetailsState extends State<DealsDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE4F0FA),
+      backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height * 0.123),
         child: Container(
           decoration: new BoxDecoration(
-            gradient:  gradient(Color(0xFF1A9AFF), Color(0xFF54FADC),),
+            gradient:  gradient(const Color(0xFF1A9AFF), const Color(0xFF54FADC),),
           ),
           padding: EdgeInsets.only(top: 55.h, left: 12.w, right: 12.w),
           child: Column(
@@ -44,16 +44,16 @@ class _DealsDetailsState extends State<DealsDetails> {
                 ),
               ),
 
-              SizedBox(width: 10,),
+              const SizedBox(width: 10,),
               Row(
                 children: [
                   InkWell(
                     onTap: (){
                       Get.back();
                     },
-                      child: Icon(Icons.arrow_back_ios,  color: Colors.white,)),
+                      child: const Icon(Icons.arrow_back_ios,  color: Colors.white,)),
                   InkWell(
-                    onTap: ()=>Get.to(()=>SearchScreen()),
+                    onTap: ()=>Get.to(()=>const SearchScreen()),
                     child: Container(
                       height: MediaQuery.of(context).size.height * 0.050,
                       width: MediaQuery.of(context).size.width * 0.85,
@@ -76,7 +76,7 @@ class _DealsDetailsState extends State<DealsDetails> {
                               fontSize: 15.w,
                               color: Colors.grey.shade500
                           ),
-                          prefixIcon: Icon(Icons.search),
+                          prefixIcon: const Icon(Icons.search),
                         ),
                       ),
                     ),
@@ -94,24 +94,24 @@ class _DealsDetailsState extends State<DealsDetails> {
         ),
       ),
       body: ListView(
-        physics: ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         children: [
           Container(
               width:MediaQuery.of(context).size.width,
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.w),
               decoration: BoxDecoration(
-                  color: Color(0xFF1F4167),
-                  gradient: gradient(Color(0xFF1F4167), Color(0xFF0777FB))
+                  color: const Color(0xFF1F4167),
+                  gradient: gradient(const Color(0xFF1F4167), const Color(0xFF0777FB))
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
-                      (widget.title! == "Best Selling Items") ? Icon(CustomIcons.best_selling, color: Color(0xFFE48C24), size: 37.w,)
-                      : (widget.title! == "Top Deals") ?  Icon(CustomIcons.top_deals, color: Color(0xFFE48C24), size: 33.w,)
-                      :  Icon(CustomIcons.recommended_deals, color: Color(0xFFE48C24), size: 33.w,),
+                      (widget.title! == "Best Selling Items") ? Icon(CustomIcons.best_selling, color: const Color(0xFFE48C24), size: 37.w,)
+                      : (widget.title! == "Top Deals") ?  Icon(CustomIcons.top_deals, color: const Color(0xFFE48C24), size: 33.w,)
+                      :  Icon(CustomIcons.recommended_deals, color: const Color(0xFFE48C24), size: 33.w,),
 
 
 
@@ -148,8 +148,8 @@ class _DealsDetailsState extends State<DealsDetails> {
               margin: EdgeInsets.symmetric(vertical: 17.w),
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.w),
               decoration: BoxDecoration(
-                  color: Color(0xFF1F4167),
-                  gradient: gradient(Color(0xFF1F4167), Color(0xFF0777FB))
+                  color: const Color(0xFF1F4167),
+                  gradient: gradient(const Color(0xFF1F4167), const Color(0xFF0777FB))
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -168,7 +168,7 @@ class _DealsDetailsState extends State<DealsDetails> {
                       height: 24.w,
                       width: 95.w,
                       decoration: BoxDecoration(
-                        color: Color(0xFFDCE9F4),
+                        color: const Color(0xFFDCE9F4),
                         borderRadius: BorderRadius.circular(12.w),
                       ),
                       child: Center(
@@ -197,7 +197,7 @@ class _DealsDetailsState extends State<DealsDetails> {
               ),
               itemCount: 10,
               itemBuilder: (context, c){
-                return ProductWidget();
+                return const ProductWidget();
               }),
 
         ],
@@ -220,20 +220,20 @@ class ProductWidget extends StatelessWidget {
           width: MediaQuery.of(context).size.width * 0.452,
           margin: EdgeInsets.symmetric(horizontal: 9.w),
           decoration: BoxDecoration(
-              color: Color(0xFFDAE5F2),
+              color: const Color(0xFFDAE5F2),
               borderRadius: BorderRadius.circular(10.w),
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.5),
                   spreadRadius: 1,
                   blurRadius: 2,
-                  offset: Offset(0, 1), // changes position of shadow
+                  offset: const Offset(0, 1), // changes position of shadow
                 ),
                 BoxShadow(
                   color: Colors.white.withOpacity(0.3),
                   spreadRadius: 2,
                   blurRadius: 3,
-                  offset: Offset(-3, -6), // changes position of shadow
+                  offset: const Offset(-3, -6), // changes position of shadow
                 ),
               ]
           ),
@@ -244,7 +244,7 @@ class ProductWidget extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.455,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.w),
-                  image: DecorationImage(image: AssetImage("assets/images/house.png"), fit: BoxFit.fill,),
+                  image: const DecorationImage(image: AssetImage("assets/images/house.png"), fit: BoxFit.fill,),
                 ),
               ),
               SizedBox(height: 10.w,),
@@ -266,7 +266,7 @@ class ProductWidget extends StatelessWidget {
                             Text("Delivery info will  be here dg likseller offer sajncnask...",
                               style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                   fontSize: 12.w,
-                                  color: Color(0xFF334669),
+                                  color: const Color(0xFF334669),
                                   fontWeight: FontWeight.w700
                               ),),
                             Row(
@@ -295,31 +295,31 @@ class ProductWidget extends StatelessWidget {
                                 Text("259 reviews.",
                                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                       fontSize: 10.w,
-                                      color: Color(0xFF334669).withOpacity(0.6),
+                                      color: const Color(0xFF334669).withOpacity(0.6),
                                       fontWeight: FontWeight.w500
                                   ),),
                               ],
                             ),
                             Row(
                               children: [
-                                Icon(Icons.location_on),
+                                const Icon(Icons.location_on),
                                 SizedBox(width: 10.w,),
                                 Text("United State, Florida 3340",
                                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                       fontSize: 11.w,
-                                      color: Color(0xFF334669).withOpacity(0.6),
+                                      color: const Color(0xFF334669).withOpacity(0.6),
                                       fontWeight: FontWeight.w400
                                   ),),
                               ],
                             ),
                             Row(
                               children: [
-                                Icon(Icons.fire_truck),
+                                const Icon(Icons.fire_truck),
                                 SizedBox(width: 10.w,),
                                 Text("Free Shipping",
                                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                       fontSize: 12.w,
-                                      color: Color(0xFF0F7D46),
+                                      color: const Color(0xFF0F7D46),
                                       fontWeight: FontWeight.w500
                                   ),)
                               ],
@@ -333,7 +333,7 @@ class ProductWidget extends StatelessWidget {
                     Text("17,000   so’m",
                       style: Theme.of(context).textTheme.bodyText1!.copyWith(
                           fontSize: 15.w,
-                          color: Color(0xFFCE242B),
+                          color: const Color(0xFFCE242B),
                           fontWeight: FontWeight.w800
                       ),),
                   ],

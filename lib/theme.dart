@@ -8,4 +8,6 @@ const Color grey = Color(0xFF5B80A3);
 const Color black = Color(0xFF000000);
 const Color blue = Color(0xFF1994F5);
 const Color lightGrey = Color(0xFF8F9FAE);
+const Color light = Color(0xFFB3B9C9);
 const Color peach = Color(0xFFEE9378);
+const Color green = Color(0xFF1DF489);
