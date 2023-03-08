@@ -21,11 +21,15 @@ class _SubCategoryState extends State<SubCategory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFE4F0FA),
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height * 0.12),
         child: Container(
           decoration: BoxDecoration(
-            gradient:  gradient(Color(0xFF1A9AFF), Color(0xFF54FADC),),
+            gradient:  gradient(
+              const Color(0xFF691232),
+              const Color(0xFF1770A2),
+            ),
           ),
           padding: EdgeInsets.only(top: 55.h, left: 12.w, right: 12.w),
           child: Column(
@@ -82,9 +86,6 @@ class _SubCategoryState extends State<SubCategory> {
       ),
       body: Container(
         padding: EdgeInsets.only(top: 15.w, right: 15.w, left: 25.w,),
-        decoration: BoxDecoration(
-          gradient:  gradient3(Color(0xFF1A9AFF), Color(0xFF54FADC),),
-        ),
         child: ListView.builder(
           itemCount: 6,
           itemBuilder: (context, index){
@@ -103,7 +104,7 @@ class _SubCategoryState extends State<SubCategory> {
 
                 KText("Apartment",
                   fontSize: 15.w,
-                  color: Colors.white,
+                  color: kTextBlackColor,
                   fontWeight: FontWeight.w700,
                 )
               ],

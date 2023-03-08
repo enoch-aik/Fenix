@@ -49,8 +49,10 @@ class _MapState extends State<Map> {
           centerTitle: true,
           flexibleSpace: Container(
             decoration: BoxDecoration(
-                gradient: gradient(Color(0xFF1A9AFF),
-                  Color(0xFF54FADC),),
+                gradient: gradient(
+                  const Color(0xFF691232),
+                  const Color(0xFF1770A2),
+                ),
             ),
           )),
       body: Stack(
