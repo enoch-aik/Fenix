@@ -73,6 +73,19 @@ LinearGradient invertedGradient = LinearGradient(
 );
 
 
+LinearGradient gradientInverted(a,b) {
+  return LinearGradient(
+      colors: [
+        a,b
+      ],
+      stops: [0.0, 1.0],
+      begin: FractionalOffset.topLeft,
+      end: FractionalOffset.bottomRight,
+      tileMode: TileMode.repeated
+  );
+}
+
+
 
 const fullAngleInRadians = math.pi * 2;
 

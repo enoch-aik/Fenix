@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../onboarding/constants.dart';
 import 'bar_chart.dart';
 import 'chart.dart';
+import '../../theme.dart';
 
 class Charts extends StatefulWidget {
   const Charts({Key? key}) : super(key: key);
@@ -24,8 +25,8 @@ class _ChartsState extends State<Charts> {
         child: Container(
           decoration: BoxDecoration(
               gradient: gradient(
-                Color(0xFF1A9AFF),
-                Color(0xFF54FADC),
+                const Color(0xFF691232),
+                const Color(0xFF1770A2),
               ),
               border:
                   Border(bottom: BorderSide(color: Colors.purple, width: 2))),
@@ -76,22 +77,27 @@ class _ChartsState extends State<Charts> {
                     MenuTitle(
                       icon: "Dacha.png",
                       title: "Dacha",
+                      color: white,
                     ),
                     MenuTitle(
                       icon: "houseRental.png",
                       title: "House Rental",
+                      color: white,
                     ),
                     MenuTitle(
                       icon: "apartment.png",
                       title: "Apartment",
+                      color: white,
                     ),
                     MenuTitle(
                       icon: "carRental.png",
                       title: "Car Rental",
+                      color: white,
                     ),
                     MenuTitle(
                       icon: "storeRental.png",
                       title: "Store Rental",
+                      color: white,
                     ),
                   ],
                 ),
@@ -116,7 +122,7 @@ class _ChartsState extends State<Charts> {
                       color: Colors.grey.withOpacity(0.3),
                       offset: const Offset(-2, 2)),
                 ],
-                border: Border.all(color: Colors.purple),
+                // border: Border.all(color: Colors.purple),
                 borderRadius: BorderRadius.circular(20)),
             child: Padding(
               padding: const EdgeInsets.all(15),

@@ -61,7 +61,10 @@ class _HomeState extends State<Views> with TickerProviderStateMixin {
       bottomNavigationBar: Container(
         padding: EdgeInsets.only(top: 7.w),
         decoration: BoxDecoration(
-          gradient: invertedGradient,
+          gradient: gradientInverted(
+            const Color(0xFF691232),
+            const Color(0xFF1770A2),
+          ),
         ),
         child: BottomNavigationBar(
           backgroundColor: Colors.transparent,
@@ -69,28 +72,28 @@ class _HomeState extends State<Views> with TickerProviderStateMixin {
           type: BottomNavigationBarType.fixed,
           items:  <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.map_outlined,color: Colors.black.withOpacity(0.38), size: 35.w,),
-              activeIcon: Icon(Icons.map,color: Color(0xFF0148B3), size: 35.w,),
+              icon: Icon(Icons.map_outlined,color: Colors.white.withOpacity(0.44), size: 35.w,),
+              activeIcon: Icon(Icons.map,color: Colors.white, size: 35.w,),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined,color: Colors.black.withOpacity(0.38), size: 35.w,),
-              activeIcon: Icon(Icons.home,color: Color(0xFF0148B3), size: 35.w,),
+              icon: Icon(Icons.home_outlined,color: Colors.white.withOpacity(0.44), size: 35.w,),
+              activeIcon: Icon(Icons.home,color: Colors.white, size: 35.w,),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_outlined, size: 30.w, color: Colors.black.withOpacity(0.38),),
-              activeIcon: Icon(Icons.account_circle, size: 30.w, color: Color(0xFF0148B3),),
+              icon: Icon(Icons.account_circle_outlined, size: 30.w, color: Colors.white.withOpacity(0.44),),
+              activeIcon: Icon(Icons.account_circle, size: 30.w, color: Colors.white,),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(CustomIcons.hammer,color: Colors.black.withOpacity(0.38),size: 30.w),
-              activeIcon: Icon(CustomIcons.hammer,color:Color(0xFF0148B3),size: 30.w),
+              icon: Icon(CustomIcons.hammer,color: Colors.white.withOpacity(0.44),size: 30.w),
+              activeIcon: Icon(CustomIcons.hammer,color: Colors.white, size: 30.w),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.menu_outlined,color: Colors.black.withOpacity(0.38), size: 30.w,),
-              activeIcon:  Icon(Icons.menu,color: Color(0xFF0148B3), size: 30.w,),
+              icon: Icon(Icons.menu_outlined,color: Colors.white.withOpacity(0.44), size: 30.w,),
+              activeIcon:  Icon(Icons.menu,color: Colors.white, size: 30.w,),
               label: '',
             ),
           ], // This trailing comma makes auto-formatting nicer for build methods.
