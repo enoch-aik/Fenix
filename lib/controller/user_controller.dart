@@ -30,7 +30,6 @@ class UserController extends GetxController {
 
   updateProfile(token, {address, city, country}) {
     UserServices.updateUser((status, response) {
-      print(response);
       if (status) {
         CustomSnackBar.successSnackBar(
             'Success', 'Profile updated successfully');
