@@ -397,9 +397,11 @@ class TextFieldWidget extends StatelessWidget {
 
   String hint;
   Icon? prefixIcon;
+  TextEditingController? textController;
+ String? Function(String?)? validator;
 
   TextFieldWidget({
-    Key? key, required this.hint,this.prefixIcon,
+    Key? key, required this.hint,this.prefixIcon,this.textController,this.validator
   }) : super(key: key);
 
   @override
@@ -422,13 +424,17 @@ class TextFieldWidget extends StatelessWidget {
 
         ],
       ),
-      child: TextField(
+      child: TextFormField(
         style: TextStyle(
           fontSize: 16.w,
         ),
+        validator:validator,
+        controller: textController,
         decoration: InputDecoration(
             enabledBorder: InputBorder.none,
             focusedBorder: InputBorder.none,
+            errorBorder: InputBorder.none,
+            focusedErrorBorder: InputBorder.none,
             contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             hintText: hint,
             hintStyle: Theme.of(context).textTheme.bodyText1!.copyWith(

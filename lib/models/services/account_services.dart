@@ -1,0 +1,58 @@
+import 'api_docs.dart';
+import 'api_scheme.dart';
+
+class AccountServices {
+  static loginUser(
+    Function callback, {
+    email,
+    password,
+  }) async {
+    var data = {"email": email, "password": password};
+    var response =
+        await ApiServices.initialisePostRequest(url: loginUrl, data: data);
+    print(response);
+    if (response is String) {
+      callback(false, response);
+    } else {
+      callback(true, response);
+    }
+  }
+
+  static registerUser(Function callback,
+      {email, firstName, lastName, password}) async {
+    var data = {
+      "email": email,
+      "password": password,
+      "firstName": firstName,
+      "lastName": lastName,
+    };
+    var response =
+        await ApiServices.initialisePostRequest(url: registerUrl, data: data);
+    print(response);
+    if (response is String) {
+      callback(false, response);
+    } else {
+      callback(true, response);
+    }
+  }
+
+// "phoneNumber": "+2347032490038",
+// "gender": "Male",
+// "address": "Abeokuta, Ogun State",
+// "city": "Test City",
+// "country": "Nigeria",
+// "username": "MF"
+
+// "email": "mofeoluwalijadu@gmail.com",
+// "password": "testing123"
+//
+//
+// "address": "Abeokuta, Ogun State",
+// "city": "Test City",
+// "country": "Nigeria"
+}
+
+// "name": "MFStores",
+// "description": "just testing",
+// "location": "Ogun State, Nigeria"
+// }

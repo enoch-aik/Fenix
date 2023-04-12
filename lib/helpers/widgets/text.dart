@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+// import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -30,18 +30,20 @@ class KText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return isNeumorphic
-        ? NeumorphicText(
-      text,
-      textAlign: textAlign ?? TextAlign.center,
-      style: NeumorphicStyle(color: color ?? lightText,depth: 1),
-      textStyle: NeumorphicTextStyle(
-          fontSize: fontSize ?? 18.sp,
-          fontFamily: GoogleFonts.lato().fontFamily,
-          fontWeight: fontWeight ?? FontWeight.w400,
-          height: lineHeight),
-    )
-        : Text(
+    return
+    //   isNeumorphic
+    //     ? NeumorphicText(
+    //   text,
+    //   textAlign: textAlign ?? TextAlign.center,
+    //   style: NeumorphicStyle(color: color ?? lightText,depth: 1),
+    //   textStyle: NeumorphicTextStyle(
+    //       fontSize: fontSize ?? 18.sp,
+    //       fontFamily: GoogleFonts.lato().fontFamily,
+    //       fontWeight: fontWeight ?? FontWeight.w400,
+    //       height: lineHeight),
+    // )
+    //     :
+    Text(
       text,
       textAlign: textAlign,
       overflow: overflow,

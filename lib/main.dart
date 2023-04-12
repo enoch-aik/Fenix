@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import 'controller/account_controller.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -20,6 +22,9 @@ class MyApp extends StatelessWidget {
       builder: (context, child) => GetMaterialApp(
         title: 'Fenix',
         theme: theme,
+        onInit: () {
+          Get.put(AccountController());
+        },
         transitionDuration: const Duration(milliseconds: 550),
         defaultTransition: Transition.native,
         home: SplashScreen(),

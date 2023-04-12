@@ -11,3 +11,5 @@ const Color lightGrey = Color(0xFF8F9FAE);
 const Color light = Color(0xFFB3B9C9);
 const Color peach = Color(0xFFEE9378);
 const Color green = Color(0xFF1DF489);
+const Color background =  Color(0xFFE4F0FA);
+const Color red = Color(0xFFF1004B);

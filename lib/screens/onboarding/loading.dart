@@ -1,19 +1,12 @@
-import 'dart:async';
-
 import 'package:fenix/helpers/widgets.dart';
-import 'package:fenix/screens/home/home.dart';
-import 'package:fenix/screens/onboarding/onboarding_one.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/src/size_extension.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
-import '../views.dart';
-import 'onboarding_two.dart';
-
 class Loading extends StatefulWidget {
-  const Loading({Key? key,required this.navigateScreen}) : super(key: key);
-  final Widget navigateScreen;
+  const Loading({Key? key,  this.navigateScreen}) : super(key: key);
+  final Widget? navigateScreen;
 
   @override
   State<Loading> createState() => _LoadingState();
@@ -24,13 +17,17 @@ class _LoadingState extends State<Loading> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer(Duration(seconds: 3),
-            (){
-              Get.off(() =>  widget.navigateScreen);
-            }
-    );
+    // Timer(const Duration(seconds: 3), () {
+    //   widget.navigateScreen!=null?
+    //   Get.off(() => widget.navigateScreen):Get.back();
+    // });
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,12 +41,6 @@ class _LoadingState extends State<Loading> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  // child: Center(
-                  //     child: Image.asset(
-                  //   "assets/images/logoFrame.png",
-                  //   width: Get.height * 0.2,
-                  //   height: Get.width * 0.48,
-                  // )),
                   width: Get.height * 0.4,
                   height: Get.width * 0.9,
                   decoration: const BoxDecoration(
