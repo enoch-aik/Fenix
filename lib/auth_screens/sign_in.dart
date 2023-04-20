@@ -34,7 +34,7 @@ class SignIn extends StatelessWidget {
         padding: EdgeInsets.only(top: 35.w, left: 31.w, right: 31.w, bottom: 0.w),
         child: SizedBox(
           height: MediaQuery.of(context).size.height,
-          child: Column(
+          child: ListView(
             children: [
               Form(
                 key: _formKey,
@@ -178,19 +178,6 @@ class SignIn extends StatelessWidget {
                             width: MediaQuery.of(context).size.width * 0.4,
                             alignment: Alignment.center,
                             padding: const EdgeInsets.all(8),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.person, color: Color(0xFF414B5A),size: 15,),
-                                tinyH5Space(),
-
-                                Text("Forgot Email", style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                                    color: const Color(0xFF414B5A).withOpacity(0.8),
-                                    fontSize: 12.w,
-                                  fontWeight: FontWeight.w800
-                                ),),
-                              ],
-                            ),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(17.w),
                               color: const Color(0xFFE3EDF7),
@@ -209,6 +196,19 @@ class SignIn extends StatelessWidget {
                                 ),
 
 
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                 Icon(Icons.person, color: Color(0xFF414B5A),size: 15,),
+                                tinyH5Space(),
+
+                                Text("Forgot Email", style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    color:  Color(0xFF414B5A).withOpacity(0.8),
+                                    fontSize: 12.w,
+                                  fontWeight: FontWeight.w800
+                                ),),
                               ],
                             ),
                           ),

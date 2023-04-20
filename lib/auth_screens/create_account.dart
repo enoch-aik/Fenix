@@ -95,30 +95,30 @@ class SignUp extends StatelessWidget {
                             validator: (value) =>
                                 EmailValidator.validate(value!),
                           ),
-                          kSpacing,
-                          TextFieldWidget(
-                            hint: "Phone Number",
-                          ),
-                          kSpacing,
-                          TextFieldWidget(
-                            hint: "Date of Birth",
-                          ),
-                          kSpacing,
-                          TextFieldWidget(
-                            hint: "Address",
-                          ),
-                          kSpacing,
-                          TextFieldWidget(
-                            hint: "Street Name",
-                          ),
-                          kSpacing,
-                          TextFieldWidget(
-                            hint: "City",
-                          ),
-                          kSpacing,
-                          TextFieldWidget(
-                            hint: "Country",
-                          ),
+                          // kSpacing,
+                          // TextFieldWidget(
+                          //   hint: "Phone Number",
+                          // ),
+                          // kSpacing,
+                          // TextFieldWidget(
+                          //   hint: "Date of Birth",
+                          // ),
+                          // kSpacing,
+                          // TextFieldWidget(
+                          //   hint: "Address",
+                          // ),
+                          // kSpacing,
+                          // TextFieldWidget(
+                          //   hint: "Street Name",
+                          // ),
+                          // kSpacing,
+                          // TextFieldWidget(
+                          //   hint: "City",
+                          // ),
+                          // kSpacing,
+                          // TextFieldWidget(
+                          //   hint: "Country",
+                          // ),
                           kSpacing,
                           TextFieldWidget(
                             hint: "New Password",

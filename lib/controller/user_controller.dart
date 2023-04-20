@@ -3,13 +3,18 @@ import 'package:get/get.dart';
 import '../helpers/widgets/snackBar.dart';
 import '../models/services/user_services.dart';
 import '../models/user_model.dart';
+import '../screens/onboarding/loading.dart';
+import '../screens/profile/edit_profile.dart';
 import '../screens/views.dart';
 
 class UserController extends GetxController {
   String _token = '';
+  var gender = ''.obs;
   UserModel? user;
 
   String getToken() => _token;
+
+  UserModel? getUser() => user;
 
   setToken(token) => _token = token;
 
@@ -20,7 +25,8 @@ class UserController extends GetxController {
         setUser(response);
       } else {
         if (response.toString().contains('profile yet')) {
-          Get.to(() => const Views());
+          CustomSnackBar.successSnackBar('Welcome', 'Update your profile to continue');
+          Get.to(() =>  EditProfile());
         } else {
           CustomSnackBar.failedSnackBar('Failed', '$response');
         }
@@ -41,12 +47,17 @@ class UserController extends GetxController {
 
   createProfile(token,
       {phoneNumber, gender, address, city, country, username}) {
+    Get.to(() => const Loading());
     UserServices.createUser((status, response) {
       print(response);
       if (status) {
+        fetchUser(token);
+        Get.back();
         CustomSnackBar.successSnackBar(
             'Success', 'Profile created successfully');
       } else {
+        Get.back();
+
         CustomSnackBar.failedSnackBar('Failed', '$response');
       }
     }, {
@@ -63,6 +74,6 @@ class UserController extends GetxController {
     UserModel user = UserModel.fromJson(response['data']);
     this.user = user;
 
-    // Get.to(() => const Views());
+    Get.to(() => const Views());
   }
 }

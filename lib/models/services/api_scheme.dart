@@ -76,7 +76,9 @@ class ApiServices {
   static initialisePostRequest(
       {required data, required String url, token}) async {
     try {
+      print(token);
       print(data);
+      print(url);
 
       http.Response response = await ApiServices.makePostRequest(
           apiUrl: url, data: data, token: token);
@@ -90,6 +92,7 @@ class ApiServices {
         return ApiServices.handleError(response);
       }
     } catch (e) {
+      print('Errororor $e');
       if (e.toString().contains('HandshakeException')) {
         return 'Check your internet connection';
       } else {

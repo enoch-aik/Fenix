@@ -1,11 +1,8 @@
-
 import 'package:fenix/screens/onboarding/auth_board.dart';
 import 'package:fenix/screens/onboarding/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:get/get.dart';
-
-
 
 class BottomHillsWidget extends StatelessWidget {
   const BottomHillsWidget({
@@ -20,40 +17,39 @@ class BottomHillsWidget extends StatelessWidget {
         height: 120,
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
-            image: DecorationImage(image: AssetImage("assets/images/bottomHills.png"),fit: BoxFit.fitWidth)
-        ),
+            image: DecorationImage(
+                image: AssetImage("assets/images/bottomHills.png"),
+                fit: BoxFit.fitWidth)),
       ),
     );
   }
 }
 
-
 ThemeData theme = ThemeData(
   primarySwatch: Colors.blue,
   backgroundColor: const Color(0xFFE4F0FA),
   textTheme: const TextTheme(
-      bodyText1: TextStyle(
-    fontSize: 20,
-    color: Color(0xFF31456A),
-    fontFamily: "Lato",
-  ),
-      bodyText2: TextStyle(
+    bodyText1: TextStyle(
+      fontSize: 20,
+      color: Color(0xFF31456A),
+      fontFamily: "Lato",
+    ),
+    bodyText2: TextStyle(
         fontSize: 20,
         color: Color(0xFF31456A),
         fontFamily: "Lato",
-        fontWeight: FontWeight.bold
-      ),
+        fontWeight: FontWeight.bold),
   ),
 );
 
-
 class ButtonWidget extends StatelessWidget {
-
   String title;
   Color color;
 
   ButtonWidget({
-    Key? key, required this.title,this.color = const Color(0xFFE3EDF7),
+    Key? key,
+    required this.title,
+    this.color = const Color(0xFFE3EDF7),
   }) : super(key: key);
 
   @override
@@ -67,10 +63,12 @@ class ButtonWidget extends StatelessWidget {
             width: 185.w,
             alignment: Alignment.center,
             padding: const EdgeInsets.all(8),
-            child: Text(title, style: Theme.of(context).textTheme.bodyText1!.copyWith(
-              color: const Color(0xFF31456A).withOpacity(0.8),
-              fontSize: 15.w
-            ),),
+            child: Text(
+              title,
+              style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  color: const Color(0xFF31456A).withOpacity(0.8),
+                  fontSize: 15.w),
+            ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(17.w),
               color: color,
@@ -87,18 +85,18 @@ class ButtonWidget extends StatelessWidget {
                   blurRadius: 3,
                   offset: const Offset(-3, -6), // changes position of shadow
                 ),
-
-
               ],
             ),
           ),
           Positioned(
             right: 8,
-            bottom:8,
+            bottom: 8,
             child: Container(
               height: 25,
               width: 25,
-              child: Center(child: Icon(Icons.arrow_forward_ios, size: 12.w, color: Colors.red)),
+              child: Center(
+                  child: Icon(Icons.arrow_forward_ios,
+                      size: 12.w, color: Colors.red)),
               decoration: BoxDecoration(
                 color: const Color(0xFFE3EDF7),
                 shape: BoxShape.circle,
@@ -115,24 +113,20 @@ class ButtonWidget extends StatelessWidget {
                     blurRadius: 3,
                     offset: const Offset(-3, 1), // changes position of shadow
                   ),
-
-
                 ],
               ),
-            ),)
+            ),
+          )
         ],
       ),
     );
   }
 }
 
-
 class SwipeToggleButton extends StatelessWidget {
-
   Widget child;
-  SwipeToggleButton({
-    Key? key, required this.child
-  }) : super(key: key);
+
+  SwipeToggleButton({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -141,27 +135,26 @@ class SwipeToggleButton extends StatelessWidget {
         width: 48.w,
         decoration: BoxDecoration(
             color: const Color(0xFFE3EDF7),
-            borderRadius: BorderRadius.circular(12), boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            spreadRadius: 6,
-            blurRadius: 12,
-            offset: const Offset(1, 1), // changes position of shadow
-          ),
-
-        ]
-        ),
-        child: Center(child: child)
-    );
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 6,
+                blurRadius: 12,
+                offset: const Offset(1, 1), // changes position of shadow
+              ),
+            ]),
+        child: Center(child: child));
   }
 }
 
-
 class WelcomeCards extends StatelessWidget {
-  const WelcomeCards({
-    Key? key,
-    required this.pageController, required this.title, required this.image
-  }) : super(key: key);
+  const WelcomeCards(
+      {Key? key,
+      required this.pageController,
+      required this.title,
+      required this.image})
+      : super(key: key);
 
   final PageController pageController;
   final String title;
@@ -175,89 +168,92 @@ class WelcomeCards extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(title, style: Theme.of(context).textTheme.bodyText2),
-
           SizedBox(height: 21.w),
-
           Column(
             children: [
               Stack(
                 children: [
-
-
-
                   Container(
-                      height: MediaQuery.of(context).size.height * 0.68,
-                      width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.symmetric(vertical: 36.w, horizontal: 15.w),
-                      decoration:  BoxDecoration(
-                        border: Border.all(color: Colors.white.withOpacity(0.511), width: 0.85),
-                        borderRadius: BorderRadius.circular(8.53.w),
-                        color: const Color(0xFFEBF2F9),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.6),
-                            spreadRadius: 0,
-                            blurRadius: 1,
-                            offset: const Offset(1, 1), // changes position of shadow
-                          ),
-                          const BoxShadow(
-                            color: Colors.white,
-                            spreadRadius: 0,
-                            blurRadius: 1,
-                            offset: Offset(-1, -1), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child:   PageView(
-                        controller: pageController,
-                        children: [
-                          Image.asset("assets/images/lottieAnimOne.png",fit: BoxFit.fill,),
-                          Image.asset("assets/images/lottieAnimTwo.png",fit: BoxFit.fill,),
-                          Image.asset("assets/images/lottieAnimThree.png",fit: BoxFit.fill,),
-
-                        ],
-                      ),
+                    height: MediaQuery.of(context).size.height * 0.68,
+                    width: MediaQuery.of(context).size.width,
+                    padding:
+                        EdgeInsets.symmetric(vertical: 36.w, horizontal: 15.w),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          color: Colors.white.withOpacity(0.511), width: 0.85),
+                      borderRadius: BorderRadius.circular(8.53.w),
+                      color: const Color(0xFFEBF2F9),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.6),
+                          spreadRadius: 0,
+                          blurRadius: 1,
+                          offset:
+                              const Offset(1, 1), // changes position of shadow
+                        ),
+                        const BoxShadow(
+                          color: Colors.white,
+                          spreadRadius: 0,
+                          blurRadius: 1,
+                          offset: Offset(-1, -1), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: PageView(
+                      controller: pageController,
+                      children: [
+                        Image.asset(
+                          "assets/images/lottieAnimOne.png",
+                          fit: BoxFit.fill,
+                        ),
+                        Image.asset(
+                          "assets/images/lottieAnimTwo.png",
+                          fit: BoxFit.fill,
+                        ),
+                        Image.asset(
+                          "assets/images/lottieAnimThree.png",
+                          fit: BoxFit.fill,
+                        ),
+                      ],
+                    ),
                   ),
-
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: 17.w,),
+                    padding: EdgeInsets.symmetric(
+                      vertical: 17.w,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         InkWell(
-                          onTap: (){
-                          if(pageController.page != 0.0) {
-                            pageController.previousPage(
-                                duration: const Duration(milliseconds: 500),
-                                curve: Curves.easeIn
-                            );
-                          } else{
-                            Get.back();
-                          }
+                          onTap: () {
+                            if (pageController.page != 0.0) {
+                              pageController.previousPage(
+                                  duration: const Duration(milliseconds: 500),
+                                  curve: Curves.easeIn);
+                            } else {
+                              Get.back();
+                            }
                           },
                           child: backButton,
                         ),
                         InkWell(
-                          onTap: (){
-                            if(pageController.page != 2.0) {
+                          onTap: () {
+                            if (pageController.page != 2.0) {
                               pageController.nextPage(
                                   duration: const Duration(milliseconds: 500),
-                                  curve: Curves.easeIn
-                              );
+                                  curve: Curves.easeIn);
                             } else {
-                              Get.to(()=> AuthBoard());
+                              Get.to(() => AuthBoard());
                             }
-
                           },
-                          child: forwardButton,),
+                          child: forwardButton,
+                        ),
                       ],
                     ),
                   ),
-
                 ],
                 alignment: Alignment.bottomCenter,
               ),
-
             ],
           ),
         ],
@@ -266,13 +262,10 @@ class WelcomeCards extends StatelessWidget {
   }
 }
 
-
 class WidgetsPad extends StatelessWidget {
-
   Widget child;
-  WidgetsPad({
-    Key? key,required this.child
-  }) : super(key: key);
+
+  WidgetsPad({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -329,13 +322,10 @@ class WidgetsPad extends StatelessWidget {
   }
 }
 
-
 class CustomWidgetsPad extends StatelessWidget {
-
   Widget child;
-  CustomWidgetsPad({
-    Key? key,required this.child
-  }) : super(key: key);
+
+  CustomWidgetsPad({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -391,18 +381,21 @@ class CustomWidgetsPad extends StatelessWidget {
   }
 }
 
-
-
 class TextFieldWidget extends StatelessWidget {
-
   String hint;
   Icon? prefixIcon;
   TextEditingController? textController;
- String? Function(String?)? validator;
+  String? Function(String?)? validator;
+  bool? enabled;
 
-  TextFieldWidget({
-    Key? key, required this.hint,this.prefixIcon,this.textController,this.validator
-  }) : super(key: key);
+  TextFieldWidget(
+      {Key? key,
+      required this.hint,
+      this.prefixIcon,
+      this.enabled,
+      this.textController,
+      this.validator})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -421,26 +414,27 @@ class TextFieldWidget extends StatelessWidget {
             blurRadius: 3,
             offset: const Offset(3, 5), // changes position of shadow
           ),
-
         ],
       ),
       child: TextFormField(
         style: TextStyle(
           fontSize: 16.w,
         ),
-        validator:validator,
+        enabled: enabled,
+        validator: validator,
         controller: textController,
         decoration: InputDecoration(
-            enabledBorder: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            errorBorder: InputBorder.none,
-            focusedErrorBorder: InputBorder.none,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-            hintText: hint,
-            hintStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
-                fontSize: 15.w,
-                color: Colors.grey.shade400
-            ),
+          enabledBorder: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          errorBorder: InputBorder.none,
+          focusedErrorBorder: InputBorder.none,
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+          hintText: hint,
+          hintStyle: Theme.of(context)
+              .textTheme
+              .bodyText1!
+              .copyWith(fontSize: 15.w, color: Colors.grey.shade400),
           prefixIcon: prefixIcon,
         ),
       ),
@@ -448,16 +442,10 @@ class TextFieldWidget extends StatelessWidget {
   }
 }
 
-
 List lottieSlides = [
-Image.asset("assets/images/lottieAnimOne.png"),
-Image.asset("assets/images/lottieAnimOne.png"),
-Image.asset("assets/images/lottieAnimOne.png"),
+  Image.asset("assets/images/lottieAnimOne.png"),
+  Image.asset("assets/images/lottieAnimOne.png"),
+  Image.asset("assets/images/lottieAnimOne.png"),
 ];
 
-
 // margin: EdgeInsets.symmetric(vertical: 17.w, horizontal: 24.w),
-
-
-
-

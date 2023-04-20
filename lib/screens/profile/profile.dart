@@ -146,7 +146,7 @@ class _UserProfileState extends State<UserProfile> {
                               const Color(0xFFDBE6F2).withOpacity(0.2),
                               const Color(0xFF8F9FAE).withOpacity(0.2),
                             ],
-                            stops: [
+                            stops: const [
                               0.0,
                               0.5,
                               1.0
@@ -235,7 +235,7 @@ class _UserProfileState extends State<UserProfile> {
                                 const Color(0xFFDBE6F2).withOpacity(0.2),
                                 const Color(0xFF8F9FAE).withOpacity(0.2),
                               ],
-                              stops: [
+                              stops: const [
                                 0.0,
                                 0.5,
                                 1.0
@@ -325,7 +325,7 @@ class _UserProfileState extends State<UserProfile> {
                                 const Color(0xFFDBE6F2).withOpacity(0.2),
                                 const Color(0xFF8F9FAE).withOpacity(0.2),
                               ],
-                              stops: [
+                              stops: const [
                                 0.0,
                                 0.5,
                                 1.0

@@ -6,6 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../onboarding/constants.dart';
+import 'create_store.dart';
+import 'edit_profile.dart';
 
 class Account extends StatelessWidget {
   const Account({Key? key}) : super(key: key);
@@ -14,7 +16,6 @@ class Account extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
-
       appBar: AppBar(
           title: SizedBox(
             height: 46.h,
@@ -76,7 +77,7 @@ class Account extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 InkWell(
-                  onTap:()=>Get.back(),
+                  onTap: () => Get.back(),
                   child: const Icon(
                     Icons.arrow_back_ios,
                     color: white,
@@ -102,9 +103,17 @@ class Account extends StatelessWidget {
             children: [
               const Text('Account Settings'),
               smallSpace(),
-              accountContainer('Your Account Information'),
+              accountContainer('Your Account Information', onTap: () {
+                Get.to(() => EditProfile());
+              }),
               tinySpace(),
-              accountContainer('Your Selling List'),
+              accountContainer('Your Store Information', onTap: () {
+                Get.to(() => CreateStore());
+              }),
+              tinySpace(),
+              accountContainer(
+                'Your Selling List',
+              ),
               tinySpace(),
               accountContainer('Login & Security'),
               tinySpace(),
@@ -117,8 +126,6 @@ class Account extends StatelessWidget {
               accountContainer('Your Gift Card'),
               tinySpace(),
               accountContainer('Fenix Card'),
-
-
             ],
           ))
         ],
@@ -126,31 +133,25 @@ class Account extends StatelessWidget {
     );
   }
 
-  Container accountContainer(title) {
-    return Container(
-      decoration: depressNeumorph().copyWith(borderRadius: BorderRadius.circular(15)),
-
-      //     .copyWith(
-      //   color: white,
-      //   boxShadow: [
-      //     const BoxShadow(
-      //       color: Colors.white,
-      //     ),
-      //     BoxShadow(
-      //       color: Colors.grey.withOpacity(0.9),
-      //       spreadRadius: -3,
-      //       blurRadius: 3,
-      //       offset: const Offset(3, 5), // changes position of shadow
-      //     ),
-      //   ], // changes position of shadow
-      // ),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(15, 12, 15, 12),
-        child: Row(
-          children: [
-            Expanded(child: Text(title,style: const TextStyle(fontSize: 17,fontWeight: FontWeight.w400),)),
-            const Icon(Icons.arrow_forward,size: 25),
-          ],
+  InkWell accountContainer(title, {onTap}) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        decoration:
+            depressNeumorph().copyWith(borderRadius: BorderRadius.circular(15)),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(15, 12, 15, 12),
+          child: Row(
+            children: [
+              Expanded(
+                  child: Text(
+                title,
+                style:
+                    const TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
+              )),
+              const Icon(Icons.arrow_forward, size: 25),
+            ],
+          ),
         ),
       ),
     );

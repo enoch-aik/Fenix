@@ -1,3 +1,4 @@
+import 'package:fenix/controller/store_controller.dart';
 import 'package:fenix/helpers/widgets.dart';
 import 'package:fenix/screens/onboarding/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         theme: theme,
         onInit: () {
           Get.put(AccountController());
+          Get.put(StoreController());
         },
         transitionDuration: const Duration(milliseconds: 550),
         defaultTransition: Transition.native,

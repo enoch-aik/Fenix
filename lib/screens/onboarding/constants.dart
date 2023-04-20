@@ -8,7 +8,7 @@ import 'package:flutter_screenutil/src/size_extension.dart';
 Widget kSpacing = SizedBox(height: 16.w,);
 Widget kLargeSpacing = SizedBox(height: 52.w,);
 
-Color kTextBlackColor = Color(0xFF334669);
+Color kTextBlackColor = const Color(0xFF334669);
 
 
 const Color scaffoldBg1 = Color(0xff424750);
@@ -61,7 +61,7 @@ LinearGradient gradient3(a,b) {
 }
 
 
-LinearGradient invertedGradient = LinearGradient(
+LinearGradient invertedGradient = const LinearGradient(
     colors: [
       Color(0xFF54FADC),
       Color(0xFF1A9AFF),

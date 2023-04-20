@@ -32,7 +32,7 @@ const String emptyPasswordField = 'Password field cannot be empty';
 const String invalidEmailField =
     "Email provided isn\'t valid.Try another email address";
 const String passwordLengthError = 'Password length must be greater than 6';
-const String emptyUsernameField = 'Username  cannot be empty';
+const String emptyUsernameField = 'Name  cannot be empty';
 const String usernameLengthError = 'Username length must be greater than 5';
 const String emailRegex = '[a-zA-Z0-9\+\.\_\%\-\+]{1,256}' +
     '\\@' +
