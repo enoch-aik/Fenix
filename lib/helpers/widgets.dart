@@ -1,6 +1,7 @@
 import 'package:fenix/screens/onboarding/auth_board.dart';
 import 'package:fenix/screens/onboarding/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:get/get.dart';
 
@@ -63,12 +64,6 @@ class ButtonWidget extends StatelessWidget {
             width: 185.w,
             alignment: Alignment.center,
             padding: const EdgeInsets.all(8),
-            child: Text(
-              title,
-              style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                  color: const Color(0xFF31456A).withOpacity(0.8),
-                  fontSize: 15.w),
-            ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(17.w),
               color: color,
@@ -87,6 +82,12 @@ class ButtonWidget extends StatelessWidget {
                 ),
               ],
             ),
+            child: Text(
+              title,
+              style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  color: const Color(0xFF31456A).withOpacity(0.8),
+                  fontSize: 15.w),
+            ),
           ),
           Positioned(
             right: 8,
@@ -94,9 +95,6 @@ class ButtonWidget extends StatelessWidget {
             child: Container(
               height: 25,
               width: 25,
-              child: Center(
-                  child: Icon(Icons.arrow_forward_ios,
-                      size: 12.w, color: Colors.red)),
               decoration: BoxDecoration(
                 color: const Color(0xFFE3EDF7),
                 shape: BoxShape.circle,
@@ -115,6 +113,9 @@ class ButtonWidget extends StatelessWidget {
                   ),
                 ],
               ),
+              child: Center(
+                  child: Icon(Icons.arrow_forward_ios,
+                      size: 12.w, color: Colors.red)),
             ),
           )
         ],
@@ -172,6 +173,7 @@ class WelcomeCards extends StatelessWidget {
           Column(
             children: [
               Stack(
+                alignment: Alignment.bottomCenter,
                 children: [
                   Container(
                     height: MediaQuery.of(context).size.height * 0.68,
@@ -252,7 +254,6 @@ class WelcomeCards extends StatelessWidget {
                     ),
                   ),
                 ],
-                alignment: Alignment.bottomCenter,
               ),
             ],
           ),
@@ -295,7 +296,6 @@ class WidgetsPad extends StatelessWidget {
             ],
           ),
           child: Container(
-            child: child,
             padding: EdgeInsets.all(13.w),
             decoration: BoxDecoration(
               color: const Color(0xFFE3EDF7),
@@ -315,6 +315,7 @@ class WidgetsPad extends StatelessWidget {
                 ),
               ],
             ),
+            child: child,
           ),
         ),
       ),
@@ -354,7 +355,6 @@ class CustomWidgetsPad extends StatelessWidget {
             ],
           ),
           child: Container(
-            child: child,
             padding: EdgeInsets.all(13.w),
             decoration: BoxDecoration(
               color: const Color(0xFFE3EDF7),
@@ -374,6 +374,7 @@ class CustomWidgetsPad extends StatelessWidget {
                 ),
               ],
             ),
+            child: child,
           ),
         ),
       ),
@@ -387,22 +388,28 @@ class TextFieldWidget extends StatelessWidget {
   TextEditingController? textController;
   String? Function(String?)? validator;
   bool? enabled;
+  int? maxLine;
+  TextInputType? keyboardType;
+  List<TextInputFormatter>? inputFormatters;
 
   TextFieldWidget(
       {Key? key,
       required this.hint,
       this.prefixIcon,
       this.enabled,
+      this.maxLine,
       this.textController,
+      this.keyboardType,
+      this.inputFormatters,
       this.validator})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 45,
+      // height: 45,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(17.w),
+        borderRadius: BorderRadius.circular(6),
         color: const Color(0xFFE4F0FA).withOpacity(0.9),
         boxShadow: [
           const BoxShadow(
@@ -417,10 +424,14 @@ class TextFieldWidget extends StatelessWidget {
         ],
       ),
       child: TextFormField(
-        style: TextStyle(
-          fontSize: 16.w,
+        style: const TextStyle(
+          fontSize: 14,
         ),
+
+        maxLines: maxLine,
         enabled: enabled,
+        keyboardType: keyboardType,
+        inputFormatters:inputFormatters,
         validator: validator,
         controller: textController,
         decoration: InputDecoration(
@@ -430,9 +441,14 @@ class TextFieldWidget extends StatelessWidget {
           errorBorder: InputBorder.none,
           focusedErrorBorder: InputBorder.none,
           contentPadding:
-              const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+              const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
           hintText: hint,
+          labelText: hint,
           hintStyle: Theme.of(context)
+              .textTheme
+              .bodyText1!
+              .copyWith(fontSize: 15.w, color: Colors.grey.shade400),
+          labelStyle: Theme.of(context)
               .textTheme
               .bodyText1!
               .copyWith(fontSize: 15.w, color: Colors.grey.shade400),

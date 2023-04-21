@@ -34,8 +34,6 @@ class _CreateProductState extends State<CreateProduct> {
 
   final priceController = TextEditingController();
 
-  final countryController = TextEditingController();
-
   final nameController = TextEditingController();
 
   final sizeController = TextEditingController();
@@ -49,14 +47,21 @@ class _CreateProductState extends State<CreateProduct> {
   final categoryController = TextEditingController();
 
   final colorController = TextEditingController();
+  final capacityController = TextEditingController();
 
   final brandController = TextEditingController();
 
   final featuresController = TextEditingController();
+  final deliveryLocationController = TextEditingController();
 
   final featureController = TextEditingController();
+  final deliveryPriceController = TextEditingController();
+  final discountController = TextEditingController();
+  final planController = TextEditingController();
+  final deliveryController = TextEditingController();
 
   String deliveryValue = '';
+  bool selectDollar = false;
 
   @override
   Widget build(BuildContext context) {
@@ -168,14 +173,8 @@ class _CreateProductState extends State<CreateProduct> {
                   title('Item Specifics'),
                   kSpacing,
                   TextFieldWidget(
-                    hint: "Location",
-                    textController: countryController,
-                    validator: (value) => FieldValidator.validate(value!),
-                  ),
-                  kSpacing,
-                  TextFieldWidget(
-                    hint: "Feature",
-                    textController: featuresController,
+                    hint: "Condition",
+                    textController: conditionController,
                   ),
                   kSpacing,
                   TextFieldWidget(
@@ -184,19 +183,32 @@ class _CreateProductState extends State<CreateProduct> {
                   ),
                   kSpacing,
                   TextFieldWidget(
-                    hint: "Size",
-                    textController: sizeController,
-                  ),
-                  kSpacing,
-                  TextFieldWidget(
-                    hint: "Condition",
-                    textController: conditionController,
-                  ),
-                  kSpacing,
-                  TextFieldWidget(
                     hint: "Material",
                     textController: materialController,
                   ),
+                  kSpacing,
+                  TextFieldWidget(
+                    hint: "Brand",
+                    textController: brandController,
+                    validator: (value) => FieldValidator.validate(value!),
+                  ),
+                  kSpacing,
+                  TextFieldWidget(
+                    hint: "Size",
+                    textController: sizeController,
+                  ),
+
+                  kSpacing,
+                  TextFieldWidget(
+                    hint: "Feature",
+                    textController: featuresController,
+                  ),
+                  // kSpacing,
+                  // TextFieldWidget(
+                  //   hint: "Location",
+                  //   textController: countryController,
+                  //   validator: (value) => FieldValidator.validate(value!),
+                  // ),
                   kSpacing,
                   TextFieldWidget(
                     hint: "Color",
@@ -204,29 +216,64 @@ class _CreateProductState extends State<CreateProduct> {
                   ),
                   kSpacing,
                   TextFieldWidget(
-                    hint: "Storage Category",
-                    textController: colorController,
+                    hint: "Storage Capacity",
+                    textController: capacityController,
                   ),
                   kSpacing,
-                  title('Category'),
-                  kSpacing,
+                  // title('Category'),
+                  // kSpacing,
                   TextFieldWidget(
                     hint: "Category",
                     textController: categoryController,
                   ),
-                  kSpacing,
-                  title('Price'),
-                  kSpacing,
-                  TextFieldWidget(
-                    hint: "Price",
-                    textController: priceController,
-                  ),
+
                   kSpacing,
                   title('Description'),
                   kSpacing,
                   TextFieldWidget(
                     hint: "Description",
+                    maxLine: 4,
                     textController: descriptionController,
+                  ),
+                  kSpacing,
+                  title('Price'),
+                  kSpacing,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFieldWidget(
+                            keyboardType: const TextInputType.numberWithOptions(
+                                decimal: true),
+                            hint: "Price",
+                            textController: priceController),
+                      ),
+                      smallHSpace(),
+                      const Text(
+                        'Dollar \$',
+                        style: TextStyle(fontSize: 13),
+                      ),
+                      tinyH5Space(),
+                      checkBox(),
+                    ],
+                  ),
+                  kSpacing,
+                  title('Discount Option'),
+                  kSpacing,
+
+                  Row(
+                    children: [
+                      discount(),
+                      tinyH5Space(),
+                      discount(),
+                      tinyH5Space(),
+                      discount(),
+                      smallHSpace(),
+                      Expanded(
+                        child: TextFieldWidget(
+                            hint: "Discount",
+                            textController: discountController),
+                      ),
+                    ],
                   ),
                   kSpacing,
                   title('Shipping'),
@@ -234,44 +281,143 @@ class _CreateProductState extends State<CreateProduct> {
                   check('Yes, I can Deliver the item', 'Yes'),
                   tinySpace(),
                   check('No, I can\'t Deliver the item', 'No'),
+                  kSpacing,
+
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFieldWidget(
+                            hint: "Delivery Price",
+                            textController: deliveryPriceController),
+                      ),
+                      smallHSpace(),
+                      const Text(
+                        'Dollar \$',
+                        style: TextStyle(fontSize: 13),
+                      ),
+                      tinyH5Space(),
+                      checkBox(),
+                    ],
+                  ),
+                  kSpacing,
+
+                  TextFieldWidget(
+                      hint: "Delivery Details",
+                      textController: deliveryController),
+                  kSpacing,
+
+                  TextFieldWidget(
+                      hint: "Delivery Location",
+                      textController: deliveryLocationController),
+
                   verticalSpace(0.02),
-                  InkWell(
-                      onTap: () {
-                        if (_formKey.currentState!.validate()) {
-                          _storeController.createNewProduct(
-                            _userController.getToken(),
-                            storeId: widget.storeId,
-                            title: nameController.text,
-                            discount: '',
-                            plan: '',
-                            deliveryAddress: '',
-                            deliveryCity: '',
-                            shippingCost: '',
-                            capacity: '',
-                            quantity: quantityController.text,
-                            price: priceController.text,
-                            size: sizeController.text,
-                            material: materialController.text,
-                            category: categoryController.text,
-                            condition: conditionController.text,
-                            brand: brandController.text,
-                            coordinate: "12.345678, -98.765432",
-                            features: featuresController.text,
-                            color: colorController.text,
-                            description: descriptionController.text,
-                          );
-                        } else {
-                          CustomSnackBar.failedSnackBar('Error',
-                              'Ensure that all required fields are filled');
-                        }
-                      },
-                      child: ButtonWidget(title: "Next")),
+                  Center(
+                    child: InkWell(
+                        onTap: () {
+                          if (_formKey.currentState!.validate()) {
+                            _storeController.createNewProduct(
+                              _userController.getToken(),
+                              storeId: widget.storeId,
+                              title: nameController.text,
+                              discount: discountController.text,
+                              plan: 'Basic',
+                              // plan: planController.text,
+                              deliveryAddress: deliveryController.text,
+                              deliveryCity: deliveryLocationController.text,
+                              shippingCost: deliveryPriceController.text,
+                              capacity: capacityController.text,
+                              quantity: quantityController.text,
+                              price: priceController.text,
+                              size: sizeController.text,
+                              material: materialController.text,
+                              category: categoryController.text,
+                              condition: conditionController.text,
+                              brand: brandController.text,
+                              coordinate: "12.345678, -98.765432",
+                              features: featuresController.text,
+                              color: colorController.text,
+                              description: descriptionController.text,
+                            );
+                          } else {
+                            CustomSnackBar.failedSnackBar('Error',
+                                'Ensure that all required fields are filled');
+                          }
+                        },
+                        child: ButtonWidget(title: "Next")),
+                  ),
                   verticalSpace(0.04),
                 ],
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Container checkBox() {
+    return Container(
+        decoration: depressNeumorph(),
+        child: SizedBox(
+          height: 23,
+          width: 23,
+          child: Theme(
+            data: ThemeData(
+              unselectedWidgetColor: Colors.transparent, // Your color
+            ),
+            child: Checkbox(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5)),
+              value: selectDollar,
+              onChanged: (v) {
+                setState(() {
+                  selectDollar = v!;
+                });
+              },
+            ),
+          ),
+        ));
+  }
+
+  Container discount() {
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xFFE4EFF9),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: const Color(0xFf334669), width: 0.1),
+        gradient: LinearGradient(
+            colors: [
+              Colors.white,
+              const Color(0xFFDBE6F2).withOpacity(0.2),
+              const Color(0xFF8F9FAE).withOpacity(0.2),
+            ],
+            stops: const [
+              0.0,
+              0.5,
+              1.0
+            ],
+            begin: FractionalOffset.topLeft,
+            end: FractionalOffset.bottomRight,
+            tileMode: TileMode.repeated),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 0,
+            blurRadius: 5,
+            offset: const Offset(1, 0), // changes position of shadow
+          ),
+          BoxShadow(
+            color: Colors.white.withOpacity(0.4),
+            spreadRadius: 1,
+            blurRadius: 3,
+            offset: const Offset(1, 1), // changes position of shadow
+          ),
+        ],
+      ),
+      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+      child: const Text(
+        '10%',
+        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
       ),
     );
   }
@@ -300,6 +446,8 @@ class _CreateProductState extends State<CreateProduct> {
                   unselectedWidgetColor: Colors.transparent, // Your color
                 ),
                 child: Checkbox(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)),
                   value: deliveryValue == subText,
                   onChanged: (v) {
                     setState(() {
