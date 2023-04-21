@@ -65,6 +65,8 @@ class _CreateProductState extends State<CreateProduct> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.storeId);
+
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(
@@ -249,7 +251,7 @@ class _CreateProductState extends State<CreateProduct> {
                       ),
                       smallHSpace(),
                       const Text(
-                        'Dollar \$',
+                        'so\'m',
                         style: TextStyle(fontSize: 13),
                       ),
                       tinyH5Space(),
@@ -292,7 +294,8 @@ class _CreateProductState extends State<CreateProduct> {
                       ),
                       smallHSpace(),
                       const Text(
-                        'Dollar \$',
+                        'so\'m',
+
                         style: TextStyle(fontSize: 13),
                       ),
                       tinyH5Space(),
@@ -321,7 +324,6 @@ class _CreateProductState extends State<CreateProduct> {
                               title: nameController.text,
                               discount: discountController.text,
                               plan: 'Basic',
-                              // plan: planController.text,
                               deliveryAddress: deliveryController.text,
                               deliveryCity: deliveryLocationController.text,
                               shippingCost: deliveryPriceController.text,

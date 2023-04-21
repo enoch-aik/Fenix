@@ -14,14 +14,6 @@ class StoreList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // accountContainer('Your Product Information', onTap: () {
-    //   Get.to(() => CreateProduct(
-    //     storeId: 'clgoud7j70002vm0uhqm5oce4',
-    //   ));
-    //   clgouf3zx0004vm0u1aboektj
-    // }),
-    // tinySpace(),
-
     final StoreController _storeController = Get.find();
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),

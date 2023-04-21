@@ -10,14 +10,14 @@ import '../onboarding/constants.dart';
 import 'create_product.dart';
 
 class ProductList extends StatelessWidget {
-   ProductList({Key? key, required this.storeId}) : super(key: key);
+  ProductList({Key? key, required this.storeId}) : super(key: key);
   final String storeId;
- final UserController _userController = Get.find();
+  final UserController _userController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     final StoreController _storeController = Get.find();
-    _storeController.getProducts(_userController.getToken(), storeId);
+    // _storeController.getProducts(_userController.getToken(), storeId);
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       floatingActionButton: FloatingActionButton.extended(
@@ -30,7 +30,8 @@ class ProductList extends StatelessWidget {
                 ));
             //   clgouf3zx0004vm0u1aboektj
           },
-          label: const Text('Add Product', style: TextStyle(color: background))),
+          label:
+              const Text('Add Product', style: TextStyle(color: background))),
       appBar: AppBar(
           title: SizedBox(
             height: 46.h,
@@ -174,22 +175,37 @@ class ProductList extends StatelessWidget {
                                   ),
                                 ],
                               ),
+
+                              // {id: clgqpdgnf0006v50ujfgdr8bi, title: Tap, storeId: clgqd4gq50006tl0u2kjmchrq, plan: Basic, category: Fresh, description: This is amazing, price: {amount: 1200000, discount: 20}, shipping: {price: 1500, details: Class on, Adriana , location: New York, shipping: true}, specifics: {size: 12, brand: Teas, color: Grey, category: Fresh, features: Very good, material: Mac, quantity: 5, condition: New, storageCapacity: 123}, date_created: 2023-04-21T15:25:02.476Z}]}
+                              // flutter: [{id: clgqpdgnf0006v50ujfgdr8bi, title: Tap, storeId: clgqd4gq50006tl0u2kjmchrq, plan: Basic, category: Fresh, description: This is amazing, price: {amount: 1200000, discount: 20}, shipping: {price: 1500, details: Class on, Adriana , location: New York, shipping: true}, specifics: {size: 12, brand: Teas, color: Grey, category: Fresh, features: Very good, material: Mac, quantity: 5, condition: New, storageCapacity: 123}, date_created: 2023-04-21T15:25:02.476Z}
+
                               child: Row(
                                 children: [
-                                  const Icon(
-                                    Icons.storefront,
-                                    size: 45,
-                                  ),
+                                  Image.asset('assets/images/headset.png'),
                                   smallHSpace(),
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(item['name']),
+                                        Text(item['title']),
+                                        Row(
+                                          children: const [
+                                            Icon(Icons.star,
+                                                color: Colors.orange, size: 15),
+                                            Icon(Icons.star,
+                                                color: Colors.orange, size: 15),
+                                            Icon(Icons.star_border,
+                                                color: Colors.orange, size: 15),
+                                            Icon(Icons.star_border,
+                                                color: Colors.orange, size: 15),
+                                            Icon(Icons.star_border,
+                                                color: Colors.orange, size: 15),
+                                          ],
+                                        ),
                                         Text(
-                                          item['location'],
-                                          style: const TextStyle(fontSize: 14),
+                                          '${item['price']['amount']} so\'m',
+                                          style: const TextStyle(fontSize: 16,fontWeight:FontWeight.bold,color: blue),
                                         ),
                                       ],
                                     ),
