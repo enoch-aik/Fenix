@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../helpers/widgets/snackBar.dart';
+import '../helpers/widgets/snack_bar.dart';
 import '../models/services/user_services.dart';
 import '../models/user_model.dart';
 import '../screens/auth_screens/create_profile.dart';

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../helpers/widgets/snackBar.dart';
+import '../helpers/widgets/snack_bar.dart';
 import '../models/services/store_services.dart';
 import '../screens/onboarding/loading.dart';
 
@@ -105,5 +105,66 @@ class StoreController extends GetxController {
       "description":features
 
     });
+  }
+
+  createNewApartment(token,
+      {storeId,
+      color,
+      price,
+      title,
+      category,
+      condition,
+      brand,
+      size,
+      material,
+      coordinate,
+      features,
+      description,
+      quantity,
+        address}) async {
+    Get.to(() => const Loading());
+
+    StoreServices.createApartment((status, response) {
+      print('==> $response');
+      if (status) {
+        Get.back();
+        Get.back();
+        getProducts(token,storeId);
+        CustomSnackBar.successSnackBar('Great!', 'Store created successfully');
+      } else {
+        Get.back();
+        CustomSnackBar.failedSnackBar('Failed', '$response');
+      }
+    }, token, storeId, {
+      "title": "Cozy Apartment",
+      "description": "A cozy and comfortable apartment in the city center.",
+      "location": "123 Main St, City Center, Example City",
+      "propertyType": "apartment",
+      "rentPrice": {
+        "night": 120,
+        "week": 800,
+        "month": 3000
+      },
+      "rentAvailability": {
+        "startDate": "2023-05-01T00:00:00.000Z",
+        "endDate": "2023-08-31T00:00:00.000Z"
+      },
+      "specifics": {
+        "bedroom": 2,
+        "bathroom": 1,
+        "shower": 1,
+        "toilet": 1,
+        "floor": 3,
+        "squareMetre": 80,
+        "amenities": ["wifi", "tv", "air_conditioning", "kitchen"]
+      },
+      "rules": {
+        "occupant": 4,
+        "pet": false,
+        "smoke": false
+      }
+    }
+
+    );
   }
 }

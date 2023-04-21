@@ -1,5 +1,5 @@
 import 'package:fenix/controller/user_controller.dart';
-import 'package:fenix/helpers/widgets/snackBar.dart';
+import 'package:fenix/helpers/widgets/snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -2,7 +2,7 @@ import 'package:fenix/const.dart';
 import 'package:fenix/controller/account_controller.dart';
 import 'package:fenix/helpers/validator.dart';
 import 'package:fenix/helpers/widgets.dart';
-import 'package:fenix/helpers/widgets/snackBar.dart';
+import 'package:fenix/helpers/widgets/snack_bar.dart';
 import 'package:fenix/screens/onboarding/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
