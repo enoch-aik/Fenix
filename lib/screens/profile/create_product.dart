@@ -9,198 +9,332 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../controller/store_controller.dart';
+import '../../neumorph.dart';
 import '../../theme.dart';
 
-class CreateProduct extends StatelessWidget {
+class CreateProduct extends StatefulWidget {
   final String storeId;
 
   CreateProduct({Key? key, required this.storeId}) : super(key: key);
 
+  @override
+  State<CreateProduct> createState() => _CreateProductState();
+}
+
+class _CreateProductState extends State<CreateProduct> {
   PageController pageController = PageController();
+
   final UserController _userController = Get.find();
+
   final StoreController _storeController = Get.find();
+
   final _formKey = GlobalKey<FormState>();
+
   final quantityController = TextEditingController();
+
   final priceController = TextEditingController();
+
   final countryController = TextEditingController();
+
   final nameController = TextEditingController();
+
   final sizeController = TextEditingController();
+
   final materialController = TextEditingController();
+
   final descriptionController = TextEditingController();
+
   final conditionController = TextEditingController();
+
   final categoryController = TextEditingController();
+
   final colorController = TextEditingController();
+
   final brandController = TextEditingController();
+
   final featuresController = TextEditingController();
+
   final featureController = TextEditingController();
+
+  String deliveryValue = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
-      appBar: AppBar(
-          title: SizedBox(
-            height: 46.h,
-            child: Image.asset(
-              "assets/images/fenixWhite2.png",
-              fit: BoxFit.fill,
+      appBar: PreferredSize(
+        preferredSize: Size(MediaQuery.of(context).size.width,
+            MediaQuery.of(context).size.height * 0.08),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: gradient(
+              const Color(0xFF1A9AFF),
+              const Color(0xFF54FADC),
             ),
           ),
-          automaticallyImplyLeading: false,
-          elevation: 0,
-          centerTitle: false,
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-              gradient: gradient2(
-                const Color(0xFF46E0C4),
-                const Color(0xFF59B5C0),
-              ),
-            ),
-          )),
-      body: Column(
-        children: [
-          Container(
-            height: 50.w,
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
-            margin: EdgeInsets.only(bottom: 20.w),
-            decoration: BoxDecoration(
-              gradient: gradient2(
-                const Color(0xFF41F0D1),
-                const Color(0xFF4A9A9E),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                InkWell(
-                  onTap: () => Get.back(),
-                  child: const Icon(
-                    Icons.arrow_back_ios,
-                    color: white,
-                  ),
-                ),
-                Text(
-                  "Create Product",
-                  style: TextStyle(
+          padding: EdgeInsets.only(top: 55.h, left: 12.w, right: 12.w),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  InkWell(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                      )),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.050,
+                    width: MediaQuery.of(context).size.width * 0.85,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(13.w),
                       color: Colors.white,
-                      fontSize: 24.w,
-                      shadows: [
-                        Shadow(
-                            color: Colors.black.withOpacity(0.2),
-                            offset: const Offset(2, 2))
-                      ]),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: ListView(
-              padding: EdgeInsets.symmetric(horizontal: 17.w),
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          kSpacing,
-                          TextFieldWidget(
-                            hint: "Name",
-                            textController: nameController,
-                            validator: (value) =>
-                                FieldValidator.validate(value!),
-                          ),
-                          kSpacing,
-                          TextFieldWidget(
-                            hint: "Location",
-                            textController: countryController,
-                            validator: (value) =>
-                                FieldValidator.validate(value!),
-                          ),
-                          kSpacing,
-                          TextFieldWidget(
-                            hint: "Category",
-                            textController: categoryController,
-                          ),  kSpacing,
-                          TextFieldWidget(
-                            hint: "Feature",
-                            textController: featuresController,
-                          ),
-                          kSpacing,
-                          TextFieldWidget(
-                            hint: "Quantity",
-                            textController: quantityController,
-                          ),
-                          kSpacing,
-                          TextFieldWidget(
-                            hint: "Price",
-                            textController: priceController,
-                          ),
-                          kSpacing,
-                          TextFieldWidget(
-                            hint: "Size",
-                            textController: sizeController,
-                          ),
-                          kSpacing,
-                          TextFieldWidget(
-                            hint: "Condition",
-                            textController: conditionController,
-                          ),
-                          kSpacing,
-                          TextFieldWidget(
-                            hint: "Material",
-                            textController: materialController,
-                          ),
-                          kSpacing,
-                          TextFieldWidget(
-                            hint: "Color",
-                            textController: colorController,
-                          ),
-                          kSpacing,
-                          TextFieldWidget(
-                            hint: "Description",
-                            textController: descriptionController,
-                          ),
-                          verticalSpace(0.02),
-                          InkWell(
-                              onTap: () {
-                                if (_formKey.currentState!.validate()) {
-                                  _storeController.createNewProduct(
-                                    _userController.getToken(),
-                                    storeId: storeId,
-                                    title: nameController.text,
-                                    address: countryController.text,
-                                    quantity: quantityController.text,
-                                    price: priceController.text,
-                                    size: sizeController.text,
-                                    material: materialController.text,
-                                    category: categoryController.text,
-                                    condition: conditionController.text,
-                                    brand: brandController.text,
-                                    coordinate: "12.345678, -98.765432",
-                                    features: featuresController.text,
-                                    color: colorController.text,
-                                    description: descriptionController.text,
-                                  );
-                                } else {
-                                  CustomSnackBar.failedSnackBar('Error',
-                                      'Ensure that all required fields are filled');
-                                }
-                              },
-                              child: ButtonWidget(title: "Next")),
-                          verticalSpace(0.04),
-                        ],
+                    ),
+                    child: TextField(
+                      style: TextStyle(
+                        fontSize: 16.w,
+                      ),
+                      decoration: InputDecoration(
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 15,
+                            vertical:
+                                MediaQuery.of(context).size.height * 0.015),
+                        hintText: "Search Fenix",
+                        hintStyle: Theme.of(context)
+                            .textTheme
+                            .bodyText1!
+                            .copyWith(
+                                fontSize: 15.w, color: Colors.grey.shade500),
+                        prefixIcon: const Icon(Icons.search),
+                        suffixIcon: const Icon(
+                          Icons.qr_code_scanner,
+                          color: primary,
+                        ),
                       ),
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.010,
+              )
+            ],
+          ),
+        ),
+      ),
+      body: Column(
+        children: [
+          const Center(
+              child: Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text('Create Selling Post'),
+          )),
+          const Divider(thickness: 4, color: textColor),
+          Expanded(
+            child: Form(
+              key: _formKey,
+              child: ListView(
+                padding: EdgeInsets.symmetric(horizontal: 17.w),
+                children: [
+                  kSpacing,
+                  title('Photos'),
+                  kSpacing,
+                  Row(
+                    children: [
+                      imageSelect(),
+                      tinyHSpace(),
+                      imageSelect(),
+                      tinyHSpace(),
+                      imageSelect(),
+                      tinyHSpace(),
+                      imageSelect(),
+                    ],
+                  ),
+                  kSpacing,
+                  title('Title of Product'),
+                  kSpacing,
+                  TextFieldWidget(
+                    hint: "Name",
+                    textController: nameController,
+                    validator: (value) => FieldValidator.validate(value!),
+                  ),
+                  kSpacing,
+                  title('Item Specifics'),
+                  kSpacing,
+                  TextFieldWidget(
+                    hint: "Location",
+                    textController: countryController,
+                    validator: (value) => FieldValidator.validate(value!),
+                  ),
+                  kSpacing,
+                  TextFieldWidget(
+                    hint: "Feature",
+                    textController: featuresController,
+                  ),
+                  kSpacing,
+                  TextFieldWidget(
+                    hint: "Quantity",
+                    textController: quantityController,
+                  ),
+                  kSpacing,
+                  TextFieldWidget(
+                    hint: "Size",
+                    textController: sizeController,
+                  ),
+                  kSpacing,
+                  TextFieldWidget(
+                    hint: "Condition",
+                    textController: conditionController,
+                  ),
+                  kSpacing,
+                  TextFieldWidget(
+                    hint: "Material",
+                    textController: materialController,
+                  ),
+                  kSpacing,
+                  TextFieldWidget(
+                    hint: "Color",
+                    textController: colorController,
+                  ),
+                  kSpacing,
+                  TextFieldWidget(
+                    hint: "Storage Category",
+                    textController: colorController,
+                  ),
+                  kSpacing,
+                  title('Category'),
+                  kSpacing,
+                  TextFieldWidget(
+                    hint: "Category",
+                    textController: categoryController,
+                  ),
+                  kSpacing,
+                  title('Price'),
+                  kSpacing,
+                  TextFieldWidget(
+                    hint: "Price",
+                    textController: priceController,
+                  ),
+                  kSpacing,
+                  title('Description'),
+                  kSpacing,
+                  TextFieldWidget(
+                    hint: "Description",
+                    textController: descriptionController,
+                  ),
+                  kSpacing,
+                  title('Shipping'),
+                  kSpacing,
+                  check('Yes, I can Deliver the item', 'Yes'),
+                  tinySpace(),
+                  check('No, I can\'t Deliver the item', 'No'),
+                  verticalSpace(0.02),
+                  InkWell(
+                      onTap: () {
+                        if (_formKey.currentState!.validate()) {
+                          _storeController.createNewProduct(
+                            _userController.getToken(),
+                            storeId: widget.storeId,
+                            title: nameController.text,
+                            discount: '',
+                            plan: '',
+                            deliveryAddress: '',
+                            deliveryCity: '',
+                            shippingCost: '',
+                            capacity: '',
+                            quantity: quantityController.text,
+                            price: priceController.text,
+                            size: sizeController.text,
+                            material: materialController.text,
+                            category: categoryController.text,
+                            condition: conditionController.text,
+                            brand: brandController.text,
+                            coordinate: "12.345678, -98.765432",
+                            features: featuresController.text,
+                            color: colorController.text,
+                            description: descriptionController.text,
+                          );
+                        } else {
+                          CustomSnackBar.failedSnackBar('Error',
+                              'Ensure that all required fields are filled');
+                        }
+                      },
+                      child: ButtonWidget(title: "Next")),
+                  verticalSpace(0.04),
+                ],
+              ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Row check(title, subText) {
+    return Row(
+      children: [
+        Expanded(
+            flex: 3,
+            child: Text(
+              title,
+              style: const TextStyle(fontSize: 12),
+            )),
+        Expanded(
+            child: Text(
+          subText,
+          style: const TextStyle(fontSize: 13),
+        )),
+        Container(
+            decoration: depressNeumorph(),
+            child: SizedBox(
+              height: 23,
+              width: 23,
+              child: Theme(
+                data: ThemeData(
+                  unselectedWidgetColor: Colors.transparent, // Your color
+                ),
+                child: Checkbox(
+                  value: deliveryValue == subText,
+                  onChanged: (v) {
+                    setState(() {
+                      deliveryValue = subText;
+                    });
+                  },
+                ),
+              ),
+            )),
+      ],
+    );
+  }
+
+  Container imageSelect() {
+    return Container(
+      decoration: BoxDecoration(
+          border: Border.all(color: lightGrey),
+          borderRadius: BorderRadius.circular(5)),
+      child: const Padding(
+        padding: EdgeInsets.all(25.0),
+        child: Icon(Icons.photo_camera, color: lightGrey),
+      ),
+    );
+  }
+
+  Row title(String title) {
+    return Row(
+      children: [
+        Image.asset(
+          'assets/images/icons/check.png',
+          height: 20,
+        ),
+        tinyH5Space(),
+        Text(title),
+      ],
     );
   }
 

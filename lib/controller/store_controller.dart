@@ -30,7 +30,7 @@ class StoreController extends GetxController {
     }, token);
   }
 
-  getProducts(token,storeId) {
+  getProducts(token, storeId) {
     isFetchingProducts(true);
     StoreServices.getProducts((status, response) {
       isFetchingProducts(false);
@@ -41,7 +41,7 @@ class StoreController extends GetxController {
         productList.value = [];
         print('Error - $response');
       }
-    }, token,storeId);
+    }, token, storeId);
   }
 
   createNewStore(token, {name, description, location}) async {
@@ -61,21 +61,28 @@ class StoreController extends GetxController {
     }, token, {"name": name, "description": description, "location": location});
   }
 
-  createNewProduct(token,
-      {storeId,
-      color,
-      price,
-      title,
-      category,
-      condition,
-      brand,
-      size,
-      material,
-      coordinate,
-      features,
-      description,
-      quantity,
-        address}) async {
+  createNewProduct(
+    token, {
+    storeId,
+    color,
+    price,
+    title,
+    category,
+    plan,
+    condition,
+    capacity,
+    brand,
+    discount,
+    size,
+    material,
+    coordinate,
+    features,
+    shippingCost,
+    description,
+    deliveryAddress,
+    deliveryCity,
+    quantity,
+  }) async {
     Get.to(() => const Loading());
 
     StoreServices.createProduct((status, response) {
@@ -83,7 +90,7 @@ class StoreController extends GetxController {
       if (status) {
         Get.back();
         Get.back();
-        getProducts(token,storeId);
+        getProducts(token, storeId);
         CustomSnackBar.successSnackBar('Great!', 'Store created successfully');
       } else {
         Get.back();
@@ -91,19 +98,30 @@ class StoreController extends GetxController {
       }
     }, token, storeId, {
       "title": title,
+      "description": description,
       "category": category,
-      "condition": condition,
-      "material": material,
-      "brand": brand,
-      "color": color,
-      "size": 42,
-      "price": 150,
-      "quantity": 10,
-      "location": address,
-      "coordinate": coordinate,
-      "features":features,
-      "description":features
-
+      "plan": plan,
+      "specifics": {
+        "condition": condition,
+        "quantity": quantity,
+        "material": material,
+        "brand": brand,
+        "size": size,
+        "features": features,
+        "category": category,
+        "color": color,
+        "storageCapacity": capacity,
+      },
+      "price": {
+        "amount": double.parse(price),
+        "discount": double.parse(discount),
+      },
+      "shipping": {
+        "shipping": true,
+        "price": double.parse(shippingCost),
+        "details": deliveryAddress,
+        "location": deliveryCity
+      }
     });
   }
 
@@ -121,7 +139,7 @@ class StoreController extends GetxController {
       features,
       description,
       quantity,
-        address}) async {
+      address}) async {
     Get.to(() => const Loading());
 
     StoreServices.createApartment((status, response) {
@@ -129,7 +147,7 @@ class StoreController extends GetxController {
       if (status) {
         Get.back();
         Get.back();
-        getProducts(token,storeId);
+        getProducts(token, storeId);
         CustomSnackBar.successSnackBar('Great!', 'Store created successfully');
       } else {
         Get.back();
@@ -140,11 +158,7 @@ class StoreController extends GetxController {
       "description": "A cozy and comfortable apartment in the city center.",
       "location": "123 Main St, City Center, Example City",
       "propertyType": "apartment",
-      "rentPrice": {
-        "night": 120,
-        "week": 800,
-        "month": 3000
-      },
+      "rentPrice": {"night": 120, "week": 800, "month": 3000},
       "rentAvailability": {
         "startDate": "2023-05-01T00:00:00.000Z",
         "endDate": "2023-08-31T00:00:00.000Z"
@@ -158,13 +172,7 @@ class StoreController extends GetxController {
         "squareMetre": 80,
         "amenities": ["wifi", "tv", "air_conditioning", "kitchen"]
       },
-      "rules": {
-        "occupant": 4,
-        "pet": false,
-        "smoke": false
-      }
-    }
-
-    );
+      "rules": {"occupant": 4, "pet": false, "smoke": false}
+    });
   }
 }
