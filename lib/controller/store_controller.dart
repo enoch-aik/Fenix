@@ -125,21 +125,28 @@ class StoreController extends GetxController {
     });
   }
 
-  createNewApartment(token,
-      {storeId,
-      color,
-      price,
-      title,
-      category,
-      condition,
-      brand,
-      size,
-      material,
-      coordinate,
-      features,
-      description,
-      quantity,
-      address}) async {
+  createNewApartment(
+    token, {
+    storeId,
+    bool? smoke,
+    bool? pet,
+    title,
+    description,
+    location,
+    propertyType,
+    nightAmount,
+    weekAmount,
+    monthAmount,
+    startDate,
+    endDate,
+    bedroom,
+    shower,
+    bathroom,
+    sqMeter,
+    toilet,
+    occupantsNumber,
+    floor,
+  }) async {
     Get.to(() => const Loading());
 
     StoreServices.createApartment((status, response) {
@@ -154,25 +161,30 @@ class StoreController extends GetxController {
         CustomSnackBar.failedSnackBar('Failed', '$response');
       }
     }, token, storeId, {
-      "title": "Cozy Apartment",
-      "description": "A cozy and comfortable apartment in the city center.",
-      "location": "123 Main St, City Center, Example City",
-      "propertyType": "apartment",
-      "rentPrice": {"night": 120, "week": 800, "month": 3000},
-      "rentAvailability": {
-        "startDate": "2023-05-01T00:00:00.000Z",
-        "endDate": "2023-08-31T00:00:00.000Z"
+      "title": title,
+      "description": description,
+      "location": location,
+      "propertyType": propertyType,
+      "rentPrice": {
+        "night": double.parse(nightAmount),
+        "week": double.parse(weekAmount),
+        "month": double.parse(monthAmount)
       },
+      "rentAvailability": {"startDate": startDate, "endDate": endDate},
       "specifics": {
-        "bedroom": 2,
-        "bathroom": 1,
-        "shower": 1,
-        "toilet": 1,
-        "floor": 3,
-        "squareMetre": 80,
+        "bedroom": double.parse(bedroom),
+        "bathroom": double.parse(bathroom),
+        "shower": double.parse(shower),
+        "toilet": double.parse(toilet),
+        "floor": double.parse(floor),
+        "squareMetre": double.parse(sqMeter),
         "amenities": ["wifi", "tv", "air_conditioning", "kitchen"]
       },
-      "rules": {"occupant": 4, "pet": false, "smoke": false}
+      "rules": {
+        "occupant": double.parse(occupantsNumber),
+        "pet": pet,
+        "smoke": smoke
+      }
     });
   }
 }

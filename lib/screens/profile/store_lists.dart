@@ -126,7 +126,7 @@ class StoreList extends StatelessWidget {
                             print(_storeController.storeList);
                             var item = _storeController.storeList[i];
                             return InkWell(
-                              onTap: ()=>Get.to(()=>ProductList(storeId:item['id'])),
+                              onTap: ()=>Get.to(()=>ProductList(storeId:item['id'],storeName:item['name'],storeLocation:item['location'])),
                               child: Container(
                                 padding:
                                     const EdgeInsets.fromLTRB(20, 15, 20, 15),
