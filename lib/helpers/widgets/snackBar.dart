@@ -16,6 +16,7 @@ class CustomSnackBar {
   }
 
 
+
   static failedSnackBar(title, message) {
     Get.snackbar(title, message,
         borderColor: red,
