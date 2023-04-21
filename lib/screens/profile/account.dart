@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../onboarding/constants.dart';
-import 'create_store.dart';
 import 'edit_profile.dart';
 
 class Account extends StatelessWidget {
@@ -107,10 +106,7 @@ class Account extends StatelessWidget {
                 Get.to(() => EditProfile());
               }),
               tinySpace(),
-              accountContainer('Your Store Information', onTap: () {
-                Get.to(() => CreateStore());
-              }),
-              tinySpace(),
+
               accountContainer(
                 'Your Selling List',
               ),

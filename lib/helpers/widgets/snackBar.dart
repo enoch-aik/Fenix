@@ -20,6 +20,7 @@ class CustomSnackBar {
     Get.snackbar(title, message,
         borderColor: red,
         borderWidth: 0.7,
+        duration: const Duration(seconds: 3),
         backgroundColor:background ,
         icon: const Icon(
           Icons.error,

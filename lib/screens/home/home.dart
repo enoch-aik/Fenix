@@ -1,3 +1,5 @@
+import 'package:fenix/controller/store_controller.dart';
+import 'package:fenix/controller/user_controller.dart';
 import 'package:fenix/helpers/widgets/recently_viewed_widget.dart';
 import 'package:fenix/screens/dealsDetails.dart';
 import 'package:fenix/screens/home/house_rent.dart';
@@ -24,6 +26,21 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String homeTab = 'Dacha';
+  String token = '';
+  final UserController _userController = Get.find();
+  final StoreController _storeController = Get.put(StoreController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    boot();
+    super.initState();
+  }
+
+  boot()async{
+    token =  _userController.getToken();
+    _storeController.getStores(token);
+  }
 
   @override
   Widget build(BuildContext context) {

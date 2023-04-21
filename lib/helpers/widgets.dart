@@ -425,6 +425,7 @@ class TextFieldWidget extends StatelessWidget {
         controller: textController,
         decoration: InputDecoration(
           enabledBorder: InputBorder.none,
+          disabledBorder: InputBorder.none,
           focusedBorder: InputBorder.none,
           errorBorder: InputBorder.none,
           focusedErrorBorder: InputBorder.none,

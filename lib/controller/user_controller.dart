@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../helpers/widgets/snackBar.dart';
 import '../models/services/user_services.dart';
 import '../models/user_model.dart';
+import '../screens/auth_screens/create_profile.dart';
 import '../screens/onboarding/loading.dart';
 import '../screens/profile/edit_profile.dart';
 import '../screens/views.dart';
@@ -25,8 +26,8 @@ class UserController extends GetxController {
         setUser(response);
       } else {
         if (response.toString().contains('profile yet')) {
-          CustomSnackBar.successSnackBar('Welcome', 'Update your profile to continue');
-          Get.to(() =>  EditProfile());
+          CustomSnackBar.failedSnackBar('Welcome!', 'Update your profile to continue');
+          Get.off(() =>  CreateProfile());
         } else {
           CustomSnackBar.failedSnackBar('Failed', '$response');
         }
@@ -37,6 +38,7 @@ class UserController extends GetxController {
   updateProfile(token, {address, city, country}) {
     UserServices.updateUser((status, response) {
       if (status) {
+        fetchUser(token);
         CustomSnackBar.successSnackBar(
             'Success', 'Profile updated successfully');
       } else {
@@ -52,7 +54,6 @@ class UserController extends GetxController {
       print(response);
       if (status) {
         fetchUser(token);
-        Get.back();
         CustomSnackBar.successSnackBar(
             'Success', 'Profile created successfully');
       } else {
@@ -73,7 +74,6 @@ class UserController extends GetxController {
   setUser(response) {
     UserModel user = UserModel.fromJson(response['data']);
     this.user = user;
-
     Get.to(() => const Views());
   }
 }

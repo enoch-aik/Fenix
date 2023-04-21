@@ -8,37 +8,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../controller/store_controller.dart';
 import '../../theme.dart';
 
-class EditProfile extends StatelessWidget {
-  EditProfile({Key? key}) : super(key: key);
+class CreateProduct extends StatelessWidget {
+  final String storeId;
+
+  CreateProduct({Key? key, required this.storeId}) : super(key: key);
 
   PageController pageController = PageController();
   final UserController _userController = Get.find();
+  final StoreController _storeController = Get.find();
   final _formKey = GlobalKey<FormState>();
-  final phoneController = TextEditingController();
-  final addressController = TextEditingController();
-  final cityController = TextEditingController();
+  final quantityController = TextEditingController();
+  final priceController = TextEditingController();
   final countryController = TextEditingController();
-  final firstNameController = TextEditingController();
-  final lastNameController = TextEditingController();
-  final emailController = TextEditingController();
-  final userNameController = TextEditingController();
+  final nameController = TextEditingController();
+  final sizeController = TextEditingController();
+  final materialController = TextEditingController();
+  final descriptionController = TextEditingController();
+  final conditionController = TextEditingController();
+  final categoryController = TextEditingController();
+  final colorController = TextEditingController();
+  final brandController = TextEditingController();
+  final featuresController = TextEditingController();
+  final featureController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    var user = _userController.getUser();
-    print('user - ${_userController.getUser()}');
-    if (user != null) {
-      firstNameController.text = user.firstName.toString();
-      lastNameController.text = user.lastName.toString();
-      emailController.text = user.email.toString();
-      userNameController.text = user.username.toString();
-      addressController.text = user.address.toString();
-      cityController.text = user.city.toString();
-      phoneController.text = user.mobileNumber.toString();
-      countryController.text = user.country.toString();
-    }
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: AppBar(
@@ -84,7 +81,7 @@ class EditProfile extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Edit Account",
+                  "Create Product",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 24.w,
@@ -110,79 +107,83 @@ class EditProfile extends StatelessWidget {
                         children: [
                           kSpacing,
                           TextFieldWidget(
-                            hint: "First Name",
-                            enabled: false,
-                            textController: firstNameController,
+                            hint: "Name",
+                            textController: nameController,
                             validator: (value) =>
-                                UsernameValidator.validate(value!),
+                                FieldValidator.validate(value!),
                           ),
                           kSpacing,
                           TextFieldWidget(
-                            hint: "Last Name",
-                            enabled: false,
-                            textController: lastNameController,
-                            validator: (value) =>
-                                UsernameValidator.validate(value!),
-                          ),
-                          kSpacing,
-                          TextFieldWidget(
-                            hint: "Email",
-                            enabled: false,
-                            textController: emailController,
-                            validator: (value) =>
-                                EmailValidator.validate(value!),
-                          ),
-                          kSpacing,
-                          TextFieldWidget(
-                            hint: "Username",
-                            enabled: false,
-                            textController: userNameController,
-                            validator: (value) =>
-                                UsernameValidator.validate(value!),
-                          ),
-                          kSpacing,
-                          TextFieldWidget(
-                              hint: "Phone Number",
-                              enabled: false,
-                              textController: phoneController),
-                          kSpacing,
-                          TextFieldWidget(
-                            hint: "Address",
-                            textController: addressController,
-                          ),
-                          kSpacing,
-                          TextFieldWidget(
-                            hint: "City",
-                            textController: cityController,
-                          ),
-                          kSpacing,
-                          TextFieldWidget(
-                            hint: "Country",
+                            hint: "Location",
                             textController: countryController,
+                            validator: (value) =>
+                                FieldValidator.validate(value!),
                           ),
                           kSpacing,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              gender(context, Icons.male, 'Male'),
-                              smallHSpace(),
-                              gender(context, Icons.female, 'Female'),
-                            ],
+                          TextFieldWidget(
+                            hint: "Category",
+                            textController: categoryController,
+                          ),  kSpacing,
+                          TextFieldWidget(
+                            hint: "Feature",
+                            textController: featuresController,
                           ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.07,
+                          kSpacing,
+                          TextFieldWidget(
+                            hint: "Quantity",
+                            textController: quantityController,
                           ),
+                          kSpacing,
+                          TextFieldWidget(
+                            hint: "Price",
+                            textController: priceController,
+                          ),
+                          kSpacing,
+                          TextFieldWidget(
+                            hint: "Size",
+                            textController: sizeController,
+                          ),
+                          kSpacing,
+                          TextFieldWidget(
+                            hint: "Condition",
+                            textController: conditionController,
+                          ),
+                          kSpacing,
+                          TextFieldWidget(
+                            hint: "Material",
+                            textController: materialController,
+                          ),
+                          kSpacing,
+                          TextFieldWidget(
+                            hint: "Color",
+                            textController: colorController,
+                          ),
+                          kSpacing,
+                          TextFieldWidget(
+                            hint: "Description",
+                            textController: descriptionController,
+                          ),
+                          verticalSpace(0.02),
                           InkWell(
                               onTap: () {
                                 if (_formKey.currentState!.validate()) {
-                                  _userController.createProfile(
-                                      _userController.getToken(),
-                                      username: userNameController.text,
-                                      phoneNumber: phoneController.text,
-                                      gender: _userController.gender.value,
-                                      address: addressController.text,
-                                      country: countryController.text,
-                                      city: cityController.text);
+                                  _storeController.createNewProduct(
+                                    _userController.getToken(),
+                                    storeId: storeId,
+                                    title: nameController.text,
+                                    address: countryController.text,
+                                    quantity: quantityController.text,
+                                    price: priceController.text,
+                                    size: sizeController.text,
+                                    material: materialController.text,
+                                    category: categoryController.text,
+                                    condition: conditionController.text,
+                                    brand: brandController.text,
+                                    coordinate: "12.345678, -98.765432",
+                                    features: featuresController.text,
+                                    color: colorController.text,
+                                    description: descriptionController.text,
+                                  );
                                 } else {
                                   CustomSnackBar.failedSnackBar('Error',
                                       'Ensure that all required fields are filled');

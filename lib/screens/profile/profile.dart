@@ -8,6 +8,7 @@ import '../onboarding/constants.dart';
 import 'account.dart';
 import 'message.dart';
 import 'selling_post.dart';
+import 'store_lists.dart';
 import 'subscribe.dart';
 
 class UserProfile extends StatefulWidget {
@@ -24,6 +25,7 @@ class _UserProfileState extends State<UserProfile> {
     "Create Selling Post",
     "Subscribe",
     "Your Wishlist",
+    "Your Stores",
     "Your Selling",
     "Language",
   ];
@@ -118,7 +120,7 @@ class _UserProfileState extends State<UserProfile> {
                     childAspectRatio: 3 / 1,
                     crossAxisSpacing: 20,
                     mainAxisSpacing: 10),
-                itemCount: 7,
+                itemCount: 8,
                 shrinkWrap: true,
                 itemBuilder: (BuildContext ctx, index) {
                   return InkWell(
@@ -128,8 +130,9 @@ class _UserProfileState extends State<UserProfile> {
                       if (index == 2) Get.to(() => const SellingPost());
                       if (index == 3) Get.to(() => const Subscribe());
                       if (index == 4) Get.to(() => const WishList());
+                      if (index == 5) Get.to(() => const StoreList());
 
-                      if (index == 5) Get.to(() => const SellingList());
+                      if (index == 6) Get.to(() => const SellingList());
                     },
                     child: Container(
                       alignment: Alignment.center,

@@ -1,4 +1,5 @@
 
+import 'package:fenix/controller/user_controller.dart';
 import 'package:fenix/helpers/icons/custom_icons_icons.dart';
 import 'package:fenix/helpers/icons/profile_icon_black_icons.dart';
 import 'package:fenix/helpers/widgets.dart';
@@ -9,6 +10,7 @@ import 'package:fenix/screens/onboarding/constants.dart';
 import 'package:fenix/screens/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
+import 'package:get/get.dart';
 
 import '../theme.dart';
 import 'data_Screen/chart_Screen.dart';
@@ -22,7 +24,7 @@ class Views extends StatefulWidget {
 
 class _HomeState extends State<Views> with TickerProviderStateMixin {
   int _selectedIndex = 1;
-
+final UserController userController = Get.put(UserController());
   TabController? _tabController;
 
   @override

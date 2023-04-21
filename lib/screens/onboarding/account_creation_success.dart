@@ -1,9 +1,10 @@
-import 'package:fenix/auth_screens/sign_in.dart';
 import 'package:fenix/const.dart';
 import 'package:fenix/helpers/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/src/size_extension.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
+import '../auth_screens/sign_in.dart';
 
 class AcctCreationSuccess extends StatelessWidget {
   const AcctCreationSuccess({Key? key}) : super(key: key);
@@ -11,7 +12,7 @@ class AcctCreationSuccess extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE4F0FA),
+      backgroundColor: const Color(0xFFE4F0FA),
       body: Stack(
         alignment: Alignment.center,
         children: [

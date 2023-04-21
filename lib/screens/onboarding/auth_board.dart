@@ -1,11 +1,11 @@
-import 'package:fenix/auth_screens/create_account.dart';
-import 'package:fenix/auth_screens/sign_in.dart';
 import 'package:fenix/const.dart';
 import 'package:fenix/helpers/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/src/size_extension.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../auth_screens/create_account.dart';
+import '../auth_screens/sign_in.dart';
 import 'constants.dart';
 
 class AuthBoard extends StatelessWidget {

@@ -1,10 +1,6 @@
 
 import 'package:fenix/const.dart';
 import 'package:fenix/helpers/widgets.dart';
-import 'package:fenix/icons/arrow_back_icon_icons.dart';
-import 'package:fenix/screens/onboarding/loading.dart';
-import 'package:fenix/screens/views.dart';
-import 'package:fenix/screens/onboarding/account_creation_success.dart';
 import 'package:fenix/screens/onboarding/auth_board.dart';
 import 'package:fenix/screens/onboarding/constants.dart';
 import 'package:fenix/screens/onboarding/reset_email.dart';
@@ -13,10 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../controller/account_controller.dart';
-import '../helpers/validator.dart';
-import '../neumorph.dart';
-import '../theme.dart';
+import '../../controller/account_controller.dart';
+import '../../helpers/validator.dart';
+import '../../neumorph.dart';
+import '../../theme.dart';
+
 
 class SignIn extends StatelessWidget {
 

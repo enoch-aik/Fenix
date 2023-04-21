@@ -136,116 +136,119 @@ class SignUp extends StatelessWidget {
                                 return null;
                               }),
                           kSpacing,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                height: 30,
-                                width: MediaQuery.of(context).size.width * 0.35,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(17.w),
-                                  color:
-                                      const Color(0xFFE4F0FA).withOpacity(0.9),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.shade400,
-                                    ),
-                                    BoxShadow(
-                                      color: Colors.white.withOpacity(0.9),
-                                      spreadRadius: -3,
-                                      blurRadius: 3,
-                                      offset: const Offset(
-                                          3, 6), // changes position of shadow
-                                    ),
-                                  ],
-                                ),
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                      suffixIcon: Container(
-                                          margin: const EdgeInsets.all(3),
-                                          height: 30,
-                                          width: 30,
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: const Color(0xFF797979)
-                                                  .withOpacity(0.5)),
-                                          child: Center(
-                                              child: Icon(
-                                            Icons.male,
-                                            color: kTextBlackColor,
-                                          ))),
-                                      enabledBorder: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      contentPadding:
-                                          EdgeInsets.only(left: 15.w),
-                                      hintText: "Male",
-                                      hintStyle: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1!
-                                          .copyWith(
-                                              fontSize: 15.w,
-                                              color: Colors.grey.shade400)),
-                                ),
-                              ),
-                              Container(
-                                height: 30,
-                                width: MediaQuery.of(context).size.width * 0.35,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(17.w),
-                                  color:
-                                      const Color(0xFFE4F0FA).withOpacity(0.9),
-                                  boxShadow: [
-                                    const BoxShadow(
-                                      color: Colors.grey,
-                                    ),
-                                    BoxShadow(
-                                      color: Colors.white.withOpacity(0.9),
-                                      spreadRadius: -3,
-                                      blurRadius: 3,
-                                      offset: const Offset(
-                                          3, 6), // changes position of shadow
-                                    ),
-                                  ],
-                                ),
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                      suffixIcon: Container(
-                                          height: 30,
-                                          width: 30,
-                                          margin: const EdgeInsets.all(3),
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: const Color(0xFF797979)
-                                                  .withOpacity(0.5)),
-                                          child: Center(
-                                              child: Icon(
-                                            Icons.female,
-                                            color: kTextBlackColor,
-                                          ))),
-                                      enabledBorder: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      contentPadding:
-                                          EdgeInsets.only(left: 15.w),
-                                      hintText: "Female",
-                                      hintStyle: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1!
-                                          .copyWith(
-                                              fontSize: 15.w,
-                                              color: Colors.grey.shade400)),
-                                ),
-                              ),
-                            ],
-                          ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //   children: [
+                          //     Container(
+                          //       height: 30,
+                          //       width: MediaQuery.of(context).size.width * 0.35,
+                          //       decoration: BoxDecoration(
+                          //         borderRadius: BorderRadius.circular(17.w),
+                          //         color:
+                          //             const Color(0xFFE4F0FA).withOpacity(0.9),
+                          //         boxShadow: [
+                          //           BoxShadow(
+                          //             color: Colors.grey.shade400,
+                          //           ),
+                          //           BoxShadow(
+                          //             color: Colors.white.withOpacity(0.9),
+                          //             spreadRadius: -3,
+                          //             blurRadius: 3,
+                          //             offset: const Offset(
+                          //                 3, 6), // changes position of shadow
+                          //           ),
+                          //         ],
+                          //       ),
+                          //       child: TextField(
+                          //         decoration: InputDecoration(
+                          //             suffixIcon: Container(
+                          //                 margin: const EdgeInsets.all(3),
+                          //                 height: 30,
+                          //                 width: 30,
+                          //                 decoration: BoxDecoration(
+                          //                     shape: BoxShape.circle,
+                          //                     color: const Color(0xFF797979)
+                          //                         .withOpacity(0.5)),
+                          //                 child: Center(
+                          //                     child: Icon(
+                          //                   Icons.male,
+                          //                   color: kTextBlackColor,
+                          //                 ))),
+                          //             enabledBorder: InputBorder.none,
+                          //             focusedBorder: InputBorder.none,
+                          //             contentPadding:
+                          //                 EdgeInsets.only(left: 15.w),
+                          //             hintText: "Male",
+                          //             hintStyle: Theme.of(context)
+                          //                 .textTheme
+                          //                 .bodyText1!
+                          //                 .copyWith(
+                          //                     fontSize: 15.w,
+                          //                     color: Colors.grey.shade400)),
+                          //       ),
+                          //     ),
+                          //     Container(
+                          //       height: 30,
+                          //       width: MediaQuery.of(context).size.width * 0.35,
+                          //       decoration: BoxDecoration(
+                          //         borderRadius: BorderRadius.circular(17.w),
+                          //         color:
+                          //             const Color(0xFFE4F0FA).withOpacity(0.9),
+                          //         boxShadow: [
+                          //           const BoxShadow(
+                          //             color: Colors.grey,
+                          //           ),
+                          //           BoxShadow(
+                          //             color: Colors.white.withOpacity(0.9),
+                          //             spreadRadius: -3,
+                          //             blurRadius: 3,
+                          //             offset: const Offset(
+                          //                 3, 6), // changes position of shadow
+                          //           ),
+                          //         ],
+                          //       ),
+                          //       child: TextField(
+                          //         decoration: InputDecoration(
+                          //             suffixIcon: Container(
+                          //                 height: 30,
+                          //                 width: 30,
+                          //                 margin: const EdgeInsets.all(3),
+                          //                 decoration: BoxDecoration(
+                          //                     shape: BoxShape.circle,
+                          //                     color: const Color(0xFF797979)
+                          //                         .withOpacity(0.5)),
+                          //                 child: Center(
+                          //                     child: Icon(
+                          //                   Icons.female,
+                          //                   color: kTextBlackColor,
+                          //                 ))),
+                          //             enabledBorder: InputBorder.none,
+                          //             focusedBorder: InputBorder.none,
+                          //             contentPadding:
+                          //                 EdgeInsets.only(left: 15.w),
+                          //             hintText: "Female",
+                          //             hintStyle: Theme.of(context)
+                          //                 .textTheme
+                          //                 .bodyText1!
+                          //                 .copyWith(
+                          //                     fontSize: 15.w,
+                          //                     color: Colors.grey.shade400)),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
+
+
                           SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.07,
-                          ),
+                              height:
+                                  MediaQuery.of(context).size.height * 0.07),
                           InkWell(
                               onTap: () {
                                 if (_formKey.currentState!.validate()) {
                                   _accountController.signUp();
-                                }else{
-                                  CustomSnackBar.failedSnackBar('Error', 'Ensure that all required fields are filled');
+                                } else {
+                                  CustomSnackBar.failedSnackBar('Error',
+                                      'Ensure that all required fields are filled');
                                 }
                                 // Get.to(() => Agreement());
                               },

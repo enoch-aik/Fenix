@@ -10,8 +10,8 @@ import 'package:get/get.dart';
 
 import '../../theme.dart';
 
-class EditProfile extends StatelessWidget {
-  EditProfile({Key? key}) : super(key: key);
+class CreateProfile extends StatelessWidget {
+  CreateProfile({Key? key}) : super(key: key);
 
   PageController pageController = PageController();
   final UserController _userController = Get.find();
@@ -20,25 +20,10 @@ class EditProfile extends StatelessWidget {
   final addressController = TextEditingController();
   final cityController = TextEditingController();
   final countryController = TextEditingController();
-  final firstNameController = TextEditingController();
-  final lastNameController = TextEditingController();
-  final emailController = TextEditingController();
   final userNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    var user = _userController.getUser();
-    print('user - ${_userController.getUser()}');
-    if (user != null) {
-      firstNameController.text = user.firstName.toString();
-      lastNameController.text = user.lastName.toString();
-      emailController.text = user.email.toString();
-      userNameController.text = user.username.toString();
-      addressController.text = user.address.toString();
-      cityController.text = user.city.toString();
-      phoneController.text = user.mobileNumber.toString();
-      countryController.text = user.country.toString();
-    }
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: AppBar(
@@ -84,7 +69,7 @@ class EditProfile extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Edit Account",
+                  "Create Profile",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 24.w,
@@ -110,40 +95,14 @@ class EditProfile extends StatelessWidget {
                         children: [
                           kSpacing,
                           TextFieldWidget(
-                            hint: "First Name",
-                            enabled: false,
-                            textController: firstNameController,
-                            validator: (value) =>
-                                UsernameValidator.validate(value!),
-                          ),
-                          kSpacing,
-                          TextFieldWidget(
-                            hint: "Last Name",
-                            enabled: false,
-                            textController: lastNameController,
-                            validator: (value) =>
-                                UsernameValidator.validate(value!),
-                          ),
-                          kSpacing,
-                          TextFieldWidget(
-                            hint: "Email",
-                            enabled: false,
-                            textController: emailController,
-                            validator: (value) =>
-                                EmailValidator.validate(value!),
-                          ),
-                          kSpacing,
-                          TextFieldWidget(
                             hint: "Username",
-                            enabled: false,
-                            textController: userNameController,
+                            textController:userNameController,
                             validator: (value) =>
                                 UsernameValidator.validate(value!),
                           ),
                           kSpacing,
                           TextFieldWidget(
                               hint: "Phone Number",
-                              enabled: false,
                               textController: phoneController),
                           kSpacing,
                           TextFieldWidget(
@@ -175,11 +134,8 @@ class EditProfile extends StatelessWidget {
                           InkWell(
                               onTap: () {
                                 if (_formKey.currentState!.validate()) {
-                                  _userController.createProfile(
+                                  _userController.updateProfile(
                                       _userController.getToken(),
-                                      username: userNameController.text,
-                                      phoneNumber: phoneController.text,
-                                      gender: _userController.gender.value,
                                       address: addressController.text,
                                       country: countryController.text,
                                       city: cityController.text);
@@ -212,12 +168,12 @@ class EditProfile extends StatelessWidget {
           _userController.gender(title);
         },
         child: Obx(
-          () => Container(
+              () => Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(17.w),
               color: (_userController.gender.value == title ||
-                      (_userController.getUser() != null &&
-                          _userController.getUser()!.gender == title))
+                  (_userController.getUser() != null &&
+                      _userController.getUser()!.gender == title))
                   ? const Color(0xFFE4F0FA).withOpacity(0.8)
                   : const Color(0xFFE4F0FA),
               boxShadow: [
@@ -239,14 +195,14 @@ class EditProfile extends StatelessWidget {
                   child: Text(
                     title,
                     style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                          fontSize: 15.w,
-                          color: (_userController.gender.value == title ||
-                                  (_userController.getUser() != null &&
-                                      _userController.getUser()!.gender ==
-                                          title))
-                              ? Colors.black
-                              : Colors.grey.shade400,
-                        ),
+                      fontSize: 15.w,
+                      color: (_userController.gender.value == title ||
+                          (_userController.getUser() != null &&
+                              _userController.getUser()!.gender ==
+                                  title))
+                          ? Colors.black
+                          : Colors.grey.shade400,
+                    ),
                   ),
                 ),
                 Container(
@@ -254,15 +210,15 @@ class EditProfile extends StatelessWidget {
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: (_userController.gender.value == title ||
-                                (_userController.getUser() != null &&
-                                    _userController.getUser()!.gender == title))
+                            (_userController.getUser() != null &&
+                                _userController.getUser()!.gender == title))
                             ? light.withOpacity(0.5)
                             : Colors.transparent),
                     child: Icon(
                       icon,
                       color: (_userController.gender.value == title ||
-                              (_userController.getUser() != null &&
-                                  _userController.getUser()!.gender == title))
+                          (_userController.getUser() != null &&
+                              _userController.getUser()!.gender == title))
                           ? kTextBlackColor
                           : Colors.blueGrey,
                     )),
