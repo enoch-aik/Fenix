@@ -20,6 +20,7 @@ class UserServices {
     var response =
     await ApiServices.initialisePatchRequest(url: profileUrl, token: token,data: data);
     print(response);
+    print("this");
     if (response is String) {
       callback(false, response);
     } else {

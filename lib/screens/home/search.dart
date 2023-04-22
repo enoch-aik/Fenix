@@ -29,7 +29,7 @@ class _SearchScreenState extends State<SearchScreen> {
           decoration: BoxDecoration(
               border: Border(
                   bottom: BorderSide(
-                      color: tab == title ? peach : lightGrey.withOpacity(0.5),
+                      color: tab == title ? primary : lightGrey.withOpacity(0.5),
                       width: 3))),
           padding: const EdgeInsets.all(8),
           child: Text(

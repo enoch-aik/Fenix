@@ -1,9 +1,11 @@
 import 'package:fenix/screens/profile/selling_list.dart';
 import 'package:fenix/screens/profile/wish_list.dart';
+import 'package:fenix/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../helpers/widgets/logout_card_widget.dart';
 import '../onboarding/constants.dart';
 import 'account.dart';
 import 'message.dart';
@@ -58,10 +60,15 @@ class _UserProfileState extends State<UserProfile> {
                     color: Colors.white,
                     size: 27.w,
                   ),
-                  Icon(
-                    Icons.logout,
-                    color: Colors.white,
-                    size: 27.w,
+                  InkWell(
+                    onTap: () async {
+                      Get.bottomSheet(LogoutCard());
+                    },
+                    child: Icon(
+                      Icons.logout,
+                      color: Colors.white,
+                      size: 27.w,
+                    ),
                   ),
                 ],
               ),

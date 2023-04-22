@@ -1,4 +1,6 @@
 import 'package:fenix/const.dart';
+import 'package:fenix/screens/profile/create_apartment.dart';
+import 'package:fenix/screens/profile/create_product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -85,17 +87,105 @@ class _SellingPostState extends State<SellingPost> {
       body: Padding(
         padding: const EdgeInsets.all(18.0),
         child: ListView(children: [
-          Image.asset('assets/images/Map widget.png'),
+
+          InkWell(
+            onTap: (){
+              Get.to(() => CreateApartment(storeId: "1",));
+            },
+            child: SellingPostCard(
+              title: "Apartment",
+              icon:'assets/images/icons/apartment.png',
+              backgroundImage: 'assets/images/apartment 1.png',
+            ),
+          ),
           smallSpace(),
-          Image.asset('assets/images/Map widget.png'),
-          smallSpace(),
-          Image.asset('assets/images/Map widget.png'),
-          smallSpace(),
-          Image.asset('assets/images/Map widget.png'),
-          smallSpace(),
-          Image.asset('assets/images/Map widget.png'),
+          
+          InkWell(
+            onTap: (){
+              Get.to(() => CreateProduct(storeId: "1",));
+            },
+            child: SellingPostCard(
+              title: "Product",
+              icon:'assets/images/icons/carRental.png',
+              backgroundImage: 'assets/images/apartment 1.png',
+            ),
+          ),
         ],),
       ),
+    );
+  }
+}
+
+class SellingPostCard extends StatelessWidget {
+
+  String? title;
+  String? icon;
+  String? backgroundImage;
+
+  SellingPostCard({
+    Key? key, this.title, this.icon, this.backgroundImage
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          height: MediaQuery.of(context).size.height * 0.27,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(22.w),
+            color: Colors.red,
+            image: DecorationImage(image: AssetImage(backgroundImage!), fit: BoxFit.fill)
+          ),
+        ),
+
+        Positioned(
+          bottom: 0,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 23.w, vertical: 14.w),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.070,
+                width: MediaQuery.of(context).size.width * 0.8,
+                padding: EdgeInsets.symmetric(horizontal:12.w, vertical: 12.w),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6.w),
+                  color: background,
+                ),
+                child:Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Image.asset(icon!, scale: 0.6,),
+                        smallHSpace(),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(title!,
+                              style: TextStyle(
+                                color: Colors.black87,
+                                fontSize: 13.5.w,
+                              ),),
+                            tiny5Space(),
+                            Text("Create Rent/Selling Post",
+                              style: TextStyle(
+                                  color: Colors.black54,
+                                  fontSize: 10.5.w
+                              ),)
+                          ],
+                        ),
+                      ],
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                        child: Icon(Icons.arrow_forward_ios, color: blue, size: 20.w,))
+                  ],
+                ),
+              ),
+            )
+        )
+      ],
     );
   }
 }

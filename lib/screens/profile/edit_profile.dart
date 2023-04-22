@@ -175,11 +175,11 @@ class EditProfile extends StatelessWidget {
                           InkWell(
                               onTap: () {
                                 if (_formKey.currentState!.validate()) {
-                                  _userController.createProfile(
+                                  _userController.updateProfile(
                                       _userController.getToken(),
-                                      username: userNameController.text,
-                                      phoneNumber: phoneController.text,
-                                      gender: _userController.gender.value,
+                                      // username: userNameController.text,
+                                      // phoneNumber: phoneController.text,
+                                      // gender: _userController.gender.value,
                                       address: addressController.text,
                                       country: countryController.text,
                                       city: cityController.text);
