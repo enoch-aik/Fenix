@@ -1,3 +1,4 @@
+import 'package:fenix/screens/home/home.dart';
 import 'package:get/get.dart';
 
 import '../helpers/widgets/snack_bar.dart';
@@ -27,7 +28,7 @@ class UserController extends GetxController {
       } else {
         if (response.toString().contains('profile yet')) {
           CustomSnackBar.failedSnackBar('Welcome!', 'Update your profile to continue');
-          Get.off(() =>  CreateProfile());
+          Get.off(() =>  Views());
         } else {
           CustomSnackBar.failedSnackBar('Failed', '$response');
         }
