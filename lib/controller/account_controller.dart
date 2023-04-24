@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../models/services/account_services.dart';
+import '../screens/auth_screens/sign_in.dart';
 import '../screens/onboarding/account_creation_success.dart';
 import '../screens/onboarding/loading.dart';
 
@@ -67,5 +68,23 @@ class AccountController extends GetxController {
         CustomSnackBar.failedSnackBar('Failed', '$response');
       }
     }, email: _email.text, password: _password.text);
+  }
+
+  signOut(token) async {
+    Get.to(() => Loading(
+      navigateScreen: SignIn(),
+    ));
+    AccountServices.loginOutUser((status, response) {
+      if (status) {
+          CustomSnackBar.successSnackBar(
+              'Logout Successful!', '$response');
+
+          Get.to(() => SignIn());
+      } else {
+        Get.back();
+
+        CustomSnackBar.failedSnackBar('Logout Failed', '$response');
+      }
+    }, token);
   }
 }

@@ -36,6 +36,19 @@ class AccountServices {
     }
   }
 
+  static loginOutUser(
+      Function callback, token) async {
+    var data = {};
+    var response =
+    await ApiServices.initialisePostRequest(url: logoutUrl, data: data, token: token);
+    print(response);
+    if (response is String) {
+      callback(false, response);
+    } else {
+      callback(true, response);
+    }
+  }
+
 // "phoneNumber": "+2347032490038",
 // "gender": "Male",
 // "address": "Abeokuta, Ogun State",

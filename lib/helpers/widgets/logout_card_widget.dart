@@ -2,13 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../controller/account_controller.dart';
+import '../../controller/user_controller.dart';
 import '../../theme.dart';
 
 
-class LogoutCard extends StatelessWidget {
-  const LogoutCard({
+class LogoutCard extends StatefulWidget {
+   LogoutCard({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<LogoutCard> createState() => _LogoutCardState();
+}
+
+class _LogoutCardState extends State<LogoutCard> {
+
+   String token = '';
+   final AccountController _accountController = Get.find();
+   final UserController _userController = Get.find();
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    boot();
+    super.initState();
+  }
+
+   boot()async{
+     token =  _userController.getToken();
+   }
 
   @override
   Widget build(BuildContext context) {
@@ -64,21 +88,26 @@ class LogoutCard extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: Container(
-                    height: 45.w,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: red,
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Logout",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                            fontSize: 14.w
+                child: InkWell(
+                  onTap: (){
+                    _accountController.signOut(token);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: Container(
+                      height: 45.w,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: red,
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Logout",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                              fontSize: 14.w
+                          ),
                         ),
                       ),
                     ),
