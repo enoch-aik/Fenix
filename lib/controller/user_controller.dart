@@ -36,7 +36,7 @@ class UserController extends GetxController {
     }, token);
   }
 
-  updateProfile(token, {address, city, country}) {
+  updateProfile(token, {phoneNumber, gender, address, city, country, username}) {
     UserServices.updateUser((status, response) {
       if (status) {
         fetchUser(token);
@@ -45,7 +45,7 @@ class UserController extends GetxController {
       } else {
         CustomSnackBar.failedSnackBar('Failed', '$response');
       }
-    }, {"address": address, "city": city, "country": country}, token);
+    }, {"phoneNumber":phoneNumber, "gender": gender, "address": address, "city": city, "country": country, "username": username }, token);
   }
 
   createProfile(token,

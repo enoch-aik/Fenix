@@ -135,7 +135,6 @@ class EditProfile extends StatelessWidget {
                           kSpacing,
                           TextFieldWidget(
                             hint: "Username",
-                            enabled: false,
                             textController: userNameController,
                             validator: (value) =>
                                 UsernameValidator.validate(value!),
@@ -143,7 +142,6 @@ class EditProfile extends StatelessWidget {
                           kSpacing,
                           TextFieldWidget(
                               hint: "Phone Number",
-                              enabled: false,
                               textController: phoneController),
                           kSpacing,
                           TextFieldWidget(
@@ -177,9 +175,9 @@ class EditProfile extends StatelessWidget {
                                 if (_formKey.currentState!.validate()) {
                                   _userController.updateProfile(
                                       _userController.getToken(),
-                                      // username: userNameController.text,
-                                      // phoneNumber: phoneController.text,
-                                      // gender: _userController.gender.value,
+                                      username: userNameController.text,
+                                      phoneNumber: phoneController.text,
+                                      gender: _userController.gender.value,
                                       address: addressController.text,
                                       country: countryController.text,
                                       city: cityController.text);

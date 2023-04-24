@@ -14,7 +14,7 @@ class LogoutCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.42,
-      color: Colors.white,
+      color: background,
       padding: EdgeInsets.all(25.w),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
