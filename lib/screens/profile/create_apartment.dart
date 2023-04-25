@@ -4,6 +4,7 @@ import 'package:fenix/helpers/validator.dart';
 import 'package:fenix/helpers/widgets.dart';
 import 'package:fenix/helpers/widgets/snack_bar.dart';
 import 'package:fenix/screens/onboarding/constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -33,14 +34,13 @@ class _CreateApartmentState extends State<CreateApartment> {
   final nameController = TextEditingController();
 
   final descriptionController = TextEditingController();
+  final addressController = TextEditingController();
   final nightController = TextEditingController();
   final weekController = TextEditingController();
   final monthController = TextEditingController();
 
-
-
-
   String deliveryValue = '';
+  String rentType = '';
   bool selectDollar = false;
 
   @override
@@ -91,13 +91,13 @@ class _CreateApartmentState extends State<CreateApartment> {
                         contentPadding: EdgeInsets.symmetric(
                             horizontal: 15,
                             vertical:
-                            MediaQuery.of(context).size.height * 0.015),
+                                MediaQuery.of(context).size.height * 0.015),
                         hintText: "Search Fenix",
                         hintStyle: Theme.of(context)
                             .textTheme
                             .bodyText1!
                             .copyWith(
-                            fontSize: 15.w, color: Colors.grey.shade500),
+                                fontSize: 15.w, color: Colors.grey.shade500),
                         prefixIcon: const Icon(Icons.search),
                         suffixIcon: const Icon(
                           Icons.qr_code_scanner,
@@ -119,9 +119,9 @@ class _CreateApartmentState extends State<CreateApartment> {
         children: [
           const Center(
               child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text('Sell House or Apartment'),
-              )),
+            padding: EdgeInsets.all(8.0),
+            child: Text('Sell House or Apartment'),
+          )),
           const Divider(thickness: 4, color: textColor),
           Expanded(
             child: Form(
@@ -144,19 +144,58 @@ class _CreateApartmentState extends State<CreateApartment> {
                     ],
                   ),
                   kSpacing,
-                  title('Title of Product'),
+                  title('Title of Property'),
                   kSpacing,
                   TextFieldWidget(
-                    hint: "Name",
+                    hint: "Name of property",
                     textController: nameController,
                     validator: (value) => FieldValidator.validate(value!),
                   ),
                   kSpacing,
-
-
-
-
+                  title('House Specifics'),
                   kSpacing,
+                  subText(
+                    'How many Bed',
+                  ),
+                  subText(
+                    'How many Shower',
+                  ),
+                  subText(
+                    'How many Bathroom',
+                  ),
+                  subText(
+                    'How many Toilet',
+                  ),
+                  subText(
+                    'How many Floors in your house',
+                  ),
+                  subText(
+                    'How many square footage',
+                  ),
+                  subText(
+                    'How many square meter',
+                  ),
+                  subText('Amenities'),
+                  Row(
+                    children: [
+                      imageSelect(),
+                      tinyHSpace(),
+                      imageSelect(),
+                      tinyHSpace(),
+                      imageSelect(),
+                      tinyHSpace(),
+                      imageSelect(),
+                    ],
+                  ),
+                  kSpacing,
+                  title('House Rules'),
+                  kSpacing,
+                  title_icon('Allow People in the property', Icons.person_3),
+                  const Divider(thickness: 3, color: grey),
+                  title_icon('Are pets allowed', Icons.pets),
+                  const Divider(thickness: 3, color: grey),
+                  title_icon('Is smoke allowed', Icons.smoking_rooms),
+                  const Divider(thickness: 3, color: grey),
                   title('Description'),
                   kSpacing,
                   TextFieldWidget(
@@ -165,10 +204,43 @@ class _CreateApartmentState extends State<CreateApartment> {
                     textController: descriptionController,
                   ),
                   kSpacing,
-                  title('Price'),
+                  title('Set House location'),
+                  subText(
+                    'Set the property location',
+                  ),
+                  TextFieldWidget(
+                    hint: "Search location",
+                    textController: addressController,
+                    validator: (value) => FieldValidator.validate(value!),
+                  ),
+                  kSpacing,
+                  title('Choose one of the options'),
+                  Row(
+                    children: [
+                      rentOption(
+                        'Rent Property',
+                      ),
+                      smallHSpace(),
+                      rentOption('Sell Property'),
+                    ],
+                  ),
+                  kSpacing,
+                  title('Available for Rent'),
+                  subText(
+                    'Available start date',
+                  ),
+                  subText(
+                    'Available end date',
+                  ),
+                  kSpacing,
+                  title('Rent Price'),
+                  subText(
+                    'Rental Price',
+                  ),
                   kSpacing,
                   Row(
                     children: [
+                      CupertinoSwitch(value: true, onChanged: (v) {}),
                       Expanded(
                         child: TextFieldWidget(
                             keyboardType: const TextInputType.numberWithOptions(
@@ -178,17 +250,58 @@ class _CreateApartmentState extends State<CreateApartment> {
                       ),
                       smallHSpace(),
                       const Text(
-                        'so\'m',
-                        style: TextStyle(fontSize: 13),
+                        'Per night',
+                        style: TextStyle(fontSize: 13, color: blue),
                       ),
                       tinyH5Space(),
-                      checkBox(),
+                      Icon(Icons.event_available_outlined)
                     ],
+                  ),
+                  subText(
+                    'Chose the currency',
+                  ),
+                  Row(
+                    children: [
+                      CupertinoSwitch(value: true, onChanged: (v) {}),
+                      Expanded(
+                        child: TextFieldWidget(
+                            keyboardType: const TextInputType.numberWithOptions(
+                                decimal: true),
+                            hint: "Price",
+                            textController: nightController),
+                      ),
+                      smallHSpace(),
+
+                    ],
+                  ),
+
+                  subText(
+                    'How do you want to accept the money?',
+                  ),
+                  Row(
+                    children: [
+                      CupertinoSwitch(value: true, onChanged: (v) {}),
+                      Expanded(
+                        child: TextFieldWidget(
+                            keyboardType: const TextInputType.numberWithOptions(
+                                decimal: true),
+                            hint: "Price",
+                            textController: nightController),
+                      ),
+                      smallHSpace(),
+// Icon(Icons.)
+                    ],
+                  ),
+
+                  subText(
+                    'Do you accept any offer?',
+                  ),
+                  subText(
+                    'Do you allow self check-in?',
                   ),
                   kSpacing,
                   title('Discount Option'),
                   kSpacing,
-
                   Row(
                     children: [
                       discount(),
@@ -199,8 +312,8 @@ class _CreateApartmentState extends State<CreateApartment> {
                       smallHSpace(),
                       Expanded(
                         child: TextFieldWidget(
-                            hint: "Discount",
-                            // textController: discountController
+                          hint: "Discount",
+                          // textController: discountController
                         ),
                       ),
                     ],
@@ -212,19 +325,17 @@ class _CreateApartmentState extends State<CreateApartment> {
                   tinySpace(),
                   check('No, I can\'t Deliver the item', 'No'),
                   kSpacing,
-
                   Row(
                     children: [
                       Expanded(
                         child: TextFieldWidget(
-                            hint: "Delivery Price",
-                            // textController: deliveryPriceController
+                          hint: "Delivery Price",
+                          // textController: deliveryPriceController
                         ),
                       ),
                       smallHSpace(),
                       const Text(
                         'so\'m',
-
                         style: TextStyle(fontSize: 13),
                       ),
                       tinyH5Space(),
@@ -232,18 +343,15 @@ class _CreateApartmentState extends State<CreateApartment> {
                     ],
                   ),
                   kSpacing,
-
                   TextFieldWidget(
-                      hint: "Delivery Details",
-                      // textController: deliveryController
+                    hint: "Delivery Details",
+                    // textController: deliveryController
                   ),
                   kSpacing,
-
                   TextFieldWidget(
-                      hint: "Delivery Location",
-                      // textController: deliveryLocationController
+                    hint: "Delivery Location",
+                    // textController: deliveryLocationController
                   ),
-
                   verticalSpace(0.02),
                   Center(
                     child: InkWell(
@@ -269,6 +377,57 @@ class _CreateApartmentState extends State<CreateApartment> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget rentOption(title) {
+    return Expanded(
+      child: InkWell(
+        onTap: () {
+          setState(() {
+            rentType = title;
+          });
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: rentType == title
+                ? gradient(
+                    const Color(0xFF1A9AFF),
+                    const Color(0xFF54FADC),
+                  )
+                : gradient(
+                    const Color(0xFF1A9AFF).withOpacity(0.5),
+                    const Color(0xFF54FADC).withOpacity(0.6),
+                  ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            child: Text(
+              title,
+              style: TextStyle(color: white),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Text subText(title) {
+    return Text(
+      title,
+      style: const TextStyle(color: blue),
+    );
+  }
+
+  Row title_icon(title, icon) {
+    return Row(
+      children: [
+        Icon(icon),
+        Text(
+          title,
+          style: const TextStyle(color: blue),
+        ),
+      ],
     );
   }
 
@@ -350,9 +509,9 @@ class _CreateApartmentState extends State<CreateApartment> {
             )),
         Expanded(
             child: Text(
-              subText,
-              style: const TextStyle(fontSize: 13),
-            )),
+          subText,
+          style: const TextStyle(fontSize: 13),
+        )),
         Container(
             decoration: depressNeumorph(),
             child: SizedBox(
@@ -412,12 +571,12 @@ class _CreateApartmentState extends State<CreateApartment> {
           _userController.gender(title);
         },
         child: Obx(
-              () => Container(
+          () => Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(17.w),
               color: (_userController.gender.value == title ||
-                  (_userController.getUser() != null &&
-                      _userController.getUser()!.gender == title))
+                      (_userController.getUser() != null &&
+                          _userController.getUser()!.gender == title))
                   ? const Color(0xFFE4F0FA).withOpacity(0.8)
                   : const Color(0xFFE4F0FA),
               boxShadow: [
@@ -439,14 +598,14 @@ class _CreateApartmentState extends State<CreateApartment> {
                   child: Text(
                     title,
                     style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                      fontSize: 15.w,
-                      color: (_userController.gender.value == title ||
-                          (_userController.getUser() != null &&
-                              _userController.getUser()!.gender ==
-                                  title))
-                          ? Colors.black
-                          : Colors.grey.shade400,
-                    ),
+                          fontSize: 15.w,
+                          color: (_userController.gender.value == title ||
+                                  (_userController.getUser() != null &&
+                                      _userController.getUser()!.gender ==
+                                          title))
+                              ? Colors.black
+                              : Colors.grey.shade400,
+                        ),
                   ),
                 ),
                 Container(
@@ -454,15 +613,15 @@ class _CreateApartmentState extends State<CreateApartment> {
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: (_userController.gender.value == title ||
-                            (_userController.getUser() != null &&
-                                _userController.getUser()!.gender == title))
+                                (_userController.getUser() != null &&
+                                    _userController.getUser()!.gender == title))
                             ? light.withOpacity(0.5)
                             : Colors.transparent),
                     child: Icon(
                       icon,
                       color: (_userController.gender.value == title ||
-                          (_userController.getUser() != null &&
-                              _userController.getUser()!.gender == title))
+                              (_userController.getUser() != null &&
+                                  _userController.getUser()!.gender == title))
                           ? kTextBlackColor
                           : Colors.blueGrey,
                     )),

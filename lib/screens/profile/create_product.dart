@@ -167,7 +167,7 @@ class _CreateProductState extends State<CreateProduct> {
                   title('Title of Product'),
                   kSpacing,
                   TextFieldWidget(
-                    hint: "Name",
+                    hint: "Name of product",
                     textController: nameController,
                     validator: (value) => FieldValidator.validate(value!),
                   ),
