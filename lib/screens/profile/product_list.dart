@@ -17,10 +17,12 @@ class ProductList extends StatelessWidget {
       required this.storeLocation})
       : super(key: key);
   final String storeId, storeName, storeLocation;
-  final StoreController _storeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
+    final StoreController storeController = Get.find();
+    final UserController userController = Get.find();
+    storeController.getProducts(userController.getToken(), storeId);
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       floatingActionButton: FloatingActionButton.extended(
@@ -114,9 +116,9 @@ class ProductList extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: BODY_PADDING),
-              child: Obx(() => _storeController.isFetchingProducts.isTrue
+              child: Obx(() => storeController.isFetchingProducts.isTrue
                   ? const Center(child: CircularProgressIndicator())
-                  : _storeController.productList.isEmpty
+                  : storeController.productList.isEmpty
                       ? Center(
                           child: InkWell(
                           onTap: () => Get.to(() => CreateProduct(
@@ -134,7 +136,7 @@ class ProductList extends StatelessWidget {
                         ))
                       : ListView.separated(
                           itemBuilder: (c, i) {
-                            var item = _storeController.productList[i];
+                            var item = storeController.productList[i];
                             return Row(
                               children: [
                                 Image.asset('assets/images/headset.png'),
@@ -213,7 +215,7 @@ class ProductList extends StatelessWidget {
                             );
                           },
                           separatorBuilder: (c, i) => smallSpace(),
-                          itemCount: _storeController.productList.length)),
+                          itemCount: storeController.productList.length)),
             ),
           )
         ],

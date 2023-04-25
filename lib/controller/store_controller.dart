@@ -114,11 +114,11 @@ class StoreController extends GetxController {
       },
       "price": {
         "amount": double.parse(price),
-        "discount": double.parse(discount),
+        "discount": double.parse(discount==''?'0':discount),
       },
       "shipping": {
         "shipping": true,
-        "price": double.parse(shippingCost),
+        "price": double.parse(shippingCost==''?'0':shippingCost),
         "details": deliveryAddress,
         "location": deliveryCity
       }
