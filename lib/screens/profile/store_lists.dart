@@ -8,6 +8,7 @@ import '../../controller/store_controller.dart';
 import '../onboarding/constants.dart';
 import 'create_store.dart';
 import 'product_list.dart';
+import 'selling_post.dart';
 
 class StoreList extends StatelessWidget {
   const StoreList({Key? key}) : super(key: key);
@@ -126,7 +127,8 @@ class StoreList extends StatelessWidget {
                             print(_storeController.storeList);
                             var item = _storeController.storeList[i];
                             return InkWell(
-                              onTap: ()=>Get.to(()=>ProductList(storeId:item['id'],storeName:item['name'],storeLocation:item['location'])),
+                              onTap: ()=>Get.to(()=>SellingPost(storeId:item['id'],storeName:item['name'],storeLocation:item['location'])),
+                              // onTap: ()=>Get.to(()=>ProductList(storeId:item['id'],storeName:item['name'],storeLocation:item['location'])),
                               child: Container(
                                 padding:
                                     const EdgeInsets.fromLTRB(20, 15, 20, 15),

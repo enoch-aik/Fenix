@@ -9,7 +9,13 @@ import '../../theme.dart';
 import '../onboarding/constants.dart';
 
 class SellingPost extends StatefulWidget {
-  const SellingPost({Key? key}) : super(key: key);
+  SellingPost(
+      {Key? key,
+        required this.storeId,
+        required this.storeName,
+        required this.storeLocation})
+      : super(key: key);
+  final String storeId, storeName, storeLocation;
 
   @override
   State<SellingPost> createState() => _SellingPostState();
@@ -20,6 +26,16 @@ class _SellingPostState extends State<SellingPost> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFE4F0FA),
+      floatingActionButton: FloatingActionButton.extended(
+          backgroundColor: dark,
+          icon: const Icon(Icons.add, color: background),
+          onPressed: () {
+            Get.to(() => CreateApartment(
+              storeId: widget.storeId,
+            ));
+          },
+          label:
+          const Text('Add Apartment', style: TextStyle(color: background))),
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width,
             MediaQuery.of(context).size.height * 0.08),
