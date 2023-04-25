@@ -94,6 +94,7 @@ class _SellingPostState extends State<SellingPost> {
             },
             child: SellingPostCard(
               title: "Apartment",
+              subtitle: "Create Rent/Selling Post",
               icon:'assets/images/icons/apartment.png',
               backgroundImage: 'assets/images/apartment 1.png',
             ),
@@ -102,14 +103,56 @@ class _SellingPostState extends State<SellingPost> {
           
           InkWell(
             onTap: (){
+              Get.to(() => CreateApartment(storeId: "1",));
+            },
+            child: SellingPostCard(
+              title: "House",
+              subtitle: "Create House Rent/Selling Post",
+              icon:'assets/images/icons/houseRental.png',
+              backgroundImage: 'assets/images/house.png',
+            ),
+          ),
+          smallSpace(),
+
+          InkWell(
+            onTap: (){
+              Get.to(() => CreateApartment(storeId: "1",));
+            },
+            child: SellingPostCard(
+              title: "Dacha",
+              subtitle: "Create Dacha Rent/Selling Post",
+              icon:'assets/images/icons/Dacha.png',
+              backgroundImage: 'assets/images/house.png',
+            ),
+          ),
+          smallSpace(),
+
+          InkWell(
+            onTap: (){
+
+            },
+            child: SellingPostCard(
+              title: "Car",
+              subtitle: "Sell Cars",
+              icon:'assets/images/icons/carRental.png',
+              backgroundImage: 'assets/images/cars.png',
+            ),
+          ),
+          smallSpace(),
+
+          InkWell(
+            onTap: (){
               Get.to(() => CreateProduct(storeId: "1",));
             },
             child: SellingPostCard(
-              title: "Product",
-              icon:'assets/images/icons/carRental.png',
+              title: "Electronics",
+              subtitle: "Sell Electronics",
+              icon:'assets/images/icons/apartment.png',
               backgroundImage: 'assets/images/apartment 1.png',
             ),
           ),
+          smallSpace(),
+
         ],),
       ),
     );
@@ -119,11 +162,12 @@ class _SellingPostState extends State<SellingPost> {
 class SellingPostCard extends StatelessWidget {
 
   String? title;
+  String? subtitle;
   String? icon;
   String? backgroundImage;
 
   SellingPostCard({
-    Key? key, this.title, this.icon, this.backgroundImage
+    Key? key, this.title, this.subtitle, this.icon, this.backgroundImage
   }) : super(key: key);
 
   @override
@@ -168,7 +212,7 @@ class SellingPostCard extends StatelessWidget {
                                 fontSize: 13.5.w,
                               ),),
                             tiny5Space(),
-                            Text("Create Rent/Selling Post",
+                            Text(subtitle!,
                               style: TextStyle(
                                   color: Colors.black54,
                                   fontSize: 10.5.w

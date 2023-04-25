@@ -160,7 +160,7 @@ class ProductList extends StatelessWidget {
                                               color: Colors.orange, size: 15),
                                           smallHSpace(),
                                           Text(
-                                            '295 Reviews',
+                                            '25 Reviews',
                                             style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w400),
@@ -201,10 +201,10 @@ class ProductList extends StatelessWidget {
                                       smallSpace(),
                                       Text(
                                         '${item['price']['amount']} so\'m',
-                                        style: const TextStyle(
-                                            fontSize: 16,
+                                        style: TextStyle(
+                                            fontSize: 16.w,
                                             fontWeight: FontWeight.bold,
-                                            color: blue),
+                                            color: black),
                                       ),
                                     ],
                                   ),

@@ -91,7 +91,7 @@ class StoreController extends GetxController {
         Get.back();
         Get.back();
         getProducts(token, storeId);
-        CustomSnackBar.successSnackBar('Great!', 'Store created successfully');
+        CustomSnackBar.successSnackBar('Great!', 'Product created successfully');
       } else {
         Get.back();
         CustomSnackBar.failedSnackBar('Failed', '$response');

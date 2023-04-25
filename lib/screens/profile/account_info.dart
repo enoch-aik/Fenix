@@ -4,14 +4,15 @@ import 'package:fenix/helpers/validator.dart';
 import 'package:fenix/helpers/widgets.dart';
 import 'package:fenix/helpers/widgets/snack_bar.dart';
 import 'package:fenix/screens/onboarding/constants.dart';
+import 'package:fenix/screens/profile/edit_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../theme.dart';
 
-class EditProfile extends StatelessWidget {
-  EditProfile({Key? key}) : super(key: key);
+class AccountInfo extends StatelessWidget {
+  AccountInfo({Key? key}) : super(key: key);
 
   PageController pageController = PageController();
   final UserController _userController = Get.find();
@@ -84,7 +85,7 @@ class EditProfile extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Edit",
+                  "Your account Information",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.w,
@@ -109,21 +110,40 @@ class EditProfile extends StatelessWidget {
                       child: Column(
                         children: [
                           kSpacing,
-                          Column(
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Icon(Icons.person, size: 40.w,),
-                              tiny5Space(),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text("Choose a photo",
-                                  style: TextStyle(
-                                    fontSize: 13.w,
-                                    color: dark.withOpacity(0.3),
-                                  ),),
+                                  Icon(Icons.person, color: Colors.black, size: 40.w,),
                                   tinyHSpace(),
-                                  Icon(Icons.edit, size: 13.w, color: dark.withOpacity(0.3),)
+                                  Text(firstNameController.text,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                  ),),
+                                  tinyH5Space(),
+                                  Text(lastNameController.text,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                    ),)
                                 ],
+                              ),
+
+                              InkWell(
+                                onTap: (){
+                                  Get.to(() => EditProfile());
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 2.w),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15.w),
+                                    border: Border.all(color: dark.withOpacity(0.5)),
+                                  ),
+                                  child: Text("Edit",
+                                  style: TextStyle(
+                                    fontSize: 14.w
+                                  ),),
+                                ),
                               )
                             ],
                           ),
@@ -154,6 +174,7 @@ class EditProfile extends StatelessWidget {
                           kSpacing,
                           TextFieldWidget(
                             hint: "Username",
+                            enabled: false,
                             textController: userNameController,
                             validator: (value) =>
                                 UsernameValidator.validate(value!),
@@ -161,20 +182,24 @@ class EditProfile extends StatelessWidget {
                           kSpacing,
                           TextFieldWidget(
                               hint: "Phone Number",
+                              enabled: false,
                               textController: phoneController),
                           kSpacing,
                           TextFieldWidget(
                             hint: "Address",
+                            enabled: false,
                             textController: addressController,
                           ),
                           kSpacing,
                           TextFieldWidget(
                             hint: "City",
+                            enabled: false,
                             textController: cityController,
                           ),
                           kSpacing,
                           TextFieldWidget(
                             hint: "Country",
+                            enabled: false,
                             textController: countryController,
                           ),
                           kSpacing,
@@ -189,23 +214,6 @@ class EditProfile extends StatelessWidget {
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.07,
                           ),
-                          InkWell(
-                              onTap: () {
-                                if (_formKey.currentState!.validate()) {
-                                  _userController.updateProfile(
-                                      _userController.getToken(),
-                                      username: userNameController.text,
-                                      phoneNumber: phoneController.text,
-                                      gender: _userController.gender.value,
-                                      address: addressController.text,
-                                      country: countryController.text,
-                                      city: cityController.text);
-                                } else {
-                                  CustomSnackBar.failedSnackBar('Error',
-                                      'Ensure that all required fields are filled');
-                                }
-                              },
-                              child: ButtonWidget(title: "Save Information")),
                           verticalSpace(0.04),
                         ],
                       ),
@@ -229,12 +237,12 @@ class EditProfile extends StatelessWidget {
           _userController.gender(title);
         },
         child: Obx(
-          () => Container(
+              () => Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(17.w),
               color: (_userController.gender.value == title ||
-                      (_userController.getUser() != null &&
-                          _userController.getUser()!.gender == title))
+                  (_userController.getUser() != null &&
+                      _userController.getUser()!.gender == title))
                   ? const Color(0xFFE4F0FA).withOpacity(0.8)
                   : const Color(0xFFE4F0FA),
               boxShadow: [
@@ -256,14 +264,14 @@ class EditProfile extends StatelessWidget {
                   child: Text(
                     title,
                     style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                          fontSize: 15.w,
-                          color: (_userController.gender.value == title ||
-                                  (_userController.getUser() != null &&
-                                      _userController.getUser()!.gender ==
-                                          title))
-                              ? Colors.black
-                              : Colors.grey.shade400,
-                        ),
+                      fontSize: 15.w,
+                      color: (_userController.gender.value == title ||
+                          (_userController.getUser() != null &&
+                              _userController.getUser()!.gender ==
+                                  title))
+                          ? Colors.black
+                          : Colors.grey.shade400,
+                    ),
                   ),
                 ),
                 Container(
@@ -271,15 +279,15 @@ class EditProfile extends StatelessWidget {
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: (_userController.gender.value == title ||
-                                (_userController.getUser() != null &&
-                                    _userController.getUser()!.gender == title))
+                            (_userController.getUser() != null &&
+                                _userController.getUser()!.gender == title))
                             ? light.withOpacity(0.5)
                             : Colors.transparent),
                     child: Icon(
                       icon,
                       color: (_userController.gender.value == title ||
-                              (_userController.getUser() != null &&
-                                  _userController.getUser()!.gender == title))
+                          (_userController.getUser() != null &&
+                              _userController.getUser()!.gender == title))
                           ? kTextBlackColor
                           : Colors.blueGrey,
                     )),
