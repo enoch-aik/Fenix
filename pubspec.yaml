@@ -43,6 +43,8 @@ dependencies:
   loading_indicator: ^3.1.0
   google_fonts: ^4.0.3
 #  flutter_neumorphic: ^3.2.0
+  image_picker:
+  intl:
   fl_chart:
   rflutter_alert:
   cached_network_image:

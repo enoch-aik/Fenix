@@ -59,7 +59,7 @@ class _CreateCarState extends State<CreateCar> {
   final discountController = TextEditingController();
   final planController = TextEditingController();
   final deliveryController = TextEditingController();
-
+  List amenities = [];
   String deliveryValue = '';
   bool selectDollar = false;
 
@@ -111,13 +111,13 @@ class _CreateCarState extends State<CreateCar> {
                         contentPadding: EdgeInsets.symmetric(
                             horizontal: 15,
                             vertical:
-                            MediaQuery.of(context).size.height * 0.015),
+                                MediaQuery.of(context).size.height * 0.015),
                         hintText: "Search Fenix",
                         hintStyle: Theme.of(context)
                             .textTheme
                             .bodyText1!
                             .copyWith(
-                            fontSize: 15.w, color: Colors.grey.shade500),
+                                fontSize: 15.w, color: Colors.grey.shade500),
                         prefixIcon: const Icon(Icons.search),
                         suffixIcon: const Icon(
                           Icons.qr_code_scanner,
@@ -139,9 +139,9 @@ class _CreateCarState extends State<CreateCar> {
         children: [
           const Center(
               child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text('Create Car Listing'),
-              )),
+            padding: EdgeInsets.all(8.0),
+            child: Text('Create Car Listing'),
+          )),
           const Divider(thickness: 4, color: textColor),
           Expanded(
             child: Form(
@@ -294,8 +294,7 @@ class _CreateCarState extends State<CreateCar> {
                       ),
                       smallHSpace(),
                       const Text(
-                        'so\'m',
-
+                        'So\'m',
                         style: TextStyle(fontSize: 13),
                       ),
                       tinyH5Space(),
@@ -318,25 +317,18 @@ class _CreateCarState extends State<CreateCar> {
                     child: InkWell(
                         onTap: () {
                           if (_formKey.currentState!.validate()) {
-                            _storeController.createNewProduct(
+                            _storeController.createNewCar(
                               _userController.getToken(),
                               storeId: widget.storeId,
                               title: nameController.text,
-                              discount: discountController.text,
-                              plan: 'Basic',
+                              // plan: 'Basic',
+                              // plan: 'Premium',
+                              amenities: amenities,
+                              plan: 'Loggie',
                               deliveryAddress: deliveryController.text,
-                              deliveryCity: deliveryLocationController.text,
-                              shippingCost: deliveryPriceController.text,
-                              capacity: capacityController.text,
-                              quantity: quantityController.text,
                               price: priceController.text,
-                              size: sizeController.text,
-                              material: materialController.text,
                               category: categoryController.text,
-                              condition: conditionController.text,
                               brand: brandController.text,
-                              coordinate: "12.345678, -98.765432",
-                              features: featuresController.text,
                               color: colorController.text,
                               description: descriptionController.text,
                             );
@@ -435,9 +427,9 @@ class _CreateCarState extends State<CreateCar> {
             )),
         Expanded(
             child: Text(
-              subText,
-              style: const TextStyle(fontSize: 13),
-            )),
+          subText,
+          style: const TextStyle(fontSize: 13),
+        )),
         Container(
             decoration: depressNeumorph(),
             child: SizedBox(
@@ -497,12 +489,12 @@ class _CreateCarState extends State<CreateCar> {
           _userController.gender(title);
         },
         child: Obx(
-              () => Container(
+          () => Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(17.w),
               color: (_userController.gender.value == title ||
-                  (_userController.getUser() != null &&
-                      _userController.getUser()!.gender == title))
+                      (_userController.getUser() != null &&
+                          _userController.getUser()!.gender == title))
                   ? const Color(0xFFE4F0FA).withOpacity(0.8)
                   : const Color(0xFFE4F0FA),
               boxShadow: [
@@ -524,14 +516,14 @@ class _CreateCarState extends State<CreateCar> {
                   child: Text(
                     title,
                     style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                      fontSize: 15.w,
-                      color: (_userController.gender.value == title ||
-                          (_userController.getUser() != null &&
-                              _userController.getUser()!.gender ==
-                                  title))
-                          ? Colors.black
-                          : Colors.grey.shade400,
-                    ),
+                          fontSize: 15.w,
+                          color: (_userController.gender.value == title ||
+                                  (_userController.getUser() != null &&
+                                      _userController.getUser()!.gender ==
+                                          title))
+                              ? Colors.black
+                              : Colors.grey.shade400,
+                        ),
                   ),
                 ),
                 Container(
@@ -539,15 +531,15 @@ class _CreateCarState extends State<CreateCar> {
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: (_userController.gender.value == title ||
-                            (_userController.getUser() != null &&
-                                _userController.getUser()!.gender == title))
+                                (_userController.getUser() != null &&
+                                    _userController.getUser()!.gender == title))
                             ? light.withOpacity(0.5)
                             : Colors.transparent),
                     child: Icon(
                       icon,
                       color: (_userController.gender.value == title ||
-                          (_userController.getUser() != null &&
-                              _userController.getUser()!.gender == title))
+                              (_userController.getUser() != null &&
+                                  _userController.getUser()!.gender == title))
                           ? kTextBlackColor
                           : Colors.blueGrey,
                     )),

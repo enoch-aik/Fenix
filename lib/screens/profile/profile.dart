@@ -1,3 +1,6 @@
+import 'package:fenix/controller/store_controller.dart';
+import 'package:fenix/controller/user_controller.dart';
+import 'package:fenix/helpers/widgets/snack_bar.dart';
 import 'package:fenix/screens/profile/selling_list.dart';
 import 'package:fenix/screens/profile/wish_list.dart';
 import 'package:fenix/theme.dart';
@@ -5,9 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../helpers/widgets/dialogs.dart';
 import '../../helpers/widgets/logout_card_widget.dart';
+import '../auth_screens/create_profile.dart';
 import '../onboarding/constants.dart';
 import 'account.dart';
+import 'edit_profile.dart';
 import 'message.dart';
 import 'selling_post.dart';
 import 'store_lists.dart';
@@ -21,6 +27,9 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
+  final UserController _userController = Get.find();
+  final StoreController _storeController = Get.find();
+
   List title = [
     "Your Account",
     "Your Message",
@@ -31,6 +40,12 @@ class _UserProfileState extends State<UserProfile> {
     "Your Selling",
     "Language",
   ];
+
+  @override
+  void initState() {
+    _storeController.getStores(_userController.getToken());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +149,26 @@ class _UserProfileState extends State<UserProfile> {
                     onTap: () {
                       if (index == 0) Get.to(() => const Account());
                       if (index == 1) Get.to(() => const Messages());
-                      if (index == 2) Get.to(() =>  SellingPost(storeId: '', storeName: '', storeLocation: '',));
+                      if (index == 2) {
+                        print('=======');
+                        print( _storeController.storeList[0]['id'].toString());
+                        (_userController.getUser()!.address == '' ||
+                                _userController.getUser()!.mobileNumber == '')
+                            ? CustomDialogs.showNoticeDialog(
+                                title: 'Sorry!',
+                                message:
+                                    'Updated your profile to create selling',
+                                onClick: () {
+                                  Get.to(() => EditProfile());
+                                })
+                            : Get.to(() => SellingPost(
+                                  storeId: _storeController.storeList[0]['id'].toString(),
+                                  storeName: _storeController.storeList[0]
+                                      ['name'].toString(),
+                                  storeLocation: _storeController.storeList[0]
+                                      ['location'].toString(),
+                                ));
+                      }
                       if (index == 3) Get.to(() => const Subscribe());
                       if (index == 4) Get.to(() => const WishList());
                       if (index == 5) Get.to(() => const StoreList());

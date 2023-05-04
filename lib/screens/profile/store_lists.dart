@@ -1,12 +1,17 @@
 import 'package:fenix/const.dart';
+import 'package:fenix/controller/user_controller.dart';
+import 'package:fenix/helpers/widgets/dialogs.dart';
 import 'package:fenix/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../controller/store_controller.dart';
+import '../../helpers/widgets/snack_bar.dart';
+import '../auth_screens/create_profile.dart';
 import '../onboarding/constants.dart';
 import 'create_store.dart';
+import 'edit_profile.dart';
 import 'product_list.dart';
 import 'selling_post.dart';
 
@@ -15,7 +20,8 @@ class StoreList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final StoreController _storeController = Get.find();
+    final StoreController storeController = Get.find();
+    final UserController userController = Get.find();
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       floatingActionButton: FloatingActionButton.extended(
@@ -106,9 +112,9 @@ class StoreList extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: BODY_PADDING),
-              child: Obx(() => _storeController.isFetchingStore.isTrue
+              child: Obx(() => storeController.isFetchingStore.isTrue
                   ? const Center(child: CircularProgressIndicator())
-                  : _storeController.storeList.isEmpty
+                  : storeController.storeList.isEmpty
                       ? Center(
                           child: InkWell(
                           onTap: () => Get.to(() => CreateStore()),
@@ -124,10 +130,25 @@ class StoreList extends StatelessWidget {
                         ))
                       : ListView.separated(
                           itemBuilder: (c, i) {
-                            print(_storeController.storeList);
-                            var item = _storeController.storeList[i];
+                            print(storeController.storeList);
+                            var item = storeController.storeList[i];
                             return InkWell(
-                              onTap: ()=>Get.to(()=>SellingPost(storeId:item['id'],storeName:item['name'],storeLocation:item['location'])),
+                              onTap: () => (userController.getUser()!.address ==
+                                          '' ||
+                                      userController.getUser()!.mobileNumber ==
+                                          '')
+                                  ? CustomDialogs.showNoticeDialog(
+                                      title: 'Sorry!',
+                                      message:
+                                          'Updated your profile to create selling',
+                                      onClick: () {
+                                        Get.to(() => EditProfile());
+                                      })
+                                  : Get.to(() => SellingPost(
+                                      storeId: item['id'].toString(),
+                                      storeName: item['name'].toString(),
+                                      storeLocation:
+                                          item['location'].toString())),
                               // onTap: ()=>Get.to(()=>ProductList(storeId:item['id'],storeName:item['name'],storeLocation:item['location'])),
                               child: Container(
                                 padding:
@@ -136,12 +157,15 @@ class StoreList extends StatelessWidget {
                                   color: const Color(0xFFE4EFF9),
                                   borderRadius: BorderRadius.circular(10),
                                   border: Border.all(
-                                      color: const Color(0xFf334669), width: 0.1),
+                                      color: const Color(0xFf334669),
+                                      width: 0.1),
                                   gradient: LinearGradient(
                                       colors: [
                                         Colors.white,
-                                        const Color(0xFFDBE6F2).withOpacity(0.2),
-                                        const Color(0xFF8F9FAE).withOpacity(0.2),
+                                        const Color(0xFFDBE6F2)
+                                            .withOpacity(0.2),
+                                        const Color(0xFF8F9FAE)
+                                            .withOpacity(0.2),
                                       ],
                                       stops: const [
                                         0.0,
@@ -180,10 +204,11 @@ class StoreList extends StatelessWidget {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(item['name']),
+                                          Text(item['name'].toString()),
                                           Text(
-                                            item['location'],
-                                            style: const TextStyle(fontSize: 14),
+                                            item['location'].toString(),
+                                            style:
+                                                const TextStyle(fontSize: 14),
                                           ),
                                         ],
                                       ),
@@ -195,7 +220,7 @@ class StoreList extends StatelessWidget {
                             );
                           },
                           separatorBuilder: (c, i) => smallSpace(),
-                          itemCount: _storeController.storeList.length)),
+                          itemCount: storeController.storeList.length)),
             ),
           )
         ],
