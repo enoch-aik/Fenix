@@ -1,5 +1,6 @@
 import 'package:fenix/screens/onboarding/auth_board.dart';
 import 'package:fenix/screens/onboarding/constants.dart';
+import 'package:fenix/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
@@ -28,6 +29,10 @@ class BottomHillsWidget extends StatelessWidget {
 
 ThemeData theme = ThemeData(
   primarySwatch: Colors.blue,
+  colorScheme: ThemeData()
+      .colorScheme
+      .copyWith(primary: primary, background: white, error: blue),
+
   backgroundColor: const Color(0xFFE4F0FA),
   textTheme: const TextTheme(
     bodyText1: TextStyle(
@@ -123,6 +128,56 @@ class ButtonWidget extends StatelessWidget {
     );
   }
 }
+
+
+class DefaultButton extends StatelessWidget {
+  final String? title;
+  final onPress;
+  final color;
+
+  const DefaultButton({
+    Key? key,
+    this.title,
+    this.onPress,
+    this.color,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onPress,
+      child: Container(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(title.toString(),
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 16,
+                  color: white)),
+        ),
+        decoration: BoxDecoration(
+color: color??lightGreen,
+            boxShadow: const [
+              BoxShadow(
+                spreadRadius: 0.5,
+                color: Color.fromRGBO(0, 0, 0, 0.2),
+                offset: Offset(4, 4),
+                blurRadius: 6,
+              ),
+              BoxShadow(
+                spreadRadius: 0.5,
+                color: Color.fromRGBO(255, 255, 255, 1),
+                offset: Offset(-4, -4),
+                blurRadius: 6,
+              )
+            ],
+            borderRadius: BorderRadius.circular(12)),
+      ),
+    );
+  }
+}
+
 
 class SwipeToggleButton extends StatelessWidget {
   Widget child;
@@ -384,8 +439,8 @@ class CustomWidgetsPad extends StatelessWidget {
 
 class TextFieldWidget extends StatelessWidget {
   String hint;
-  Icon? prefixIcon;
-  Icon? suffixIcon;
+  Widget? prefixIcon;
+  Widget? suffixIcon;
   TextEditingController? textController;
   String? Function(String?)? validator;
   bool? enabled;

@@ -27,17 +27,7 @@ class _SellingPostState extends State<SellingPost> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFE4F0FA),
-      // floatingActionButton: FloatingActionButton.extended(
-      //     backgroundColor: dark,
-      //     icon: const Icon(Icons.add, color: background),
-      //     onPressed: () {
-      //       Get.to(() => CreateApartment(
-      //         storeId: widget.storeId,
-      //       ));
-      //     },
-      //     label:
-      //     const Text('Add Apartment', style: TextStyle(color: background))),
-      appBar: PreferredSize(
+     appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width,
             MediaQuery.of(context).size.height * 0.08),
         child: Container(
@@ -107,7 +97,7 @@ class _SellingPostState extends State<SellingPost> {
 
           InkWell(
             onTap: (){
-              Get.to(() => CreateApartment(storeId: "1",));
+              Get.to(() => CreateApartment(storeId:widget.storeId,));
             },
             child: SellingPostCard(
               title: "Apartment",
@@ -120,7 +110,7 @@ class _SellingPostState extends State<SellingPost> {
           
           InkWell(
             onTap: (){
-              Get.to(() => CreateApartment(storeId: "1",));
+              Get.to(() => CreateApartment(storeId: widget.storeId,));
             },
             child: SellingPostCard(
               title: "House",
@@ -133,7 +123,8 @@ class _SellingPostState extends State<SellingPost> {
 
           InkWell(
             onTap: (){
-              Get.to(() => CreateApartment(storeId: "1",));
+              Get.to(() => CreateApartment(storeId: widget.storeId,));
+
             },
             child: SellingPostCard(
               title: "Dacha",
@@ -146,7 +137,7 @@ class _SellingPostState extends State<SellingPost> {
 
           InkWell(
             onTap: (){
-              Get.to(() => CreateCar(storeId: "1",));
+              Get.to(() => CreateCar(storeId: widget.storeId,));
             },
             child: SellingPostCard(
               title: "Car",
@@ -159,7 +150,7 @@ class _SellingPostState extends State<SellingPost> {
 
           InkWell(
             onTap: (){
-              Get.to(() => CreateProduct(storeId: "1",));
+              Get.to(() => CreateProduct(storeId: widget.storeId,));
             },
             child: SellingPostCard(
               title: "Electronics",

@@ -91,7 +91,8 @@ class StoreController extends GetxController {
         Get.back();
         Get.back();
         getProducts(token, storeId);
-        CustomSnackBar.successSnackBar('Great!', 'Product created successfully');
+        CustomSnackBar.successSnackBar(
+            'Great!', 'Product created successfully');
       } else {
         Get.back();
         CustomSnackBar.failedSnackBar('Failed', '$response');
@@ -114,13 +115,72 @@ class StoreController extends GetxController {
       },
       "price": {
         "amount": double.parse(price),
-        "discount": double.parse(discount==''?'0':discount),
+        "discount": double.parse(discount == '' ? '0' : discount),
       },
       "shipping": {
         "shipping": true,
-        "price": double.parse(shippingCost==''?'0':shippingCost),
+        "price": double.parse(shippingCost == '' ? '0' : shippingCost),
         "details": deliveryAddress,
         "location": deliveryCity
+      }
+    });
+  }
+
+  createNewCar(
+    token, {
+    storeId,
+    color,
+    price,
+    title,
+    previousAccident,
+    firstOwner,
+    mileage,
+    brand,
+    year,
+    model,
+    seats,
+    key,
+    description,
+    deliveryAddress,
+    detail,category,plan,
+    amenities,
+  }) async {
+    Get.to(() => const Loading());
+
+    StoreServices.createProduct((status, response) {
+      print('==> $response');
+      if (status) {
+        Get.back();
+        Get.back();
+        getProducts(token, storeId);
+        CustomSnackBar.successSnackBar(
+            'Great!', 'Product created successfully');
+      } else {
+        Get.back();
+        CustomSnackBar.failedSnackBar('Failed', '$response');
+      }
+    }, token, storeId, {
+      "title": title,
+      "description": description,
+      "category": category,
+      "plan": plan,
+      "specifics": {
+        "model": model,
+        "year": year,
+        "mileage": mileage,
+        "seats": double.parse(seats),
+        "keys": double.parse(key),
+        "previousAccident": previousAccident ?? false,
+        "firstOwner": firstOwner ?? true,
+        "amenities": amenities,
+        "brand": brand,
+        "color": color,
+      },
+      "shipping": {
+        "shipping": true,
+        "price": price,
+        "details": detail,
+        "location": deliveryAddress,
       }
     });
   }
@@ -135,6 +195,7 @@ class StoreController extends GetxController {
     longitude,
     latitude,
     propertyType,
+    apartmentType,
     nightAmount,
     weekAmount,
     monthAmount,
@@ -147,21 +208,9 @@ class StoreController extends GetxController {
     toilet,
     occupantsNumber,
     floor,
+    amenities,
   }) async {
-    Get.to(() => const Loading());
-
-    StoreServices.createApartment((status, response) {
-      print('==> $response');
-      if (status) {
-        Get.back();
-        Get.back();
-        getProducts(token, storeId);
-        CustomSnackBar.successSnackBar('Great!', 'Store created successfully');
-      } else {
-        Get.back();
-        CustomSnackBar.failedSnackBar('Failed', '$response');
-      }
-    }, token, storeId, {
+    var data = {
       "title": title,
       "description": description,
       "location": {
@@ -169,6 +218,7 @@ class StoreController extends GetxController {
         "latitude": latitude,
       },
       "propertyType": propertyType,
+      "apartmentType": apartmentType,
       "rentPrice": {
         "night": double.parse(nightAmount),
         "week": double.parse(weekAmount),
@@ -182,13 +232,28 @@ class StoreController extends GetxController {
         "toilet": double.parse(toilet),
         "floor": double.parse(floor),
         "squareMetre": double.parse(sqMeter),
-        "amenities": ["wifi", "tv", "air_conditioning", "kitchen"]
+        "amenities": amenities,
       },
       "rules": {
         "occupant": double.parse(occupantsNumber),
         "pet": pet,
         "smoke": smoke
       }
-    });
+    };
+    print(data);
+    Get.to(() => const Loading());
+
+    StoreServices.createApartment((status, response) {
+      print('==> $response');
+      if (status) {
+        Get.back();
+        Get.back();
+        getProducts(token, storeId);
+        CustomSnackBar.successSnackBar('Great!', 'Store created successfully');
+      } else {
+        Get.back();
+        CustomSnackBar.failedSnackBar('Failed', '$response');
+      }
+    }, token, storeId, data);
   }
 }

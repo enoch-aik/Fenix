@@ -37,12 +37,15 @@ class UserController extends GetxController {
   }
 
   updateProfile(token, {phoneNumber, gender, address, city, country, username}) {
+    Get.to(() => const Loading());
     UserServices.updateUser((status, response) {
       if (status) {
         fetchUser(token);
         CustomSnackBar.successSnackBar(
             'Success', 'Profile updated successfully');
       } else {
+        Get.back();
+
         CustomSnackBar.failedSnackBar('Failed', '$response');
       }
     }, {"phoneNumber":phoneNumber, "gender": gender, "address": address, "city": city, "country": country, "username": username }, token);

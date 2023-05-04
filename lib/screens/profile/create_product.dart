@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fenix/const.dart';
 import 'package:fenix/controller/user_controller.dart';
 import 'package:fenix/helpers/validator.dart';
@@ -9,6 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../controller/store_controller.dart';
+import '../../helpers/image_picker.dart';
 import '../../neumorph.dart';
 import '../../theme.dart';
 
@@ -62,6 +65,139 @@ class _CreateProductState extends State<CreateProduct> {
 
   String deliveryValue = '';
   bool selectDollar = false;
+  File? _image;
+
+  Future<dynamic> showImagePickers({isPhoto = true}) {
+    return showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        context: context,
+        isDismissible: true,
+        isScrollControlled: true,
+        builder: (context) {
+          return SizedBox(
+            height: height() * 0.32,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 30),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                          color: background,
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: InkWell(
+                                onTap: () async {
+                                  Get.back();
+
+                                  var selectedImage = isPhoto
+                                      ? await openCamera()
+                                      : await openVideoCamera();
+                                  if (selectedImage != null) {
+                                    setState(() {
+                                      _image = selectedImage;
+                                    });
+                                  }
+                                },
+                                child: Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                          'Take ${isPhoto ? 'Photo' : 'Video'} from camera',
+                                          style: const TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w400)),
+                                    ),
+                                    const Padding(
+                                      padding: EdgeInsets.only(right: 10),
+                                      child: Icon(
+                                        Icons.camera_alt,
+                                        size: 25,
+                                        color: primary,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const Divider(),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: InkWell(
+                                onTap: () async {
+                                  Get.back();
+
+                                  var selectedImage = isPhoto
+                                      ? await openGallery()
+                                      : await openVideoGallery();
+                                  if (selectedImage != null) {
+                                    setState(() {
+                                      _image = selectedImage;
+                                    });
+                                  }
+                                },
+                                child: Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Text(
+                                          'Take ${isPhoto ? 'Photo' : 'Video'} from gallery',
+                                          style: const TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w400)),
+                                    ),
+                                    const Padding(
+                                      padding: EdgeInsets.only(right: 10),
+                                      child: Icon(
+                                        Icons.collections,
+                                        size: 25,
+                                        color: primary,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: background,
+                            borderRadius: BorderRadius.circular(8)),
+                        child: const Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Center(
+                            child: Text(
+                              'Cancel',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 15),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +276,7 @@ class _CreateProductState extends State<CreateProduct> {
           const Center(
               child: Padding(
             padding: EdgeInsets.all(8.0),
-            child: Text('Create Selling Post'),
+            child: Text('Create Selling Post',style: TextStyle(fontWeight: FontWeight.w400)),
           )),
           const Divider(thickness: 4, color: textColor),
           Expanded(
@@ -156,9 +292,9 @@ class _CreateProductState extends State<CreateProduct> {
                     children: [
                       imageSelect(),
                       tinyHSpace(),
-                      imageSelect(),
+                      imageSelect(icon: Icons.videocam),
                       tinyHSpace(),
-                      imageSelect(),
+                      imageSelect(icon: Icons.add),
                       tinyHSpace(),
                       imageSelect(),
                     ],
@@ -234,7 +370,7 @@ class _CreateProductState extends State<CreateProduct> {
                   kSpacing,
                   TextFieldWidget(
                     hint: "Description",
-                    maxLine: 4,
+                    maxLine: 5,
                     textController: descriptionController,
                   ),
                   kSpacing,
@@ -463,17 +599,18 @@ class _CreateProductState extends State<CreateProduct> {
     );
   }
 
-  Container imageSelect() {
+  Container imageSelect({icon}) {
     return Container(
       decoration: BoxDecoration(
-          border: Border.all(color: lightGrey),
-          borderRadius: BorderRadius.circular(5)),
-      child: const Padding(
-        padding: EdgeInsets.all(25.0),
-        child: Icon(Icons.photo_camera, color: lightGrey),
+          border: Border.all(color: light),
+          borderRadius: BorderRadius.circular(10)),
+      child:  Padding(
+        padding: EdgeInsets.all(30.0),
+        child: Icon(icon??Icons.photo_camera, color: lightGrey),
       ),
     );
   }
+
 
   Row title(String title) {
     return Row(

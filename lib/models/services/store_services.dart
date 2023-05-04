@@ -47,6 +47,7 @@ class StoreServices {
   }
 
   static createApartment(Function callback, token, storeId, data) async {
+
     var response = await ApiServices.initialisePostRequest(
         url: '$storesUrl/$storeId/apartments', token: token, data: data);
     print(response);
