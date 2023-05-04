@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../../controller/user_controller.dart';
 import '../onboarding/constants.dart';
@@ -130,17 +131,84 @@ class LoginAndSecurity extends StatelessWidget {
                         ),
                         Divider(thickness: 1, height: 25.w, color: dark.withOpacity(0.4),),
                         verticalSpace(0.05),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Delete Account",
-                              style: TextStyle(
-                                fontSize: 15.w,
-                                fontWeight: FontWeight.w500,
-                                color: red
-                              ),),
-                            Icon(Icons.arrow_forward,)
-                          ],
+                        InkWell(
+                          onTap: (){
+                            Alert(
+                              context: context,
+                              content: SizedBox(
+                                height: MediaQuery.of(context).size.height * 0.31,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text(" By deleting your account you are also permanently all history and transaction records.\n\n",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                      ),),
+
+                                    const Text("Are you sure you want to continue?",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                      ),),
+                                    const SizedBox(height: 30,),
+
+
+                                    Row(children: [
+                                      Expanded(
+                                        child:DialogButton(
+                                          radius: BorderRadius.circular(8.w),
+                                          border: Border.all(color: primary, width: 1.w),
+                                          color: Colors.white,
+                                          onPressed: () async{
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text("Cancel",
+                                            style: TextStyle(color: primary, fontSize: 16.w),
+                                          ),
+                                        ),
+                                      ),
+
+                                      Expanded(
+                                        child:  DialogButton(
+                                          color: red,
+                                          radius: BorderRadius.circular(8.w),
+                                          border: Border.all(color: red, width: 1.w),
+                                          onPressed: () {
+                                          },
+                                          child: Text('Yes, Delete',
+                                            textAlign: TextAlign.center,
+                                            style:  TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16.w,
+                                              fontFamily: 'Poppins',
+                                            ),
+                                          ),),
+                                      ),
+                                    ],),
+
+
+
+                                  ],
+                                ),
+                              ),
+                              buttons: [
+
+                              ],
+                            ).show();
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Delete Account",
+                                style: TextStyle(
+                                  fontSize: 15.w,
+                                  fontWeight: FontWeight.w500,
+                                  color: red
+                                ),),
+                              Icon(Icons.arrow_forward,)
+                            ],
+                          ),
                         )
                       ],
                     ),
@@ -151,6 +219,9 @@ class LoginAndSecurity extends StatelessWidget {
       ),
     );
   }
+
+
+
 
   InkWell accountContainer(title, {onTap}) {
     return InkWell(

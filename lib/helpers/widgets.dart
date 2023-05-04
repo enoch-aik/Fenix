@@ -385,6 +385,7 @@ class CustomWidgetsPad extends StatelessWidget {
 class TextFieldWidget extends StatelessWidget {
   String hint;
   Icon? prefixIcon;
+  Icon? suffixIcon;
   TextEditingController? textController;
   String? Function(String?)? validator;
   bool? enabled;
@@ -396,6 +397,7 @@ class TextFieldWidget extends StatelessWidget {
       {Key? key,
       required this.hint,
       this.prefixIcon,
+      this.suffixIcon,
       this.enabled,
       this.maxLine,
       this.textController,
@@ -453,6 +455,7 @@ class TextFieldWidget extends StatelessWidget {
               .bodyText1!
               .copyWith(fontSize: 15.w, color: Colors.grey.shade400),
           prefixIcon: prefixIcon,
+          suffixIcon: suffixIcon,
         ),
       ),
     );

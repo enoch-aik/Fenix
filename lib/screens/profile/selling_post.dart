@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 
 import '../../theme.dart';
 import '../onboarding/constants.dart';
+import 'create_car.dart';
 
 class SellingPost extends StatefulWidget {
   SellingPost(
@@ -26,16 +27,16 @@ class _SellingPostState extends State<SellingPost> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFE4F0FA),
-      floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: dark,
-          icon: const Icon(Icons.add, color: background),
-          onPressed: () {
-            Get.to(() => CreateApartment(
-              storeId: widget.storeId,
-            ));
-          },
-          label:
-          const Text('Add Apartment', style: TextStyle(color: background))),
+      // floatingActionButton: FloatingActionButton.extended(
+      //     backgroundColor: dark,
+      //     icon: const Icon(Icons.add, color: background),
+      //     onPressed: () {
+      //       Get.to(() => CreateApartment(
+      //         storeId: widget.storeId,
+      //       ));
+      //     },
+      //     label:
+      //     const Text('Add Apartment', style: TextStyle(color: background))),
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width,
             MediaQuery.of(context).size.height * 0.08),
@@ -145,7 +146,7 @@ class _SellingPostState extends State<SellingPost> {
 
           InkWell(
             onTap: (){
-
+              Get.to(() => CreateCar(storeId: "1",));
             },
             child: SellingPostCard(
               title: "Car",

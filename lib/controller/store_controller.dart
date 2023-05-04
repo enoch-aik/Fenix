@@ -132,7 +132,8 @@ class StoreController extends GetxController {
     bool? pet,
     title,
     description,
-    location,
+    longitude,
+    latitude,
     propertyType,
     nightAmount,
     weekAmount,
@@ -163,7 +164,10 @@ class StoreController extends GetxController {
     }, token, storeId, {
       "title": title,
       "description": description,
-      "location": location,
+      "location": {
+        "longitude": longitude,
+        "latitude": latitude,
+      },
       "propertyType": propertyType,
       "rentPrice": {
         "night": double.parse(nightAmount),
