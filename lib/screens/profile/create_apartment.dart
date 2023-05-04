@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fenix/const.dart';
 import 'package:fenix/controller/user_controller.dart';
 import 'package:fenix/helpers/validator.dart';
 import 'package:fenix/helpers/widgets.dart';
+import 'package:fenix/helpers/widgets/camera_gallery_picker.dart';
 import 'package:fenix/helpers/widgets/snack_bar.dart';
 import 'package:fenix/screens/onboarding/constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,6 +12,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../controller/store_controller.dart';
+import '../../helpers/image_picker.dart';
 import '../../neumorph.dart';
 import '../../theme.dart';
 
@@ -132,17 +135,21 @@ class _CreateApartmentState extends State<CreateApartment> {
                   kSpacing,
                   title('Photos'),
                   kSpacing,
-                  Row(
+                  Wrap(
                     children: [
-                      imageSelect(),
-                      tinyHSpace(),
-                      imageSelect(),
-                      tinyHSpace(),
-                      imageSelect(),
-                      tinyHSpace(),
-                      imageSelect(),
+                     Obx(() =>  Wrap(
+                       children: List.generate(images!.length, (index) =>
+                           imageSelect(Icons.photo_camera, images![index], index),
+
+                       ),),),
+                      imageSelectAdd(Icons.add),
                     ],
                   ),
+                  kSpacing,
+                  Text('* Select up to 10 photos and a video',
+                  style: TextStyle(
+                    fontSize: 12.w
+                  ),),
                   kSpacing,
                   title('Title of Property'),
                   kSpacing,
@@ -176,17 +183,7 @@ class _CreateApartmentState extends State<CreateApartment> {
                     'How many square meter',
                   ),
                   subText('Amenities'),
-                  Row(
-                    children: [
-                      imageSelect(),
-                      tinyHSpace(),
-                      imageSelect(),
-                      tinyHSpace(),
-                      imageSelect(),
-                      tinyHSpace(),
-                      imageSelect(),
-                    ],
-                  ),
+
                   kSpacing,
                   title('House Rules'),
                   kSpacing,
@@ -539,14 +536,84 @@ class _CreateApartmentState extends State<CreateApartment> {
     );
   }
 
-  Container imageSelect() {
-    return Container(
-      decoration: BoxDecoration(
-          border: Border.all(color: lightGrey),
-          borderRadius: BorderRadius.circular(5)),
-      child: const Padding(
-        padding: EdgeInsets.all(25.0),
-        child: Icon(Icons.photo_camera, color: lightGrey),
+  Widget imageSelect(icon, image, index) {
+    return Stack(
+      children: [
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 7.w, horizontal: 7.w),
+          decoration: BoxDecoration(
+              border: Border.all(color: dark.withOpacity(0.62)),
+              borderRadius: BorderRadius.circular(14.w),
+            image: DecorationImage(image: Image.file(image, fit: BoxFit.fitWidth,).image, fit: BoxFit.fill)
+          ),
+          child: CachedNetworkImage(
+            fit: BoxFit.scaleDown,
+            imageUrl: "https://app.sharewithleaf.com/uploads/avatars/",
+            placeholder: (context, url) => Padding(
+              padding: EdgeInsets.all(25.0),
+              child: Icon(icon, color: dark.withOpacity(0.62)),
+            ),
+            errorWidget: (context, url, error) => Padding(
+              padding: EdgeInsets.all(25.0),
+              child:  Icon(icon, color: dark.withOpacity(0.62)),
+            ),
+            imageBuilder: (context, imageProvider)
+            => CircleAvatar(
+              backgroundColor: Colors.blue,
+              backgroundImage: imageProvider,
+              radius: 50.w,
+              foregroundImage: Image.file(image!.value, fit: BoxFit.fill,).image,
+            ),
+          ),
+        ),
+
+        Positioned(
+          right: 0,
+            child: InkWell(
+              onTap: (){
+                images!.removeAt(index);
+              },
+                child: Icon(Icons.delete, color: grey,),
+            ),
+        )
+      ],
+    );
+  }
+
+
+  Widget imageSelectAdd(icon) {
+    return InkWell(
+      onTap: (){
+        Future<void> future =
+        showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return BottomSheet(
+                builder:
+                    (BuildContext context) {
+                  return CameraGalleryPicker();
+                },
+                onClosing: () {},
+              );
+            });
+        void _closeModal(void value) {
+          setState(() {
+            // image!.value = image!.value;
+          });
+        }
+
+        future.then(
+                (void value) => _closeModal(value));
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 7.w, horizontal: 10.w),
+        decoration: BoxDecoration(
+          border: Border.all(color: dark.withOpacity(0.62)),
+          borderRadius: BorderRadius.circular(14.w),),
+        child: Padding(
+          padding: EdgeInsets.all(25.0),
+          child: Icon(icon, color: dark.withOpacity(0.62)),
+        ),
       ),
     );
   }
