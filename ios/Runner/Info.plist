@@ -22,6 +22,16 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Explanation on why the camera access is needed.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>This app authenticating using face id to log in</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Can I use the mic please?</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>This app needs access to store pictures</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs access to store pictures</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

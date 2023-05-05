@@ -68,7 +68,8 @@ class _CreateApartmentState extends State<CreateApartment> {
   String smoke = '';
   String pet = '';
   List amenities = [];
-  File? _image;
+  List<File> images = [];
+  List<File> videos = [];
 
   Future<dynamic> showImagePickers({isPhoto = true}) {
     return showModalBottomSheet(
@@ -97,13 +98,14 @@ class _CreateApartmentState extends State<CreateApartment> {
                               child: InkWell(
                                 onTap: () async {
                                   Get.back();
-
                                   var selectedImage = isPhoto
                                       ? await openCamera()
                                       : await openVideoCamera();
                                   if (selectedImage != null) {
                                     setState(() {
-                                      _image = selectedImage;
+                                      isPhoto
+                                          ? images.add(selectedImage)
+                                          : videos.add(selectedImage);
                                     });
                                   }
                                 },
@@ -142,7 +144,9 @@ class _CreateApartmentState extends State<CreateApartment> {
                                       : await openVideoGallery();
                                   if (selectedImage != null) {
                                     setState(() {
-                                      _image = selectedImage;
+                                      isPhoto
+                                          ? images.add(selectedImage)
+                                          : videos.add(selectedImage);
                                     });
                                   }
                                 },
@@ -313,22 +317,42 @@ class _CreateApartmentState extends State<CreateApartment> {
                   title('Photos'),
                   smallText('Please select photos or video'),
                   kSpacing,
-                  Row(
-                    children: [
-                      imageSelect(
-                        onTap: () => showImagePickers(),
-                      ),
-                      tinyHSpace(),
-                      imageSelect(
-                        icon: Icons.videocam_rounded,
-                        onTap: () => showImagePickers(isPhoto: false),
-                      ),
-                      tinyHSpace(),
-                      imageSelect(icon: Icons.add),
-                      tinyHSpace(),
-                      imageSelect(icon: Icons.add),
-                    ],
-                  ),
+                  images.isNotEmpty || videos.isNotEmpty
+                      ? Wrap(
+                          runSpacing: 10,
+                          spacing: 10,
+                          children: List.generate(
+                            images.length + 2,
+                            (index) => index == images.length
+                                ? imageSelect(
+                                    onTap: () => showImagePickers(),
+                                  )
+                                : index == images.length + 1
+                                    ? imageSelect(
+                                        icon: Icons.video_call,
+                                        onTap: () =>
+                                            showImagePickers(isPhoto: false),
+                                      )
+                                    : imageSelect(
+                                        onTap: () => showImagePickers(),
+                                        image: images[index]),
+                          ),
+                        )
+                      : Row(
+                          children: [
+                            imageSelect(
+                                onTap: () => showImagePickers(),),
+                            tinyHSpace(),
+                            imageSelect(
+                              icon: Icons.videocam_rounded,
+                              onTap: () => showImagePickers(isPhoto: false),
+                            ),
+                            tinyHSpace(),
+                            imageSelect(icon: Icons.add),
+                            tinyHSpace(),
+                            // imageSelect(icon: Icons.add),
+                          ],
+                        ),
                   kSpacing,
                   const Divider(color: light, thickness: 3),
                   kSpacing,
@@ -671,7 +695,8 @@ class _CreateApartmentState extends State<CreateApartment> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Icon(Icons.access_time_outlined, size: 18),
+                                const Icon(Icons.access_time_outlined,
+                                    size: 18),
                                 tinyHSpace(),
                                 const Expanded(
                                   child: Text(
@@ -695,7 +720,8 @@ class _CreateApartmentState extends State<CreateApartment> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Icon(Icons.access_time_outlined, size: 18),
+                                const Icon(Icons.access_time_outlined,
+                                    size: 18),
                                 tinyHSpace(),
                                 Expanded(
                                   child: Text(
@@ -793,7 +819,8 @@ class _CreateApartmentState extends State<CreateApartment> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Icon(Icons.access_time_outlined, size: 18),
+                                const Icon(Icons.access_time_outlined,
+                                    size: 18),
                                 tinyHSpace(),
                                 const Expanded(
                                   child: Text(
@@ -817,7 +844,8 @@ class _CreateApartmentState extends State<CreateApartment> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Icon(Icons.access_time_outlined, size: 18),
+                                const Icon(Icons.access_time_outlined,
+                                    size: 18),
                                 tinyHSpace(),
                                 Expanded(
                                   child: Text(
@@ -1079,7 +1107,9 @@ class _CreateApartmentState extends State<CreateApartment> {
                               description: descriptionController.text,
                               smoke: smoke == 'Yes' ? true : false,
                               pet: pet == 'Yes' ? true : false,
-                              propertyType: rentType=='Rent Property'?'rental':'sale',
+                              propertyType: rentType == 'Rent Property'
+                                  ? 'rental'
+                                  : 'sale',
                               apartmentType: 'apartment',
                               nightAmount: nightController.text,
                               weekAmount: weekController.text,
@@ -1465,17 +1495,24 @@ class _CreateApartmentState extends State<CreateApartment> {
     );
   }
 
-  Widget imageSelect({icon, onTap}) {
+  Widget imageSelect({icon, onTap, image}) {
     return InkWell(
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
             border: Border.all(color: light),
             borderRadius: BorderRadius.circular(10)),
-        child: Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: Icon(icon ?? Icons.photo_camera, color: lightGrey),
-        ),
+        child: image != null
+            ? Image.file(
+                image,
+                width: 82,
+                height: 82,
+                fit: BoxFit.cover,
+              )
+            : Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: Icon(icon ?? Icons.photo_camera, color: lightGrey),
+              ),
       ),
     );
   }
