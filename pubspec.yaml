@@ -48,7 +48,7 @@ dependencies:
   fl_chart:
   rflutter_alert:
   cached_network_image:
-  image_picker:
+  custom_map_markers: ^0.0.2+1
 
 dev_dependencies:
   flutter_test:

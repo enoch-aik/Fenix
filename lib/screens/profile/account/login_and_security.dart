@@ -1,6 +1,5 @@
 import 'package:fenix/const.dart';
 import 'package:fenix/neumorph.dart';
-import 'package:fenix/screens/profile/account_info.dart';
 import 'package:fenix/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,9 +7,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
-import '../../controller/user_controller.dart';
-import '../onboarding/constants.dart';
-import 'edit_profile.dart';
+import '../../../controller/user_controller.dart';
+import '../../onboarding/constants.dart';
 
 class LoginAndSecurity extends StatelessWidget {
    LoginAndSecurity({Key? key}) : super(key: key);

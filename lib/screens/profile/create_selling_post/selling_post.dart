@@ -1,12 +1,12 @@
 import 'package:fenix/const.dart';
-import 'package:fenix/screens/profile/create_apartment.dart';
-import 'package:fenix/screens/profile/create_product.dart';
+import 'package:fenix/screens/profile/create_selling_post/create_apartment.dart';
+import 'package:fenix/screens/profile/create_selling_post/create_product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../theme.dart';
-import '../onboarding/constants.dart';
+import '../../../theme.dart';
+import '../../onboarding/constants.dart';
 import 'create_car.dart';
 
 class SellingPost extends StatefulWidget {

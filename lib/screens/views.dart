@@ -1,4 +1,5 @@
 
+import 'package:fenix/const.dart';
 import 'package:fenix/controller/user_controller.dart';
 import 'package:fenix/helpers/icons/custom_icons_icons.dart';
 import 'package:fenix/helpers/icons/profile_icon_black_icons.dart';
@@ -68,40 +69,42 @@ final UserController userController = Get.put(UserController());
             const Color(0xFF1770A2),
           ),
         ),
-        child: BottomNavigationBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          type: BottomNavigationBarType.fixed,
-          items:  <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.map_outlined,color: Colors.white.withOpacity(0.44), size: 35.w,),
-              activeIcon: Icon(Icons.map,color: Colors.white, size: 35.w,),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined,color: Colors.white.withOpacity(0.44), size: 35.w,),
-              activeIcon: Icon(Icons.home,color: Colors.white, size: 35.w,),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_outlined, size: 30.w, color: Colors.white.withOpacity(0.44),),
-              activeIcon: Icon(Icons.account_circle, size: 30.w, color: Colors.white,),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(CustomIcons.hammer,color: Colors.white.withOpacity(0.44),size: 30.w),
-              activeIcon: Icon(CustomIcons.hammer,color: Colors.white, size: 30.w),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.menu_outlined,color: Colors.white.withOpacity(0.44), size: 30.w,),
-              activeIcon:  Icon(Icons.menu,color: Colors.white, size: 30.w,),
-              label: '',
-            ),
-          ], // This trailing comma makes auto-formatting nicer for build methods.
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.white,
-          onTap: _onItemTapped,
+        child: SizedBox(
+          child: BottomNavigationBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            type: BottomNavigationBarType.fixed,
+            items:  <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.map_outlined,color: Colors.white.withOpacity(0.44), size: 35.w,),
+                activeIcon: Icon(Icons.map,color: Colors.white, size: 35.w,),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home_outlined,color: Colors.white.withOpacity(0.44), size: 35.w,),
+                activeIcon: Icon(Icons.home,color: Colors.white, size: 35.w,),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.account_circle_outlined, size: 30.w, color: Colors.white.withOpacity(0.44),),
+                activeIcon: Icon(Icons.account_circle, size: 30.w, color: Colors.white,),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(CustomIcons.hammer,color: Colors.white.withOpacity(0.44),size: 30.w),
+                activeIcon: Icon(CustomIcons.hammer,color: Colors.white, size: 30.w),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.menu_outlined,color: Colors.white.withOpacity(0.44), size: 30.w,),
+                activeIcon:  Icon(Icons.menu,color: Colors.white, size: 30.w,),
+                label: '',
+              ),
+            ], // This trailing comma makes auto-formatting nicer for build methods.
+            currentIndex: _selectedIndex,
+            selectedItemColor: Colors.white,
+            onTap: _onItemTapped,
+          ),
         ),
       ),
     );

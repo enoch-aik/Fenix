@@ -10,10 +10,10 @@ import '../../controller/store_controller.dart';
 import '../../helpers/widgets/snack_bar.dart';
 import '../auth_screens/create_profile.dart';
 import '../onboarding/constants.dart';
-import 'create_store.dart';
+import 'create_selling_post/create_store.dart';
+import 'create_selling_post/selling_post.dart';
 import 'edit_profile.dart';
 import 'product_list.dart';
-import 'selling_post.dart';
 
 class StoreList extends StatelessWidget {
   const StoreList({Key? key}) : super(key: key);

@@ -1,18 +1,18 @@
 import 'package:fenix/const.dart';
 import 'package:fenix/neumorph.dart';
-import 'package:fenix/screens/profile/account_info.dart';
-import 'package:fenix/screens/profile/login_and_security.dart';
+import 'package:fenix/screens/profile/account/contact/live_chat.dart';
+import 'package:fenix/screens/profile/account/contact/report_issue.dart';
 import 'package:fenix/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
-import '../onboarding/constants.dart';
-import 'edit_profile.dart';
+import '../../../onboarding/constants.dart';
+import '../../edit_profile.dart';
 
-class ReportIssue extends StatelessWidget {
-  const ReportIssue({Key? key}) : super(key: key);
+class ContactUs extends StatelessWidget {
+  const ContactUs({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class ReportIssue extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Report Issue",
+                  "Contact Us",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.w,
@@ -80,21 +80,18 @@ class ReportIssue extends StatelessWidget {
                 padding: const EdgeInsets.all(14),
                 children: [
 
+                  accountContainer('Live Chat Support', Icons.support_agent, onTap: () {
+                    Get.to(() => LiveChatScreen());
+                  }),
 
-                  accountContainer('Fenix has a bug', Icons.support_agent, onTap: () {
+                  tinySpace(),
+                  accountContainer('Business and Deals', FontAwesomeIcons.moneyBill, onTap: () {
 
                   }),
                   tinySpace(),
-                  accountContainer('The app is not working as expected', FontAwesomeIcons.moneyBill, onTap: () {
-
+                  accountContainer('Report Issue', Icons.report_gmailerrorred_outlined,onTap: () {
+                    Get.to(() => ReportIssue());
                   }),
-                  tinySpace(),
-                  accountContainer('App is not loading sometimes', Icons.report_gmailerrorred_outlined),
-                  tinySpace(),
-                  accountContainer('Other issues', FontAwesomeIcons.moneyBill, onTap: () {
-
-                  }),
-                  tinySpace(),
 
                 ],
               ))
@@ -125,7 +122,7 @@ class ReportIssue extends StatelessWidget {
                       ),
                     ],
                   )),
-              Icon(Icons.arrow_forward, size: 25, color: dark.withOpacity(0.5),),
+               Icon(Icons.arrow_forward, size: 25, color: dark.withOpacity(0.5),),
             ],
           ),
         ),

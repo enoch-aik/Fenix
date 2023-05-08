@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../controller/store_controller.dart';
-import '../../theme.dart';
+import '../../../controller/store_controller.dart';
+import '../../../theme.dart';
 
 class CreateStore extends StatelessWidget {
   CreateStore({Key? key}) : super(key: key);

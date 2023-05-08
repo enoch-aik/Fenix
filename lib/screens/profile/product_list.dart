@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 
 import '../../controller/store_controller.dart';
 import '../onboarding/constants.dart';
-import 'create_product.dart';
+import 'create_selling_post/create_product.dart';
 
 class ProductList extends StatelessWidget {
   ProductList(

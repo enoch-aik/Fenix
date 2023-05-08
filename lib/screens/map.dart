@@ -1,9 +1,13 @@
+import 'package:custom_map_markers/custom_map_markers.dart';
+import 'package:fenix/controller/map_controller.dart';
 import 'package:fenix/screens/onboarding/constants.dart';
 import 'package:fenix/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
+
 
 
 class Map extends StatefulWidget {
@@ -18,7 +22,28 @@ class _MapState extends State<Map> {
 
   late GoogleMapController mapController;
 
-  final LatLng _center = const LatLng(35.5164, -97.4676);
+  final MapController _mapController = Get.find();
+
+  LatLng _center = const LatLng(36.79582, -88.64801);
+
+  late List<MarkerData> _customMarkers;
+
+  List<MarkerData> _list = [];
+  BitmapDescriptor? customIcon;
+
+
+  getMarkers(){
+    for(var i = 0; i < _mapController.apartmentList.length; i++){
+      var item = _mapController.apartmentList[i];
+      _list.add(
+          MarkerData(
+              marker:
+              Marker( markerId: MarkerId(item['id'].toString()),  position: LatLng(item['latitude'],item['longitude']),),
+              child: _customMarkerWidget(item['rentPrice']['month'].toString(), Colors.blue)),
+         );
+    }
+    _customMarkers.addAll(_list);
+  }
 
 
   @override
@@ -28,11 +53,21 @@ class _MapState extends State<Map> {
     rootBundle.loadString('assets/mapstyle').then((string) {
       mapStyle = string;
     });
+    _customMarkers = [];
+    getMarkers();
+
   }
+
+
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
     mapController.setMapStyle(mapStyle);
+
+  }
+
+  onCameraMove(CameraPosition position){
+      _center = position.target;
   }
 
   zoomIn() async{
@@ -67,96 +102,137 @@ class _MapState extends State<Map> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      body: Stack(
-        alignment: AlignmentDirectional.bottomEnd,
-        children: [
-          GoogleMap(
-            onMapCreated: _onMapCreated,
-            initialCameraPosition: CameraPosition(
-              target: _center,
-              zoom: 11.0,
-            ),
-          ),
-
-
-          Align(
-            alignment: Alignment.topRight,
-            child: Column(
-              children: [
-                SizedBox(height: 40.w,),
-                MapIcons(Image.asset("assets/images/icons/apartment.png",), grey,),
-                MapIcons(Image.asset("assets/images/icons/houseRental.png",), grey,),
-                MapIcons(Image.asset("assets/images/icons/Dacha.png",), grey,),
-              ],
-            ),
-          ),
-
-
-
-
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.end,
+      body: CustomGoogleMapMarkerBuilder(
+        //screenshotDelay: const Duration(seconds: 4),
+        customMarkers: _customMarkers,
+        builder: (BuildContext context, Set<Marker>? markers) {
+          if (markers == null) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return Stack(
+            alignment: AlignmentDirectional.bottomEnd,
             children: [
-              MapIcons(Icon(Icons.add, color: white, size: 20.w,), black, onTap: zoomIn,),
-              MapIcons(Icon(Icons.remove, color: white,size: 20.w,),black, onTap: zoomOut),
-              SizedBox(height: 30.w,),
-              MapIcons(Transform.rotate(angle: 0.6, child: Icon(Icons.navigation, color: white,size: 20.w,),), black,
-                  onTap: (){
-                    mapController.animateCamera(
-                      CameraUpdate.newCameraPosition(
-                        CameraPosition(
-                          target: _center,
-                          zoom: 11,
-                        ),
-                      ),);
-                  }),
+              GoogleMap(
+                onMapCreated: _onMapCreated,
+                initialCameraPosition: CameraPosition(
+                  target: _center,
+                  zoom: 11.0,
+                ),
+                markers: markers,
+                onCameraMove: onCameraMove,
+              ),
 
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.23,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 7,
-                    itemBuilder: (context,index) {
-                      return Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 12.w),
-                        child: Container(
-                          alignment: Alignment.bottomCenter,
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          height: MediaQuery.of(context).size.height * 0.2,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(13.w),
-                              // border: Border.all(color: Color(0xFF1994F5), width: 3),
-                              image: DecorationImage(image: AssetImage("assets/images/house.png",),fit: BoxFit.fitWidth)
-                          ),
-                          child: Container(
-                            height: MediaQuery.of(context).size.height * 0.052,
-                            padding: EdgeInsets.symmetric(horizontal: 10.w),
-                            decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.8),
-                              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(13.w), bottomRight: Radius.circular(13.w)),
+
+              Align(
+                alignment: Alignment.topRight,
+                child: Column(
+                  children: [
+                    SizedBox(height: 40.w,),
+                    MapIcons(Image.asset("assets/images/icons/apartment.png",), grey,
+                        onTap: (){
+                          print(_mapController.apartmentList.length);
+                        }),
+                    MapIcons(Image.asset("assets/images/icons/houseRental.png",), grey,
+                        onTap: (){
+                          print(_list);
+                        }),
+                    MapIcons(Image.asset("assets/images/icons/Dacha.png",), grey,),
+                  ],
+                ),
+              ),
+
+
+
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  MapIcons(Icon(Icons.add, color: white, size: 20.w,), black, onTap: zoomIn,),
+                  MapIcons(Icon(Icons.remove, color: white,size: 20.w,),black, onTap: zoomOut),
+                  SizedBox(height: 30.w,),
+                  MapIcons(Transform.rotate(angle: 0.6, child: Icon(Icons.navigation, color: white,size: 20.w,),), black,
+                      onTap: (){
+                        mapController.animateCamera(
+                          CameraUpdate.newCameraPosition(
+                            CameraPosition(
+                              target: _center,
+                              zoom: 11,
                             ),
-                            child: Center(
-                              child: Text("5 bedroom and 2 bath Apartment . great view and sall pool for kids are great options",
-                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    color: Colors.white,
-                                    fontSize: 12.w,
-                                    fontWeight: FontWeight.w700
-                                ),),
+                          ),);
+                      }),
+
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.23,
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: _mapController.apartmentList.length,
+                        itemBuilder: (context,index) {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 12.w),
+                            child: Container(
+                              alignment: Alignment.bottomCenter,
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              height: MediaQuery.of(context).size.height * 0.2,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(13.w),
+                                  // border: Border.all(color: Color(0xFF1994F5), width: 3),
+                                  image: DecorationImage(image: AssetImage("assets/images/house.png",),fit: BoxFit.fitWidth)
+                              ),
+                              child: Container(
+                                height: MediaQuery.of(context).size.height * 0.052,
+                                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(0.8),
+                                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(13.w), bottomRight: Radius.circular(13.w)),
+                                ),
+                                child: Center(
+                                  child: Text(_mapController.apartmentList[index]['description'],
+                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                        color: Colors.white,
+                                        fontSize: 12.w,
+                                        fontWeight: FontWeight.w700
+                                    ),),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      );
-                    }),
+                          );
+                        }),
+                  ),
+                ],
               ),
             ],
-          ),
-        ],
+          );
+        },
       ),
     );
   }
 }
 
+
+
+_customMarkerWidget(String text, Color color) {
+  return Container(
+    padding:  EdgeInsets.all(5.w),
+    decoration: BoxDecoration(
+        color: Color(0xFFDADADA),
+        borderRadius: BorderRadius.circular(20.w),),
+    child: Container(
+      padding: EdgeInsets.all(8.w),
+      decoration: BoxDecoration(
+          color: Color(0xFFC9C9C9),
+          borderRadius: BorderRadius.circular(20.w),),
+      child: Center(
+          child: Text(text,
+              style: TextStyle(
+              fontSize: 11.w,
+              color: black,
+                fontWeight: FontWeight.bold
+          ),
+          )),
+    ),
+  );
+}
 
 InkWell MapIcons (icon, color, {onTap}){
   return InkWell(

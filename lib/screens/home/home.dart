@@ -12,6 +12,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
+import '../../controller/map_controller.dart';
 import '../../helpers/icons/custom_icons_icons.dart';
 import '../../helpers/widgets/top_rated_Items.dart';
 import '../../theme.dart';
@@ -29,6 +30,7 @@ class _HomeState extends State<Home> {
   String token = '';
   final UserController _userController = Get.find();
   final StoreController _storeController = Get.put(StoreController());
+  final MapController _mapController = Get.put(MapController());
 
   @override
   void initState() {
@@ -40,6 +42,9 @@ class _HomeState extends State<Home> {
   boot()async{
     token =  _userController.getToken();
     _storeController.getStores(token);
+    _mapController.getApartments(token,
+      longitude: -88.14801,
+      latitude: 36.79582,);
   }
 
   @override

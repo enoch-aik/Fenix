@@ -12,10 +12,10 @@ import '../../helpers/widgets/dialogs.dart';
 import '../../helpers/widgets/logout_card_widget.dart';
 import '../auth_screens/create_profile.dart';
 import '../onboarding/constants.dart';
-import 'account.dart';
+import 'account/account.dart';
+import 'create_selling_post/selling_post.dart';
 import 'edit_profile.dart';
 import 'message.dart';
-import 'selling_post.dart';
 import 'store_lists.dart';
 import 'subscribe.dart';
 

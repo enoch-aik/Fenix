@@ -1,15 +1,15 @@
 import 'package:fenix/const.dart';
 import 'package:fenix/neumorph.dart';
-import 'package:fenix/screens/profile/account_info.dart';
-import 'package:fenix/screens/profile/contact_us.dart';
-import 'package:fenix/screens/profile/login_and_security.dart';
+import 'package:fenix/screens/profile/account/contact/contact_us.dart';
 import 'package:fenix/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../onboarding/constants.dart';
-import 'edit_profile.dart';
+import '../../onboarding/constants.dart';
+import '../edit_profile.dart';
+import 'account_info.dart';
+import 'login_and_security.dart';
 
 class Account extends StatelessWidget {
   const Account({Key? key}) : super(key: key);
