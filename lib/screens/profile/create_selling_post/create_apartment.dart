@@ -1098,6 +1098,7 @@ class _CreateApartmentState extends State<CreateApartment> {
                         onTap: () {
                           print('square -- > $square');
                           if (_formKey.currentState!.validate()) {
+                            images.addAll(videos);
                             _storeController.createNewApartment(
                               _userController.getToken(),
                               storeId: widget.storeId,
@@ -1124,6 +1125,7 @@ class _CreateApartmentState extends State<CreateApartment> {
                               toilet: toilet,
                               occupantsNumber: occupant,
                               floor: floor,
+                              media: images,
                             );
                           } else {
                             CustomSnackBar.failedSnackBar('Error',

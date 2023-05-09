@@ -9,8 +9,8 @@ class CameraGalleryPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 200.h,
-      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
         color: Colors.white,
       ),
@@ -24,21 +24,22 @@ class CameraGalleryPicker extends StatelessWidget {
               ),
             ),
           ),
-          Divider(),
+          const Divider(),
           Expanded(
             child: InkWell(
               onTap: () {
-                getImageFromCamera(ImageSource.camera);
+                // getImageFromCamera(ImageSource.camera);
+                openCamera();
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.camera_alt_outlined,
                     color: Colors.black87,
                     size: 30,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Text(
@@ -49,30 +50,29 @@ class CameraGalleryPicker extends StatelessWidget {
               ),
             ),
           ),
-          Divider(),
+          const Divider(),
           Expanded(
             child: InkWell(
               onTap: () {
-                getImageFromGallery(ImageSource.gallery);
+                // getImageFromGallery(ImageSource.gallery);
+                openGallery();
               },
-              child: Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.camera,
-                      color: Colors.black87,
-                      size: 30,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      'Gallery',
-                      style: TextStyle(fontSize: 18.w),
-                    ),
-                  ],
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.camera,
+                    color: Colors.black87,
+                    size: 30,
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    'Gallery',
+                    style: TextStyle(fontSize: 18.w),
+                  ),
+                ],
               ),
             ),
           )
