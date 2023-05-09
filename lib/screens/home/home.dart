@@ -17,6 +17,7 @@ import '../../helpers/icons/custom_icons_icons.dart';
 import '../../helpers/widgets/top_rated_Items.dart';
 import '../../theme.dart';
 import '../onboarding/constants.dart';
+import 'car_listing.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -132,7 +133,8 @@ class _HomeState extends State<Home> {
                         icon: "carRental.png",
                         title: "Car Rental",
                         color: white,
-                        onTap: () => setState(() => homeTab = 'Dacha')),
+                        onTap: () => Get.to(() => const VehicleList())),
+
                     MenuTitle(
                         icon: "storeRental.png",
                         title: "Store Rental",
