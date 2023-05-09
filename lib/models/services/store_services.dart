@@ -24,6 +24,28 @@ class StoreServices {
     }
   }
 
+  static getApartment(Function callback, token, storeId) async {
+    var response = await ApiServices.initialiseGetRequest(
+        url: '$storesUrl/$storeId/apartments', token: token);
+    print(response);
+    if (response is String) {
+      callback(false, response);
+    } else {
+      callback(true, response);
+    }
+  }
+
+  static getVehicles(Function callback, token, storeId) async {
+    var response = await ApiServices.initialiseGetRequest(
+        url: '$storesUrl/$storeId/vehicles', token: token);
+    print(response);
+    if (response is String) {
+      callback(false, response);
+    } else {
+      callback(true, response);
+    }
+  }
+
   static createStore(Function callback, token, data) async {
     var response = await ApiServices.initialisePostRequest(
         url: storesUrl, token: token, data: data);

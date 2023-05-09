@@ -7,8 +7,12 @@ import '../screens/onboarding/loading.dart';
 class StoreController extends GetxController {
   var storeList = [].obs;
   var productList = [].obs;
+  var vehicleList = [].obs;
+  var apartmentList = [].obs;
   var isFetchingStore = true.obs;
   var isFetchingProducts = true.obs;
+  var isFetchingVehicles = true.obs;
+  var isFetchingApartments = true.obs;
 
   @override
   void onInit() {
@@ -39,6 +43,34 @@ class StoreController extends GetxController {
         productList.value = response['data'];
       } else {
         productList.value = [];
+        print('Error - $response');
+      }
+    }, token, storeId);
+  }
+
+  getApartments(token, storeId) {
+    isFetchingApartments(true);
+    StoreServices.getApartment((status, response) {
+      isFetchingApartments(false);
+
+      if (status) {
+        apartmentList.value = response['data'];
+      } else {
+        apartmentList.value = [];
+        print('Error - $response');
+      }
+    }, token, storeId);
+  }
+
+  getVehicles(token, storeId) {
+    isFetchingVehicles(true);
+    StoreServices.getVehicles((status, response) {
+      isFetchingVehicles(false);
+
+      if (status) {
+        vehicleList.value = response['data'];
+      } else {
+        vehicleList.value = [];
         print('Error - $response');
       }
     }, token, storeId);
