@@ -49,9 +49,9 @@ class _LiveChatScreenState extends State<LiveChatScreen> {
                               children: [
                                 InkWell(
                                   onTap: () => Get.back(),
-                                  child: const Icon(
+                                  child: Icon(
                                     Icons.arrow_back,
-                                    color: white,
+                                    color: primary.withOpacity(0.7),
                                   ),
                                 ),
                                 Row(
@@ -62,8 +62,8 @@ class _LiveChatScreenState extends State<LiveChatScreen> {
                                       width: 40,
                                     ),
                                     smallHSpace(),
-                                    Icon(Icons.arrow_back, color: Colors.white,),
-                                    Icon(Icons.arrow_forward, color: Colors.white),
+                                    Icon(Icons.arrow_back, color: primary.withOpacity(0.7),),
+                                    Icon(Icons.arrow_forward, color: primary.withOpacity(0.7),),
                                     smallHSpace(),
                                     Image.asset(
                                       'assets/images/icons/Ellipse 1.png',
@@ -89,11 +89,12 @@ class _LiveChatScreenState extends State<LiveChatScreen> {
                                   padding: EdgeInsets.all(3.w),
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                      color: green
+                                      color: Color(0xFF15801F)
                                   ),
                                 )
                               ],
-                            )
+                            ),
+                            Divider()
                           ],
                         ),
                       ),

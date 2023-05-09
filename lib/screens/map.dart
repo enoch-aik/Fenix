@@ -2,6 +2,8 @@ import 'package:custom_map_markers/custom_map_markers.dart';
 import 'package:fenix/controller/map_controller.dart';
 import 'package:fenix/screens/onboarding/constants.dart';
 import 'package:fenix/theme.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -19,8 +21,6 @@ class Map extends StatefulWidget {
 
 class _MapState extends State<Map> {
   String? mapStyle;
-
-  late GoogleMapController mapController;
 
   final MapController _mapController = Get.find();
 
@@ -61,9 +61,9 @@ class _MapState extends State<Map> {
 
 
   void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-    mapController.setMapStyle(mapStyle);
-
+    _mapController.googleMapController = controller;
+    _mapController.googleMapController.setMapStyle(mapStyle);
+    controller.dispose();
   }
 
   onCameraMove(CameraPosition position){
@@ -71,10 +71,10 @@ class _MapState extends State<Map> {
   }
 
   zoomIn() async{
-    var currentZoomLevel = await mapController.getZoomLevel();
+    var currentZoomLevel = await _mapController.googleMapController.getZoomLevel();
 
-    currentZoomLevel = currentZoomLevel + 0.5;
-    mapController.animateCamera(
+    currentZoomLevel = currentZoomLevel + 1;
+    _mapController.googleMapController.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
           target: _center,
@@ -85,10 +85,10 @@ class _MapState extends State<Map> {
   }
 
   zoomOut() async{
-    var currentZoomLevel = await mapController.getZoomLevel();
-    currentZoomLevel = currentZoomLevel - 0.5;
+    var currentZoomLevel = await _mapController.googleMapController.getZoomLevel();
+    currentZoomLevel = currentZoomLevel - 1;
     if (currentZoomLevel < 0) currentZoomLevel = 0;
-    mapController.animateCamera(
+    _mapController.googleMapController.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
           target: _center,
@@ -98,12 +98,39 @@ class _MapState extends State<Map> {
     );
   }
 
+
+  getFilterMarkers(){
+    for(var i = 0; i < _mapController.apartmentFilterList.length; i++){
+      var item = _mapController.apartmentFilterList[i];
+      _list.add(
+        MarkerData(
+            marker:
+            Marker( markerId: MarkerId(item['id'].toString()),  position: LatLng(item['latitude'],item['longitude']),),
+            child: _customMarkerWidget(item['rentPrice']['month'].toString(), Colors.blue)),
+      );
+    }
+    _customMarkers.addAll(_list);
+  }
+
+
+  filterApartments(type){
+    for (var i = 0; i < _mapController.apartmentList.length; i++) {
+      var result = _mapController.apartmentList.where((apartment) => apartment["apartmentType"] == type);
+      setState(() {
+        _mapController.apartmentFilterList.value = [];
+        _mapController.apartmentFilterList.addAll(result);
+        _list.clear();
+        _customMarkers.clear();
+        getFilterMarkers();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
 
       body: CustomGoogleMapMarkerBuilder(
-        //screenshotDelay: const Duration(seconds: 4),
         customMarkers: _customMarkers,
         builder: (BuildContext context, Set<Marker>? markers) {
           if (markers == null) {
@@ -119,7 +146,13 @@ class _MapState extends State<Map> {
                   zoom: 11.0,
                 ),
                 markers: markers,
+                myLocationEnabled: false,
                 onCameraMove: onCameraMove,
+                zoomControlsEnabled: false,
+                zoomGesturesEnabled: true,
+                myLocationButtonEnabled: false,
+                gestureRecognizers: Set()
+                  ..add(Factory<PanGestureRecognizer>(() => PanGestureRecognizer())),
               ),
 
 
@@ -128,15 +161,19 @@ class _MapState extends State<Map> {
                 child: Column(
                   children: [
                     SizedBox(height: 40.w,),
-                    MapIcons(Image.asset("assets/images/icons/apartment.png",), grey,
+                    MapIcons(Image.asset("assets/images/icons/apartment.png",), grey, type: "apartment",
                         onTap: (){
-                          print(_mapController.apartmentList.length);
+                      filterApartments("apartment");
+
                         }),
-                    MapIcons(Image.asset("assets/images/icons/houseRental.png",), grey,
+                    MapIcons(Image.asset("assets/images/icons/houseRental.png",), grey,type: "house",
                         onTap: (){
-                          print(_list);
+                          filterApartments("house");
                         }),
-                    MapIcons(Image.asset("assets/images/icons/Dacha.png",), grey,),
+                    MapIcons(Image.asset("assets/images/icons/Dacha.png",), grey,type: "dacha",
+                    onTap: (){
+                      filterApartments("dacha");
+                    }),
                   ],
                 ),
               ),
@@ -153,10 +190,11 @@ class _MapState extends State<Map> {
                   SizedBox(height: 30.w,),
                   MapIcons(Transform.rotate(angle: 0.6, child: Icon(Icons.navigation, color: white,size: 20.w,),), black,
                       onTap: (){
-                        mapController.animateCamera(
+                        print(_mapController.userCurrentPosition.longitude);
+                        _mapController.googleMapController.animateCamera(
                           CameraUpdate.newCameraPosition(
                             CameraPosition(
-                              target: _center,
+                              target: LatLng(_mapController.userCurrentPosition.latitude, _mapController.userCurrentPosition.longitude),
                               zoom: 11,
                             ),
                           ),);
@@ -213,12 +251,12 @@ class _MapState extends State<Map> {
 
 _customMarkerWidget(String text, Color color) {
   return Container(
-    padding:  EdgeInsets.all(5.w),
+    padding:  EdgeInsets.all(3.w),
     decoration: BoxDecoration(
         color: Color(0xFFDADADA),
         borderRadius: BorderRadius.circular(20.w),),
     child: Container(
-      padding: EdgeInsets.all(8.w),
+      padding: EdgeInsets.all(5.w),
       decoration: BoxDecoration(
           color: Color(0xFFC9C9C9),
           borderRadius: BorderRadius.circular(20.w),),
@@ -234,7 +272,7 @@ _customMarkerWidget(String text, Color color) {
   );
 }
 
-InkWell MapIcons (icon, color, {onTap}){
+InkWell MapIcons (icon, color, {type,onTap}){
   return InkWell(
     onTap: onTap,
     child: Container(

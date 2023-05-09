@@ -1,3 +1,4 @@
+import 'package:fenix/const.dart';
 import 'package:fenix/controller/store_controller.dart';
 import 'package:fenix/controller/user_controller.dart';
 import 'package:fenix/helpers/widgets/recently_viewed_widget.dart';
@@ -10,14 +11,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../controller/map_controller.dart';
 import '../../helpers/icons/custom_icons_icons.dart';
 import '../../helpers/widgets/top_rated_Items.dart';
 import '../../theme.dart';
 import '../onboarding/constants.dart';
-import 'car_listing.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -33,6 +35,8 @@ class _HomeState extends State<Home> {
   final StoreController _storeController = Get.put(StoreController());
   final MapController _mapController = Get.put(MapController());
 
+  Position? _currentPosition;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -40,14 +44,30 @@ class _HomeState extends State<Home> {
     super.initState();
   }
 
-  boot() async {
-    token = _userController.getToken();
+  getCurrentLocation() async{
+    await Permission.location.request();
+    Geolocator
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best, forceAndroidLocationManager: true)
+        .then((Position position) {
+          setState(() {
+            _currentPosition = position;
+            print(position);
+            _mapController.userCurrentPosition = position;
+
+            _mapController.getApartments(token,
+              longitude: -88.14801,
+              latitude: 36.74582);
+          });
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
+  boot()async{
+    token =  _userController.getToken();
     _storeController.getStores(token);
-    _mapController.getApartments(
-      token,
-      longitude: -88.14801,
-      latitude: 36.79582,
-    );
+    await getCurrentLocation();
+
   }
 
   @override
@@ -56,7 +76,7 @@ class _HomeState extends State<Home> {
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width,
-            MediaQuery.of(context).size.height * 0.183),
+            height() * 0.2),
         child: Container(
           decoration: BoxDecoration(
             gradient: gradient(
@@ -64,7 +84,7 @@ class _HomeState extends State<Home> {
               const Color(0xFF1770A2),
             ),
           ),
-          padding: EdgeInsets.only(top: 55.h, left: 12.w, right: 12.w),
+          padding: EdgeInsets.only(top: 50.h, left: 12.w, right: 12.w),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,7 +98,7 @@ class _HomeState extends State<Home> {
               ),
               const SizedBox(width: 10),
               InkWell(
-                onTap: () => Get.to(() => SearchScreen()),
+                onTap: ()=>Get.to(()=>SearchScreen()),
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.050,
                   width: MediaQuery.of(context).size.width,
@@ -101,8 +121,7 @@ class _HomeState extends State<Home> {
                       hintStyle: Theme.of(context)
                           .textTheme
                           .bodyText1!
-                          .copyWith(
-                              fontSize: 15.w, color: Colors.grey.shade500),
+                          .copyWith(fontSize: 15.w, color: Colors.grey.shade500),
                       prefixIcon: const Icon(Icons.search),
                     ),
                   ),
@@ -123,7 +142,8 @@ class _HomeState extends State<Home> {
                         icon: "houseRental.png",
                         title: "House Rental",
                         color: white,
-                        onTap: () => Get.to(() => const HouseRents())),
+                        onTap: () => Get.to(() => const HouseRents())
+                    ),
                     MenuTitle(
                         icon: "apartment.png",
                         title: "Apartment",
@@ -133,8 +153,7 @@ class _HomeState extends State<Home> {
                         icon: "carRental.png",
                         title: "Car Rental",
                         color: white,
-                        onTap: () => Get.to(() => const VehicleList())),
-
+                        onTap: () => setState(() => homeTab = 'Dacha')),
                     MenuTitle(
                         icon: "storeRental.png",
                         title: "Store Rental",
