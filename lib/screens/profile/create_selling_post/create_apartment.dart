@@ -1106,8 +1106,8 @@ class _CreateApartmentState extends State<CreateApartment> {
                               longitude: -97.4676,
                               latitude: 35.5164,
                               description: descriptionController.text,
-                              smoke: smoke == 'Yes' ? true : false,
-                              pet: pet == 'Yes' ? true : false,
+                              smoke: smoke == 'Yes',
+                              pet: pet == 'Yes',
                               propertyType: rentType == 'Rent Property'
                                   ? 'rental'
                                   : 'sale',
