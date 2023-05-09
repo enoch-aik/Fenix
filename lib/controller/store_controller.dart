@@ -208,7 +208,7 @@ class StoreController extends GetxController {
     toilet,
     occupantsNumber,
     floor,
-    amenities,
+    amenities,media
   }) async {
     var data = {
       "title": title,
@@ -238,7 +238,8 @@ class StoreController extends GetxController {
         "occupant": double.parse(occupantsNumber),
         "pet": pet,
         "smoke": smoke
-      }
+      },
+      media:media,
     };
     print(data);
     Get.to(() => const Loading());
