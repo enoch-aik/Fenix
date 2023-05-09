@@ -150,18 +150,18 @@ class ProductList extends StatelessWidget {
                                       tinySpace(),
                                       Row(
                                         children: [
-                                          Icon(Icons.star,
+                                          const Icon(Icons.star,
                                               color: Colors.orange, size: 15),
-                                          Icon(Icons.star,
+                                          const Icon(Icons.star,
                                               color: Colors.orange, size: 15),
-                                          Icon(Icons.star_border,
+                                          const Icon(Icons.star_border,
                                               color: Colors.orange, size: 15),
-                                          Icon(Icons.star_border,
+                                          const Icon(Icons.star_border,
                                               color: Colors.orange, size: 15),
-                                          Icon(Icons.star_border,
+                                          const Icon(Icons.star_border,
                                               color: Colors.orange, size: 15),
                                           smallHSpace(),
-                                          Text(
+                                          const Text(
                                             '25 Reviews',
                                             style: TextStyle(
                                                 fontSize: 14,
@@ -172,12 +172,12 @@ class ProductList extends StatelessWidget {
                                       tiny5Space(),
                                       Row(
                                         children: [
-                                          Icon(Icons.location_on_outlined,
+                                          const Icon(Icons.location_on_outlined,
                                               size: 15),
                                           tinyHSpace(),
                                           Text(
                                             '$storeName, $storeLocation',
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w400),
                                           )
@@ -186,12 +186,12 @@ class ProductList extends StatelessWidget {
                                       tiny5Space(),
                                       Row(
                                         children: [
-                                          Icon(
+                                          const Icon(
                                             Icons.local_shipping_outlined,
                                             size: 15,
                                           ),
                                           tinyHSpace(),
-                                          Text(
+                                          const Text(
                                             'Free Shipping',
                                             style: TextStyle(
                                                 fontSize: 14,

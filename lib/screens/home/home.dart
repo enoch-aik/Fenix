@@ -39,12 +39,14 @@ class _HomeState extends State<Home> {
     super.initState();
   }
 
-  boot()async{
-    token =  _userController.getToken();
+  boot() async {
+    token = _userController.getToken();
     _storeController.getStores(token);
-    _mapController.getApartments(token,
+    _mapController.getApartments(
+      token,
       longitude: -88.14801,
-      latitude: 36.79582,);
+      latitude: 36.79582,
+    );
   }
 
   @override
@@ -75,7 +77,7 @@ class _HomeState extends State<Home> {
               ),
               const SizedBox(width: 10),
               InkWell(
-                onTap: ()=>Get.to(()=>SearchScreen()),
+                onTap: () => Get.to(() => SearchScreen()),
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.050,
                   width: MediaQuery.of(context).size.width,
@@ -98,7 +100,8 @@ class _HomeState extends State<Home> {
                       hintStyle: Theme.of(context)
                           .textTheme
                           .bodyText1!
-                          .copyWith(fontSize: 15.w, color: Colors.grey.shade500),
+                          .copyWith(
+                              fontSize: 15.w, color: Colors.grey.shade500),
                       prefixIcon: const Icon(Icons.search),
                     ),
                   ),
@@ -119,8 +122,7 @@ class _HomeState extends State<Home> {
                         icon: "houseRental.png",
                         title: "House Rental",
                         color: white,
-                        onTap: () => Get.to(() => const HouseRents())
-                    ),
+                        onTap: () => Get.to(() => const HouseRents())),
                     MenuTitle(
                         icon: "apartment.png",
                         title: "Apartment",

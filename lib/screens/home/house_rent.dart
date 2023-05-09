@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../controller/store_controller.dart';
+import '../../controller/user_controller.dart';
 import '../../helpers/widgets/top_rated_Items.dart';
 import '../../theme.dart';
 import '../onboarding/constants.dart';
@@ -17,6 +19,24 @@ class HouseRents extends StatefulWidget {
 }
 
 class _HouseRentsState extends State<HouseRents> {
+  String token = '';
+  final UserController _userController = Get.find();
+  final StoreController _storeController = Get.put(StoreController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    boot();
+    super.initState();
+  }
+
+  boot() async {
+    token = _userController.getToken();
+    _storeController.getStores(token);
+    var storeId =  _storeController.storeList[0]['id'].toString();
+    _storeController.getApartments(token,storeId);
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
