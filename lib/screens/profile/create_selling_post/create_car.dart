@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fenix/const.dart';
 import 'package:fenix/controller/user_controller.dart';
 import 'package:fenix/helpers/validator.dart';
@@ -53,13 +55,20 @@ class _CreateCarState extends State<CreateCar> {
 
   final featuresController = TextEditingController();
   final deliveryLocationController = TextEditingController();
-
   final featureController = TextEditingController();
   final deliveryPriceController = TextEditingController();
   final discountController = TextEditingController();
   final planController = TextEditingController();
   final deliveryController = TextEditingController();
+  final mileageController = TextEditingController();
+  final detailController = TextEditingController();
+  final keyController = TextEditingController();
+  final modelController = TextEditingController();
+  final yearController = TextEditingController();
+  final seatController = TextEditingController();
   List amenities = [];
+  List<File> images = [];
+  List<File> videos = [];
   String deliveryValue = '';
   bool selectDollar = false;
 
@@ -70,8 +79,14 @@ class _CreateCarState extends State<CreateCar> {
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(
-        preferredSize: Size(MediaQuery.of(context).size.width,
-            MediaQuery.of(context).size.height * 0.08),
+        preferredSize: Size(MediaQuery
+            .of(context)
+            .size
+            .width,
+            MediaQuery
+                .of(context)
+                .size
+                .height * 0.08),
         child: Container(
           decoration: BoxDecoration(
             gradient: gradient(
@@ -95,8 +110,14 @@ class _CreateCarState extends State<CreateCar> {
                         color: Colors.white,
                       )),
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.050,
-                    width: MediaQuery.of(context).size.width * 0.85,
+                    height: MediaQuery
+                        .of(context)
+                        .size
+                        .height * 0.050,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.85,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(13.w),
                       color: Colors.white,
@@ -111,13 +132,17 @@ class _CreateCarState extends State<CreateCar> {
                         contentPadding: EdgeInsets.symmetric(
                             horizontal: 15,
                             vertical:
-                                MediaQuery.of(context).size.height * 0.015),
+                            MediaQuery
+                                .of(context)
+                                .size
+                                .height * 0.015),
                         hintText: "Search Fenix",
-                        hintStyle: Theme.of(context)
+                        hintStyle: Theme
+                            .of(context)
                             .textTheme
                             .bodyText1!
                             .copyWith(
-                                fontSize: 15.w, color: Colors.grey.shade500),
+                            fontSize: 15.w, color: Colors.grey.shade500),
                         prefixIcon: const Icon(Icons.search),
                         suffixIcon: const Icon(
                           Icons.qr_code_scanner,
@@ -129,7 +154,10 @@ class _CreateCarState extends State<CreateCar> {
                 ],
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.010,
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height * 0.010,
               )
             ],
           ),
@@ -139,9 +167,9 @@ class _CreateCarState extends State<CreateCar> {
         children: [
           const Center(
               child: Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text('Create Car Listing'),
-          )),
+                padding: EdgeInsets.all(8.0),
+                child: Text('Create Car Listing'),
+              )),
           const Divider(thickness: 4, color: textColor),
           Expanded(
             child: Form(
@@ -317,20 +345,27 @@ class _CreateCarState extends State<CreateCar> {
                     child: InkWell(
                         onTap: () {
                           if (_formKey.currentState!.validate()) {
-                            _storeController.createNewCar(
+                            _storeController.createNewVehicle(
                               _userController.getToken(),
                               storeId: widget.storeId,
                               title: nameController.text,
-                              // plan: 'Basic',
-                              // plan: 'Premium',
                               amenities: amenities,
                               plan: 'Loggie',
+                              mileage: mileageController.text,
+                              model: modelController.text,
                               deliveryAddress: deliveryController.text,
                               price: priceController.text,
                               category: categoryController.text,
                               brand: brandController.text,
                               color: colorController.text,
                               description: descriptionController.text,
+                              previousAccident: true,
+                              firstOwner: false,
+                              year: yearController.text,
+                              seats: seatController.text,
+                              key: keyController.text,
+                              detail: detailController.text,
+                              media:images,
                             );
                           } else {
                             CustomSnackBar.failedSnackBar('Error',
@@ -427,9 +462,9 @@ class _CreateCarState extends State<CreateCar> {
             )),
         Expanded(
             child: Text(
-          subText,
-          style: const TextStyle(fontSize: 13),
-        )),
+              subText,
+              style: const TextStyle(fontSize: 13),
+            )),
         Container(
             decoration: depressNeumorph(),
             child: SizedBox(
@@ -489,63 +524,68 @@ class _CreateCarState extends State<CreateCar> {
           _userController.gender(title);
         },
         child: Obx(
-          () => Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(17.w),
-              color: (_userController.gender.value == title ||
+              () =>
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(17.w),
+                  color: (_userController.gender.value == title ||
                       (_userController.getUser() != null &&
                           _userController.getUser()!.gender == title))
-                  ? const Color(0xFFE4F0FA).withOpacity(0.8)
-                  : const Color(0xFFE4F0FA),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.shade400,
+                      ? const Color(0xFFE4F0FA).withOpacity(0.8)
+                      : const Color(0xFFE4F0FA),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.shade400,
+                    ),
+                    BoxShadow(
+                      color: Colors.white.withOpacity(0.9),
+                      spreadRadius: -3,
+                      blurRadius: 3,
+                      offset: const Offset(3, 6), // changes position of shadow
+                    ),
+                  ],
                 ),
-                BoxShadow(
-                  color: Colors.white.withOpacity(0.9),
-                  spreadRadius: -3,
-                  blurRadius: 3,
-                  offset: const Offset(3, 6), // changes position of shadow
-                ),
-              ],
-            ),
-            padding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    title,
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                padding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        title,
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .bodyText1!
+                            .copyWith(
                           fontSize: 15.w,
                           color: (_userController.gender.value == title ||
-                                  (_userController.getUser() != null &&
-                                      _userController.getUser()!.gender ==
-                                          title))
+                              (_userController.getUser() != null &&
+                                  _userController.getUser()!.gender ==
+                                      title))
                               ? Colors.black
                               : Colors.grey.shade400,
                         ),
-                  ),
-                ),
-                Container(
-                    margin: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: (_userController.gender.value == title ||
+                      ),
+                    ),
+                    Container(
+                        margin: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: (_userController.gender.value == title ||
                                 (_userController.getUser() != null &&
                                     _userController.getUser()!.gender == title))
-                            ? light.withOpacity(0.5)
-                            : Colors.transparent),
-                    child: Icon(
-                      icon,
-                      color: (_userController.gender.value == title ||
+                                ? light.withOpacity(0.5)
+                                : Colors.transparent),
+                        child: Icon(
+                          icon,
+                          color: (_userController.gender.value == title ||
                               (_userController.getUser() != null &&
                                   _userController.getUser()!.gender == title))
-                          ? kTextBlackColor
-                          : Colors.blueGrey,
-                    )),
-              ],
-            ),
-          ),
+                              ? kTextBlackColor
+                              : Colors.blueGrey,
+                        )),
+                  ],
+                ),
+              ),
         ),
       ),
     );

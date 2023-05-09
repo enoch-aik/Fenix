@@ -46,8 +46,19 @@ class StoreServices {
     }
   }
 
-  static createApartment(Function callback, token, storeId, data) async {
 
+  static createVehicle(Function callback, token, storeId, data) async {
+    var response = await ApiServices.initialisePostRequest(
+        url: '$storesUrl/$storeId/vehicles', token: token, data: data);
+    print(response);
+    if (response is String) {
+      callback(false, response);
+    } else {
+      callback(true, response);
+    }
+  }
+
+  static createApartment(Function callback, token, storeId, data) async {
     var response = await ApiServices.initialisePostRequest(
         url: '$storesUrl/$storeId/apartments', token: token, data: data);
     print(response);

@@ -126,7 +126,7 @@ class StoreController extends GetxController {
     });
   }
 
-  createNewCar(
+  createNewVehicle(
     token, {
     storeId,
     color,
@@ -143,11 +143,11 @@ class StoreController extends GetxController {
     description,
     deliveryAddress,
     detail,category,plan,
-    amenities,
+    amenities,media,
   }) async {
     Get.to(() => const Loading());
 
-    StoreServices.createProduct((status, response) {
+    StoreServices.createVehicle((status, response) {
       print('==> $response');
       if (status) {
         Get.back();
@@ -165,23 +165,25 @@ class StoreController extends GetxController {
       "category": category,
       "plan": plan,
       "specifics": {
+        "brand": brand,
         "model": model,
         "year": year,
+        "color": color,
         "mileage": mileage,
         "seats": double.parse(seats),
         "keys": double.parse(key),
         "previousAccident": previousAccident ?? false,
         "firstOwner": firstOwner ?? true,
         "amenities": amenities,
-        "brand": brand,
-        "color": color,
       },
       "shipping": {
         "shipping": true,
         "price": price,
         "details": detail,
         "location": deliveryAddress,
-      }
+      },
+      "media":media,
+
     });
   }
 
