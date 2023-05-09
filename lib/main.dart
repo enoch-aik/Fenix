@@ -27,8 +27,8 @@ class MyApp extends StatelessWidget {
           Get.put(AccountController());
           Get.put(StoreController());
         },
-        transitionDuration: const Duration(milliseconds: 550),
-        defaultTransition: Transition.native,
+        transitionDuration: const Duration(milliseconds: 350),
+        defaultTransition: Transition.zoom,
 
         home: SplashScreen(),
       ),

@@ -1360,13 +1360,6 @@ class _CreateApartmentState extends State<CreateApartment> {
     );
   }
 
-  Text subText(title) {
-    return Text(
-      title,
-      style: const TextStyle(
-          color: blue, fontWeight: FontWeight.w500, fontSize: 18),
-    );
-  }
 
   Row title_icon(title, icon) {
     return Row(
@@ -1382,29 +1375,6 @@ class _CreateApartmentState extends State<CreateApartment> {
     );
   }
 
-  Container checkBox() {
-    return Container(
-        decoration: depressNeumorph(),
-        child: SizedBox(
-          height: 23,
-          width: 23,
-          child: Theme(
-            data: ThemeData(
-              unselectedWidgetColor: Colors.transparent, // Your color
-            ),
-            child: Checkbox(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5)),
-              value: selectDollar,
-              onChanged: (v) {
-                setState(() {
-                  selectDollar = v!;
-                });
-              },
-            ),
-          ),
-        ));
-  }
 
   Container discount() {
     return Container(
@@ -1497,27 +1467,6 @@ class _CreateApartmentState extends State<CreateApartment> {
     );
   }
 
-  Widget imageSelect({icon, onTap, image}) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-            border: Border.all(color: light),
-            borderRadius: BorderRadius.circular(10)),
-        child: image != null
-            ? Image.file(
-                image,
-                width: 82,
-                height: 82,
-                fit: BoxFit.cover,
-              )
-            : Padding(
-                padding: const EdgeInsets.all(30.0),
-                child: Icon(icon ?? Icons.photo_camera, color: lightGrey),
-              ),
-      ),
-    );
-  }
 
   getColor(description, title) {
     if (description == 'bedroom' && bedroom == title) {
@@ -1614,11 +1563,6 @@ class _CreateApartmentState extends State<CreateApartment> {
     );
   }
 
-  Text smallText(String title) => Text(
-        title,
-        style: const TextStyle(
-            fontWeight: FontWeight.w300, color: grey, fontSize: 13),
-      );
 
   Widget gender(BuildContext context, icon, title) {
     print(_userController.gender.value);
@@ -1692,4 +1636,40 @@ class _CreateApartmentState extends State<CreateApartment> {
   }
 }
 
-// margin: EdgeInsets.symmetric(vertical: 17.w, horizontal: 24.w),
+Widget imageSelect({icon, onTap, image}) {
+  return InkWell(
+    onTap: onTap,
+    child: Container(
+      decoration: BoxDecoration(
+          border: Border.all(color: light),
+          borderRadius: BorderRadius.circular(10)),
+      child: image != null
+          ? Image.file(
+        image,
+        width: 82,
+        height: 82,
+        fit: BoxFit.cover,
+      )
+          : Padding(
+        padding: const EdgeInsets.all(30.0),
+        child: Icon(icon ?? Icons.photo_camera, color: lightGrey),
+      ),
+    ),
+  );
+}
+
+Text smallText(String title) => Text(
+  title,
+  style: const TextStyle(
+      fontWeight: FontWeight.w300, color: grey, fontSize: 13),
+);
+
+
+Text subText(title) {
+  return Text(
+    title,
+    style: const TextStyle(
+        color: blue, fontWeight: FontWeight.w500, fontSize: 18),
+  );
+}
+

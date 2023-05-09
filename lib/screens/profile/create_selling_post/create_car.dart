@@ -11,8 +11,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/store_controller.dart';
+import '../../../helpers/image_picker.dart';
 import '../../../neumorph.dart';
 import '../../../theme.dart';
+import 'create_apartment.dart';
 
 class CreateCar extends StatefulWidget {
   final String storeId;
@@ -70,7 +72,144 @@ class _CreateCarState extends State<CreateCar> {
   List<File> images = [];
   List<File> videos = [];
   String deliveryValue = '';
+  String hadAccident = '';
+  String firstOwner = '';
   bool selectDollar = false;
+
+  Future<dynamic> showImagePickers({isPhoto = true}) {
+    return showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        context: context,
+        isDismissible: true,
+        isScrollControlled: true,
+        builder: (context) {
+          return SizedBox(
+            height: height() * 0.32,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 30),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                          color: background,
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: InkWell(
+                                onTap: () async {
+                                  Get.back();
+                                  var selectedImage = isPhoto
+                                      ? await openCamera()
+                                      : await openVideoCamera();
+                                  if (selectedImage != null) {
+                                    setState(() {
+                                      isPhoto
+                                          ? images.add(selectedImage)
+                                          : videos.add(selectedImage);
+                                    });
+                                  }
+                                },
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                          'Take ${isPhoto ? 'Photo' : 'Video'} from camera',
+                                          style: const TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w400)),
+                                    ),
+                                    const Padding(
+                                      padding: EdgeInsets.only(right: 10),
+                                      child: Icon(
+                                        Icons.camera_alt,
+                                        size: 25,
+                                        color: primary,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const Divider(),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: InkWell(
+                                onTap: () async {
+                                  Get.back();
+
+                                  var selectedImage = isPhoto
+                                      ? await openGallery()
+                                      : await openVideoGallery();
+                                  if (selectedImage != null) {
+                                    setState(() {
+                                      isPhoto
+                                          ? images.add(selectedImage)
+                                          : videos.add(selectedImage);
+                                    });
+                                  }
+                                },
+                                child: Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Text(
+                                          'Take ${isPhoto ? 'Photo' : 'Video'} from gallery',
+                                          style: const TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w400)),
+                                    ),
+                                    const Padding(
+                                      padding: EdgeInsets.only(right: 10),
+                                      child: Icon(
+                                        Icons.collections,
+                                        size: 25,
+                                        color: primary,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: background,
+                            borderRadius: BorderRadius.circular(8)),
+                        child: const Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Center(
+                            child: Text(
+                              'Cancel',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 15),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,14 +218,8 @@ class _CreateCarState extends State<CreateCar> {
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(
-        preferredSize: Size(MediaQuery
-            .of(context)
-            .size
-            .width,
-            MediaQuery
-                .of(context)
-                .size
-                .height * 0.08),
+        preferredSize: Size(MediaQuery.of(context).size.width,
+            MediaQuery.of(context).size.height * 0.08),
         child: Container(
           decoration: BoxDecoration(
             gradient: gradient(
@@ -110,14 +243,8 @@ class _CreateCarState extends State<CreateCar> {
                         color: Colors.white,
                       )),
                   Container(
-                    height: MediaQuery
-                        .of(context)
-                        .size
-                        .height * 0.050,
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 0.85,
+                    height: MediaQuery.of(context).size.height * 0.050,
+                    width: MediaQuery.of(context).size.width * 0.85,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(13.w),
                       color: Colors.white,
@@ -132,17 +259,13 @@ class _CreateCarState extends State<CreateCar> {
                         contentPadding: EdgeInsets.symmetric(
                             horizontal: 15,
                             vertical:
-                            MediaQuery
-                                .of(context)
-                                .size
-                                .height * 0.015),
+                                MediaQuery.of(context).size.height * 0.015),
                         hintText: "Search Fenix",
-                        hintStyle: Theme
-                            .of(context)
+                        hintStyle: Theme.of(context)
                             .textTheme
                             .bodyText1!
                             .copyWith(
-                            fontSize: 15.w, color: Colors.grey.shade500),
+                                fontSize: 15.w, color: Colors.grey.shade500),
                         prefixIcon: const Icon(Icons.search),
                         suffixIcon: const Icon(
                           Icons.qr_code_scanner,
@@ -154,10 +277,7 @@ class _CreateCarState extends State<CreateCar> {
                 ],
               ),
               SizedBox(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.010,
+                height: MediaQuery.of(context).size.height * 0.010,
               )
             ],
           ),
@@ -167,9 +287,9 @@ class _CreateCarState extends State<CreateCar> {
         children: [
           const Center(
               child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text('Create Car Listing'),
-              )),
+            padding: EdgeInsets.all(8.0),
+            child: Text('Create Car Listing'),
+          )),
           const Divider(thickness: 4, color: textColor),
           Expanded(
             child: Form(
@@ -180,17 +300,43 @@ class _CreateCarState extends State<CreateCar> {
                   kSpacing,
                   title('Photos'),
                   kSpacing,
-                  Row(
-                    children: [
-                      imageSelect(),
-                      tinyHSpace(),
-                      imageSelect(),
-                      tinyHSpace(),
-                      imageSelect(),
-                      tinyHSpace(),
-                      imageSelect(),
-                    ],
-                  ),
+                  images.isNotEmpty || videos.isNotEmpty
+                      ? Wrap(
+                          runSpacing: 10,
+                          spacing: 10,
+                          children: List.generate(
+                            images.length + 2,
+                            (index) => index == images.length
+                                ? imageSelect(
+                                    onTap: () => showImagePickers(),
+                                  )
+                                : index == images.length + 1
+                                    ? imageSelect(
+                                        icon: Icons.video_call,
+                                        onTap: () =>
+                                            showImagePickers(isPhoto: false),
+                                      )
+                                    : imageSelect(
+                                        onTap: () => showImagePickers(),
+                                        image: images[index]),
+                          ),
+                        )
+                      : Row(
+                          children: [
+                            imageSelect(
+                              onTap: () => showImagePickers(),
+                            ),
+                            tinyHSpace(),
+                            imageSelect(
+                              icon: Icons.videocam_rounded,
+                              onTap: () => showImagePickers(isPhoto: false),
+                            ),
+                            tinyHSpace(),
+                            imageSelect(icon: Icons.add),
+                            tinyHSpace(),
+                            // imageSelect(icon: Icons.add),
+                          ],
+                        ),
                   kSpacing,
                   title('Title'),
                   kSpacing,
@@ -202,67 +348,161 @@ class _CreateCarState extends State<CreateCar> {
                   kSpacing,
                   title('Item Specifics'),
                   kSpacing,
+                  textTitle('Car Brand:'),
                   TextFieldWidget(
-                    hint: "Car Brand",
-                    textController: conditionController,
-                  ),
-                  kSpacing,
-                  TextFieldWidget(
-                    hint: "Car Model",
-                    textController: quantityController,
-                  ),
-                  kSpacing,
-                  TextFieldWidget(
-                    hint: "Car Year",
-                    textController: materialController,
-                  ),
-                  kSpacing,
-                  TextFieldWidget(
-                    hint: "Car Color",
+                    hint: " Brand",
                     textController: brandController,
+                  ),
+                  kSpacing,
+                  textTitle('Car Model:'),
+                  TextFieldWidget(
+                    hint: " Model",
+                    textController: modelController,
+                  ),
+                  kSpacing,
+                  textTitle('Car Year:'),
+                  TextFieldWidget(
+                    hint: " Year",
+                    textController: yearController,
+                  ),
+                  kSpacing,
+                  textTitle(' Color:'),
+                  TextFieldWidget(
+                    hint: " Color",
+                    textController: colorController,
                     validator: (value) => FieldValidator.validate(value!),
                   ),
                   kSpacing,
+                  textTitle('Car Mileage:'),
                   TextFieldWidget(
-                    hint: "Car Milage",
-                    textController: sizeController,
+                    hint: "Mileage",
+                    textController: mileageController,
+                  ),
+                  kSpacing,
+                  textTitle('How many keys do you have? (optional)'),
+                  TextFieldWidget(
+                    hint: "Keys",
+                    textController: keyController,
+                  ),
+                  kSpacing,
+                  textTitle('How many seats do?'),
+                  TextFieldWidget(
+                    hint: "Seats",
+                    textController: seatController,
                   ),
 
                   kSpacing,
-                  TextFieldWidget(
-                    hint: "How many keys do you have",
-                    textController: featuresController,
+                  textTitle('Car has any accident'),
+
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: TextFieldWidget(
+                                hint: "Yes",
+                                textController: TextEditingController(text: 'Yes'),
+                              ),
+                            ),                            tinyHSpace(),
+
+                            checkBox(
+                              hadAccident=='Yes',
+                              onChanged: (v) {
+                              setState(() {
+                                hadAccident = "Yes";
+                              });
+                            },)
+                          ],
+                        ),
+                      ),
+                      smallHSpace(),
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: TextFieldWidget(
+                                hint: "No",
+                                textController: TextEditingController(text: 'No'),
+                              ),
+                            ),
+                            tinyHSpace(),
+                            checkBox(
+                              hadAccident=='No',
+                              onChanged: (v) {
+                              setState(() {
+                                hadAccident = "No";
+                              });
+                            },)
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  // kSpacing,
-                  // TextFieldWidget(
-                  //   hint: "Location",
-                  //   textController: countryController,
-                  //   validator: (value) => FieldValidator.validate(value!),
-                  // ),
                   kSpacing,
-                  TextFieldWidget(
-                    hint: "Car has any accident",
-                    textController: colorController,
+                  kSpacing,
+                  textTitle('Are you the first owner?'),
+
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: TextFieldWidget(
+                                hint: "Yes",
+                                textController: TextEditingController(text: 'Yes'),
+                              ),
+                            ),                            tinyHSpace(),
+
+                            checkBox(
+                              firstOwner=='Yes',
+                              onChanged: (v) {
+                              setState(() {
+                                firstOwner = "Yes";
+                              });
+                            },)
+                          ],
+                        ),
+                      ),
+                      smallHSpace(),
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: TextFieldWidget(
+                                hint: "No",
+                                textController: TextEditingController(text: 'No'),
+                              ),
+                            ),
+                            tinyHSpace(),
+                            checkBox(
+                              firstOwner=='No',
+                              onChanged: (v) {
+                              setState(() {
+                                firstOwner = "No";
+                              });
+                            },)
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                   kSpacing,
-                  TextFieldWidget(
-                    hint: "How many Seats",
-                    textController: capacityController,
-                  ),
+                  title('Category'),
                   kSpacing,
-                  // title('Category'),
-                  // kSpacing,
+
                   TextFieldWidget(
-                    hint: "Are you the first owner",
+                    hint: "Category",
                     textController: categoryController,
+                    suffixIcon: Icon(Icons.expand_more),
                   ),
-
                   kSpacing,
                   title('Description'),
                   kSpacing,
                   TextFieldWidget(
                     hint: "Description",
-                    maxLine: 4,
+                    maxLine: 6,
                     textController: descriptionController,
                   ),
                   kSpacing,
@@ -271,40 +511,67 @@ class _CreateCarState extends State<CreateCar> {
                   Row(
                     children: [
                       Expanded(
+                        flex:3,
                         child: TextFieldWidget(
                             keyboardType: const TextInputType.numberWithOptions(
                                 decimal: true),
                             hint: "Price",
                             textController: priceController),
                       ),
-                      smallHSpace(),
-                      const Text(
-                        'so\'m',
-                        style: TextStyle(fontSize: 13),
-                      ),
-                      tinyH5Space(),
-                      checkBox(),
+                      mediumHSpace(),
+                 Expanded(
+                   child: Column(children: [
+                     Row(children: [
+                       Expanded(
+                         child: const Text(
+                           'So\'m',
+                           style: TextStyle(fontSize: 13),
+                         ),
+                       ),
+                       tinyH5Space(),
+                       checkBox(!selectDollar,onChanged: (v) {
+                         setState(() {
+                           selectDollar = !v!;
+                         });
+                       },),
+                     ],),
+                     tiny5Space(),
+                     Row(children: [
+                       Expanded(
+                         child: const Text(
+                           'Dollar \$',
+                           style: TextStyle(fontSize: 13),
+                         ),
+                       ),
+                       tinyH5Space(),
+                       checkBox(selectDollar,onChanged: (v) {
+                         setState(() {
+                           selectDollar = v!;
+                         });
+                       },),
+                     ],),
+                   ],),
+                 )
                     ],
                   ),
-                  kSpacing,
-                  title('Discount Option'),
-                  kSpacing,
-
-                  Row(
-                    children: [
-                      discount(),
-                      tinyH5Space(),
-                      discount(),
-                      tinyH5Space(),
-                      discount(),
-                      smallHSpace(),
-                      Expanded(
-                        child: TextFieldWidget(
-                            hint: "Discount",
-                            textController: discountController),
-                      ),
-                    ],
-                  ),
+                  // kSpacing,
+                  // title('Discount Option'),
+                  // kSpacing,
+                  // Row(
+                  //   children: [
+                  //     discount(),
+                  //     tinyH5Space(),
+                  //     discount(),
+                  //     tinyH5Space(),
+                  //     discount(),
+                  //     smallHSpace(),
+                  //     Expanded(
+                  //       child: TextFieldWidget(
+                  //           hint: "Discount",
+                  //           textController: discountController),
+                  //     ),
+                  //   ],
+                  // ),
                   kSpacing,
                   title('Shipping'),
                   kSpacing,
@@ -312,34 +579,64 @@ class _CreateCarState extends State<CreateCar> {
                   tinySpace(),
                   check('No, I can\'t Deliver the item', 'No'),
                   kSpacing,
+                  textTitle('Delivery Price'),
 
                   Row(
                     children: [
                       Expanded(
+                        flex:3,
                         child: TextFieldWidget(
+                            keyboardType: const TextInputType.numberWithOptions(
+                                decimal: true),
                             hint: "Delivery Price",
                             textController: deliveryPriceController),
                       ),
-                      smallHSpace(),
-                      const Text(
-                        'So\'m',
-                        style: TextStyle(fontSize: 13),
-                      ),
-                      tinyH5Space(),
-                      checkBox(),
+                      mediumHSpace(),
+                      Expanded(
+                        child: Column(children: [
+                          Row(children: [
+                            Expanded(
+                              child: const Text(
+                                'So\'m',
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            ),
+                            tinyH5Space(),
+                            checkBox(!selectDollar,onChanged: (v) {
+                              setState(() {
+                                selectDollar = !v!;
+                              });
+                            },),
+                          ],),
+                          tiny5Space(),
+                          Row(children: [
+                            Expanded(
+                              child: const Text(
+                                'Dollar \$',
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            ),
+                            tinyH5Space(),
+                            checkBox(selectDollar,onChanged: (v) {
+                              setState(() {
+                                selectDollar = v!;
+                              });
+                            },),
+                          ],),
+                        ],),
+                      )
                     ],
                   ),
-                  kSpacing,
+
+                  kSpacing,                  textTitle('Delivery Details'),
 
                   TextFieldWidget(
                       hint: "Delivery Details",
                       textController: deliveryController),
-                  kSpacing,
-
+                  kSpacing,  textTitle('Delivery Location'),
                   TextFieldWidget(
                       hint: "Delivery Location",
                       textController: deliveryLocationController),
-
                   verticalSpace(0.02),
                   Center(
                     child: InkWell(
@@ -353,7 +650,7 @@ class _CreateCarState extends State<CreateCar> {
                               plan: 'Loggie',
                               mileage: mileageController.text,
                               model: modelController.text,
-                              deliveryAddress: deliveryController.text,
+                              deliveryAddress: deliveryLocationController.text,
                               price: priceController.text,
                               category: categoryController.text,
                               brand: brandController.text,
@@ -365,7 +662,7 @@ class _CreateCarState extends State<CreateCar> {
                               seats: seatController.text,
                               key: keyController.text,
                               detail: detailController.text,
-                              media:images,
+                              media: images,
                             );
                           } else {
                             CustomSnackBar.failedSnackBar('Error',
@@ -384,7 +681,14 @@ class _CreateCarState extends State<CreateCar> {
     );
   }
 
-  Container checkBox() {
+  Text textTitle(text) {
+    return Text(
+      text,
+      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+    );
+  }
+
+  Container checkBox(value,{required void Function(bool?)?  onChanged}) {
     return Container(
         decoration: depressNeumorph(),
         child: SizedBox(
@@ -397,12 +701,8 @@ class _CreateCarState extends State<CreateCar> {
             child: Checkbox(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5)),
-              value: selectDollar,
-              onChanged: (v) {
-                setState(() {
-                  selectDollar = v!;
-                });
-              },
+              value: value,
+              onChanged: onChanged
             ),
           ),
         ));
@@ -462,9 +762,9 @@ class _CreateCarState extends State<CreateCar> {
             )),
         Expanded(
             child: Text(
-              subText,
-              style: const TextStyle(fontSize: 13),
-            )),
+          subText,
+          style: const TextStyle(fontSize: 13),
+        )),
         Container(
             decoration: depressNeumorph(),
             child: SizedBox(
@@ -490,18 +790,6 @@ class _CreateCarState extends State<CreateCar> {
     );
   }
 
-  Container imageSelect() {
-    return Container(
-      decoration: BoxDecoration(
-          border: Border.all(color: lightGrey),
-          borderRadius: BorderRadius.circular(5)),
-      child: const Padding(
-        padding: EdgeInsets.all(25.0),
-        child: Icon(Icons.photo_camera, color: lightGrey),
-      ),
-    );
-  }
-
   Row title(String title) {
     return Row(
       children: [
@@ -524,68 +812,63 @@ class _CreateCarState extends State<CreateCar> {
           _userController.gender(title);
         },
         child: Obx(
-              () =>
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(17.w),
-                  color: (_userController.gender.value == title ||
+          () => Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(17.w),
+              color: (_userController.gender.value == title ||
                       (_userController.getUser() != null &&
                           _userController.getUser()!.gender == title))
-                      ? const Color(0xFFE4F0FA).withOpacity(0.8)
-                      : const Color(0xFFE4F0FA),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.shade400,
-                    ),
-                    BoxShadow(
-                      color: Colors.white.withOpacity(0.9),
-                      spreadRadius: -3,
-                      blurRadius: 3,
-                      offset: const Offset(3, 6), // changes position of shadow
-                    ),
-                  ],
+                  ? const Color(0xFFE4F0FA).withOpacity(0.8)
+                  : const Color(0xFFE4F0FA),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.shade400,
                 ),
-                padding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        title,
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .bodyText1!
-                            .copyWith(
+                BoxShadow(
+                  color: Colors.white.withOpacity(0.9),
+                  spreadRadius: -3,
+                  blurRadius: 3,
+                  offset: const Offset(3, 6), // changes position of shadow
+                ),
+              ],
+            ),
+            padding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    title,
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
                           fontSize: 15.w,
                           color: (_userController.gender.value == title ||
-                              (_userController.getUser() != null &&
-                                  _userController.getUser()!.gender ==
-                                      title))
+                                  (_userController.getUser() != null &&
+                                      _userController.getUser()!.gender ==
+                                          title))
                               ? Colors.black
                               : Colors.grey.shade400,
                         ),
-                      ),
-                    ),
-                    Container(
-                        margin: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: (_userController.gender.value == title ||
+                  ),
+                ),
+                Container(
+                    margin: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: (_userController.gender.value == title ||
                                 (_userController.getUser() != null &&
                                     _userController.getUser()!.gender == title))
-                                ? light.withOpacity(0.5)
-                                : Colors.transparent),
-                        child: Icon(
-                          icon,
-                          color: (_userController.gender.value == title ||
+                            ? light.withOpacity(0.5)
+                            : Colors.transparent),
+                    child: Icon(
+                      icon,
+                      color: (_userController.gender.value == title ||
                               (_userController.getUser() != null &&
                                   _userController.getUser()!.gender == title))
-                              ? kTextBlackColor
-                              : Colors.blueGrey,
-                        )),
-                  ],
-                ),
-              ),
+                          ? kTextBlackColor
+                          : Colors.blueGrey,
+                    )),
+              ],
+            ),
+          ),
         ),
       ),
     );
