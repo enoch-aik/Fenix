@@ -214,7 +214,9 @@ class ProductList extends StatelessWidget {
                               ],
                             );
                           },
-                          separatorBuilder: (c, i) => smallSpace(),
+                  shrinkWrap: true,
+
+                  separatorBuilder: (c, i) => smallSpace(),
                           itemCount: storeController.productList.length)),
             ),
           )

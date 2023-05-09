@@ -12,14 +12,14 @@ import '../../theme.dart';
 import '../onboarding/constants.dart';
 import 'search.dart';
 
-class HouseRents extends StatefulWidget {
-  const HouseRents({Key? key}) : super(key: key);
+class VehicleList extends StatefulWidget {
+  const VehicleList({Key? key}) : super(key: key);
 
   @override
-  State<HouseRents> createState() => _HouseRentsState();
+  State<VehicleList> createState() => _VehicleListState();
 }
 
-class _HouseRentsState extends State<HouseRents> {
+class _VehicleListState extends State<VehicleList> {
   String token = '';
   String storeId = '';
   final UserController _userController = Get.find();
@@ -36,7 +36,7 @@ class _HouseRentsState extends State<HouseRents> {
     token = _userController.getToken();
     _storeController.getStores(token);
     storeId = _storeController.storeList[0]['id'].toString();
-    _storeController.getApartments(token, storeId);
+    _storeController.getVehicles(token, storeId);
   }
 
   @override
@@ -140,9 +140,9 @@ class _HouseRentsState extends State<HouseRents> {
                 ],
               )),
           Expanded(
-            child: Obx(() => _storeController.isFetchingApartments.isTrue
+            child: Obx(() => _storeController.isFetchingVehicles.isTrue
                 ? const Center(child: CircularProgressIndicator())
-                : _storeController.apartmentList.isEmpty
+                : _storeController.vehicleList.isEmpty
                     ? Center(
                         child: Padding(
                         padding: const EdgeInsets.symmetric(
@@ -157,7 +157,8 @@ class _HouseRentsState extends State<HouseRents> {
                             children: [
                               const Icon(Icons.add_box, size: 30),
                               smallSpace(),
-                              const Text('You do not have any apartment for rent yet'),
+                              const Text(
+                                  'You do not have any car for sale yet'),
                             ],
                           ),
                         ),
@@ -165,28 +166,13 @@ class _HouseRentsState extends State<HouseRents> {
                     : ListView.separated(
                         padding: const EdgeInsets.only(top: BODY_PADDING),
                         itemBuilder: (c, i) {
-                          var item = _storeController.apartmentList[i];
+                          var item = _storeController.vehicleList[i];
                           return const RatedItemsWidget(actionText: 'More');
                         },
                         separatorBuilder: (c, i) => smallSpace(),
                         shrinkWrap: true,
-                        itemCount: _storeController.apartmentList.length)),
+                        itemCount: _storeController.vehicleList.length)),
           ),
-          // Expanded(
-          //   child: ListView(
-          //     children: [
-          //       mediumSpace(),
-          //       ListView.separated(
-          //           physics: const NeverScrollableScrollPhysics(),
-          //           itemCount: 8,
-          //           shrinkWrap: true,
-          //           separatorBuilder: (c,i)=>smallSpace(),
-          //           itemBuilder: (c, i) {
-          //             return const RatedItemsWidget(actionText:'More');
-          //           }),
-          //     ],
-          //   ),
-          // )
         ],
       ),
     );
