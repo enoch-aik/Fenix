@@ -48,6 +48,7 @@ class _CreateProductState extends State<CreateProduct> {
   final conditionController = TextEditingController();
 
   final categoryController = TextEditingController();
+  final subcategoryController = TextEditingController();
 
   final colorController = TextEditingController();
   final capacityController = TextEditingController();
@@ -63,6 +64,8 @@ class _CreateProductState extends State<CreateProduct> {
   final planController = TextEditingController();
   final deliveryController = TextEditingController();
 
+  List<File> images = [];
+  List<File> videos = [];
   String deliveryValue = '';
   bool selectDollar = false;
   File? _image;
@@ -106,7 +109,7 @@ class _CreateProductState extends State<CreateProduct> {
                                 },
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
                                       child: Text(
@@ -276,7 +279,8 @@ class _CreateProductState extends State<CreateProduct> {
           const Center(
               child: Padding(
             padding: EdgeInsets.all(8.0),
-            child: Text('Create Selling Post',style: TextStyle(fontWeight: FontWeight.w400)),
+            child: Text('Create Selling Post',
+                style: TextStyle(fontWeight: FontWeight.w400)),
           )),
           const Divider(thickness: 4, color: textColor),
           Expanded(
@@ -288,17 +292,43 @@ class _CreateProductState extends State<CreateProduct> {
                   kSpacing,
                   title('Photos'),
                   kSpacing,
-                  Row(
-                    children: [
-                      imageSelect(),
-                      tinyHSpace(),
-                      imageSelect(icon: Icons.videocam),
-                      tinyHSpace(),
-                      imageSelect(icon: Icons.add),
-                      tinyHSpace(),
-                      imageSelect(),
-                    ],
-                  ),
+                  images.isNotEmpty || videos.isNotEmpty
+                      ? Wrap(
+                          runSpacing: 10,
+                          spacing: 10,
+                          children: List.generate(
+                            images.length + 2,
+                            (index) => index == images.length
+                                ? imageSelect(
+                                    onTap: () => showImagePickers(),
+                                  )
+                                : index == images.length + 1
+                                    ? imageSelect(
+                                        icon: Icons.video_call,
+                                        onTap: () =>
+                                            showImagePickers(isPhoto: false),
+                                      )
+                                    : imageSelect(
+                                        onTap: () => showImagePickers(),
+                                        image: images[index]),
+                          ),
+                        )
+                      : Row(
+                          children: [
+                            imageSelect(
+                              onTap: () => showImagePickers(),
+                            ),
+                            tinyHSpace(),
+                            imageSelect(
+                              icon: Icons.videocam_rounded,
+                              onTap: () => showImagePickers(isPhoto: false),
+                            ),
+                            tinyHSpace(),
+                            imageSelect(icon: Icons.add),
+                            tinyHSpace(),
+                            // imageSelect(icon: Icons.add),
+                          ],
+                        ),
                   kSpacing,
                   title('Title of Product'),
                   kSpacing,
@@ -363,6 +393,11 @@ class _CreateProductState extends State<CreateProduct> {
                   TextFieldWidget(
                     hint: "Category",
                     textController: categoryController,
+                  ),
+                  kSpacing,
+                  TextFieldWidget(
+                    hint: "Sub-Category",
+                    textController: subcategoryController,
                   ),
 
                   kSpacing,
@@ -431,7 +466,6 @@ class _CreateProductState extends State<CreateProduct> {
                       smallHSpace(),
                       const Text(
                         'so\'m',
-
                         style: TextStyle(fontSize: 13),
                       ),
                       tinyH5Space(),
@@ -469,6 +503,7 @@ class _CreateProductState extends State<CreateProduct> {
                               size: sizeController.text,
                               material: materialController.text,
                               category: categoryController.text,
+                              subCategory: subcategoryController.text,
                               condition: conditionController.text,
                               brand: brandController.text,
                               coordinate: "12.345678, -98.765432",
@@ -599,18 +634,27 @@ class _CreateProductState extends State<CreateProduct> {
     );
   }
 
-  Container imageSelect({icon}) {
-    return Container(
-      decoration: BoxDecoration(
-          border: Border.all(color: light),
-          borderRadius: BorderRadius.circular(10)),
-      child:  Padding(
-        padding: EdgeInsets.all(30.0),
-        child: Icon(icon??Icons.photo_camera, color: lightGrey),
+  Widget imageSelect({icon, onTap, image}) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+            border: Border.all(color: light),
+            borderRadius: BorderRadius.circular(10)),
+        child: image != null
+            ? Image.file(
+                image,
+                width: 82,
+                height: 82,
+                fit: BoxFit.cover,
+              )
+            : Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: Icon(icon ?? Icons.photo_camera, color: lightGrey),
+              ),
       ),
     );
   }
-
 
   Row title(String title) {
     return Row(

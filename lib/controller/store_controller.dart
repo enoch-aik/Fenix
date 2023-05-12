@@ -109,7 +109,7 @@ class StoreController extends GetxController {
     material,
     coordinate,
     features,
-    shippingCost,
+    shippingCost,subCategory,
     description,
     deliveryAddress,
     deliveryCity,
@@ -141,7 +141,8 @@ class StoreController extends GetxController {
         "brand": brand,
         "size": size,
         "features": features,
-        "category": category,
+        "category": {'name':category,
+        'subCategory': subCategory},
         "color": color,
         "storageCapacity": capacity,
       },
@@ -167,7 +168,7 @@ class StoreController extends GetxController {
     previousAccident,
     firstOwner,
     mileage,
-    brand,
+    brand,shippingPrice,
     year,
     model,
     seats,
@@ -196,6 +197,7 @@ class StoreController extends GetxController {
       "description": description,
       "category": category,
       "plan": plan,
+      "price": price,
       "specifics": {
         "brand": brand,
         "model": model,
@@ -210,11 +212,11 @@ class StoreController extends GetxController {
       },
       "shipping": {
         "shipping": true,
-        "price": price,
+        "price": shippingPrice,
         "details": detail,
         "location": deliveryAddress,
       },
-      "media":media,
+      // "media":media,
 
     });
   }
@@ -273,7 +275,7 @@ class StoreController extends GetxController {
         "pet": pet,
         "smoke": smoke
       },
-      media:media,
+      // "media":'media',
     };
     print(data);
     Get.to(() => const Loading());

@@ -34,7 +34,7 @@ class _HouseRentsState extends State<HouseRents> {
 
   boot() async {
     token = _userController.getToken();
-    _storeController.getStores(token);
+  await  _storeController.getStores(token);
     storeId = _storeController.storeList[0]['id'].toString();
     _storeController.getApartments(token, storeId);
   }

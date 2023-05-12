@@ -17,7 +17,8 @@ import '../home/search.dart';
 import '../onboarding/constants.dart';
 
 class ProductDetails extends StatefulWidget {
-  const ProductDetails({Key? key}) : super(key: key);
+  const ProductDetails({Key? key, this.product}) : super(key: key);
+  final product;
 
   @override
   State<ProductDetails> createState() => _ProductDetailsState();
@@ -43,8 +44,14 @@ class _ProductDetailsState extends State<ProductDetails>
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(
-        preferredSize: Size(MediaQuery.of(context).size.width,
-            MediaQuery.of(context).size.height * 0.13),
+        preferredSize: Size(MediaQuery
+            .of(context)
+            .size
+            .width,
+            MediaQuery
+                .of(context)
+                .size
+                .height * 0.13),
         child: Container(
           decoration: new BoxDecoration(
             gradient: gradient(
@@ -60,7 +67,10 @@ class _ProductDetailsState extends State<ProductDetails>
               Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
-                  height: MediaQuery.of(context).size.height * 0.06,
+                  height: MediaQuery
+                      .of(context)
+                      .size
+                      .height * 0.06,
                   child: Image.asset(
                     "assets/images/fenix_c.png",
                     fit: BoxFit.fill,
@@ -84,8 +94,14 @@ class _ProductDetailsState extends State<ProductDetails>
                   InkWell(
                     onTap: () => Get.to(() => SearchScreen()),
                     child: Container(
-                      height: MediaQuery.of(context).size.height * 0.050,
-                      width: MediaQuery.of(context).size.width * 0.85,
+                      height: MediaQuery
+                          .of(context)
+                          .size
+                          .height * 0.050,
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width * 0.85,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(13.w),
                         color: Colors.white,
@@ -101,13 +117,17 @@ class _ProductDetailsState extends State<ProductDetails>
                           contentPadding: EdgeInsets.symmetric(
                               horizontal: 15,
                               vertical:
-                                  MediaQuery.of(context).size.height * 0.015),
+                              MediaQuery
+                                  .of(context)
+                                  .size
+                                  .height * 0.015),
                           hintText: "Search Fenix",
-                          hintStyle: Theme.of(context)
+                          hintStyle: Theme
+                              .of(context)
                               .textTheme
                               .bodyText1!
                               .copyWith(
-                                  fontSize: 15.w, color: Colors.grey.shade500),
+                              fontSize: 15.w, color: Colors.grey.shade500),
                           prefixIcon: const Icon(Icons.search),
                         ),
                       ),
@@ -116,7 +136,10 @@ class _ProductDetailsState extends State<ProductDetails>
                 ],
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.010,
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height * 0.010,
               )
             ],
           ),
@@ -126,7 +149,10 @@ class _ProductDetailsState extends State<ProductDetails>
         physics: const ClampingScrollPhysics(),
         children: [
           Container(
-              width: MediaQuery.of(context).size.width,
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width,
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.w),
               decoration: BoxDecoration(
@@ -145,7 +171,7 @@ class _ProductDetailsState extends State<ProductDetails>
                       ignoreGestures: true,
                       ratingWidget: RatingWidget(
                           full:
-                              const Icon(Icons.star, color: Color(0xFFFFD600)),
+                          const Icon(Icons.star, color: Color(0xFFFFD600)),
                           half: const Icon(
                             Icons.star_half,
                             color: Color(0xFFFFD600),
@@ -160,7 +186,11 @@ class _ProductDetailsState extends State<ProductDetails>
                   ),
                   Text(
                     "6,231",
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .bodyText1!
+                        .copyWith(
                         fontSize: 16.w,
                         color: kTextBlackColor,
                         fontWeight: FontWeight.w700),
@@ -173,7 +203,7 @@ class _ProductDetailsState extends State<ProductDetails>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 KText(
-                  "Brand Apple",
+                  widget.product['title'] ?? "Brand Apple",
                   color: const Color(0xFF0B85E6),
                   fontWeight: FontWeight.w700,
                   fontSize: 19.w,
@@ -182,7 +212,8 @@ class _ProductDetailsState extends State<ProductDetails>
                   height: 3.w,
                 ),
                 KText(
-                  "Iphone 14 pro max Bsf sddsef cajcas dcsdc sd Optio out there fcjabc cahsccbaccdcdcd gdf dgdgdrg dg",
+                  widget.product['description'] ??
+                      "Iphone 14 pro max Bsf sddsef cajcas dcsdc sd Optio out there fcjabc cahsccbaccdcdcd gdf dgdgdrg dg",
                   fontWeight: FontWeight.w500,
                   fontSize: 15.w,
                 ),
@@ -205,10 +236,11 @@ class _ProductDetailsState extends State<ProductDetails>
                         currentIn = v;
                       });
                     },
-                    itemBuilder: (c, i) => Image.asset(
-                      "assets/images/Rectangle 7.png",
-                      fit: BoxFit.fitWidth,
-                    ),
+                    itemBuilder: (c, i) =>
+                        Image.asset(
+                          "assets/images/Rectangle 7.png",
+                          fit: BoxFit.fitWidth,
+                        ),
                     itemCount: 3,
                   )),
               Positioned(
@@ -242,7 +274,8 @@ class _ProductDetailsState extends State<ProductDetails>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(
                         3,
-                        (i) => Padding(
+                            (i) =>
+                            Padding(
                               padding: const EdgeInsets.all(3.0),
                               child: Container(
                                 height: 18,
@@ -273,7 +306,7 @@ class _ProductDetailsState extends State<ProductDetails>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     KText(
-                      "87,000  so'm",
+                      "${widget.product['price']['amount'] ?? ' 87,000'} so'm",
                       fontWeight: FontWeight.w700,
                       fontSize: 22.w,
                     ),
@@ -303,7 +336,7 @@ class _ProductDetailsState extends State<ProductDetails>
                 Container(
                   height: 32.w,
                   padding:
-                      EdgeInsets.symmetric(horizontal: 19.w, vertical: 5.w),
+                  EdgeInsets.symmetric(horizontal: 19.w, vertical: 5.w),
                   decoration: shadow(),
                   child: KText(
                     "-10 %",
@@ -320,15 +353,18 @@ class _ProductDetailsState extends State<ProductDetails>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.6,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width * 0.6,
                   padding:
-                      EdgeInsets.symmetric(horizontal: 19.w, vertical: 8.w),
+                  EdgeInsets.symmetric(horizontal: 19.w, vertical: 8.w),
                   decoration: shadow(),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       KText(
-                        "Colors:  Space Grey",
+                        "Colors:  ${widget.product['specifics']['color']}",
                         fontSize: 15.w,
                         fontWeight: FontWeight.w500,
                       ),
@@ -342,22 +378,25 @@ class _ProductDetailsState extends State<ProductDetails>
                 ),
                 Container(
                   height: 32.w,
-                  width: MediaQuery.of(context).size.width * 0.22,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width * 0.22,
                   padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 8.w),
                   decoration: shadow(),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       KText(
-                        "Qty:   1",
+                        "Qty:    ${widget.product['specifics']['quantity']}",
                         fontSize: 15.w,
                         fontWeight: FontWeight.w500,
                       ),
-                      Icon(
-                        Icons.arrow_drop_down,
-                        color: kTextBlackColor,
-                        size: 20,
-                      )
+                      // Icon(
+                      //   Icons.arrow_drop_down,
+                      //   color: kTextBlackColor,
+                      //   size: 20,
+                      // )
                     ],
                   ),
                 )
@@ -374,7 +413,7 @@ class _ProductDetailsState extends State<ProductDetails>
                     controller: _tabController,
                     labelColor: kTextBlackColor,
                     labelStyle:
-                        TextStyle(fontSize: 18.w, fontWeight: FontWeight.w500),
+                    TextStyle(fontSize: 18.w, fontWeight: FontWeight.w500),
                     tabs: const [
                       Tab(
                         text: "Delivery",
@@ -395,7 +434,7 @@ class _ProductDetailsState extends State<ProductDetails>
                       Container(
                           child: KText(
                             "Delivery info will  be here like seller offer to shvbhjsbvj vsdhvsdvvhsdjbvhjsdbvjhsdbvhsdbvjhsbdjvhbsdjvbsdjhvbjhbvjsddhvbshdbhjvbsjhdbvjhsdbvjhsdbvjhsdbvjhsdbvjhsdbvjhsdbvjhs"
-                            "delivry, day took for delivery and so on hsdbvjhbsdvjhshjvsdhjvhs",
+                                "delivry, day took for delivery and so on hsdbvjhbsdvjhshjvsdhjvhs",
                             fontSize: 13.w,
                             fontWeight: FontWeight.w500,
                           ),
@@ -407,7 +446,7 @@ class _ProductDetailsState extends State<ProductDetails>
                       Container(
                           child: KText(
                             "Delivery info will  be here like seller offer to shvbhjsbvj vsdhvsdvvhsdjbvhjsdbvjhsdbvhsdbvjhsbdjvhbsdjvbsdjhvbjhbvjsddhvbshdbhjvbsjhdbvjhsdbvjhsdbvjhsdbvjhsdbvjhsdbvjhsdbvjhs"
-                            "delivry, day took for delivery and so on hsdbvjhbsdvjhshjvsdhjvhs",
+                                "delivry, day took for delivery and so on hsdbvjhbsdvjhshjvsdhjvhs",
                             fontSize: 12.w,
                             fontWeight: FontWeight.w500,
                           ),
@@ -491,40 +530,40 @@ class _ProductDetailsState extends State<ProductDetails>
             ),
           ),
           ProductDetailProperty(
-            property: "Condition:",
+            property: "Condition: ${widget.product['specifics']['condition']}",
           ),
           ProductDetailProperty(
-            property: "Quantity:",
+            property: "Quantity: ${widget.product['specifics']['quantity']}",
           ),
           ProductDetailProperty(
-            property: "Item Number:",
+            property: "Item Number: 5",
           ),
           ProductDetailProperty(
-            property: "Material:",
+            property: "Material: ${widget.product['specifics']['material']}",
           ),
           ProductDetailProperty(
-            property: "Brand:",
+            property: "Brand: ${widget.product['specifics']['brand']}",
           ),
           ProductDetailProperty(
-            property: "Size:",
+            property: "Size: ${widget.product['specifics']['size']}",
           ),
           ProductDetailProperty(
-            property: "Features:",
+            property: "Features: ${widget.product['specifics']['features']}",
           ),
           ProductDetailProperty(
-            property: "Category:",
+            property: "Category: ${widget.product['specifics']['category']['name']}",
           ),
           ProductDetailProperty(
-            property: "Color:",
+            property: "Color: ${widget.product['specifics']['color']}",
           ),
           ProductDetailProperty(
-            property: "Network:",
+            property: "Network: ${widget.product['specifics']['condition']}",
           ),
           ProductDetailProperty(
-            property: "Carrier:",
+            property: "Carrier: ${widget.product['specifics']['condition']}",
           ),
           ProductDetailProperty(
-            property: "Storage Capacity:",
+            property: "Storage Capacity: ${widget.product['specifics']['storageCapacity']}",
           ),
           Divider(
             height: 50.w,
@@ -543,12 +582,7 @@ class _ProductDetailsState extends State<ProductDetails>
           Padding(
             padding: const EdgeInsets.all(10),
             child: KText(
-              "dahbsjdbasdbaskbdkjasdkjanskdjnaskjdnaskjdnaskjdn"
-              "dasjdbajksbdjkasnkdnaskjndkjasndkjnaskdjnasdjkasda"
-              "dasdjbasjhbdasbdjknasdnkasnd asdjkn asjkndkajsndn"
-              "dajksdbnjkasndjknkjasndkjnaskjdnkja asd asjkdasjdasd"
-              "d jasbdjkansjdn asdjkasndkasn das jdasndnasndkansda"
-              "das das daskldklasdlkmasldm asdlaskdmlaskdlkasmdl",
+              "${widget.product['specifics']['condition']} ${widget.product['title']}, ${widget.product['specifics']['category']['name']}, ${widget.product['specifics']['category']['subcategory']}, ${widget.product['description']}",
               fontSize: 15.w,
             ),
           ),
@@ -580,17 +614,23 @@ class _ProductDetailsState extends State<ProductDetails>
             ],
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.30,
+            height: MediaQuery
+                .of(context)
+                .size
+                .height * 0.30,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: 30,
                 itemBuilder: (context, index) {
                   return Container(
-                    width: MediaQuery.of(context).size.width * 0.8,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.8,
                     padding:
-                        EdgeInsets.symmetric(horizontal: 10.w, vertical: 19.w),
+                    EdgeInsets.symmetric(horizontal: 10.w, vertical: 19.w),
                     margin:
-                        EdgeInsets.symmetric(horizontal: 10.w, vertical: 19.w),
+                    EdgeInsets.symmetric(horizontal: 10.w, vertical: 19.w),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15.w),
                       border: Border.all(color: Colors.blue),
@@ -683,7 +723,10 @@ class _ProductDetailsState extends State<ProductDetails>
           Padding(
             padding: EdgeInsets.all(20.w),
             child: Container(
-              height: MediaQuery.of(context).size.width * 0.3,
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .width * 0.3,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -853,7 +896,10 @@ class _ProductDetailsState extends State<ProductDetails>
             ],
           ),
           Container(
-              width: MediaQuery.of(context).size.width,
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width,
               height: 40.w,
               alignment: Alignment.centerLeft,
               margin: EdgeInsets.symmetric(vertical: 17.w),
@@ -872,7 +918,11 @@ class _ProductDetailsState extends State<ProductDetails>
                       ),
                       Text(
                         "You Might Also Like",
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .bodyText1!
+                            .copyWith(
                             fontSize: 18.w,
                             color: Colors.white,
                             fontWeight: FontWeight.w700),
@@ -882,7 +932,10 @@ class _ProductDetailsState extends State<ProductDetails>
                 ],
               )),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.45,
+            height: MediaQuery
+                .of(context)
+                .size
+                .height * 0.45,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: 30,
@@ -891,7 +944,10 @@ class _ProductDetailsState extends State<ProductDetails>
                 }),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.45,
+            height: MediaQuery
+                .of(context)
+                .size
+                .height * 0.45,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: 30,
@@ -900,7 +956,10 @@ class _ProductDetailsState extends State<ProductDetails>
                 }),
           ),
           Container(
-              width: MediaQuery.of(context).size.width,
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width,
               height: 40.w,
               alignment: Alignment.centerLeft,
               margin: EdgeInsets.symmetric(vertical: 17.w),
@@ -919,7 +978,11 @@ class _ProductDetailsState extends State<ProductDetails>
                       ),
                       Text(
                         "Most Viewed Items",
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .bodyText1!
+                            .copyWith(
                             fontSize: 18.w,
                             color: Colors.white,
                             fontWeight: FontWeight.w700),
@@ -930,7 +993,10 @@ class _ProductDetailsState extends State<ProductDetails>
               )),
           SizedBox(
             height: 152.w,
-            width: MediaQuery.of(context).size.width,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: 7,
@@ -956,7 +1022,10 @@ class _ProductDetailsState extends State<ProductDetails>
           ),
           SizedBox(
             height: 152.w,
-            width: MediaQuery.of(context).size.width,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: 7,
@@ -984,7 +1053,10 @@ class _ProductDetailsState extends State<ProductDetails>
               primary: false,
               shrinkWrap: true,
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.5,
+                maxCrossAxisExtent: MediaQuery
+                    .of(context)
+                    .size
+                    .width * 0.5,
                 childAspectRatio: 1 / 2,
                 mainAxisSpacing: 0,
                 crossAxisSpacing: 0,
@@ -995,7 +1067,10 @@ class _ProductDetailsState extends State<ProductDetails>
               }),
           SizedBox(
             height: 276.w,
-            width: MediaQuery.of(context).size.width,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
             child: PageView(
               children: [
                 Image.asset(
@@ -1126,8 +1201,14 @@ class ProductWidget extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: MediaQuery.of(context).size.height * 0.42,
-          width: MediaQuery.of(context).size.width * 0.452,
+          height: MediaQuery
+              .of(context)
+              .size
+              .height * 0.42,
+          width: MediaQuery
+              .of(context)
+              .size
+              .width * 0.452,
           margin: EdgeInsets.symmetric(horizontal: 9.w),
           decoration: BoxDecoration(
               color: const Color(0xFFDAE5F2),
@@ -1149,8 +1230,14 @@ class ProductWidget extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                height: MediaQuery.of(context).size.height * 0.25,
-                width: MediaQuery.of(context).size.width * 0.455,
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height * 0.25,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width * 0.455,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.w),
                   image: const DecorationImage(
@@ -1163,8 +1250,14 @@ class ProductWidget extends StatelessWidget {
                 height: 10.w,
               ),
               Container(
-                height: MediaQuery.of(context).size.height * 0.15,
-                width: MediaQuery.of(context).size.width * 0.455,
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height * 0.15,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width * 0.455,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -1179,13 +1272,14 @@ class ProductWidget extends StatelessWidget {
                           children: [
                             Text(
                               "Delivery info will  be here dg likseller offer sajncnask...",
-                              style: Theme.of(context)
+                              style: Theme
+                                  .of(context)
                                   .textTheme
                                   .bodyText1!
                                   .copyWith(
-                                      fontSize: 12.w,
-                                      color: const Color(0xFF334669),
-                                      fontWeight: FontWeight.w700),
+                                  fontSize: 12.w,
+                                  color: const Color(0xFF334669),
+                                  fontWeight: FontWeight.w700),
                             ),
                             Row(
                               children: [
@@ -1213,14 +1307,15 @@ class ProductWidget extends StatelessWidget {
                                 ),
                                 Text(
                                   "259 reviews.",
-                                  style: Theme.of(context)
+                                  style: Theme
+                                      .of(context)
                                       .textTheme
                                       .bodyText1!
                                       .copyWith(
-                                          fontSize: 10.w,
-                                          color: const Color(0xFF334669)
-                                              .withOpacity(0.6),
-                                          fontWeight: FontWeight.w500),
+                                      fontSize: 10.w,
+                                      color: const Color(0xFF334669)
+                                          .withOpacity(0.6),
+                                      fontWeight: FontWeight.w500),
                                 ),
                               ],
                             ),
@@ -1232,14 +1327,15 @@ class ProductWidget extends StatelessWidget {
                                 ),
                                 Text(
                                   "United State, Florida 3340",
-                                  style: Theme.of(context)
+                                  style: Theme
+                                      .of(context)
                                       .textTheme
                                       .bodyText1!
                                       .copyWith(
-                                          fontSize: 11.w,
-                                          color: const Color(0xFF334669)
-                                              .withOpacity(0.6),
-                                          fontWeight: FontWeight.w400),
+                                      fontSize: 11.w,
+                                      color: const Color(0xFF334669)
+                                          .withOpacity(0.6),
+                                      fontWeight: FontWeight.w400),
                                 ),
                               ],
                             ),
@@ -1251,13 +1347,14 @@ class ProductWidget extends StatelessWidget {
                                 ),
                                 Text(
                                   "Free Shipping",
-                                  style: Theme.of(context)
+                                  style: Theme
+                                      .of(context)
                                       .textTheme
                                       .bodyText1!
                                       .copyWith(
-                                          fontSize: 12.w,
-                                          color: const Color(0xFF0F7D46),
-                                          fontWeight: FontWeight.w500),
+                                      fontSize: 12.w,
+                                      color: const Color(0xFF0F7D46),
+                                      fontWeight: FontWeight.w500),
                                 )
                               ],
                             ),
@@ -1267,7 +1364,11 @@ class ProductWidget extends StatelessWidget {
                     ),
                     Text(
                       "17,000   so’m",
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .bodyText1!
+                          .copyWith(
                           fontSize: 15.w,
                           color: const Color(0xFFCE242B),
                           fontWeight: FontWeight.w800),

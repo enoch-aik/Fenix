@@ -20,6 +20,7 @@ import '../../helpers/icons/custom_icons_icons.dart';
 import '../../helpers/widgets/top_rated_Items.dart';
 import '../../theme.dart';
 import '../onboarding/constants.dart';
+import '../profile/product_list.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -44,30 +45,31 @@ class _HomeState extends State<Home> {
     super.initState();
   }
 
-  getCurrentLocation() async{
+  getCurrentLocation() async {
     await Permission.location.request();
-    Geolocator
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best, forceAndroidLocationManager: true)
+    Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.best,
+            forceAndroidLocationManager: true)
         .then((Position position) {
-          setState(() {
-            _currentPosition = position;
-            print(position);
-            _mapController.userCurrentPosition = position;
+      setState(() {
+        _currentPosition = position;
+        print(position);
+        _mapController.userCurrentPosition = position;
 
-            _mapController.getApartments(token,
-              longitude: -88.14801,
-              latitude: 36.74582);
-          });
+        _mapController.getApartments(token,
+            longitude: -88.14801, latitude: 36.74582);
+      });
     }).catchError((e) {
       print(e);
     });
   }
 
-  boot()async{
-    token =  _userController.getToken();
-    _storeController.getStores(token);
+  boot() async {
+    token = _userController.getToken();
+    await _storeController.getStores(token);
+    _storeController.getProducts(
+        token, _storeController.storeList[0]['id'].toString());
     await getCurrentLocation();
-
   }
 
   @override
@@ -75,8 +77,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(
-        preferredSize: Size(MediaQuery.of(context).size.width,
-            height() * 0.2),
+        preferredSize: Size(MediaQuery.of(context).size.width, height() * 0.2),
         child: Container(
           decoration: BoxDecoration(
             gradient: gradient(
@@ -98,7 +99,7 @@ class _HomeState extends State<Home> {
               ),
               const SizedBox(width: 10),
               InkWell(
-                onTap: ()=>Get.to(()=>SearchScreen()),
+                onTap: () => Get.to(() => const SearchScreen()),
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.050,
                   width: MediaQuery.of(context).size.width,
@@ -121,7 +122,8 @@ class _HomeState extends State<Home> {
                       hintStyle: Theme.of(context)
                           .textTheme
                           .bodyText1!
-                          .copyWith(fontSize: 15.w, color: Colors.grey.shade500),
+                          .copyWith(
+                              fontSize: 15.w, color: Colors.grey.shade500),
                       prefixIcon: const Icon(Icons.search),
                     ),
                   ),
@@ -142,8 +144,7 @@ class _HomeState extends State<Home> {
                         icon: "houseRental.png",
                         title: "House Rental",
                         color: white,
-                        onTap: () => Get.to(() => const HouseRents())
-                    ),
+                        onTap: () => Get.to(() => const HouseRents())),
                     MenuTitle(
                         icon: "apartment.png",
                         title: "Apartment",
@@ -216,6 +217,17 @@ class _HomeState extends State<Home> {
               ],
             ),
           ),
+          kSpacing,
+          Obx(
+            () => _storeController.isFetchingStore.isTrue
+                ? const CircularProgressIndicator()
+                : ProductList(
+                    storeId: _storeController.storeList[0]['id'].toString(),
+                    storeName: 'name',
+                    storeLocation: 'location',
+                  ),
+          ),
+          kSpacing,
           SizedBox(
             height: 152.w,
             width: MediaQuery.of(context).size.width,

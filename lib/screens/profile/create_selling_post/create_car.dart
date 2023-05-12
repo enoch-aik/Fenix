@@ -402,17 +402,20 @@ class _CreateCarState extends State<CreateCar> {
                             Expanded(
                               child: TextFieldWidget(
                                 hint: "Yes",
-                                textController: TextEditingController(text: 'Yes'),
+                                enabled: false,
+                                textController:
+                                    TextEditingController(text: 'Yes'),
                               ),
-                            ),                            tinyHSpace(),
-
+                            ),
+                            tinyHSpace(),
                             checkBox(
-                              hadAccident=='Yes',
+                              hadAccident == 'Yes',
                               onChanged: (v) {
-                              setState(() {
-                                hadAccident = "Yes";
-                              });
-                            },)
+                                setState(() {
+                                  hadAccident = "Yes";
+                                });
+                              },
+                            )
                           ],
                         ),
                       ),
@@ -423,17 +426,20 @@ class _CreateCarState extends State<CreateCar> {
                             Expanded(
                               child: TextFieldWidget(
                                 hint: "No",
-                                textController: TextEditingController(text: 'No'),
+                                enabled: false,
+                                textController:
+                                    TextEditingController(text: 'No'),
                               ),
                             ),
                             tinyHSpace(),
                             checkBox(
-                              hadAccident=='No',
+                              hadAccident == 'No',
                               onChanged: (v) {
-                              setState(() {
-                                hadAccident = "No";
-                              });
-                            },)
+                                setState(() {
+                                  hadAccident = "No";
+                                });
+                              },
+                            )
                           ],
                         ),
                       ),
@@ -451,17 +457,20 @@ class _CreateCarState extends State<CreateCar> {
                             Expanded(
                               child: TextFieldWidget(
                                 hint: "Yes",
-                                textController: TextEditingController(text: 'Yes'),
+                                enabled: false,
+                                textController:
+                                    TextEditingController(text: 'Yes'),
                               ),
-                            ),                            tinyHSpace(),
-
+                            ),
+                            tinyHSpace(),
                             checkBox(
-                              firstOwner=='Yes',
+                              firstOwner == 'Yes',
                               onChanged: (v) {
-                              setState(() {
-                                firstOwner = "Yes";
-                              });
-                            },)
+                                setState(() {
+                                  firstOwner = "Yes";
+                                });
+                              },
+                            )
                           ],
                         ),
                       ),
@@ -472,17 +481,20 @@ class _CreateCarState extends State<CreateCar> {
                             Expanded(
                               child: TextFieldWidget(
                                 hint: "No",
-                                textController: TextEditingController(text: 'No'),
+                                enabled: false,
+                                textController:
+                                    TextEditingController(text: 'No'),
                               ),
                             ),
                             tinyHSpace(),
                             checkBox(
-                              firstOwner=='No',
+                              firstOwner == 'No',
                               onChanged: (v) {
-                              setState(() {
-                                firstOwner = "No";
-                              });
-                            },)
+                                setState(() {
+                                  firstOwner = "No";
+                                });
+                              },
+                            )
                           ],
                         ),
                       ),
@@ -495,7 +507,7 @@ class _CreateCarState extends State<CreateCar> {
                   TextFieldWidget(
                     hint: "Category",
                     textController: categoryController,
-                    suffixIcon: Icon(Icons.expand_more),
+                    suffixIcon: const Icon(Icons.expand_more),
                   ),
                   kSpacing,
                   title('Description'),
@@ -511,7 +523,7 @@ class _CreateCarState extends State<CreateCar> {
                   Row(
                     children: [
                       Expanded(
-                        flex:3,
+                        flex: 3,
                         child: TextFieldWidget(
                             keyboardType: const TextInputType.numberWithOptions(
                                 decimal: true),
@@ -519,41 +531,54 @@ class _CreateCarState extends State<CreateCar> {
                             textController: priceController),
                       ),
                       mediumHSpace(),
-                 Expanded(
-                   child: Column(children: [
-                     Row(children: [
-                       Expanded(
-                         child: const Text(
-                           'So\'m',
-                           style: TextStyle(fontSize: 13),
-                         ),
-                       ),
-                       tinyH5Space(),
-                       checkBox(!selectDollar,onChanged: (v) {
-                         setState(() {
-                           selectDollar = !v!;
-                         });
-                       },),
-                     ],),
-                     tiny5Space(),
-                     Row(children: [
-                       Expanded(
-                         child: const Text(
-                           'Dollar \$',
-                           style: TextStyle(fontSize: 13),
-                         ),
-                       ),
-                       tinyH5Space(),
-                       checkBox(selectDollar,onChanged: (v) {
-                         setState(() {
-                           selectDollar = v!;
-                         });
-                       },),
-                     ],),
-                   ],),
-                 )
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                const Expanded(
+                                  child: Text(
+                                    'So\'m',
+                                    style: TextStyle(fontSize: 13),
+                                  ),
+                                ),
+                                tinyH5Space(),
+                                checkBox(
+                                  !selectDollar,
+                                  onChanged: (v) {
+                                    setState(() {
+                                      selectDollar = !v!;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                            tiny5Space(),
+                            Row(
+                              children: [
+                                const Expanded(
+                                  child: Text(
+                                    'Dollar \$',
+                                    style: TextStyle(fontSize: 13),
+                                  ),
+                                ),
+                                tinyH5Space(),
+                                checkBox(
+                                  selectDollar,
+                                  onChanged: (v) {
+                                    setState(() {
+                                      selectDollar = v!;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
+
                   // kSpacing,
                   // title('Discount Option'),
                   // kSpacing,
@@ -584,7 +609,7 @@ class _CreateCarState extends State<CreateCar> {
                   Row(
                     children: [
                       Expanded(
-                        flex:3,
+                        flex: 3,
                         child: TextFieldWidget(
                             keyboardType: const TextInputType.numberWithOptions(
                                 decimal: true),
@@ -593,50 +618,95 @@ class _CreateCarState extends State<CreateCar> {
                       ),
                       mediumHSpace(),
                       Expanded(
-                        child: Column(children: [
-                          Row(children: [
-                            Expanded(
-                              child: const Text(
-                                'So\'m',
-                                style: TextStyle(fontSize: 13),
-                              ),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                const Expanded(
+                                  child: Text(
+                                    'So\'m',
+                                    style: TextStyle(fontSize: 13),
+                                  ),
+                                ),
+                                tinyH5Space(),
+                                checkBox(
+                                  !selectDollar,
+                                  onChanged: (v) {
+                                    setState(() {
+                                      selectDollar = !v!;
+                                    });
+                                  },
+                                ),
+                              ],
                             ),
-                            tinyH5Space(),
-                            checkBox(!selectDollar,onChanged: (v) {
-                              setState(() {
-                                selectDollar = !v!;
-                              });
-                            },),
-                          ],),
-                          tiny5Space(),
-                          Row(children: [
-                            Expanded(
-                              child: const Text(
-                                'Dollar \$',
-                                style: TextStyle(fontSize: 13),
-                              ),
+                            tiny5Space(),
+                            Row(
+                              children: [
+                                const Expanded(
+                                  child: Text(
+                                    'Dollar \$',
+                                    style: TextStyle(fontSize: 13),
+                                  ),
+                                ),
+                                tinyH5Space(),
+                                checkBox(
+                                  selectDollar,
+                                  onChanged: (v) {
+                                    setState(() {
+                                      selectDollar = v!;
+                                    });
+                                  },
+                                ),
+                              ],
                             ),
-                            tinyH5Space(),
-                            checkBox(selectDollar,onChanged: (v) {
-                              setState(() {
-                                selectDollar = v!;
-                              });
-                            },),
-                          ],),
-                        ],),
+                          ],
+                        ),
                       )
                     ],
                   ),
 
-                  kSpacing,                  textTitle('Delivery Details'),
+                  kSpacing, textTitle('Delivery Details'),
 
                   TextFieldWidget(
                       hint: "Delivery Details",
-                      textController: deliveryController),
-                  kSpacing,  textTitle('Delivery Location'),
+                      textController: detailController),
+                  kSpacing, textTitle('Delivery Location'),
                   TextFieldWidget(
                       hint: "Delivery Location",
                       textController: deliveryLocationController),
+
+                  kSpacing,
+                  textTitle('Amenities'),
+                  tinySpace(),
+                  Wrap(
+                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    spacing: 5,
+                    runSpacing: 8,
+                    children: [
+                      amenitiesButton(
+                        'CD/MP3/MP4'
+                      ),
+                      amenitiesButton(
+                        'Bluetooth',
+                      ),
+                      amenitiesButton(
+                        'USB Flash',
+                      ),
+                      amenitiesButton(
+                        'USB C',
+                      ),
+                      amenitiesButton(
+                        'Heater',
+                      ),
+                      amenitiesButton(
+                        'Seat Heater',
+                      ),
+                      amenitiesButton(
+                        'Auto TMS',
+                      ),
+
+                    ],
+                  ),
                   verticalSpace(0.02),
                   Center(
                     child: InkWell(
@@ -652,12 +722,13 @@ class _CreateCarState extends State<CreateCar> {
                               model: modelController.text,
                               deliveryAddress: deliveryLocationController.text,
                               price: priceController.text,
+                              shippingPrice: deliveryPriceController.text,
                               category: categoryController.text,
                               brand: brandController.text,
                               color: colorController.text,
                               description: descriptionController.text,
-                              previousAccident: hadAccident=='Yes',
-                              firstOwner: firstOwner=='Yes',
+                              previousAccident: hadAccident == 'Yes',
+                              firstOwner: firstOwner == 'Yes',
                               year: yearController.text,
                               seats: seatController.text,
                               key: keyController.text,
@@ -681,14 +752,49 @@ class _CreateCarState extends State<CreateCar> {
     );
   }
 
-  Text textTitle(text) {
-    return Text(
-      text,
-      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+  InkWell amenitiesButton( title) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          if (amenities.contains(title)) {
+            amenities.remove(title);
+          } else {
+            amenities.add(title);
+          }
+        });
+      },
+      child: Row(
+        children: [
+          Container(
+            width: width()*0.45,
+              decoration: depressNeumorph(),
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
+              child: Text(title,softWrap: false,overflow: TextOverflow.clip,)
+
+              // Icon(icon, color: amenities.contains(title) ? white : black),
+              ),
+          checkBox(amenities.contains(title), onChanged: (v) {
+            setState(() {
+              if (amenities.contains(title)) {
+                amenities.remove(title);
+              } else {
+                amenities.add(title);
+              }
+            });
+          })
+        ],
+      ),
     );
   }
 
-  Container checkBox(value,{required void Function(bool?)?  onChanged}) {
+  Text textTitle(text) {
+    return Text(
+      text,
+      style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+    );
+  }
+
+  Container checkBox(value, {required void Function(bool?)? onChanged}) {
     return Container(
         decoration: depressNeumorph(),
         child: SizedBox(
@@ -699,11 +805,10 @@ class _CreateCarState extends State<CreateCar> {
               unselectedWidgetColor: Colors.transparent, // Your color
             ),
             child: Checkbox(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5)),
-              value: value,
-              onChanged: onChanged
-            ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5)),
+                value: value,
+                onChanged: onChanged),
           ),
         ));
   }

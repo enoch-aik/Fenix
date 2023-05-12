@@ -609,7 +609,8 @@ class _CreateApartmentState extends State<CreateApartment> {
                     ],
                   ),
                   kSpacing,
-                  title('Available for Rent'),
+                 if(rentType=='Rent Property')
+                 Column(children:[ title('Available for Rent'),
                   tinySpace(),
                   subText(
                     'Available start date',
@@ -623,11 +624,10 @@ class _CreateApartmentState extends State<CreateApartment> {
                       start = DateFormat('yyyy-MM-dd')
                           .format(selectedDate)
                           .toString();
-
+print(start);
                       var time = DateFormat.jm().format(selectedDate);
                       var day = DateFormat.EEEE().format(selectedDate);
                       startDate = picked.toString();
-                      start = picked.toString();
                       startTime = time.toString();
                       startDay = day.toString();
                       setState(() {});
@@ -738,7 +738,7 @@ class _CreateApartmentState extends State<CreateApartment> {
                   ),
                   kSpacing,
                   subText(
-                    'Available end date',
+                    'Available end date'
                   ),
                   smallText(
                       'Please choose the date of availability for the rent'),
@@ -861,6 +861,7 @@ class _CreateApartmentState extends State<CreateApartment> {
                     ],
                   ),
                   kSpacing,
+                 ]),
                   divider(),
                   kSpacing,
                   title('Rent Price'),
@@ -929,169 +930,169 @@ class _CreateApartmentState extends State<CreateApartment> {
                     ],
                   ),
                   kSpacing,
-                  subText(
-                    'Chose the currency',
-                  ),
-                  smallText('You can choose only one currency'),
-                  Row(
-                    children: [
-                      CupertinoSwitch(value: true, onChanged: (v) {}),
-                      Expanded(
-                        child: TextFieldWidget(
-                            prefixIcon: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Image.asset(
-                                    'assets/images/uz_flag.png',
-                                    width: 40,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            suffixIcon: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: const [
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text(
-                                    "So'm",
-                                    style: TextStyle(color: light),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            keyboardType: const TextInputType.numberWithOptions(
-                                decimal: true),
-                            hint: "UZB",
-                            enabled: false),
-                      ),
-                      horizontalSpace(0.25),
-// Icon(Icons.)
-                    ],
-                  ),
+//                   subText(
+//                     'Chose the currency',
+//                   ),
+//                   smallText('You can choose only one currency'),
+//                   Row(
+//                     children: [
+//                       CupertinoSwitch(value: true, onChanged: (v) {}),
+//                       Expanded(
+//                         child: TextFieldWidget(
+//                             prefixIcon: Row(
+//                               mainAxisAlignment: MainAxisAlignment.start,
+//                               mainAxisSize: MainAxisSize.min,
+//                               children: [
+//                                 Padding(
+//                                   padding: const EdgeInsets.all(8.0),
+//                                   child: Image.asset(
+//                                     'assets/images/uz_flag.png',
+//                                     width: 40,
+//                                   ),
+//                                 ),
+//                               ],
+//                             ),
+//                             suffixIcon: Row(
+//                               mainAxisAlignment: MainAxisAlignment.start,
+//                               mainAxisSize: MainAxisSize.min,
+//                               children: const [
+//                                 Padding(
+//                                   padding: EdgeInsets.all(8.0),
+//                                   child: Text(
+//                                     "So'm",
+//                                     style: TextStyle(color: light),
+//                                   ),
+//                                 ),
+//                               ],
+//                             ),
+//                             keyboardType: const TextInputType.numberWithOptions(
+//                                 decimal: true),
+//                             hint: "UZB",
+//                             enabled: false),
+//                       ),
+//                       horizontalSpace(0.25),
+// // Icon(Icons.)
+//                     ],
+//                   ),
+//                   kSpacing,
+//                   Row(
+//                     children: [
+//                       CupertinoSwitch(value: true, onChanged: (v) {}),
+//                       Expanded(
+//                         child: TextFieldWidget(
+//                             prefixIcon: Row(
+//                               mainAxisAlignment: MainAxisAlignment.start,
+//                               mainAxisSize: MainAxisSize.min,
+//                               children: [
+//                                 Padding(
+//                                   padding: const EdgeInsets.all(8.0),
+//                                   child: Image.asset(
+//                                     'assets/images/us_flag.png',
+//                                     width: 40,
+//                                   ),
+//                                 ),
+//                               ],
+//                             ),
+//                             suffixIcon: Row(
+//                               mainAxisAlignment: MainAxisAlignment.start,
+//                               mainAxisSize: MainAxisSize.min,
+//                               children: const [
+//                                 Padding(
+//                                   padding: EdgeInsets.all(8.0),
+//                                   child: Text(
+//                                     "Dollar \$",
+//                                     style: TextStyle(color: lightGrey),
+//                                   ),
+//                                 ),
+//                               ],
+//                             ),
+//                             keyboardType: const TextInputType.numberWithOptions(
+//                                 decimal: true),
+//                             hint: "USA",
+//                             enabled: false),
+//                       ),
+//                       horizontalSpace(0.25),
+// // Icon(Icons.)
+//                     ],
+//                   ),
+//                   kSpacing,
+//                   subText(
+//                     'How do you want to accept the money?',
+//                   ),
+//                   smallText('You can choose only one money exchange'),
+//                   kSpacing,
+//                   Row(
+//                     children: [
+//                       CupertinoSwitch(value: true, onChanged: (v) {}),
+//                       Expanded(
+//                         child: TextFieldWidget(
+//                             keyboardType: const TextInputType.numberWithOptions(
+//                                 decimal: true),
+//                             hint: "Meet cash Exchange",
+//                             enabled: false),
+//                       ),
+//                       smallHSpace(),
+//                       const Icon(
+//                         Icons.money,
+//                         size: 35,
+//                         color: grey,
+//                       ),
+//                       horizontalSpace(0.2),
+// // Icon(Icons.)
+//                     ],
+//                   ),
+//                   kSpacing,
+//                   Row(
+//                     children: [
+//                       CupertinoSwitch(value: true, onChanged: (v) {}),
+//                       Expanded(
+//                         child: TextFieldWidget(
+//                             keyboardType: const TextInputType.numberWithOptions(
+//                                 decimal: true),
+//                             hint: "Online Transfer",
+//                             enabled: false),
+//                       ),
+//                       smallHSpace(),
+//                       const Icon(
+//                         Icons.money,
+//                         size: 35,
+//                         color: grey,
+//                       ),
+//                       horizontalSpace(0.2),
+// // Icon(Icons.)
+//                     ],
+//                   ),
+//                   kSpacing,
+//                   divider(),
+//                   kSpacing,
+//                   subText('Do you accept any offer?'),
+//                   smallText(
+//                       'If you want, you can accept any offer besides on post price'),
+//                   kSpacing,
+//                   Row(
+//                     children: [
+//                       yesNo('Yes', 'offer'),
+//                       smallHSpace(),
+//                       yesNo('No', 'offer'),
+//                       mediumHSpace(),
+//                     ],
+//                   ),
+//                   kSpacing,
+//                   divider(),
+//                   kSpacing,
+//                   subText('Do you allow self check-in?'),
+//                   smallText(
+//                       'If you allow self check-in, you can drop or meet and give the key to tenant, or you can avoid this and say No to seld check-in'),
+//                   kSpacing,
                   kSpacing,
-                  Row(
-                    children: [
-                      CupertinoSwitch(value: true, onChanged: (v) {}),
-                      Expanded(
-                        child: TextFieldWidget(
-                            prefixIcon: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Image.asset(
-                                    'assets/images/us_flag.png',
-                                    width: 40,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            suffixIcon: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: const [
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text(
-                                    "Dollar \$",
-                                    style: TextStyle(color: lightGrey),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            keyboardType: const TextInputType.numberWithOptions(
-                                decimal: true),
-                            hint: "USA",
-                            enabled: false),
-                      ),
-                      horizontalSpace(0.25),
-// Icon(Icons.)
-                    ],
-                  ),
-                  kSpacing,
-                  subText(
-                    'How do you want to accept the money?',
-                  ),
-                  smallText('You can choose only one money exchange'),
-                  kSpacing,
-                  Row(
-                    children: [
-                      CupertinoSwitch(value: true, onChanged: (v) {}),
-                      Expanded(
-                        child: TextFieldWidget(
-                            keyboardType: const TextInputType.numberWithOptions(
-                                decimal: true),
-                            hint: "Meet cash Exchange",
-                            enabled: false),
-                      ),
-                      smallHSpace(),
-                      const Icon(
-                        Icons.money,
-                        size: 35,
-                        color: grey,
-                      ),
-                      horizontalSpace(0.2),
-// Icon(Icons.)
-                    ],
-                  ),
-                  kSpacing,
-                  Row(
-                    children: [
-                      CupertinoSwitch(value: true, onChanged: (v) {}),
-                      Expanded(
-                        child: TextFieldWidget(
-                            keyboardType: const TextInputType.numberWithOptions(
-                                decimal: true),
-                            hint: "Online Transfer",
-                            enabled: false),
-                      ),
-                      smallHSpace(),
-                      const Icon(
-                        Icons.money,
-                        size: 35,
-                        color: grey,
-                      ),
-                      horizontalSpace(0.2),
-// Icon(Icons.)
-                    ],
-                  ),
-                  kSpacing,
-                  divider(),
-                  kSpacing,
-                  subText('Do you accept any offer?'),
-                  smallText(
-                      'If you want, you can accept any offer besides on post price'),
-                  kSpacing,
-                  Row(
-                    children: [
-                      yesNo('Yes', 'offer'),
-                      smallHSpace(),
-                      yesNo('No', 'offer'),
-                      mediumHSpace(),
-                    ],
-                  ),
-                  kSpacing,
-                  divider(),
-                  kSpacing,
-                  subText('Do you allow self check-in?'),
-                  smallText(
-                      'If you allow self check-in, you can drop or meet and give the key to tenant, or you can avoid this and say No to seld check-in'),
-                  kSpacing,
-                  kSpacing,
-                  Row(
-                    children: [
-                      yesNo('Yes', 'checkin'),
-                      smallHSpace(),
-                      yesNo('No', 'checkin'),
-                      mediumHSpace(),
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     yesNo('Yes', 'checkin'),
+                  //     smallHSpace(),
+                  //     yesNo('No', 'checkin'),
+                  //     mediumHSpace(),
+                  //   ],
+                  // ),
                   verticalSpace(0.02),
                   Center(
                     child: InkWell(
@@ -1125,7 +1126,7 @@ class _CreateApartmentState extends State<CreateApartment> {
                               toilet: toilet,
                               occupantsNumber: occupant,
                               floor: floor,
-                              media: images,
+                              media: images[0],
                             );
                           } else {
                             CustomSnackBar.failedSnackBar('Error',
