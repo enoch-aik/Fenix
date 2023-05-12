@@ -24,15 +24,12 @@ class ProductController extends GetxController {
 
   boot() {
     getApartments(token, Category().property[0]);
-    getApartments(token, Category().property[1]);
-    getApartments(token, Category().property[2]);
   }
 
   getApartments(token, type) {
     isFetchingApartments(true);
     ProductServices.getApartmentsByType((status, response) {
       isFetchingApartments(false);
-
       if (status) {
         apartmentList.value = response['data'];
       } else {
