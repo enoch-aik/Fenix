@@ -10,6 +10,8 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
+import '../controller/user_controller.dart';
+
 
 
 class Map extends StatefulWidget {
@@ -23,10 +25,13 @@ class _MapState extends State<Map> {
   String? mapStyle;
 
   final MapController _mapController = Get.find();
+  final UserController _userController = Get.find();
 
   LatLng _center = const LatLng(36.79582, -88.64801);
 
   late List<MarkerData> _customMarkers;
+
+  Color color =  Color(0xFFDADADA);
 
   List<MarkerData> _list = [];
   BitmapDescriptor? customIcon;
@@ -38,8 +43,16 @@ class _MapState extends State<Map> {
       _list.add(
           MarkerData(
               marker:
-              Marker( markerId: MarkerId(item['id'].toString()),  position: LatLng(item['latitude'],item['longitude']),),
-              child: _customMarkerWidget(item['rentPrice']['month'].toString(), Colors.blue)),
+              Marker( markerId: MarkerId(item['id'].toString()),  position: LatLng(item['latitude'],item['longitude']),
+              onTap: (){
+               setState(() {
+                 _mapController.apartmentListClicked.clear();
+                 _mapController.apartmentListClicked.add(item);
+                 print(_mapController.apartmentListClicked);
+                 color = Colors.blue;
+               });
+              }),
+              child: _customMarkerWidget(item['rentPrice']['month'].toString(), color )),
          );
     }
     _customMarkers.addAll(_list);
@@ -55,7 +68,14 @@ class _MapState extends State<Map> {
     });
     _customMarkers = [];
     getMarkers();
+  }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _mapController.googleMapController.dispose();
+    _mapController.apartmentListClicked.clear();
   }
 
 
@@ -106,7 +126,11 @@ class _MapState extends State<Map> {
         MarkerData(
             marker:
             Marker( markerId: MarkerId(item['id'].toString()),  position: LatLng(item['latitude'],item['longitude']),),
-            child: _customMarkerWidget(item['rentPrice']['month'].toString(), Colors.blue)),
+            child: _customMarkerWidget(item['rentPrice']['month'].toString(), Colors.blue,
+            onTap: (){
+              print("ddddd");
+
+            })),
       );
     }
     _customMarkers.addAll(_list);
@@ -190,11 +214,11 @@ class _MapState extends State<Map> {
                   SizedBox(height: 30.w,),
                   MapIcons(Transform.rotate(angle: 0.6, child: Icon(Icons.navigation, color: white,size: 20.w,),), black,
                       onTap: (){
-                        print(_mapController.userCurrentPosition.longitude);
+                        print(_userController.userCurrentPosition!.longitude);
                         _mapController.googleMapController.animateCamera(
                           CameraUpdate.newCameraPosition(
                             CameraPosition(
-                              target: LatLng(_mapController.userCurrentPosition.latitude, _mapController.userCurrentPosition.longitude),
+                              target: LatLng(_userController.userCurrentPosition!.latitude, _userController.userCurrentPosition!.longitude),
                               zoom: 11,
                             ),
                           ),);
@@ -202,7 +226,7 @@ class _MapState extends State<Map> {
 
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.23,
-                    child: ListView.builder(
+                    child: _mapController.apartmentListClicked.isEmpty ? ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: _mapController.apartmentList.length,
                         itemBuilder: (context,index) {
@@ -235,7 +259,35 @@ class _MapState extends State<Map> {
                               ),
                             ),
                           );
-                        }),
+                        }) : Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10.w),
+                          child: Container(
+                      alignment: Alignment.bottomCenter,
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(13.w),
+                            // border: Border.all(color: Color(0xFF1994F5), width: 3),
+                            image: DecorationImage(image: AssetImage("assets/images/house.png",),fit: BoxFit.fitWidth)
+                      ),
+                      child: Container(
+                          height: MediaQuery.of(context).size.height * 0.052,
+                          padding: EdgeInsets.symmetric(horizontal: 10.w),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.8),
+                            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(13.w), bottomRight: Radius.circular(13.w)),
+                          ),
+                          child: Center(
+                            child: Text(_mapController.apartmentListClicked[0]['description'],
+                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                  color: Colors.white,
+                                  fontSize: 12.w,
+                                  fontWeight: FontWeight.w700
+                              ),),
+                          ),
+                      ),
+                    ),
+                        ),
                   ),
                 ],
               ),
@@ -249,25 +301,28 @@ class _MapState extends State<Map> {
 
 
 
-_customMarkerWidget(String text, Color color) {
-  return Container(
-    padding:  EdgeInsets.all(3.w),
-    decoration: BoxDecoration(
-        color: Color(0xFFDADADA),
-        borderRadius: BorderRadius.circular(20.w),),
+InkWell _customMarkerWidget(String text, Color color,{onTap}) {
+  return InkWell(
+    onTap: onTap,
     child: Container(
-      padding: EdgeInsets.all(5.w),
+      padding:  EdgeInsets.all(3.w),
       decoration: BoxDecoration(
-          color: Color(0xFFC9C9C9),
+          color: color,
           borderRadius: BorderRadius.circular(20.w),),
-      child: Center(
-          child: Text(text,
-              style: TextStyle(
-              fontSize: 11.w,
-              color: black,
-                fontWeight: FontWeight.bold
-          ),
-          )),
+      child: Container(
+        padding: EdgeInsets.all(5.w),
+        decoration: BoxDecoration(
+            color: Color(0xFFC9C9C9),
+            borderRadius: BorderRadius.circular(20.w),),
+        child: Center(
+            child: Text(text,
+                style: TextStyle(
+                fontSize: 11.w,
+                color: black,
+                  fontWeight: FontWeight.bold
+            ),
+            )),
+      ),
     ),
   );
 }

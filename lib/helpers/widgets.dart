@@ -517,6 +517,51 @@ class TextFieldWidget extends StatelessWidget {
   }
 }
 
+
+class DropDownWidget extends StatelessWidget {
+
+  List<String>? list;
+  List<DropdownMenuItem<String>>? items;
+  Function(String?)? onChanged;
+
+
+   DropDownWidget({ this.list, this.items, this.onChanged, Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(6),
+        color: const Color(0xFFE4F0FA).withOpacity(0.9),
+        boxShadow: [
+          const BoxShadow(
+            color: Colors.grey,
+          ),
+          BoxShadow(
+            color: Colors.white.withOpacity(0.9),
+            spreadRadius: -3,
+            blurRadius: 3,
+            offset: const Offset(3, 5), // changes position of shadow
+          ),
+        ],
+      ),
+      child: DropdownButton(
+        value:  list![0],
+        underline: Container(),
+        menuMaxHeight: MediaQuery.of(context).size.height * 0.4,
+        icon: const Icon(Icons.keyboard_arrow_down),
+        isExpanded: true,
+        itemHeight: 50,
+        items: items,
+        onChanged: onChanged
+      ),
+    );
+  }
+}
+
+
 List lottieSlides = [
   Image.asset("assets/images/lottieAnimOne.png"),
   Image.asset("assets/images/lottieAnimOne.png"),

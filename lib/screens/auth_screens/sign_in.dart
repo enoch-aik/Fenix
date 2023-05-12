@@ -62,6 +62,7 @@ class SignIn extends StatelessWidget {
                     kSpacing,
                     TextFieldWidget(hint: "Password",
                       textController: _accountController.password,
+                      suffixIcon: Icon(Icons.remove_red_eye_outlined),
                       validator: (value) =>
                           PasswordValidator.validate(value!),),
 

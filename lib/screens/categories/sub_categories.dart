@@ -11,7 +11,11 @@ import '../../helpers/widgets/top_rated_Items.dart';
 import '../onboarding/constants.dart';
 
 class SubCategory extends StatefulWidget {
-  const SubCategory({Key? key}) : super(key: key);
+
+  List? category;
+
+
+  SubCategory({this.category, Key? key}) : super(key: key);
 
   @override
   State<SubCategory> createState() => _SubCategoryState();
@@ -20,6 +24,7 @@ class SubCategory extends StatefulWidget {
 class _SubCategoryState extends State<SubCategory> {
   @override
   Widget build(BuildContext context) {
+    print(widget.category);
     return Scaffold(
       backgroundColor: Color(0xFFE4F0FA),
       appBar: PreferredSize(
@@ -87,7 +92,7 @@ class _SubCategoryState extends State<SubCategory> {
       body: Container(
         padding: EdgeInsets.only(top: 15.w, right: 15.w, left: 25.w,),
         child: ListView.builder(
-          itemCount: 6,
+          itemCount: widget.category!.length,
           itemBuilder: (context, index){
             return Row(
               children: [
@@ -102,7 +107,7 @@ class _SubCategoryState extends State<SubCategory> {
                 ),
                 SizedBox(width: 18.w,),
 
-                KText("Apartment",
+                KText(widget.category![index],
                   fontSize: 15.w,
                   color: kTextBlackColor,
                   fontWeight: FontWeight.w700,

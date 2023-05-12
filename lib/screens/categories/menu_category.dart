@@ -1,3 +1,4 @@
+import 'package:fenix/helpers/categories.dart';
 import 'package:fenix/helpers/widgets/recently_viewed_widget.dart';
 import 'package:fenix/screens/categories/sub_categories.dart';
 import 'package:fenix/screens/views.dart';
@@ -100,12 +101,23 @@ class _MenuCategoryState extends State<MenuCategory> {
                       childAspectRatio: 1.3 / 1,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10),
-                  itemCount:10,
+                  itemCount: Category().allCategories.length,
                   shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (BuildContext ctx, index) {
                     return InkWell(
                       onTap: (){
-                        Get.to(() => SubCategory());
+                        Get.to(() => SubCategory(
+                            category: index == 0 ? Category().property
+                            : index == 1  ? Category().clothing
+                            : index == 2  ? Category().healthCare
+                            : index == 3  ? Category().foodMarket
+                            : index == 4  ? Category().foodMarket
+                            : index == 5  ? Category().property
+                            : index == 6  ? Category().property
+                                : [],
+                        )
+                        );
                       },
                       child: Container(
                         padding: EdgeInsets.all(3.w),

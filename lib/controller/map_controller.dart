@@ -18,9 +18,8 @@ class MapController extends GetxController {
 
   var isSearchingApartments = true.obs;
   var apartmentList = [].obs;
+  var apartmentListClicked = [].obs;
   var apartmentFilterList = [].obs;
-
-  late Position userCurrentPosition;
 
   late GoogleMapController googleMapController;
 

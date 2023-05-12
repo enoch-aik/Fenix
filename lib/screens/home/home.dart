@@ -16,6 +16,7 @@ import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../controller/map_controller.dart';
+import '../../controller/product_controller.dart';
 import '../../helpers/icons/custom_icons_icons.dart';
 import '../../helpers/widgets/top_rated_Items.dart';
 import '../../theme.dart';
@@ -35,7 +36,8 @@ class _HomeState extends State<Home> {
   String token = '';
   String storeId = '';
   final UserController _userController = Get.find();
-  final StoreController _storeController = Get.find();
+  final StoreController _storeController = Get.put(StoreController());
+  final ProductController _productController = Get.put(ProductController());
   final MapController _mapController = Get.put(MapController());
 
   Position? _currentPosition;
@@ -47,24 +49,7 @@ class _HomeState extends State<Home> {
     super.initState();
   }
 
-  getCurrentLocation() async {
-    await Permission.location.request();
-    Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.best,
-            forceAndroidLocationManager: true)
-        .then((Position position) {
-      setState(() {
-        _currentPosition = position;
-        print(position);
-        _mapController.userCurrentPosition = position;
 
-        _mapController.getApartments(token,
-            longitude: -88.14801, latitude: 36.74582);
-      });
-    }).catchError((e) {
-      print(e);
-    });
-  }
 
   boot() async {
     token = _userController.getToken();
@@ -73,8 +58,10 @@ class _HomeState extends State<Home> {
     _storeController.getProducts(token, storeId);
     _storeController.getApartments(token, storeId);
     _storeController.getVehicles(token, storeId);
-
-    await getCurrentLocation();
+    _mapController.getApartments(token,
+        longitude: -88.14801,
+        latitude: 36.74582);
+    _productController.getApartments(token, "dacha");
   }
 
   @override
@@ -82,7 +69,8 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(
-        preferredSize: Size(MediaQuery.of(context).size.width, height() * 0.2),
+        preferredSize: Size(MediaQuery.of(context).size.width,
+            height() * 0.2),
         child: Container(
           decoration: BoxDecoration(
             gradient: gradient(
@@ -104,7 +92,7 @@ class _HomeState extends State<Home> {
               ),
               const SizedBox(width: 10),
               InkWell(
-                onTap: () => Get.to(() => const SearchScreen()),
+                onTap: ()=>Get.to(()=>SearchScreen()),
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.050,
                   width: MediaQuery.of(context).size.width,
@@ -127,8 +115,7 @@ class _HomeState extends State<Home> {
                       hintStyle: Theme.of(context)
                           .textTheme
                           .bodyText1!
-                          .copyWith(
-                              fontSize: 15.w, color: Colors.grey.shade500),
+                          .copyWith(fontSize: 15.w, color: Colors.grey.shade500),
                       prefixIcon: const Icon(Icons.search),
                     ),
                   ),
@@ -147,7 +134,7 @@ class _HomeState extends State<Home> {
                     ),
                     MenuTitle(
                         icon: "houseRental.png",
-                        title: "House Rental",
+                        title: "House",
                         color: white,
                         onTap: () => Get.to(() => const HouseRents())),
                     MenuTitle(
@@ -157,13 +144,13 @@ class _HomeState extends State<Home> {
                         onTap: () => setState(() => homeTab = 'Dacha')),
                     MenuTitle(
                         icon: "carRental.png",
-                        title: "Car Rental",
+                        title: "Car",
                         color: white,
                         onTap: () => Get.to(() => const VehicleList())),
 
                     MenuTitle(
-                        icon: "storeRental.png",
-                        title: "Store Rental",
+                        icon: "television.png",
+                        title: "Electronics",
                         color: white,
                         onTap: () => setState(() => homeTab = 'Dacha')),
                   ],
@@ -472,8 +459,8 @@ class _HomeState extends State<Home> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const ProductWidget(),
-              const ProductWidget(),
+               ProductWidget(),
+               ProductWidget(),
             ],
           ),
           Container(
@@ -550,8 +537,8 @@ class _HomeState extends State<Home> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const ProductWidget(),
-              const ProductWidget(),
+              ProductWidget(),
+              ProductWidget(),
             ],
           ),
           Container(
@@ -628,8 +615,8 @@ class _HomeState extends State<Home> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const ProductWidget(),
-              const ProductWidget(),
+                ProductWidget(),
+                ProductWidget(),
             ],
           ),
           Container(
@@ -658,9 +645,13 @@ class _HomeState extends State<Home> {
                 mainAxisSpacing: 0,
                 crossAxisSpacing: 0,
               ),
-              itemCount: 10,
-              itemBuilder: (context, c) {
-                return const ProductWidget();
+              itemCount: _productController.apartmentList.length,
+              itemBuilder: (context, index) {
+                return  ProductWidget(
+                  title: _productController.apartmentList[index]['title'],
+                  price: _productController.apartmentList[index]['rentPrice']['month'].toString(),
+                  location: _productController.apartmentList[index]['location']['latitude'].toString(),
+                );
               }),
           Container(
             height: 276.w,
@@ -698,7 +689,7 @@ class _HomeState extends State<Home> {
               ),
               itemCount: 10,
               itemBuilder: (context, c) {
-                return const ProductWidget();
+                return  ProductWidget();
               }),
           Container(
             height: 276.w,
@@ -736,7 +727,7 @@ class _HomeState extends State<Home> {
               ),
               itemCount: 10,
               itemBuilder: (context, c) {
-                return const ProductWidget();
+                return ProductWidget();
               }),
         ],
       ),
@@ -745,8 +736,14 @@ class _HomeState extends State<Home> {
 }
 
 class ProductWidget extends StatelessWidget {
-  const ProductWidget({
+
+  String title;
+  String location;
+  String price;
+
+  ProductWidget({
     Key? key,
+    this.title = "" , this.location = "", this.price = ""
   }) : super(key: key);
 
   @override
@@ -805,8 +802,7 @@ class ProductWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "Delivery info will  be here dg likseller offer sajncnask...",
+                            Text(title,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1!
@@ -858,8 +854,7 @@ class ProductWidget extends StatelessWidget {
                                 SizedBox(
                                   width: 10.w,
                                 ),
-                                Text(
-                                  "United State, Florida 3340",
+                                Text(location,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyText1!
@@ -894,7 +889,7 @@ class ProductWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "17,000   so’m",
+                      "${price}  so’m",
                       style: Theme.of(context).textTheme.bodyText1!.copyWith(
                           fontSize: 15.w,
                           color: const Color(0xFFCE242B),

@@ -1,4 +1,5 @@
 import 'package:fenix/const.dart';
+import 'package:fenix/helpers/categories.dart';
 import 'package:fenix/screens/profile/create_selling_post/create_apartment.dart';
 import 'package:fenix/screens/profile/create_selling_post/create_product.dart';
 import 'package:flutter/material.dart';
@@ -97,7 +98,7 @@ class _SellingPostState extends State<SellingPost> {
 
           InkWell(
             onTap: (){
-              Get.to(() => CreateApartment(storeId:widget.storeId,));
+              Get.to(() => CreateApartment(storeId:widget.storeId, apartmentType: Category().property[0]));
             },
             child: SellingPostCard(
               title: "Apartment",
@@ -110,7 +111,7 @@ class _SellingPostState extends State<SellingPost> {
           
           InkWell(
             onTap: (){
-              Get.to(() => CreateApartment(storeId: widget.storeId,));
+              Get.to(() => CreateApartment(storeId: widget.storeId, apartmentType: Category().property[1]));
             },
             child: SellingPostCard(
               title: "House",
@@ -123,7 +124,7 @@ class _SellingPostState extends State<SellingPost> {
 
           InkWell(
             onTap: (){
-              Get.to(() => CreateApartment(storeId: widget.storeId,));
+              Get.to(() => CreateApartment(storeId: widget.storeId, apartmentType: Category().property[2],));
 
             },
             child: SellingPostCard(

@@ -1,6 +1,6 @@
 import 'package:fenix/const.dart';
+import 'package:fenix/screens/home/widgets/vehicle_widgets.dart';
 import 'package:fenix/screens/profile/create_selling_post/create_apartment.dart';
-import 'package:fenix/screens/profile/create_selling_post/create_car.dart';
 import 'package:fenix/screens/views.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,8 +11,8 @@ import '../../controller/user_controller.dart';
 import '../../helpers/widgets/top_rated_Items.dart';
 import '../../theme.dart';
 import '../onboarding/constants.dart';
+import '../profile/create_selling_post/create_car.dart';
 import 'search.dart';
-import 'widgets/vehicle_widgets.dart';
 
 class VehicleList extends StatefulWidget {
   const VehicleList({Key? key}) : super(key: key);

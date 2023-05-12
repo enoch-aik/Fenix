@@ -19,8 +19,10 @@ import '../../../theme.dart';
 
 class CreateApartment extends StatefulWidget {
   final String storeId;
+  final String apartmentType;
 
-  CreateApartment({Key? key, required this.storeId}) : super(key: key);
+
+  CreateApartment({Key? key, required this.storeId, required this.apartmentType}) : super(key: key);
 
   @override
   State<CreateApartment> createState() => _CreateApartmentState();
@@ -43,6 +45,7 @@ class _CreateApartmentState extends State<CreateApartment> {
   final weekController = TextEditingController();
   final monthController = TextEditingController();
 
+  String storeId = '';
   String toilet = '';
   String bathroom = '';
   String bedroom = '';
@@ -70,6 +73,8 @@ class _CreateApartmentState extends State<CreateApartment> {
   List amenities = [];
   List<File> images = [];
   List<File> videos = [];
+
+  List<String> stores = [];
 
   Future<dynamic> showImagePickers({isPhoto = true}) {
     return showModalBottomSheet(
@@ -224,6 +229,23 @@ class _CreateApartmentState extends State<CreateApartment> {
     );
   }
 
+  List<String>? getStoreListNames(){
+
+    for(var i = 0; i < _storeController.storeList.length; i++){
+      stores.add(_storeController.storeList[i]['id']);
+      print(stores);
+    }
+    return stores;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getStoreListNames();
+    storeId = stores[0];
+  }
+
   @override
   Widget build(BuildContext context) {
     print(widget.storeId);
@@ -298,11 +320,11 @@ class _CreateApartmentState extends State<CreateApartment> {
       ),
       body: Column(
         children: [
-          const Center(
+           Center(
               child: Padding(
             padding: EdgeInsets.all(8.0),
             child: Text(
-              'Sell& Rent House or Apartment',
+              "Sell& Rent ${widget.apartmentType}",
               style: TextStyle(fontWeight: FontWeight.w400),
             ),
           )),
@@ -313,6 +335,24 @@ class _CreateApartmentState extends State<CreateApartment> {
               child: ListView(
                 padding: EdgeInsets.symmetric(horizontal: 17.w),
                 children: [
+                  kSpacing,
+                  title('Store'),
+                  smallText('Please select the store under which the product will be created (product will be created as a person if left as default)'),
+                  kSpacing,
+                  DropDownWidget(
+                      list: stores,
+                    items: stores.map((String items) {
+                      return DropdownMenuItem(
+                        value: items,
+                        child: Text(items),
+                      );
+                    }).toList(),
+                    onChanged: (val){
+                      storeId = val!;
+                    }
+                  ),
+
+
                   kSpacing,
                   title('Photos'),
                   smallText('Please select photos or video'),
@@ -1112,7 +1152,7 @@ print(start);
                               propertyType: rentType == 'Rent Property'
                                   ? 'rental'
                                   : 'sale',
-                              apartmentType: 'apartment',
+                              apartmentType: widget.apartmentType,
                               nightAmount: nightController.text,
                               weekAmount: weekController.text,
                               monthAmount: monthController.text,

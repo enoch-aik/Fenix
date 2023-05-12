@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../controller/product_controller.dart';
 import '../../controller/store_controller.dart';
 import '../../controller/user_controller.dart';
 import '../../helpers/widgets/top_rated_Items.dart';
@@ -23,7 +24,7 @@ class _HouseRentsState extends State<HouseRents> {
   String token = '';
   String storeId = '';
   final UserController _userController = Get.find();
-  final StoreController _storeController = Get.put(StoreController());
+  final ProductController _productController = Get.put(ProductController());
 
   @override
   void initState() {
@@ -34,7 +35,7 @@ class _HouseRentsState extends State<HouseRents> {
 
   boot() async {
     token = _userController.getToken();
-    storeId = _storeController.getDefaultStoreId();
+    _productController.getApartments(token, "house");
   }
 
   @override
@@ -138,17 +139,17 @@ class _HouseRentsState extends State<HouseRents> {
                 ],
               )),
           Expanded(
-            child: Obx(() => _storeController.isFetchingApartments.isTrue
+            child: Obx(() => _productController.isFetchingApartments.isTrue
                 ? const Center(child: CircularProgressIndicator())
-                : _storeController.apartmentList.isEmpty
+                : _productController.apartmentList.isEmpty
                     ? Center(
                         child: Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: BODY_PADDING),
                         child: InkWell(
-                          onTap: () => Get.to(() => CreateApartment(
-                                storeId: storeId,
-                              )),
+                          // onTap: () => Get.to(() => CreateApartment(
+                          //       storeId: storeId,
+                          //     )),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -163,12 +164,12 @@ class _HouseRentsState extends State<HouseRents> {
                     : ListView.separated(
                         padding: const EdgeInsets.only(top: BODY_PADDING),
                         itemBuilder: (c, i) {
-                          var item = _storeController.apartmentList[i];
-                          return  RatedItemsWidget(actionText: 'More',apartment:item);
+                          var item = _productController.apartmentList[i];
+                          return const RatedItemsWidget(actionText: 'More');
                         },
                         separatorBuilder: (c, i) => smallSpace(),
                         shrinkWrap: true,
-                        itemCount: _storeController.apartmentList.length)),
+                        itemCount: _productController.apartmentList.length)),
           ),
           // Expanded(
           //   child: ListView(

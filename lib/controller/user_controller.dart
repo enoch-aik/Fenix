@@ -1,5 +1,8 @@
 import 'package:fenix/screens/home/home.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../helpers/widgets/snack_bar.dart';
 import '../models/services/user_services.dart';
@@ -15,6 +18,11 @@ class UserController extends GetxController {
   var gender = ''.obs;
   UserModel? user;
 
+
+  Position? _currentPosition;
+
+  Position? userCurrentPosition;
+
   String getToken() => _token;
 
   UserModel? getUser() => user;
@@ -26,6 +34,7 @@ class UserController extends GetxController {
       print(response);
       if (status) {
         setUser(response);
+        getCurrentLocation();
       } else {
         if (response.toString().contains('profile yet')) {
           CustomSnackBar.failedSnackBar('Welcome!', 'Update your profile to continue');
@@ -83,4 +92,22 @@ class UserController extends GetxController {
     Get.put(StoreController());
 
   }
+
+  getCurrentLocation() async{
+    await Permission.location.request();
+    Geolocator
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best, forceAndroidLocationManager: true)
+        .then((Position position) async{
+        _currentPosition = position;
+        userCurrentPosition = position;
+        List<Placemark> placemarks = await placemarkFromCoordinates(userCurrentPosition!.latitude, userCurrentPosition!.longitude);
+        Placemark place = placemarks[0];
+        print(place);
+
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
+
 }
