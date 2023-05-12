@@ -76,6 +76,7 @@ class _CreateApartmentState extends State<CreateApartment> {
   List<File> videos = [];
 
   List<String> stores = [];
+  List<String> storeIds = [];
 
   Future<dynamic> showImagePickers({isPhoto = true}) {
     return showModalBottomSheet(
@@ -232,16 +233,23 @@ class _CreateApartmentState extends State<CreateApartment> {
 
   List<String>? getStoreListNames() {
     for (var i = 0; i < _storeController.storeList.length; i++) {
-      stores.add(_storeController.storeList[i]['id']);
-      print(stores);
+      stores.add(_storeController.storeList[i]['name']);
     }
     return stores;
+  }
+
+  List<String>? getStoreIds() {
+    for (var i = 0; i < _storeController.storeList.length; i++) {
+      storeIds.add(_storeController.storeList[i]['id']);
+    }
+    return storeIds;
   }
 
   @override
   void initState() {
     super.initState();
     getStoreListNames();
+    getStoreIds();
     storeId = stores[0];
   }
 
@@ -344,7 +352,8 @@ class _CreateApartmentState extends State<CreateApartment> {
                         );
                       }).toList(),
                       onChanged: (val) {
-                        storeId = val!;
+                        var index =  stores.indexOf(val!);
+                        storeId = storeIds[index];
                       }),
 
                   kSpacing,

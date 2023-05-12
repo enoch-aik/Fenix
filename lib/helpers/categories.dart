@@ -29,6 +29,15 @@ class Category {
   ];
 
 
+  List propertyCategory = [
+    {"name" : "Property",
+      "products" : ["Apartment",
+        "House",
+        "Dacha",]
+    }
+  ];
+
+
 
 
   List carCategories = [
@@ -63,7 +72,7 @@ class Category {
   // ];
 
   List clothing = [
-    {"gender" : "Male",
+    {"name" : "Male",
       "products" : [
         "T-Shirt",
         "Shirt",
@@ -77,7 +86,7 @@ class Category {
         "Others",
       ]
     },
-    {"gender" : "Female",
+    {"name" : "Female",
       "products" : [
         "Tops",
         "Skirts",
@@ -160,12 +169,15 @@ class Category {
 
 
   List foodMarket = [
-    "Dry Fruit",
-    "Tea",
-    "Coffee",
-    "Frozen Foods",
-    "Snacks",
-    "Others",
+    {"name" : "",
+      "products" : [
+        "Dry Fruit",
+        "Tea",
+        "Coffee",
+        "Frozen Foods",
+        "Snacks",
+        "Others",]
+    }
   ];
 
   List kids = [
