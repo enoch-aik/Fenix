@@ -77,6 +77,7 @@ class ProductListWidget extends StatelessWidget {
                                           color: const Color(0xFF334669),
                                           fontWeight: FontWeight.w700),
                                 ),
+
                                 Row(
                                   children: [
                                     RatingBar(
