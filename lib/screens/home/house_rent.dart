@@ -34,7 +34,7 @@ class _HouseRentsState extends State<HouseRents> {
 
   boot() async {
     token = _userController.getToken();
-  await  _storeController.getStores(token);
+    _storeController.getStores(token);
     storeId = _storeController.storeList[0]['id'].toString();
     _storeController.getApartments(token, storeId);
   }
@@ -166,7 +166,7 @@ class _HouseRentsState extends State<HouseRents> {
                         padding: const EdgeInsets.only(top: BODY_PADDING),
                         itemBuilder: (c, i) {
                           var item = _storeController.apartmentList[i];
-                          return const RatedItemsWidget(actionText: 'More');
+                          return  RatedItemsWidget(actionText: 'More',apartment:item);
                         },
                         separatorBuilder: (c, i) => smallSpace(),
                         shrinkWrap: true,

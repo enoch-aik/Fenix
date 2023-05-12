@@ -8,6 +8,7 @@ import '../screens/auth_screens/create_profile.dart';
 import '../screens/onboarding/loading.dart';
 import '../screens/profile/edit_profile.dart';
 import '../screens/views.dart';
+import 'store_controller.dart';
 
 class UserController extends GetxController {
   String _token = '';
@@ -79,5 +80,7 @@ class UserController extends GetxController {
     UserModel user = UserModel.fromJson(response['data']);
     this.user = user;
     Get.to(() => const Views());
+    Get.put(StoreController());
+
   }
 }

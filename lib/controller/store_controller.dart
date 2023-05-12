@@ -1,3 +1,4 @@
+import 'package:fenix/controller/user_controller.dart';
 import 'package:get/get.dart';
 
 import '../helpers/widgets/snack_bar.dart';
@@ -13,10 +14,13 @@ class StoreController extends GetxController {
   var isFetchingProducts = true.obs;
   var isFetchingVehicles = true.obs;
   var isFetchingApartments = true.obs;
+  String _id = '';
 
   @override
   void onInit() {
     // TODO: implement onInit
+    UserController userController = Get.find();
+    getStores(userController.getToken());
     super.onInit();
   }
 
@@ -27,12 +31,17 @@ class StoreController extends GetxController {
 
       if (status) {
         storeList.value = response['data'];
+        setDefaultStoreId(response['data'][0]['id']);
       } else {
         storeList.value = [];
         print('Error - $response');
       }
     }, token);
   }
+
+  String getDefaultStoreId() => _id;
+
+  setDefaultStoreId(id) => _id = id;
 
   getProducts(token, storeId) {
     isFetchingProducts(true);
@@ -109,7 +118,8 @@ class StoreController extends GetxController {
     material,
     coordinate,
     features,
-    shippingCost,subCategory,
+    shippingCost,
+    subCategory,
     description,
     deliveryAddress,
     deliveryCity,
@@ -141,8 +151,7 @@ class StoreController extends GetxController {
         "brand": brand,
         "size": size,
         "features": features,
-        "category": {'name':category,
-        'subCategory': subCategory},
+        "category": {'name': category, 'subCategory': subCategory},
         "color": color,
         "storageCapacity": capacity,
       },
@@ -168,15 +177,19 @@ class StoreController extends GetxController {
     previousAccident,
     firstOwner,
     mileage,
-    brand,shippingPrice,
+    brand,
+    shippingPrice,
     year,
     model,
     seats,
     key,
     description,
     deliveryAddress,
-    detail,category,plan,
-    amenities,media,
+    detail,
+    category,
+    plan,
+    amenities,
+    media,
   }) async {
     Get.to(() => const Loading());
 
@@ -217,35 +230,33 @@ class StoreController extends GetxController {
         "location": deliveryAddress,
       },
       // "media":media,
-
     });
   }
 
-  createNewApartment(
-    token, {
-    storeId,
-    bool? smoke,
-    bool? pet,
-    title,
-    description,
-    longitude,
-    latitude,
-    propertyType,
-    apartmentType,
-    nightAmount,
-    weekAmount,
-    monthAmount,
-    startDate,
-    endDate,
-    bedroom,
-    shower,
-    bathroom,
-    sqMeter,
-    toilet,
-    occupantsNumber,
-    floor,
-    amenities,media
-  }) async {
+  createNewApartment(token,
+      {storeId,
+      bool? smoke,
+      bool? pet,
+      title,
+      description,
+      longitude,
+      latitude,
+      propertyType,
+      apartmentType,
+      nightAmount,
+      weekAmount,
+      monthAmount,
+      startDate,
+      endDate,
+      bedroom,
+      shower,
+      bathroom,
+      sqMeter,
+      toilet,
+      occupantsNumber,
+      floor,
+      amenities,
+      media}) async {
     var data = {
       "title": title,
       "description": description,

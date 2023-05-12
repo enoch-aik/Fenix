@@ -21,6 +21,7 @@ import '../../helpers/widgets/top_rated_Items.dart';
 import '../../theme.dart';
 import '../onboarding/constants.dart';
 import '../profile/product_list.dart';
+import 'car_listing.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -32,6 +33,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   String homeTab = 'Dacha';
   String token = '';
+  String storeId = '';
   final UserController _userController = Get.find();
   final StoreController _storeController = Get.put(StoreController());
   final MapController _mapController = Get.put(MapController());
@@ -66,9 +68,10 @@ class _HomeState extends State<Home> {
 
   boot() async {
     token = _userController.getToken();
-    await _storeController.getStores(token);
-    _storeController.getProducts(
-        token, _storeController.storeList[0]['id'].toString());
+     // _storeController.getStores(token);
+    storeId = _storeController.getDefaultStoreId();
+    // _storeController.getProducts(
+    //     token, storeId);
     await getCurrentLocation();
   }
 
@@ -154,7 +157,8 @@ class _HomeState extends State<Home> {
                         icon: "carRental.png",
                         title: "Car Rental",
                         color: white,
-                        onTap: () => setState(() => homeTab = 'Dacha')),
+                        onTap: () => Get.to(() => const VehicleList())),
+
                     MenuTitle(
                         icon: "storeRental.png",
                         title: "Store Rental",
@@ -220,9 +224,9 @@ class _HomeState extends State<Home> {
           kSpacing,
           Obx(
             () => _storeController.isFetchingStore.isTrue
-                ? const CircularProgressIndicator()
+                ? const Center(child: CircularProgressIndicator())
                 : ProductList(
-                    storeId: _storeController.storeList[0]['id'].toString(),
+                    storeId: storeId,
                     storeName: 'name',
                     storeLocation: 'location',
                   ),
