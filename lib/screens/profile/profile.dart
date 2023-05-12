@@ -43,7 +43,6 @@ class _UserProfileState extends State<UserProfile> {
 
   @override
   void initState() {
-    _storeController.getStores(_userController.getToken());
     super.initState();
   }
 

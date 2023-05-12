@@ -1,5 +1,6 @@
 import 'package:fenix/const.dart';
 import 'package:fenix/screens/profile/create_selling_post/create_apartment.dart';
+import 'package:fenix/screens/profile/create_selling_post/create_car.dart';
 import 'package:fenix/screens/views.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +12,7 @@ import '../../helpers/widgets/top_rated_Items.dart';
 import '../../theme.dart';
 import '../onboarding/constants.dart';
 import 'search.dart';
+import 'widgets/vehicle_widgets.dart';
 
 class VehicleList extends StatefulWidget {
   const VehicleList({Key? key}) : super(key: key);
@@ -34,9 +36,7 @@ class _VehicleListState extends State<VehicleList> {
 
   boot() async {
     token = _userController.getToken();
-    _storeController.getStores(token);
-    storeId = _storeController.storeList[0]['id'].toString();
-    _storeController.getVehicles(token, storeId);
+    storeId = _storeController.getDefaultStoreId();
   }
 
   @override
@@ -148,7 +148,7 @@ class _VehicleListState extends State<VehicleList> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: BODY_PADDING),
                         child: InkWell(
-                          onTap: () => Get.to(() => CreateApartment(
+                          onTap: () => Get.to(() => CreateCar(
                                 storeId: storeId,
                               )),
                           child: Column(
@@ -167,7 +167,7 @@ class _VehicleListState extends State<VehicleList> {
                         padding: const EdgeInsets.only(top: BODY_PADDING),
                         itemBuilder: (c, i) {
                           var item = _storeController.vehicleList[i];
-                          return const RatedItemsWidget(actionText: 'More');
+                          return  VehicleWidget(actionText: 'More',vehicle: item,);
                         },
                         separatorBuilder: (c, i) => smallSpace(),
                         shrinkWrap: true,

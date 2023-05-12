@@ -35,7 +35,7 @@ class _HomeState extends State<Home> {
   String token = '';
   String storeId = '';
   final UserController _userController = Get.find();
-  final StoreController _storeController = Get.put(StoreController());
+  final StoreController _storeController = Get.find();
   final MapController _mapController = Get.put(MapController());
 
   Position? _currentPosition;
@@ -70,8 +70,10 @@ class _HomeState extends State<Home> {
     token = _userController.getToken();
      // _storeController.getStores(token);
     storeId = _storeController.getDefaultStoreId();
-    // _storeController.getProducts(
-    //     token, storeId);
+    _storeController.getProducts(token, storeId);
+    _storeController.getApartments(token, storeId);
+    _storeController.getVehicles(token, storeId);
+
     await getCurrentLocation();
   }
 
@@ -223,7 +225,7 @@ class _HomeState extends State<Home> {
           ),
           kSpacing,
           Obx(
-            () => _storeController.isFetchingStore.isTrue
+            () => _storeController.getDefaultStoreId()==''
                 ? const Center(child: CircularProgressIndicator())
                 : ProductList(
                     storeId: storeId,
