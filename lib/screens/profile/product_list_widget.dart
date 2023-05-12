@@ -6,8 +6,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../onboarding/constants.dart';
 
 class ProductListWidget extends StatelessWidget {
-  const ProductListWidget({Key? key, this.product}) : super(key: key);
-  final product;
+  const ProductListWidget({Key? key, this.product,this.image}) : super(key: key);
+  final product,image;
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +43,8 @@ class ProductListWidget extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * 0.455,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.w),
-                      image: const DecorationImage(
-                        image: AssetImage("assets/images/house.png"),
+                      image:  DecorationImage(
+                        image: AssetImage(image??"assets/images/house.png"),
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -68,7 +68,7 @@ class ProductListWidget extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Delivery info will  be here dg likseller offer sajncnask...",
+                                  product['title']??    "Delivery info will  be here dg likseller offer sajncnask...",
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyText1!

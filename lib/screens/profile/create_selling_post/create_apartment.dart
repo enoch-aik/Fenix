@@ -645,7 +645,9 @@ class _CreateApartmentState extends State<CreateApartment> {
                   ),
                   kSpacing,
                   if (rentType == 'Rent Property')
-                    Column(children: [
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
                       title('Available for Rent'),
                       tinySpace(),
                       subText(
@@ -1172,7 +1174,7 @@ class _CreateApartmentState extends State<CreateApartment> {
                               toilet: toilet,
                               occupantsNumber: occupant,
                               floor: floor,
-                              media: images[0],
+                              media: images,
                             );
                           } else {
                             CustomSnackBar.failedSnackBar('Error',

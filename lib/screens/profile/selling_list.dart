@@ -111,7 +111,7 @@ class _SellingListState extends State<SellingList> {
                     MenuTitle(
                         icon: "Dacha.png",
                         title: "Dacha",
-                        color: white,
+                        color: tab == "Dacha" ? dark : white,
                         onTap: () {
                           setState(() {
                             tab = "Dacha";
@@ -123,7 +123,7 @@ class _SellingListState extends State<SellingList> {
                     MenuTitle(
                         icon: "houseRental.png",
                         title: "House",
-                        color: white,
+                        color: tab == "House" ? dark : white,
                         onTap: () {
                           setState(() {
                             tab = "House";
@@ -132,11 +132,10 @@ class _SellingListState extends State<SellingList> {
                                 .toList();
                           });
                         }),
-
                     MenuTitle(
                         icon: "apartment.png",
                         title: "Apartment",
-                        color: white,
+                        color: tab == "Apartment" ? dark : white,
                         onTap: () {
                           setState(() {
                             tab = "Apartment";
@@ -148,7 +147,7 @@ class _SellingListState extends State<SellingList> {
                     MenuTitle(
                         icon: "carRental.png",
                         title: "Car",
-                        color: white,
+                        color: tab == "Car" ? dark : white,
                         onTap: () {
                           setState(() {
                             tab = "Car";
@@ -157,7 +156,7 @@ class _SellingListState extends State<SellingList> {
                     MenuTitle(
                         icon: "television.png",
                         title: "Electronics",
-                        color: white,
+                        color: tab == "Electronics" ? dark : white,
                         onTap: () {
                           setState(() {
                             tab = "Electronics";
@@ -211,7 +210,7 @@ class _SellingListState extends State<SellingList> {
                                   itemBuilder: (context, i) {
                                     var item = storeController.productList[i];
 
-                                    return ProductListWidget(product: item);
+                                    return ProductListWidget(product: item,image:'assets/images/headset.png');
                                   }),
                     ),
                   if (tab == 'Car')
@@ -251,8 +250,7 @@ class _SellingListState extends State<SellingList> {
                                   itemCount: storeController.vehicleList.length,
                                   itemBuilder: (context, i) {
                                     var item = storeController.vehicleList[i];
-
-                                    return ProductListWidget(product: item);
+                                    return ProductListWidget(product: item,image:'assets/images/car copy.jpg');
                                   }),
                     ),
                   if (tab == 'Apartment')

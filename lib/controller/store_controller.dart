@@ -261,7 +261,7 @@ class StoreController extends GetxController {
         "latitude": latitude,
       },
       "propertyType": propertyType,
-      "apartmentType": apartmentType,
+      "apartmentType": apartmentType.toString().toLowerCase(),
       "rentPrice": {
         "night": double.parse(nightAmount),
         "week": double.parse(weekAmount),
@@ -282,7 +282,6 @@ class StoreController extends GetxController {
         "pet": pet,
         "smoke": smoke
       },
-      // "media":'media',
     };
     print(data);
     Get.to(() => const Loading());

@@ -1,7 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:fenix/controller/user_controller.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+
+import '../../screens/auth_screens/sign_in.dart';
 
 class ApiServices {
   static makePostRequest({apiUrl, data, token}) async {
@@ -57,20 +61,18 @@ class ApiServices {
     return await http.get(uri, headers: headers);
   }
 
-  static makeDeleteRequest({apiUrl,data, token}) async {
+  static makeDeleteRequest({apiUrl, data, token}) async {
     var uri = Uri.parse(apiUrl);
     final jsonString = json.encode(data);
 
-    var
-      headers = {
-        'accept': 'application/json',
-        'token': 'Bearer $token',
-        HttpHeaders.authorizationHeader: 'Bearer $token',
-        'Content-Type': 'application/json'
-      };
+    var headers = {
+      'accept': 'application/json',
+      'token': 'Bearer $token',
+      HttpHeaders.authorizationHeader: 'Bearer $token',
+      'Content-Type': 'application/json'
+    };
 
     return await http.delete(uri, body: jsonString, headers: headers);
-
   }
 
   static initialisePostRequest(
@@ -89,10 +91,18 @@ class ApiServices {
         print('Success');
         return body;
       } else {
+        print('i am here now ERROR');
         return ApiServices.handleError(response);
       }
     } catch (e) {
-      print('Errororor $e');
+      print('Errororor - $e');
+      if (e.toString().contains('Expired')) {
+        UserController userController = Get.find();
+        userController.setPersistToken(null);
+        Get.offAll(
+              () => SignIn(),
+        );
+      }
       if (e.toString().contains('HandshakeException')) {
         return 'Check your internet connection';
       } else {
@@ -116,6 +126,13 @@ class ApiServices {
       }
     } catch (e) {
       print(e.toString());
+      if (e.toString().contains('Expired')) {
+        UserController userController = Get.find();
+        userController.setPersistToken(null);
+        Get.offAll(
+              () => SignIn(),
+        );
+      }
       return e.toString();
     }
     // } else {
@@ -127,7 +144,7 @@ class ApiServices {
     // if (await InternetServices.checkConnectivity()) {
     try {
       http.Response response =
-      await ApiServices.makeGetRequest(apiUrl: url, token: token);
+          await ApiServices.makeGetRequest(apiUrl: url, token: token);
 
       var body = jsonDecode(response.body);
       print('Res  $url ---- $body');
@@ -137,26 +154,36 @@ class ApiServices {
         return ApiServices.handleError(response);
       }
     } catch (e) {
-      print('Erroror'  + e.toString());
+      print('Erroror - - - - - $e');
+      if (e.toString().contains('Expired')) {
+        UserController userController = Get.find();
+        userController.setPersistToken(null);
+        Get.offAll(
+          () => SignIn(),
+        );
+      }
       return e.toString();
     }
-
   }
 
   static handleError(http.Response response) {
-    var errorMessage =
-    jsonDecode(response.body)['errors'] != null
+    var errorMessage = jsonDecode(response.body)['errors'] != null
         ? jsonDecode(response.body)['errors'].toString()
         : jsonDecode(response.body)['message'] != null
-        ? jsonDecode(response.body)['message'].toString()
-        : (jsonDecode(response.body)['data'] != null && jsonDecode(response.body)['data']['detail'] != null)
-        ? jsonDecode(response.body)['data']['detail'].toString() : (jsonDecode(response.body)['data'] != null && jsonDecode(response.body)['data']['errors'] != null)
-        ? jsonDecode(response.body)['data']['errors'].toString()
-        : jsonDecode(response.body)['result']['errors'] != null
-        ? jsonDecode(response.body)['result']['errors'].toString()
-        : jsonDecode(response.body)['result']['detail'] != null
-        ? jsonDecode(response.body)['result']['detail'].toString()
-        : 'Failed response';
+            ? jsonDecode(response.body)['message'].toString()
+            : (jsonDecode(response.body)['data'] != null &&
+                    jsonDecode(response.body)['data']['detail'] != null)
+                ? jsonDecode(response.body)['data']['detail'].toString()
+                : (jsonDecode(response.body)['data'] != null &&
+                        jsonDecode(response.body)['data']['errors'] != null)
+                    ? jsonDecode(response.body)['data']['errors'].toString()
+                    : jsonDecode(response.body)['result']['errors'] != null
+                        ? jsonDecode(response.body)['result']['errors']
+                            .toString()
+                        : jsonDecode(response.body)['result']['detail'] != null
+                            ? jsonDecode(response.body)['result']['detail']
+                                .toString()
+                            : 'Failed response';
 
     print(errorMessage);
     switch (response.statusCode) {
