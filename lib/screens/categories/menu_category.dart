@@ -1,6 +1,7 @@
 import 'package:fenix/helpers/categories.dart';
 import 'package:fenix/helpers/widgets/recently_viewed_widget.dart';
 import 'package:fenix/screens/categories/sub_categories.dart';
+import 'package:fenix/screens/categories/sub_sub_category.dart';
 import 'package:fenix/screens/views.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -108,14 +109,14 @@ class _MenuCategoryState extends State<MenuCategory> {
                     return InkWell(
                       onTap: (){
                         Get.to(() => SubCategory(
-                            category: index == 0 ? Category().property
+                            category: index == 0 ? Category().propertyCategory
                             : index == 1  ? Category().clothing
                             : index == 2  ? Category().healthCare
                             : index == 3  ? Category().foodMarket
-                            : index == 4  ? Category().foodMarket
-                            : index == 5  ? Category().property
-                            : index == 6  ? Category().property
-                                : [],
+                            : index == 4  ? Category().kids
+                            : index == 5  ? Category().electronics
+                            : index == 6  ? Category().tools
+                                : Category().carCategories
                         )
                         );
                       },

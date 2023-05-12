@@ -35,7 +35,6 @@ class UserController extends GetxController {
       print(response);
       if (status) {
         setUser(response);
-        getCurrentLocation();
       } else {
         if (response.toString().contains('profile yet')) {
           CustomSnackBar.failedSnackBar('Welcome!', 'Update your profile to continue');
@@ -91,7 +90,7 @@ class UserController extends GetxController {
     this.user = user;
     Get.to(() => const Views());
     Get.put(StoreController());
-
+    getCurrentLocation();
   }
 
   getCurrentLocation() async{

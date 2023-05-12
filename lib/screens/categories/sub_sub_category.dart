@@ -1,5 +1,4 @@
 import 'package:fenix/helpers/widgets/recently_viewed_widget.dart';
-import 'package:fenix/screens/categories/sub_sub_category.dart';
 import 'package:fenix/screens/views.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -11,18 +10,18 @@ import '../../helpers/widgets/text.dart';
 import '../../helpers/widgets/top_rated_Items.dart';
 import '../onboarding/constants.dart';
 
-class SubCategory extends StatefulWidget {
+class SubSubCategory extends StatefulWidget {
 
   List? category;
 
 
-  SubCategory({this.category, Key? key}) : super(key: key);
+  SubSubCategory({this.category, Key? key}) : super(key: key);
 
   @override
-  State<SubCategory> createState() => _SubCategoryState();
+  State<SubSubCategory> createState() => _SubSubCategoryState();
 }
 
-class _SubCategoryState extends State<SubCategory> {
+class _SubSubCategoryState extends State<SubSubCategory> {
   @override
   Widget build(BuildContext context) {
     print(widget.category);
@@ -95,30 +94,25 @@ class _SubCategoryState extends State<SubCategory> {
         child: ListView.builder(
           itemCount: widget.category!.length,
           itemBuilder: (context, index){
-            return InkWell(
-              onTap: (){
-                Get.to(() => SubSubCategory(category: widget.category![index]["products"],));
-              },
-              child: Row(
-                children: [
-                  Container(
-                    height: 64.w,
-                    width: 87.w,
-                    padding: EdgeInsets.all(3.w),
-                    margin: EdgeInsets.symmetric(vertical: 10.w),
-                    decoration: BoxDecoration(
-                        image: DecorationImage(image: AssetImage("assets/images/categoryCard.png"),fit: BoxFit.scaleDown)
-                    ),
+            return Row(
+              children: [
+                Container(
+                  height: 64.w,
+                  width: 87.w,
+                  padding: EdgeInsets.all(3.w),
+                  margin: EdgeInsets.symmetric(vertical: 10.w),
+                  decoration: BoxDecoration(
+                      image: DecorationImage(image: AssetImage("assets/images/categoryCard.png"),fit: BoxFit.scaleDown)
                   ),
-                  SizedBox(width: 18.w,),
+                ),
+                SizedBox(width: 18.w,),
 
-                  KText(widget.category![index]['name'],
-                    fontSize: 15.w,
-                    color: kTextBlackColor,
-                    fontWeight: FontWeight.w700,
-                  )
-                ],
-              ),
+                KText(widget.category![index],
+                  fontSize: 15.w,
+                  color: kTextBlackColor,
+                  fontWeight: FontWeight.w700,
+                )
+              ],
             );
           },
         ),
