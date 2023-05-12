@@ -35,7 +35,7 @@ class _HouseRentsState extends State<HouseRents> {
 
   boot() async {
     token = _userController.getToken();
-    _productController.getApartments(token, "house");
+    _productController.getApartments(token, "apartment");
   }
 
   @override
@@ -165,7 +165,7 @@ class _HouseRentsState extends State<HouseRents> {
                         padding: const EdgeInsets.only(top: BODY_PADDING),
                         itemBuilder: (c, i) {
                           var item = _productController.apartmentList[i];
-                          return const RatedItemsWidget(actionText: 'More');
+                          return  RatedItemsWidget(actionText: 'More', apartment: item,);
                         },
                         separatorBuilder: (c, i) => smallSpace(),
                         shrinkWrap: true,

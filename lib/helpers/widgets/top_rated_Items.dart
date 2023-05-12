@@ -4,10 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../screens/onboarding/constants.dart';
 
 class RatedItemsWidget extends StatelessWidget {
-  const RatedItemsWidget({Key? key, this.actionText, this.apartment})
+   RatedItemsWidget({Key? key, this.actionText, this.apartment})
       : super(key: key);
   final String? actionText;
-  final apartment;
+  var apartment;
 
   @override
   Widget build(BuildContext context) {

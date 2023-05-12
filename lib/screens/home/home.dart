@@ -211,15 +211,16 @@ class _HomeState extends State<Home> {
             ),
           ),
           kSpacing,
-          Obx(
-            () => _storeController.getDefaultStoreId()==''
-                ? const Center(child: CircularProgressIndicator())
-                : ProductList(
-                    storeId: storeId,
-                    storeName: 'name',
-                    storeLocation: 'location',
-                  ),
-          ),
+          // Obx(
+          //   () => _storeController.getDefaultStoreId()==''
+          //       ? const Center(child: CircularProgressIndicator())
+          //       : ProductList(
+          //           storeId: storeId,
+          //           storeName: 'name',
+          //           storeLocation: 'location',
+          //         ),
+          // ),
+
           kSpacing,
           SizedBox(
             height: 152.w,
@@ -294,7 +295,7 @@ class _HomeState extends State<Home> {
               itemCount: 1,
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                return const RatedItemsWidget();
+                return RatedItemsWidget();
               }),
           Container(
               width: MediaQuery.of(context).size.width,
