@@ -149,8 +149,6 @@ class _UserProfileState extends State<UserProfile> {
                       if (index == 0) Get.to(() => const Account());
                       if (index == 1) Get.to(() => const Messages());
                       if (index == 2) {
-                        print('=======');
-                        print( _storeController.storeList[0]['id'].toString());
                         (_userController.getUser()!.address == '' ||
                                 _userController.getUser()!.mobileNumber == '')
                             ? CustomDialogs.showNoticeDialog(
@@ -171,7 +169,6 @@ class _UserProfileState extends State<UserProfile> {
                       if (index == 3) Get.to(() => const Subscribe());
                       if (index == 4) Get.to(() => const WishList());
                       if (index == 5) Get.to(() => const StoreList());
-
                       if (index == 6) Get.to(() => const SellingList());
                     },
                     child: Container(

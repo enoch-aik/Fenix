@@ -3,6 +3,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helpers/widgets/snack_bar.dart';
 import '../models/services/user_services.dart';
@@ -107,6 +108,11 @@ class UserController extends GetxController {
     }).catchError((e) {
       print(e);
     });
+  }
+
+  setPersistToken(token) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('token', token);
   }
 
 

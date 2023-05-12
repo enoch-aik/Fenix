@@ -1,9 +1,8 @@
+import 'package:fenix/controller/user_controller.dart';
 import 'package:get/get.dart';
-
-import '../helpers/widgets/snack_bar.dart';
+import '../helpers/categories.dart';
 import '../models/services/product_services.dart';
 import '../models/services/store_services.dart';
-import '../screens/onboarding/loading.dart';
 
 class ProductController extends GetxController {
   var apartmentList = [].obs;
@@ -12,13 +11,22 @@ class ProductController extends GetxController {
   var isFetchingProducts = true.obs;
   var isFetchingVehicles = true.obs;
   var isFetchingApartments = true.obs;
+  String token = '';
 
   @override
   void onInit() {
     // TODO: implement onInit
+    UserController userController = Get.find();
+    token = userController.getToken();
+    boot();
     super.onInit();
   }
 
+  boot() {
+    getApartments(token, Category().property[0]);
+    getApartments(token, Category().property[1]);
+    getApartments(token, Category().property[2]);
+  }
 
   getApartments(token, type) {
     isFetchingApartments(true);
@@ -48,7 +56,6 @@ class ProductController extends GetxController {
     }, token, storeId);
   }
 
-
   getVehicles(token, storeId) {
     isFetchingVehicles(true);
     StoreServices.getVehicles((status, response) {
@@ -62,5 +69,4 @@ class ProductController extends GetxController {
       }
     }, token, storeId);
   }
-
 }

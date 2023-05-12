@@ -59,15 +59,19 @@ class AccountController extends GetxController {
         ));
     AccountServices.loginUser((status, response) {
       if (status) {
-        var userController = Get.put(UserController());
-        userController.setToken(response['data']['accessToken']);
-        userController.fetchUser(response['data']['accessToken']);
+        setUser(response['data']['accessToken']);
       } else {
         Get.back();
-
         CustomSnackBar.failedSnackBar('Failed', '$response');
       }
     }, email: _email.text, password: _password.text);
+  }
+
+  setUser(token){
+    var userController = Get.put(UserController());
+    userController.setToken(token);
+    userController. setPersistToken(token);
+    userController.fetchUser(token);
   }
 
   signOut(token) async {

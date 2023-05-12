@@ -131,6 +131,7 @@ class ProductList extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   separatorBuilder: (c, i) => smallSpace(),
                   itemCount: storeController.productList.length)),
+
     );
 
     //   Scaffold(

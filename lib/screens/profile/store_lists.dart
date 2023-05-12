@@ -149,7 +149,9 @@ class StoreList extends StatelessWidget {
                                       storeName: item['name'].toString(),
                                       storeLocation:
                                           item['location'].toString())),
+
                               // onTap: ()=>Get.to(()=>ProductList(storeId:item['id'],storeName:item['name'],storeLocation:item['location'])),
+
                               child: Container(
                                 padding:
                                     const EdgeInsets.fromLTRB(20, 15, 20, 15),

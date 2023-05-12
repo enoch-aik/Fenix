@@ -210,7 +210,7 @@ class _HomeState extends State<Home> {
               ],
             ),
           ),
-          kSpacing,
+          // kSpacing,
           // Obx(
           //   () => _storeController.getDefaultStoreId()==''
           //       ? const Center(child: CircularProgressIndicator())
@@ -220,7 +220,6 @@ class _HomeState extends State<Home> {
           //           storeLocation: 'location',
           //         ),
           // ),
-
           kSpacing,
           SizedBox(
             height: 152.w,

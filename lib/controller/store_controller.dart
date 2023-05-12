@@ -18,7 +18,6 @@ class StoreController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     UserController userController = Get.find();
     getStores(userController.getToken());
     super.onInit();
@@ -28,7 +27,6 @@ class StoreController extends GetxController {
     isFetchingStore(true);
     StoreServices.getUserStores((status, response) {
       isFetchingStore(false);
-
       if (status) {
         storeList.value = response['data'];
         setDefaultStoreId(response['data'][0]['id']);
@@ -45,9 +43,9 @@ class StoreController extends GetxController {
 
   getProducts(token, storeId) {
     isFetchingProducts(true);
+
     StoreServices.getProducts((status, response) {
       isFetchingProducts(false);
-
       if (status) {
         productList.value = response['data'];
       } else {
@@ -61,7 +59,6 @@ class StoreController extends GetxController {
     isFetchingApartments(true);
     StoreServices.getApartment((status, response) {
       isFetchingApartments(false);
-
       if (status) {
         apartmentList.value = response['data'];
       } else {
@@ -75,7 +72,6 @@ class StoreController extends GetxController {
     isFetchingVehicles(true);
     StoreServices.getVehicles((status, response) {
       isFetchingVehicles(false);
-
       if (status) {
         vehicleList.value = response['data'];
       } else {
@@ -126,9 +122,9 @@ class StoreController extends GetxController {
     quantity,
   }) async {
     Get.to(() => const Loading());
-
     StoreServices.createProduct((status, response) {
       print('==> $response');
+      getProducts(token, storeId);
       if (status) {
         Get.back();
         Get.back();
@@ -192,9 +188,8 @@ class StoreController extends GetxController {
     media,
   }) async {
     Get.to(() => const Loading());
-
     StoreServices.createVehicle((status, response) {
-      print('==> $response');
+      getVehicles(token, storeId);
       if (status) {
         Get.back();
         Get.back();
@@ -223,6 +218,7 @@ class StoreController extends GetxController {
         "firstOwner": firstOwner ?? true,
         "amenities": amenities,
       },
+
       "shipping": {
         "shipping": true,
         "price": shippingPrice,
@@ -293,6 +289,7 @@ class StoreController extends GetxController {
 
     StoreServices.createApartment((status, response) {
       print('==> $response');
+      getApartments(token, storeId);
       if (status) {
         Get.back();
         Get.back();

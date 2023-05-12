@@ -47,6 +47,7 @@ dependencies:
   intl:
   fl_chart:
   rflutter_alert:
+  shared_preferences:
   cached_network_image:
   custom_map_markers: ^0.0.2+1
   geolocator: ^9.0.2

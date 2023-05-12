@@ -21,8 +21,9 @@ class CreateApartment extends StatefulWidget {
   final String storeId;
   final String apartmentType;
 
-
-  CreateApartment({Key? key, required this.storeId, required this.apartmentType}) : super(key: key);
+  CreateApartment(
+      {Key? key, required this.storeId, required this.apartmentType})
+      : super(key: key);
 
   @override
   State<CreateApartment> createState() => _CreateApartmentState();
@@ -229,9 +230,8 @@ class _CreateApartmentState extends State<CreateApartment> {
     );
   }
 
-  List<String>? getStoreListNames(){
-
-    for(var i = 0; i < _storeController.storeList.length; i++){
+  List<String>? getStoreListNames() {
+    for (var i = 0; i < _storeController.storeList.length; i++) {
       stores.add(_storeController.storeList[i]['id']);
       print(stores);
     }
@@ -240,7 +240,6 @@ class _CreateApartmentState extends State<CreateApartment> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getStoreListNames();
     storeId = stores[0];
@@ -248,8 +247,6 @@ class _CreateApartmentState extends State<CreateApartment> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.storeId);
-
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(
@@ -257,10 +254,8 @@ class _CreateApartmentState extends State<CreateApartment> {
             MediaQuery.of(context).size.height * 0.08),
         child: Container(
           decoration: BoxDecoration(
-            gradient: gradient(
-              const Color(0xFF1A9AFF),
-              const Color(0xFF54FADC),
-            ),
+            gradient:
+                gradient(const Color(0xFF1A9AFF), const Color(0xFF54FADC)),
           ),
           padding: EdgeInsets.only(top: 55.h, left: 12.w, right: 12.w),
           child: Column(
@@ -320,12 +315,12 @@ class _CreateApartmentState extends State<CreateApartment> {
       ),
       body: Column(
         children: [
-           Center(
+          Center(
               child: Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Text(
               "Sell& Rent ${widget.apartmentType}",
-              style: TextStyle(fontWeight: FontWeight.w400),
+              style: const TextStyle(fontWeight: FontWeight.w400),
             ),
           )),
           const Divider(thickness: 4, color: textColor),
@@ -337,21 +332,20 @@ class _CreateApartmentState extends State<CreateApartment> {
                 children: [
                   kSpacing,
                   title('Store'),
-                  smallText('Please select the store under which the product will be created (product will be created as a person if left as default)'),
+                  smallText(
+                      'Please select the store under which the product will be created (product will be created as a person if left as default)'),
                   kSpacing,
                   DropDownWidget(
                       list: stores,
-                    items: stores.map((String items) {
-                      return DropdownMenuItem(
-                        value: items,
-                        child: Text(items),
-                      );
-                    }).toList(),
-                    onChanged: (val){
-                      storeId = val!;
-                    }
-                  ),
-
+                      items: stores.map((String items) {
+                        return DropdownMenuItem(
+                          value: items,
+                          child: Text(items),
+                        );
+                      }).toList(),
+                      onChanged: (val) {
+                        storeId = val!;
+                      }),
 
                   kSpacing,
                   title('Photos'),
@@ -381,7 +375,8 @@ class _CreateApartmentState extends State<CreateApartment> {
                       : Row(
                           children: [
                             imageSelect(
-                                onTap: () => showImagePickers(),),
+                              onTap: () => showImagePickers(),
+                            ),
                             tinyHSpace(),
                             imageSelect(
                               icon: Icons.videocam_rounded,
@@ -649,259 +644,270 @@ class _CreateApartmentState extends State<CreateApartment> {
                     ],
                   ),
                   kSpacing,
-                 if(rentType=='Rent Property')
-                 Column(children:[ title('Available for Rent'),
-                  tinySpace(),
-                  subText(
-                    'Available start date',
-                  ),
-                  smallText(
-                      'Please choose the date of availability for the rent'),
-                  kSpacing,
-                  InkWell(
-                    onTap: () => selectDate().then((selectedDate) {
-                      var picked = DateFormat.yMMMMd().format(selectedDate);
-                      start = DateFormat('yyyy-MM-dd')
-                          .format(selectedDate)
-                          .toString();
-print(start);
-                      var time = DateFormat.jm().format(selectedDate);
-                      var day = DateFormat.EEEE().format(selectedDate);
-                      startDate = picked.toString();
-                      startTime = time.toString();
-                      startDay = day.toString();
-                      setState(() {});
-                    }),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            decoration: buttonneumorp().copyWith(
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(12, 10, 5, 10),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(Icons.calendar_month, size: 18),
-                                  tinyHSpace(),
-                                  const Expanded(
-                                    child: Text(
-                                      'Start',
-                                      style: TextStyle(fontSize: 16),
-                                    ),
+                  if (rentType == 'Rent Property')
+                    Column(children: [
+                      title('Available for Rent'),
+                      tinySpace(),
+                      subText(
+                        'Available start date',
+                      ),
+                      smallText(
+                          'Please choose the date of availability for the rent'),
+                      kSpacing,
+                      InkWell(
+                        onTap: () => selectDate().then((selectedDate) {
+                          var picked = DateFormat.yMMMMd().format(selectedDate);
+                          start = DateFormat('yyyy-MM-dd')
+                              .format(selectedDate)
+                              .toString();
+                          print(start);
+                          var time = DateFormat.jm().format(selectedDate);
+                          var day = DateFormat.EEEE().format(selectedDate);
+                          startDate = picked.toString();
+                          startTime = time.toString();
+                          startDay = day.toString();
+                          setState(() {});
+                        }),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                decoration: buttonneumorp().copyWith(
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(12, 10, 5, 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(Icons.calendar_month,
+                                          size: 18),
+                                      tinyHSpace(),
+                                      const Expanded(
+                                        child: Text(
+                                          'Start',
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
+                                ),
+                              ),
+                            ),
+                            smallHSpace(),
+                            Expanded(
+                              flex: 2,
+                              child: Container(
+                                decoration: buttonneumorp().copyWith(
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(15, 10, 5, 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(Icons.calendar_month,
+                                          size: 18),
+                                      tinyHSpace(),
+                                      Expanded(
+                                        child: Text(
+                                          startDate,
+                                          style: const TextStyle(fontSize: 16),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      tinySpace(),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              decoration: buttonneumorp().copyWith(
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(12, 10, 5, 10),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(Icons.access_time_outlined,
+                                        size: 18),
+                                    tinyHSpace(),
+                                    const Expanded(
+                                      child: Text(
+                                        'Time',
+                                        style: TextStyle(fontSize: 16),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        smallHSpace(),
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            decoration: buttonneumorp().copyWith(
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 10, 5, 10),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(Icons.calendar_month, size: 18),
-                                  tinyHSpace(),
-                                  Expanded(
-                                    child: Text(
-                                      startDate,
-                                      style: const TextStyle(fontSize: 16),
+                          smallHSpace(),
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              decoration: buttonneumorp().copyWith(
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(15, 10, 5, 10),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(Icons.access_time_outlined,
+                                        size: 18),
+                                    tinyHSpace(),
+                                    Expanded(
+                                      child: Text(
+                                        '$startDay: $startTime',
+                                        style: const TextStyle(fontSize: 16),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  tinySpace(),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          decoration: buttonneumorp().copyWith(
-                              borderRadius: BorderRadius.circular(15)),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(12, 10, 5, 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.access_time_outlined,
-                                    size: 18),
-                                tinyHSpace(),
-                                const Expanded(
-                                  child: Text(
-                                    'Time',
-                                    style: TextStyle(fontSize: 16),
+                        ],
+                      ),
+                      kSpacing,
+                      subText('Available end date'),
+                      smallText(
+                          'Please choose the date of availability for the rent'),
+                      kSpacing,
+                      InkWell(
+                        onTap: () => selectDate().then((selectedDate) {
+                          var picked = DateFormat.yMMMMd().format(selectedDate);
+                          end = DateFormat('yyyy-MM-dd')
+                              .format(selectedDate)
+                              .toString();
+                          var time = DateFormat.jm().format(selectedDate);
+                          var day = DateFormat.EEEE().format(selectedDate);
+                          endDate = picked.toString();
+                          endTime = time.toString();
+                          endDay = day.toString();
+                          setState(() {});
+                        }),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                decoration: buttonneumorp().copyWith(
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(12, 10, 5, 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(Icons.calendar_month,
+                                          size: 18),
+                                      tinyHSpace(),
+                                      const Expanded(
+                                        child: Text(
+                                          'End Date',
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                      smallHSpace(),
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          decoration: buttonneumorp().copyWith(
-                              borderRadius: BorderRadius.circular(15)),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(15, 10, 5, 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.access_time_outlined,
-                                    size: 18),
-                                tinyHSpace(),
-                                Expanded(
-                                  child: Text(
-                                    '$startDay: $startTime',
-                                    style: const TextStyle(fontSize: 16),
+                            smallHSpace(),
+                            Expanded(
+                              flex: 2,
+                              child: Container(
+                                decoration: buttonneumorp().copyWith(
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(15, 10, 5, 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(Icons.calendar_month,
+                                          size: 18),
+                                      tinyHSpace(),
+                                      Expanded(
+                                        child: Text(
+                                          endDate,
+                                          style: const TextStyle(fontSize: 16),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                  kSpacing,
-                  subText(
-                    'Available end date'
-                  ),
-                  smallText(
-                      'Please choose the date of availability for the rent'),
-                  kSpacing,
-                  InkWell(
-                    onTap: () => selectDate().then((selectedDate) {
-                      var picked = DateFormat.yMMMMd().format(selectedDate);
-                      end = DateFormat('yyyy-MM-dd')
-                          .format(selectedDate)
-                          .toString();
-                      var time = DateFormat.jm().format(selectedDate);
-                      var day = DateFormat.EEEE().format(selectedDate);
-                      endDate = picked.toString();
-                      endTime = time.toString();
-                      endDay = day.toString();
-                      setState(() {});
-                    }),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            decoration: buttonneumorp().copyWith(
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(12, 10, 5, 10),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(Icons.calendar_month, size: 18),
-                                  tinyHSpace(),
-                                  const Expanded(
-                                    child: Text(
-                                      'End Date',
-                                      style: TextStyle(fontSize: 16),
+                      tinySpace(),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              decoration: buttonneumorp().copyWith(
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(12, 10, 5, 10),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(Icons.access_time_outlined,
+                                        size: 18),
+                                    tinyHSpace(),
+                                    const Expanded(
+                                      child: Text(
+                                        'Time',
+                                        style: TextStyle(fontSize: 16),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        smallHSpace(),
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            decoration: buttonneumorp().copyWith(
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 10, 5, 10),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(Icons.calendar_month, size: 18),
-                                  tinyHSpace(),
-                                  Expanded(
-                                    child: Text(
-                                      endDate,
-                                      style: const TextStyle(fontSize: 16),
+                          smallHSpace(),
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              decoration: buttonneumorp().copyWith(
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(15, 10, 5, 10),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(Icons.access_time_outlined,
+                                        size: 18),
+                                    tinyHSpace(),
+                                    Expanded(
+                                      child: Text(
+                                        '$endDay: $endTime',
+                                        style: const TextStyle(fontSize: 16),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  tinySpace(),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          decoration: buttonneumorp().copyWith(
-                              borderRadius: BorderRadius.circular(15)),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(12, 10, 5, 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.access_time_outlined,
-                                    size: 18),
-                                tinyHSpace(),
-                                const Expanded(
-                                  child: Text(
-                                    'Time',
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        ],
                       ),
-                      smallHSpace(),
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          decoration: buttonneumorp().copyWith(
-                              borderRadius: BorderRadius.circular(15)),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(15, 10, 5, 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.access_time_outlined,
-                                    size: 18),
-                                tinyHSpace(),
-                                Expanded(
-                                  child: Text(
-                                    '$endDay: $endTime',
-                                    style: const TextStyle(fontSize: 16),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  kSpacing,
-                 ]),
+                      kSpacing,
+                    ]),
                   divider(),
                   kSpacing,
                   title('Rent Price'),
@@ -1401,7 +1407,6 @@ print(start);
     );
   }
 
-
   Row title_icon(title, icon) {
     return Row(
       children: [
@@ -1415,7 +1420,6 @@ print(start);
       ],
     );
   }
-
 
   Container discount() {
     return Container(
@@ -1507,7 +1511,6 @@ print(start);
       ],
     );
   }
-
 
   getColor(description, title) {
     if (description == 'bedroom' && bedroom == title) {
@@ -1604,7 +1607,6 @@ print(start);
     );
   }
 
-
   Widget gender(BuildContext context, icon, title) {
     print(_userController.gender.value);
 
@@ -1686,31 +1688,29 @@ Widget imageSelect({icon, onTap, image}) {
           borderRadius: BorderRadius.circular(10)),
       child: image != null
           ? Image.file(
-        image,
-        width: 82,
-        height: 82,
-        fit: BoxFit.cover,
-      )
+              image,
+              width: 82,
+              height: 82,
+              fit: BoxFit.cover,
+            )
           : Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Icon(icon ?? Icons.photo_camera, color: lightGrey),
-      ),
+              padding: const EdgeInsets.all(30.0),
+              child: Icon(icon ?? Icons.photo_camera, color: lightGrey),
+            ),
     ),
   );
 }
 
 Text smallText(String title) => Text(
-  title,
-  style: const TextStyle(
-      fontWeight: FontWeight.w300, color: grey, fontSize: 13),
-);
-
+      title,
+      style: const TextStyle(
+          fontWeight: FontWeight.w300, color: grey, fontSize: 13),
+    );
 
 Text subText(title) {
   return Text(
     title,
-    style: const TextStyle(
-        color: blue, fontWeight: FontWeight.w500, fontSize: 18),
+    style:
+        const TextStyle(color: blue, fontWeight: FontWeight.w500, fontSize: 18),
   );
 }
-
