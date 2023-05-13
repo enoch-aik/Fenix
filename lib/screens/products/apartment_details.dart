@@ -49,15 +49,12 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
             .of(context)
             .size
             .width,
-            MediaQuery
-                .of(context)
-                .size
-                .height * 0.13),
+            height() * 0.18),
         child: Container(
           decoration:  BoxDecoration(
             gradient: gradient(
-              const Color(0xFF1A9AFF),
-              const Color(0xFF54FADC),
+              const Color(0xFF691232),
+              const Color(0xFF1770A2),
             ),
           ),
           padding: EdgeInsets.only(top: 55.h, left: 12.w, right: 12.w),
@@ -74,6 +71,7 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
                       .height * 0.06,
                   child: Image.asset(
                     "assets/images/fenix_c.png",
+                    color: white,
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -263,7 +261,7 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
                         ),
                         SizedBox(width: 11.w),
                         KText(
-                          "95,700  so'm",
+                          "100  so'm",
                           color: const Color(0xFF93A6BA),
                           fontWeight: FontWeight.w700,
                           fontSize: 15.w,

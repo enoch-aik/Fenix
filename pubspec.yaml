@@ -52,7 +52,10 @@ dependencies:
   custom_map_markers: ^0.0.2+1
   geolocator: ^9.0.2
   permission_handler:
-  geocoding: ^2.1.0
+  location:
+  google_api_headers: ^1.6.0
+  flutter_google_places_hoc081098: ^1.2.0
+  google_maps_webservice:
 
 dev_dependencies:
   flutter_test:

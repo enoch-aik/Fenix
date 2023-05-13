@@ -8,10 +8,14 @@ import 'package:fenix/helpers/widgets/snack_bar.dart';
 import 'package:fenix/screens/onboarding/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:google_api_headers/google_api_headers.dart';
+import 'package:google_maps_webservice/places.dart';
 import 'package:intl/intl.dart';
 
+import '../../../controller/map_controller.dart';
 import '../../../controller/store_controller.dart';
 import '../../../helpers/image_picker.dart';
 import '../../../neumorph.dart';
@@ -33,6 +37,7 @@ class _CreateApartmentState extends State<CreateApartment> {
   PageController pageController = PageController();
 
   final UserController _userController = Get.find();
+  final MapController _mapController = Get.find();
 
   final StoreController _storeController = Get.find();
 
@@ -46,6 +51,8 @@ class _CreateApartmentState extends State<CreateApartment> {
   final weekController = TextEditingController();
   final monthController = TextEditingController();
 
+  double longitude = 0.0;
+  double latitude = 0.0;
   String storeId = '';
   String toilet = '';
   String bathroom = '';
@@ -75,8 +82,60 @@ class _CreateApartmentState extends State<CreateApartment> {
   List<File> images = [];
   List<File> videos = [];
 
+  String store = '';
   List<String> stores = [];
   List<String> storeIds = [];
+
+
+  getLocation(){
+    _handlePressButton();
+  }
+
+  Future<void> _handlePressButton() async {
+    void onError(PlacesAutocompleteResponse response) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(response.errorMessage ?? 'Unknown error'),
+        ),
+      );
+    }
+
+    final p = await PlacesAutocomplete.show(
+      context: context,
+      apiKey: _mapController.googleApikey,
+      onError: onError,
+      mode: Mode.overlay,
+      language: 'en',
+      components: [Component(Component.country, 'US')],
+      resultTextStyle: Theme.of(context).textTheme.subtitle1,
+    );
+
+    await displayPrediction(p, ScaffoldMessenger.of(context));
+  }
+
+
+Future<void> displayPrediction(
+    Prediction? p, ScaffoldMessengerState messengerState) async {
+  if (p == null) {
+    return;
+  }
+
+  final _places = GoogleMapsPlaces(
+    apiKey: _mapController.googleApikey,
+    apiHeaders: await const GoogleApiHeaders().getHeaders(),
+  );
+
+  final detail = await _places.getDetailsByPlaceId(p.placeId!);
+  final geometry = detail.result.geometry!;
+  final lat = geometry.location.lat;
+  final lng = geometry.location.lng;
+
+  setState(() {
+    addressController.text = p.description!;
+    latitude = lat;
+    longitude = lng;
+  });
+}
 
   Future<dynamic> showImagePickers({isPhoto = true}) {
     return showModalBottomSheet(
@@ -259,7 +318,7 @@ class _CreateApartmentState extends State<CreateApartment> {
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width,
-            MediaQuery.of(context).size.height * 0.08),
+            height() * 0.1),
         child: Container(
           decoration: BoxDecoration(
             gradient:
@@ -341,10 +400,11 @@ class _CreateApartmentState extends State<CreateApartment> {
                   kSpacing,
                   title('Store'),
                   smallText(
-                      'Please select the store under which the product will be created (product will be created as a person if left as default)'),
+                      'Please select the store under which the apartment will be created (product will be created as a person if left as default)'),
                   kSpacing,
                   DropDownWidget(
                       list: stores,
+                      store: store,
                       items: stores.map((String items) {
                         return DropdownMenuItem(
                           value: items,
@@ -353,6 +413,9 @@ class _CreateApartmentState extends State<CreateApartment> {
                       }).toList(),
                       onChanged: (val) {
                         var index =  stores.indexOf(val!);
+                        setState(() {
+                          store = val;
+                        });
                         storeId = storeIds[index];
                       }),
 
@@ -636,11 +699,19 @@ class _CreateApartmentState extends State<CreateApartment> {
                   title('Set House location'),
                   kSpacing,
                   subText('Set the property location'),
-                  TextFieldWidget(
-                    hint: "Search location",
-                    textController: addressController,
-                    suffixIcon: const Icon(Icons.location_on_outlined),
-                    validator: (value) => FieldValidator.validate(value!),
+                  Column(
+                    children: [
+                      TextFieldWidget(
+                        hint: "Search location",
+                        textController: addressController,
+                        onTap: () => getLocation(),
+                        suffixIcon: InkWell(
+                            onTap: (){
+                              _handlePressButton();
+                            },child: const Icon(Icons.location_on_outlined)),
+                        validator: (value) => FieldValidator.validate(value!),
+                      ),
+                    ],
                   ),
                   kSpacing,
                   title('Choose one of the options'),
@@ -1161,8 +1232,8 @@ class _CreateApartmentState extends State<CreateApartment> {
                               _userController.getToken(),
                               storeId: widget.storeId,
                               title: nameController.text,
-                              longitude: -97.4676,
-                              latitude: 35.5164,
+                              longitude: longitude,
+                              latitude: latitude,
                               description: descriptionController.text,
                               smoke: smoke == 'Yes',
                               pet: pet == 'Yes',

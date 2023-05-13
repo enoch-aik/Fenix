@@ -9,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
+import '../../const.dart';
 import '../../helpers/widgets/top_rated_Items.dart';
 import '../onboarding/constants.dart';
 
@@ -25,7 +26,7 @@ class _MenuCategoryState extends State<MenuCategory> {
     return Scaffold(
       backgroundColor: Color(0xFFE4F0FA),
       appBar: PreferredSize(
-        preferredSize: Size(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height * 0.12),
+        preferredSize: Size(MediaQuery.of(context).size.width,  height() * 0.155),
         child: Container(
           decoration: new BoxDecoration(
             gradient:  gradient(

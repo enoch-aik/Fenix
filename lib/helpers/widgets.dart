@@ -446,6 +446,7 @@ class TextFieldWidget extends StatelessWidget {
   bool? enabled;
   int? maxLine;
   TextInputType? keyboardType;
+  Function()? onTap;
   List<TextInputFormatter>? inputFormatters;
 
   TextFieldWidget(
@@ -458,7 +459,8 @@ class TextFieldWidget extends StatelessWidget {
       this.textController,
       this.keyboardType,
       this.inputFormatters,
-      this.validator})
+      this.validator,
+      this.onTap})
       : super(key: key);
 
   @override
@@ -484,7 +486,7 @@ class TextFieldWidget extends StatelessWidget {
         style: const TextStyle(
           fontSize: 14,
         ),
-
+        onTap: onTap,
         maxLines: maxLine,
         enabled: enabled,
         keyboardType: keyboardType,
@@ -520,12 +522,13 @@ class TextFieldWidget extends StatelessWidget {
 
 class DropDownWidget extends StatelessWidget {
 
+  String store;
   List<String>? list;
   List<DropdownMenuItem<String>>? items;
   Function(String?)? onChanged;
 
 
-   DropDownWidget({ this.list, this.items, this.onChanged, Key? key}) : super(key: key);
+   DropDownWidget({ this.list, this.items, this.onChanged, this.store = "", Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -548,7 +551,7 @@ class DropDownWidget extends StatelessWidget {
         ],
       ),
       child: DropdownButton(
-        value:  list![0],
+        value: store.isEmpty ?  list![0] : store,
         underline: Container(),
         menuMaxHeight: MediaQuery.of(context).size.height * 0.4,
         icon: const Icon(Icons.keyboard_arrow_down),

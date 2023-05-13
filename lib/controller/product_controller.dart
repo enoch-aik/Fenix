@@ -39,18 +39,17 @@ class ProductController extends GetxController {
     }, token, type);
   }
 
-  getProducts(token, storeId) {
-    isFetchingProducts(true);
-    StoreServices.getProducts((status, response) {
-      isFetchingProducts(false);
-
+  getProducts(token, category) {
+    isFetchingApartments(true);
+    ProductServices.getProductsByCategory((status, response) {
+      isFetchingApartments(false);
       if (status) {
-        productList.value = response['data'];
+        apartmentList.value = response['data'];
       } else {
-        productList.value = [];
+        apartmentList.value = [];
         print('Error - $response');
       }
-    }, token, storeId);
+    }, token, category);
   }
 
   getVehicles(token, storeId) {

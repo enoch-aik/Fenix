@@ -45,12 +45,12 @@ class _SearchScreenState extends State<SearchScreen> {
       backgroundColor: Color(0xFFE4F0FA),
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width,
-            MediaQuery.of(context).size.height * 0.123),
+            height() * 0.18),
         child: Container(
           decoration: BoxDecoration(
             gradient: gradient(
-              Color(0xFF1A9AFF),
-              Color(0xFF54FADC),
+              const Color(0xFF691232),
+              const Color(0xFF1770A2),
             ),
           ),
           padding: EdgeInsets.only(top: 55.h, left: 12.w, right: 12.w),

@@ -170,7 +170,7 @@ class _MapState extends State<Map> {
                   zoom: 11.0,
                 ),
                 markers: markers,
-                myLocationEnabled: false,
+                myLocationEnabled: true,
                 onCameraMove: onCameraMove,
                 zoomControlsEnabled: false,
                 zoomGesturesEnabled: true,
@@ -214,11 +214,11 @@ class _MapState extends State<Map> {
                   SizedBox(height: 30.w,),
                   MapIcons(Transform.rotate(angle: 0.6, child: Icon(Icons.navigation, color: white,size: 20.w,),), black,
                       onTap: (){
-                        print(_userController.userCurrentPosition!.longitude);
+                        print(_userController.userCurrentPosition!.value!.longitude);
                         _mapController.googleMapController.animateCamera(
                           CameraUpdate.newCameraPosition(
                             CameraPosition(
-                              target: LatLng(_userController.userCurrentPosition!.latitude, _userController.userCurrentPosition!.longitude),
+                              target: LatLng(_userController.userCurrentPosition!.value!.latitude, _userController.userCurrentPosition!.value!.longitude),
                               zoom: 11,
                             ),
                           ),);

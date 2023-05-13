@@ -30,7 +30,7 @@ class _SellingPostState extends State<SellingPost> {
       backgroundColor: Color(0xFFE4F0FA),
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width,
-            MediaQuery.of(context).size.height * 0.08),
+            height() * 0.1),
         child: Container(
           decoration: BoxDecoration(
             gradient: gradient(

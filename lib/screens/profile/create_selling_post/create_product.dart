@@ -14,6 +14,7 @@ import '../../../controller/store_controller.dart';
 import '../../../helpers/image_picker.dart';
 import '../../../neumorph.dart';
 import '../../../theme.dart';
+import 'create_apartment.dart';
 
 class CreateProduct extends StatefulWidget {
   final String storeId;
@@ -47,7 +48,7 @@ class _CreateProductState extends State<CreateProduct> {
 
   final conditionController = TextEditingController();
 
-  final categoryController = TextEditingController();
+  final categoryController = TextEditingController(text: "Electronics");
   final subcategoryController = TextEditingController();
 
   final colorController = TextEditingController();
@@ -64,11 +65,17 @@ class _CreateProductState extends State<CreateProduct> {
   final planController = TextEditingController();
   final deliveryController = TextEditingController();
 
+  String storeId = '';
   List<File> images = [];
   List<File> videos = [];
   String deliveryValue = '';
   bool selectDollar = false;
   File? _image;
+
+  String store = '';
+  List<String> stores = [];
+  List<String> storeIds = [];
+
 
   Future<dynamic> showImagePickers({isPhoto = true}) {
     return showModalBottomSheet(
@@ -202,6 +209,28 @@ class _CreateProductState extends State<CreateProduct> {
         });
   }
 
+  List<String>? getStoreListNames() {
+    for (var i = 0; i < _storeController.storeList.length; i++) {
+      stores.add(_storeController.storeList[i]['name']);
+    }
+    return stores;
+  }
+
+  List<String>? getStoreIds() {
+    for (var i = 0; i < _storeController.storeList.length; i++) {
+      storeIds.add(_storeController.storeList[i]['id']);
+    }
+    return storeIds;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getStoreListNames();
+    getStoreIds();
+    storeId = stores[0];
+  }
+
   @override
   Widget build(BuildContext context) {
     print(widget.storeId);
@@ -210,7 +239,7 @@ class _CreateProductState extends State<CreateProduct> {
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width,
-            MediaQuery.of(context).size.height * 0.08),
+            height() * 0.1),
         child: Container(
           decoration: BoxDecoration(
             gradient: gradient(
@@ -289,6 +318,27 @@ class _CreateProductState extends State<CreateProduct> {
               child: ListView(
                 padding: EdgeInsets.symmetric(horizontal: 17.w),
                 children: [
+                  kSpacing,
+                  title('Store'),
+                  smallText(
+                      'Please select the store under which the product will be created (product will be created as a person if left as default)'),
+                  kSpacing,
+                  DropDownWidget(
+                      list: stores,
+                      store: store,
+                      items: stores.map((String items) {
+                        return DropdownMenuItem(
+                          value: items,
+                          child: Text(items),
+                        );
+                      }).toList(),
+                      onChanged: (val) {
+                        var index =  stores.indexOf(val!);
+                        setState(() {
+                          store = val;
+                        });
+                        storeId = storeIds[index];
+                      }),
                   kSpacing,
                   title('Photos'),
                   kSpacing,
@@ -393,6 +443,7 @@ class _CreateProductState extends State<CreateProduct> {
                   TextFieldWidget(
                     hint: "Category",
                     textController: categoryController,
+                    enabled: false,
                   ),
                   kSpacing,
                   TextFieldWidget(
@@ -490,7 +541,7 @@ class _CreateProductState extends State<CreateProduct> {
                           if (_formKey.currentState!.validate()) {
                             _storeController.createNewProduct(
                               _userController.getToken(),
-                              storeId: widget.storeId,
+                              storeId: storeId,
                               title: nameController.text,
                               discount: discountController.text,
                               plan: 'Basic',

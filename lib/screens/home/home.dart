@@ -1,6 +1,7 @@
 import 'package:fenix/const.dart';
 import 'package:fenix/controller/store_controller.dart';
 import 'package:fenix/controller/user_controller.dart';
+import 'package:fenix/helpers/distance_calculator.dart';
 import 'package:fenix/helpers/widgets/recently_viewed_widget.dart';
 import 'package:fenix/screens/dealsDetails.dart';
 import 'package:fenix/screens/home/house_rent.dart';
@@ -151,7 +152,6 @@ class _HomeState extends State<Home> {
                         title: "Apartment",
                         color: white,
                       onTap: () => setState(() {
-
                         _productController.getApartments(token, "apartment");
                       }),
                     ),
@@ -165,7 +165,9 @@ class _HomeState extends State<Home> {
                         icon: "television.png",
                         title: "Electronics",
                         color: white,
-                        onTap: () => setState(() => homeTab = 'Dacha')),
+                        onTap: () => setState(() {
+                          _productController.getProducts(token, "electronics");
+                        })),
                   ],
                 ),
               ),
@@ -176,54 +178,54 @@ class _HomeState extends State<Home> {
       body: ListView(
         physics: const ClampingScrollPhysics(),
         children: [
-          // Container(
-          //     height: 30.w,
-          //     width: MediaQuery.of(context).size.width,
-          //     padding: EdgeInsets.symmetric(horizontal: 10.w),
-          //     decoration: BoxDecoration(
-          //       gradient: gradient(
-          //         const Color(0xFF691232),
-          //         const Color(0xFF1770A2),
-          //       ),
-          //     ),
-          //     child: Row(
-          //       children: [
-          //         Icon(Icons.location_on, size: 17.w, color: white),
-          //         Text(
-          //           " Deliver to chicago,iL 5932 ",
-          //           style: Theme.of(context).textTheme.bodyText1!.copyWith(
-          //                 fontSize: 13.w,
-          //                 color: white,
-          //                 fontWeight: FontWeight.w800,
-          //               ),
-          //         ),
-          //       ],
-          //     )),
-          // SizedBox(
-          //   height: 276.w,
-          //   width: MediaQuery.of(context).size.width,
-          //   child: PageView(
-          //     children: [
-          //       Image.asset(
-          //         "assets/images/cokeAd.png",
-          //         fit: BoxFit.fitWidth,
-          //       ),
-          //       Image.asset(
-          //         "assets/images/logoFrame.png",
-          //         fit: BoxFit.fill,
-          //       ),
-          //       Image.asset(
-          //         "assets/images/logoFrame.png",
-          //         fit: BoxFit.fill,
-          //       ),
-          //       Image.asset(
-          //         "assets/images/logoFrame.png",
-          //         fit: BoxFit.fill,
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          // kSpacing,
+          Container(
+              height: 30.w,
+              width: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              decoration: BoxDecoration(
+                gradient: gradient(
+                  const Color(0xFF691232),
+                  const Color(0xFF1770A2),
+                ),
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.location_on, size: 17.w, color: white),
+                  Text(
+                    " Deliver to chicago,iL 5932 ",
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                          fontSize: 13.w,
+                          color: white,
+                          fontWeight: FontWeight.w800,
+                        ),
+                  ),
+                ],
+              )),
+          SizedBox(
+            height: 276.w,
+            width: MediaQuery.of(context).size.width,
+            child: PageView(
+              children: [
+                Image.asset(
+                  "assets/images/cokeAd.png",
+                  fit: BoxFit.fitWidth,
+                ),
+                Image.asset(
+                  "assets/images/logoFrame.png",
+                  fit: BoxFit.fill,
+                ),
+                Image.asset(
+                  "assets/images/logoFrame.png",
+                  fit: BoxFit.fill,
+                ),
+                Image.asset(
+                  "assets/images/logoFrame.png",
+                  fit: BoxFit.fill,
+                ),
+              ],
+            ),
+          ),
+          kSpacing,
           // Obx(
           //   () => _storeController.getDefaultStoreId()==''
           //       ? const Center(child: CircularProgressIndicator())
@@ -233,405 +235,405 @@ class _HomeState extends State<Home> {
           //           storeLocation: 'location',
           //         ),
           // ),
-          // kSpacing,
-          // SizedBox(
-          //   height: 152.w,
-          //   width: MediaQuery.of(context).size.width,
-          //   child: ListView.builder(
-          //     scrollDirection: Axis.horizontal,
-          //     itemCount: 7,
-          //     itemBuilder: (context, index) {
-          //       return InkWell(
-          //         onTap: () {
-          //           // Get.to(() => const ProductDetails());
-          //         },
-          //         child: Container(
-          //           width: 114.w,
-          //           height: 152.w,
-          //           margin: EdgeInsets.all(4.5.w),
-          //           padding: EdgeInsets.all(7.w),
-          //           decoration: BoxDecoration(
-          //               color: Colors.white,
-          //               borderRadius: BorderRadius.circular(13.w)),
-          //           child: Image.asset(
-          //             "assets/images/phone.png",
-          //             fit: BoxFit.fill,
-          //           ),
-          //         ),
-          //       );
-          //     },
-          //   ),
-          // ),
-          // Container(
-          //     width: MediaQuery.of(context).size.width,
-          //     height: 57.w,
-          //     margin: EdgeInsets.symmetric(vertical: 17.w),
-          //     decoration: const BoxDecoration(
-          //       color: Color(0xFF1F4167),
-          //       gradient: LinearGradient(
-          //           colors: [
-          //             Color(0xFF1F4167),
-          //             Color(0xFF125EB7),
-          //             Color(0xFF0777FB),
-          //           ],
-          //           stops: [
-          //             0.0,
-          //             0.5,
-          //             1.0
-          //           ],
-          //           begin: FractionalOffset.topLeft,
-          //           end: FractionalOffset.bottomRight,
-          //           tileMode: TileMode.repeated),
-          //     ),
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.center,
-          //       children: [
-          //         Padding(
-          //             padding: EdgeInsets.only(top: 5.w),
-          //             child: Icon(
-          //               CustomIcons.crown_badge,
-          //               color: const Color(0xFFFCC70A),
-          //               size: 42.w,
-          //             )),
-          //         Text(
-          //           "Top 10 Rated Items",
-          //           style: Theme.of(context).textTheme.bodyText1!.copyWith(
-          //               fontSize: 18.w,
-          //               color: Colors.white,
-          //               fontWeight: FontWeight.w700),
-          //         ),
-          //       ],
-          //     )),
-          // ListView.builder(
-          //     physics: const NeverScrollableScrollPhysics(),
-          //     itemCount: 1,
-          //     shrinkWrap: true,
-          //     itemBuilder: (context, index) {
-          //       return RatedItemsWidget();
-          //     }),
-          // Container(
-          //     width: MediaQuery.of(context).size.width,
-          //     height: 40.w,
-          //     alignment: Alignment.centerLeft,
-          //     margin: EdgeInsets.symmetric(vertical: 17.w),
-          //     padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.w),
-          //     decoration: BoxDecoration(
-          //         color: const Color(0xFF1F4167),
-          //         gradient: gradient(
-          //             const Color(0xFF1F4167), const Color(0xFF0777FB))),
-          //     child: Text(
-          //       "Recently Viewed Items",
-          //       style: Theme.of(context).textTheme.bodyText1!.copyWith(
-          //           fontSize: 18.w,
-          //           color: Colors.white,
-          //           fontWeight: FontWeight.w700),
-          //     )),
-          // SizedBox(
-          //   height: 160.w,
-          //   child: ListView.builder(
-          //       itemCount: 5,
-          //       scrollDirection: Axis.horizontal,
-          //       itemBuilder: (context, index) {
-          //         return const RecentlyViewed();
-          //       }),
-          // ),
-          // SizedBox(
-          //   height: 160.w,
-          //   child: ListView.builder(
-          //       itemCount: 5,
-          //       scrollDirection: Axis.horizontal,
-          //       itemBuilder: (context, index) {
-          //         return const RecentlyViewed();
-          //       }),
-          // ),
-          // Divider(
-          //   color: const Color(0xFF1994F5).withOpacity(0.22),
-          //   thickness: 5,
-          //   height: 50.w,
-          // ),
-          // const RecentlyViewed(),
-          // const RecentlyViewed(),
-          // const RecentlyViewed(),
-          // Container(
-          //   height: 276.w,
-          //   width: MediaQuery.of(context).size.width,
-          //   margin: EdgeInsets.only(top: 20.w),
-          //   child: PageView(
-          //     children: [
-          //       Image.asset(
-          //         "assets/images/cokeAd.png",
-          //         fit: BoxFit.fitWidth,
-          //       ),
-          //       Image.asset(
-          //         "assets/images/logoFrame.png",
-          //         fit: BoxFit.fill,
-          //       ),
-          //       Image.asset(
-          //         "assets/images/logoFrame.png",
-          //         fit: BoxFit.fill,
-          //       ),
-          //       Image.asset(
-          //         "assets/images/logoFrame.png",
-          //         fit: BoxFit.fill,
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          // SizedBox(
-          //   height: 152.w,
-          //   width: MediaQuery.of(context).size.width,
-          //   child: ListView.builder(
-          //     scrollDirection: Axis.horizontal,
-          //     itemCount: 7,
-          //     itemBuilder: (context, index) {
-          //       return Container(
-          //         width: 114.w,
-          //         height: 152.w,
-          //         margin: EdgeInsets.all(4.5.w),
-          //         padding: EdgeInsets.all(7.w),
-          //         decoration: BoxDecoration(
-          //             color: Colors.white,
-          //             borderRadius: BorderRadius.circular(13.w)),
-          //         child: Image.asset(
-          //           "assets/images/phone.png",
-          //           fit: BoxFit.fill,
-          //         ),
-          //       );
-          //     },
-          //   ),
-          // ),
-          // Container(
-          //     width: MediaQuery.of(context).size.width,
-          //     height: 57.w,
-          //     alignment: Alignment.centerLeft,
-          //     margin: EdgeInsets.symmetric(vertical: 17.w),
-          //     padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.w),
-          //     decoration: BoxDecoration(
-          //         color: const Color(0xFF1F4167),
-          //         gradient: gradient(
-          //             const Color(0xFF1F4167), const Color(0xFF0777FB))),
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //       children: [
-          //         Row(
-          //           children: [
-          //             Icon(
-          //               CustomIcons.best_selling,
-          //               color: const Color(0xFFE48C24),
-          //               size: 37.w,
-          //             ),
-          //             SizedBox(
-          //               width: 10.w,
-          //             ),
-          //             Text(
-          //               "Best Selling Items",
-          //               style: Theme.of(context).textTheme.bodyText1!.copyWith(
-          //                   fontSize: 18.w,
-          //                   color: Colors.white,
-          //                   fontWeight: FontWeight.w700),
-          //             ),
-          //           ],
-          //         ),
-          //         InkWell(
-          //           onTap: () {
-          //             Get.to(() => DealsDetails(title: "Best Selling Items"));
-          //           },
-          //           child: Container(
-          //             height: 24.w,
-          //             width: 75.w,
-          //             decoration: BoxDecoration(
-          //               color: Colors.white,
-          //               borderRadius: BorderRadius.circular(12.w),
-          //             ),
-          //             child: Row(
-          //               mainAxisAlignment: MainAxisAlignment.center,
-          //               children: [
-          //                 Text(
-          //                   "More",
-          //                   style: Theme.of(context)
-          //                       .textTheme
-          //                       .bodyText1!
-          //                       .copyWith(
-          //                           fontSize: 13.w,
-          //                           fontWeight: FontWeight.w700),
-          //                 ),
-          //                 SizedBox(
-          //                   width: 3.w,
-          //                 ),
-          //                 Icon(
-          //                   Icons.menu,
-          //                   color: kTextBlackColor,
-          //                   size: 15.w,
-          //                 ),
-          //               ],
-          //             ),
-          //           ),
-          //         )
-          //       ],
-          //     )),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: [
-          //      ProductWidget(),
-          //      ProductWidget(),
-          //   ],
-          // ),
-          // Container(
-          //     width: MediaQuery.of(context).size.width,
-          //     height: 57.w,
-          //     alignment: Alignment.centerLeft,
-          //     margin: EdgeInsets.symmetric(vertical: 17.w),
-          //     padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.w),
-          //     decoration: BoxDecoration(
-          //         color: const Color(0xFF1F4167),
-          //         gradient: gradient(
-          //             const Color(0xFF1F4167), const Color(0xFF0777FB))),
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //       children: [
-          //         Row(
-          //           children: [
-          //             Icon(
-          //               CustomIcons.top_deals,
-          //               color: const Color(0xFFE48C24),
-          //               size: 33.w,
-          //             ),
-          //             SizedBox(
-          //               width: 10.w,
-          //             ),
-          //             Text(
-          //               "Top Deals",
-          //               style: Theme.of(context).textTheme.bodyText1!.copyWith(
-          //                   fontSize: 18.w,
-          //                   color: Colors.white,
-          //                   fontWeight: FontWeight.w700),
-          //             ),
-          //           ],
-          //         ),
-          //         InkWell(
-          //           onTap: () {
-          //             Get.to(() => DealsDetails(
-          //                   title: "Top Deals",
-          //                 ));
-          //           },
-          //           child: Container(
-          //             height: 24.w,
-          //             width: 75.w,
-          //             decoration: BoxDecoration(
-          //               color: Colors.white,
-          //               borderRadius: BorderRadius.circular(12.w),
-          //             ),
-          //             child: Row(
-          //               mainAxisAlignment: MainAxisAlignment.center,
-          //               children: [
-          //                 Text(
-          //                   "More",
-          //                   style: Theme.of(context)
-          //                       .textTheme
-          //                       .bodyText1!
-          //                       .copyWith(
-          //                           fontSize: 13.w,
-          //                           fontWeight: FontWeight.w700),
-          //                 ),
-          //                 SizedBox(
-          //                   width: 3.w,
-          //                 ),
-          //                 Icon(
-          //                   Icons.menu,
-          //                   color: kTextBlackColor,
-          //                   size: 15.w,
-          //                 ),
-          //               ],
-          //             ),
-          //           ),
-          //         )
-          //       ],
-          //     )),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: [
-          //     ProductWidget(),
-          //     ProductWidget(),
-          //   ],
-          // ),
-          // Container(
-          //     width: MediaQuery.of(context).size.width,
-          //     height: 57.w,
-          //     alignment: Alignment.centerLeft,
-          //     margin: EdgeInsets.symmetric(vertical: 17.w),
-          //     padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.w),
-          //     decoration: BoxDecoration(
-          //         color: const Color(0xFF1F4167),
-          //         gradient: gradient(
-          //             const Color(0xFF1F4167), const Color(0xFF0777FB))),
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //       children: [
-          //         Row(
-          //           children: [
-          //             Icon(
-          //               CustomIcons.recommended_deals,
-          //               color: const Color(0xFFE48C24),
-          //               size: 33.w,
-          //             ),
-          //             SizedBox(
-          //               width: 10.w,
-          //             ),
-          //             Text(
-          //               "Recommended Deals",
-          //               style: Theme.of(context).textTheme.bodyText1!.copyWith(
-          //                   fontSize: 18.w,
-          //                   color: Colors.white,
-          //                   fontWeight: FontWeight.w700),
-          //             ),
-          //           ],
-          //         ),
-          //         InkWell(
-          //           onTap: () {
-          //             Get.to(() => DealsDetails(
-          //                   title: "Recommended Deals",
-          //                 ));
-          //           },
-          //           child: Container(
-          //             height: 24.w,
-          //             width: 75.w,
-          //             decoration: BoxDecoration(
-          //               color: Colors.white,
-          //               borderRadius: BorderRadius.circular(12.w),
-          //             ),
-          //             child: Row(
-          //               mainAxisAlignment: MainAxisAlignment.center,
-          //               children: [
-          //                 Text(
-          //                   "More",
-          //                   style: Theme.of(context)
-          //                       .textTheme
-          //                       .bodyText1!
-          //                       .copyWith(
-          //                           fontSize: 13.w,
-          //                           fontWeight: FontWeight.w700),
-          //                 ),
-          //                 SizedBox(
-          //                   width: 3.w,
-          //                 ),
-          //                 Icon(
-          //                   Icons.menu,
-          //                   color: kTextBlackColor,
-          //                   size: 15.w,
-          //                 ),
-          //               ],
-          //             ),
-          //           ),
-          //         )
-          //       ],
-          //     )),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: [
-          //       ProductWidget(),
-          //       ProductWidget(),
-          //   ],
-          // ),
+          kSpacing,
+          SizedBox(
+            height: 152.w,
+            width: MediaQuery.of(context).size.width,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 7,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  onTap: () {
+                    // Get.to(() => const ProductDetails());
+                  },
+                  child: Container(
+                    width: 114.w,
+                    height: 152.w,
+                    margin: EdgeInsets.all(4.5.w),
+                    padding: EdgeInsets.all(7.w),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(13.w)),
+                    child: Image.asset(
+                      "assets/images/phone.png",
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+          Container(
+              width: MediaQuery.of(context).size.width,
+              height: 57.w,
+              margin: EdgeInsets.symmetric(vertical: 17.w),
+              decoration: const BoxDecoration(
+                color: Color(0xFF1F4167),
+                gradient: LinearGradient(
+                    colors: [
+                      Color(0xFF1F4167),
+                      Color(0xFF125EB7),
+                      Color(0xFF0777FB),
+                    ],
+                    stops: [
+                      0.0,
+                      0.5,
+                      1.0
+                    ],
+                    begin: FractionalOffset.topLeft,
+                    end: FractionalOffset.bottomRight,
+                    tileMode: TileMode.repeated),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                      padding: EdgeInsets.only(top: 5.w),
+                      child: Icon(
+                        CustomIcons.crown_badge,
+                        color: const Color(0xFFFCC70A),
+                        size: 42.w,
+                      )),
+                  Text(
+                    "Top 10 Rated Items",
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        fontSize: 18.w,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ],
+              )),
+          ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: 1,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return RatedItemsWidget();
+              }),
+          Container(
+              width: MediaQuery.of(context).size.width,
+              height: 40.w,
+              alignment: Alignment.centerLeft,
+              margin: EdgeInsets.symmetric(vertical: 17.w),
+              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.w),
+              decoration: BoxDecoration(
+                  color: const Color(0xFF1F4167),
+                  gradient: gradient(
+                      const Color(0xFF1F4167), const Color(0xFF0777FB))),
+              child: Text(
+                "Recently Viewed Items",
+                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    fontSize: 18.w,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700),
+              )),
+          SizedBox(
+            height: 160.w,
+            child: ListView.builder(
+                itemCount: 5,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return const RecentlyViewed();
+                }),
+          ),
+          SizedBox(
+            height: 160.w,
+            child: ListView.builder(
+                itemCount: 5,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return const RecentlyViewed();
+                }),
+          ),
+          Divider(
+            color: const Color(0xFF1994F5).withOpacity(0.22),
+            thickness: 5,
+            height: 50.w,
+          ),
+          const RecentlyViewed(),
+          const RecentlyViewed(),
+          const RecentlyViewed(),
+          Container(
+            height: 276.w,
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(top: 20.w),
+            child: PageView(
+              children: [
+                Image.asset(
+                  "assets/images/cokeAd.png",
+                  fit: BoxFit.fitWidth,
+                ),
+                Image.asset(
+                  "assets/images/logoFrame.png",
+                  fit: BoxFit.fill,
+                ),
+                Image.asset(
+                  "assets/images/logoFrame.png",
+                  fit: BoxFit.fill,
+                ),
+                Image.asset(
+                  "assets/images/logoFrame.png",
+                  fit: BoxFit.fill,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 152.w,
+            width: MediaQuery.of(context).size.width,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 7,
+              itemBuilder: (context, index) {
+                return Container(
+                  width: 114.w,
+                  height: 152.w,
+                  margin: EdgeInsets.all(4.5.w),
+                  padding: EdgeInsets.all(7.w),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(13.w)),
+                  child: Image.asset(
+                    "assets/images/phone.png",
+                    fit: BoxFit.fill,
+                  ),
+                );
+              },
+            ),
+          ),
+          Container(
+              width: MediaQuery.of(context).size.width,
+              height: 57.w,
+              alignment: Alignment.centerLeft,
+              margin: EdgeInsets.symmetric(vertical: 17.w),
+              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.w),
+              decoration: BoxDecoration(
+                  color: const Color(0xFF1F4167),
+                  gradient: gradient(
+                      const Color(0xFF1F4167), const Color(0xFF0777FB))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        CustomIcons.best_selling,
+                        color: const Color(0xFFE48C24),
+                        size: 37.w,
+                      ),
+                      SizedBox(
+                        width: 10.w,
+                      ),
+                      Text(
+                        "Best Selling Items",
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            fontSize: 18.w,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700),
+                      ),
+                    ],
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Get.to(() => DealsDetails(title: "Best Selling Items"));
+                    },
+                    child: Container(
+                      height: 24.w,
+                      width: 75.w,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12.w),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "More",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1!
+                                .copyWith(
+                                    fontSize: 13.w,
+                                    fontWeight: FontWeight.w700),
+                          ),
+                          SizedBox(
+                            width: 3.w,
+                          ),
+                          Icon(
+                            Icons.menu,
+                            color: kTextBlackColor,
+                            size: 15.w,
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              )),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+               ProductWidget(),
+               ProductWidget(),
+            ],
+          ),
+          Container(
+              width: MediaQuery.of(context).size.width,
+              height: 57.w,
+              alignment: Alignment.centerLeft,
+              margin: EdgeInsets.symmetric(vertical: 17.w),
+              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.w),
+              decoration: BoxDecoration(
+                  color: const Color(0xFF1F4167),
+                  gradient: gradient(
+                      const Color(0xFF1F4167), const Color(0xFF0777FB))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        CustomIcons.top_deals,
+                        color: const Color(0xFFE48C24),
+                        size: 33.w,
+                      ),
+                      SizedBox(
+                        width: 10.w,
+                      ),
+                      Text(
+                        "Top Deals",
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            fontSize: 18.w,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700),
+                      ),
+                    ],
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Get.to(() => DealsDetails(
+                            title: "Top Deals",
+                          ));
+                    },
+                    child: Container(
+                      height: 24.w,
+                      width: 75.w,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12.w),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "More",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1!
+                                .copyWith(
+                                    fontSize: 13.w,
+                                    fontWeight: FontWeight.w700),
+                          ),
+                          SizedBox(
+                            width: 3.w,
+                          ),
+                          Icon(
+                            Icons.menu,
+                            color: kTextBlackColor,
+                            size: 15.w,
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              )),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ProductWidget(),
+              ProductWidget(),
+            ],
+          ),
+          Container(
+              width: MediaQuery.of(context).size.width,
+              height: 57.w,
+              alignment: Alignment.centerLeft,
+              margin: EdgeInsets.symmetric(vertical: 17.w),
+              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.w),
+              decoration: BoxDecoration(
+                  color: const Color(0xFF1F4167),
+                  gradient: gradient(
+                      const Color(0xFF1F4167), const Color(0xFF0777FB))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        CustomIcons.recommended_deals,
+                        color: const Color(0xFFE48C24),
+                        size: 33.w,
+                      ),
+                      SizedBox(
+                        width: 10.w,
+                      ),
+                      Text(
+                        "Recommended Deals",
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            fontSize: 18.w,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700),
+                      ),
+                    ],
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Get.to(() => DealsDetails(
+                            title: "Recommended Deals",
+                          ));
+                    },
+                    child: Container(
+                      height: 24.w,
+                      width: 75.w,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12.w),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "More",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1!
+                                .copyWith(
+                                    fontSize: 13.w,
+                                    fontWeight: FontWeight.w700),
+                          ),
+                          SizedBox(
+                            width: 3.w,
+                          ),
+                          Icon(
+                            Icons.menu,
+                            color: kTextBlackColor,
+                            size: 15.w,
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              )),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+                ProductWidget(),
+                ProductWidget(),
+            ],
+          ),
           smallSpace(),
           Container(
               width: MediaQuery.of(context).size.width,
@@ -682,13 +684,16 @@ class _HomeState extends State<Home> {
                   var item =  _productController.apartmentList[index];
                   return  InkWell(
                     onTap: () {
-                      Get.to(() =>  ApartmentDetails(apartment:item));
+                   Get.to(() => ApartmentDetails(apartment: _productController.apartmentList[index],));
                     },
-                    child: ProductWidget(
-                      title: item['title'],
-                      price: item['rentPrice']['month'].toString(),
-                      location: item['location']['latitude'].toString(),
-                    ),
+                    child: item['category'] == "Electronics" ? ProductWidget(
+                        title: item['title'],
+                        price: item['price']['amount'].toString(),
+                        location: item) : ProductWidget(
+                        title: item['title'],
+                        price: item['rentPrice']['month'].toString(),
+                        location: item),
+
                   );
                 }),
           ),
@@ -778,8 +783,10 @@ class _HomeState extends State<Home> {
 class ProductWidget extends StatelessWidget {
 
   String title;
-  String location;
+  var location;
   String price;
+
+  final UserController _userController = Get.find();
 
   ProductWidget({
     Key? key,
@@ -888,13 +895,19 @@ class ProductWidget extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            Row(
+                                Obx( () => _userController.isFetchingUserLocation.isFalse ? Row(
                               children: [
                                 const Icon(Icons.location_on),
                                 SizedBox(
                                   width: 10.w,
                                 ),
-                                Text(location,
+                                // ${distanceInKm(
+                                //   _userController.userCurrentPosition!.value.latitude,
+                                //   _userController.userCurrentPosition!.value.longitude,
+                                //   location['location']['latitude'],
+                                //   location['location']['longitude'],
+                                // ).toString()}
+                               Text("124Km",
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyText1!
@@ -903,9 +916,9 @@ class ProductWidget extends StatelessWidget {
                                           color: const Color(0xFF334669)
                                               .withOpacity(0.6),
                                           fontWeight: FontWeight.w400),
-                                ),
-                              ],
-                            ),
+                                )
+                              ],) : tiny5Space() ),
+
                             Row(
                               children: [
                                 const Icon(Icons.fire_truck),

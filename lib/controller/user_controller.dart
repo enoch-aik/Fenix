@@ -1,7 +1,7 @@
 import 'package:fenix/screens/home/home.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:location/location.dart' as loc;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,7 +22,8 @@ class UserController extends GetxController {
 
   Position? _currentPosition;
 
-  Position? userCurrentPosition;
+  Rx<Position>?  userCurrentPosition;
+  var isFetchingUserLocation = true.obs;
 
   String getToken() => _token;
 
@@ -94,15 +95,16 @@ class UserController extends GetxController {
   }
 
   getCurrentLocation() async{
-    await Permission.location.request();
-    Geolocator
+    isFetchingUserLocation(true);
+    await Geolocator
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.best, forceAndroidLocationManager: true)
         .then((Position position) async{
+          print("++++====${position}");
         _currentPosition = position;
-        userCurrentPosition = position;
-        List<Placemark> placemarks = await placemarkFromCoordinates(userCurrentPosition!.latitude, userCurrentPosition!.longitude);
-        Placemark place = placemarks[0];
-        print(place);
+        userCurrentPosition = position.obs;
+        isFetchingUserLocation(false);
+        print("++++++${_currentPosition!.latitude}");
+        print("=======${userCurrentPosition!.value.latitude.obs}");
 
     }).catchError((e) {
       print(e);

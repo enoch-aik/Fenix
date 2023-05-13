@@ -21,6 +21,8 @@ class MapController extends GetxController {
   var apartmentListClicked = [].obs;
   var apartmentFilterList = [].obs;
 
+  String googleApikey = "AIzaSyDAEYCfRxJfUNR_ng1PSOJojIZ_P7SXEXE";
+
   late GoogleMapController googleMapController;
 
   getApartments(token, {longitude, latitude}) {
