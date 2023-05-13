@@ -23,9 +23,9 @@ class Category {
 
 
   List property = [
+    "Dacha",
     "Apartment",
     "House",
-    "Dacha",
   ];
 
 

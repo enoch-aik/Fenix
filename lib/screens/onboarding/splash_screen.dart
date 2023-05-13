@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
   loadApp() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('token');
-    print(token);
+    var refreshToken = prefs.getString('refreshToken');
     AccountController accountController = Get.put(AccountController());
     Timer(
         const Duration(seconds: 3),
@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
             context,
             MaterialPageRoute(
                 builder: (context) =>  const OnboardingOne()
-                   )) : accountController.setUser(token)
+                   )) : accountController.setUser(token,refreshToken:refreshToken)
 
     );
   }

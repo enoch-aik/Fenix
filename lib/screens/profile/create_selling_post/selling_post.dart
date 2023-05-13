@@ -27,15 +27,15 @@ class _SellingPostState extends State<SellingPost> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE4F0FA),
+      backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width,
             height() * 0.1),
         child: Container(
           decoration: BoxDecoration(
             gradient: gradient(
-              Color(0xFF1A9AFF),
-              Color(0xFF54FADC),
+              const Color(0xFF1A9AFF),
+              const Color(0xFF54FADC),
             ),
           ),
           padding: EdgeInsets.only(top: 55.h, left: 12.w, right: 12.w),
@@ -49,7 +49,7 @@ class _SellingPostState extends State<SellingPost> {
                       onTap: () {
                         Get.back();
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.arrow_back,
                         color: Colors.white,
                       )),
@@ -77,8 +77,8 @@ class _SellingPostState extends State<SellingPost> {
                             .bodyText1!
                             .copyWith(
                                 fontSize: 15.w, color: Colors.grey.shade500),
-                        prefixIcon: Icon(Icons.search),
-                        suffixIcon: Icon(
+                        prefixIcon: const Icon(Icons.search),
+                        suffixIcon: const Icon(
                           Icons.qr_code_scanner,
                           color: primary,
                         ),
@@ -102,7 +102,7 @@ class _SellingPostState extends State<SellingPost> {
               onTap: () {
                 Get.to(() => CreateApartment(
                     storeId: widget.storeId,
-                    apartmentType: Category().property[0]));
+                    apartmentType: Category().property[1]));
               },
               child: SellingPostCard(
                 title: "Apartment",
@@ -116,7 +116,7 @@ class _SellingPostState extends State<SellingPost> {
               onTap: () {
                 Get.to(() => CreateApartment(
                     storeId: widget.storeId,
-                    apartmentType: Category().property[1]));
+                    apartmentType: Category().property[2]));
               },
               child: SellingPostCard(
                 title: "House",
@@ -130,7 +130,7 @@ class _SellingPostState extends State<SellingPost> {
               onTap: () {
                 Get.to(() => CreateApartment(
                       storeId: widget.storeId,
-                      apartmentType: Category().property[2],
+                      apartmentType: Category().property[0],
                     ));
               },
               child: SellingPostCard(
@@ -165,7 +165,7 @@ class _SellingPostState extends State<SellingPost> {
                 title: "Electronics",
                 subtitle: "Sell Electronics",
                 icon: 'assets/images/icons/apartment.png',
-                backgroundImage: 'assets/images/apartment 1.png',
+                backgroundImage: 'assets/images/electronics.png',
               ),
             ),
             smallSpace(),

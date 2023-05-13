@@ -96,9 +96,10 @@ class ApiServices {
       }
     } catch (e) {
       print('Errororor - $e');
-      if (e.toString().contains('Expired')) {
+      if (e.toString().contains('Expired')||e.toString().contains('Invalid Token')) {
+
         UserController userController = Get.find();
-        userController.setPersistToken(null);
+        userController.setPersistToken(null,null);
         Get.offAll(
               () => SignIn(),
         );
@@ -126,9 +127,9 @@ class ApiServices {
       }
     } catch (e) {
       print(e.toString());
-      if (e.toString().contains('Expired')) {
+      if (e.toString().contains('Expired')||e.toString().contains('Invalid Token')) {
         UserController userController = Get.find();
-        userController.setPersistToken(null);
+        userController.setPersistToken(null,null);
         Get.offAll(
               () => SignIn(),
         );
@@ -155,9 +156,10 @@ class ApiServices {
       }
     } catch (e) {
       print('Erroror - - - - - $e');
-      if (e.toString().contains('Expired')) {
+      if (e.toString().contains('Expired')||e.toString().contains('Invalid Token')) {
+
         UserController userController = Get.find();
-        userController.setPersistToken(null);
+        userController.setPersistToken(null,null);
         Get.offAll(
           () => SignIn(),
         );

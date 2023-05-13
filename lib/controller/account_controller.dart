@@ -21,15 +21,6 @@ class AccountController extends GetxController {
   TextEditingController get password => _password;
   final TextEditingController _password = TextEditingController();
 
-  // @override
-  // void dispose() {
-  //   _firstName.clear();
-  //   _lastName.clear();
-  //   _email.clear();
-  //   _password.clear();
-  //   super.dispose();
-  // }
-
   signUp() async {
     Get.to(() => const Loading(
           navigateScreen: AcctCreationSuccess(),
@@ -59,7 +50,8 @@ class AccountController extends GetxController {
         ));
     AccountServices.loginUser((status, response) {
       if (status) {
-        setUser(response['data']['accessToken']);
+        setUser(response['data']['accessToken'],
+            refreshToken: response['data']['refreshToken']);
       } else {
         Get.back();
         CustomSnackBar.failedSnackBar('Failed', '$response');
@@ -67,23 +59,37 @@ class AccountController extends GetxController {
     }, email: _email.text, password: _password.text);
   }
 
-  setUser(token){
+  refreshToken(token) async {
+    AccountServices.refreshToken((status, response) {
+      if (status) {
+        setUser(response['data']['accessToken'],
+            refreshToken: response['data']['refreshToken'], isFetchUser: false);
+      } else {
+        Get.back();
+        CustomSnackBar.failedSnackBar('Failed', '$response');
+      }
+    }, token);
+  }
+
+  setUser(token, {refreshToken, isFetchUser}) {
     var userController = Get.put(UserController());
     userController.setToken(token);
-    userController. setPersistToken(token);
-    userController.fetchUser(token);
+    userController.setRefresh(refreshToken);
+    userController.setPersistToken(token,refreshToken);
+    if (isFetchUser != false) {
+      userController.fetchUser(token);
+    }
   }
 
   signOut(token) async {
     Get.to(() => Loading(
-      navigateScreen: SignIn(),
-    ));
+          navigateScreen: SignIn(),
+        ));
     AccountServices.loginOutUser((status, response) {
       if (status) {
-          CustomSnackBar.successSnackBar(
-              'Logout Successful!', '$response');
+        CustomSnackBar.successSnackBar('Logout Successful!', '$response');
 
-          Get.to(() => SignIn());
+        Get.to(() => SignIn());
       } else {
         Get.back();
 

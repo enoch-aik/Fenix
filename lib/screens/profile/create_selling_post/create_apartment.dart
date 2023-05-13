@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:fenix/const.dart';
 import 'package:fenix/controller/user_controller.dart';
 import 'package:fenix/helpers/validator.dart';
@@ -14,12 +13,12 @@ import 'package:get/get.dart';
 import 'package:google_api_headers/google_api_headers.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:intl/intl.dart';
-
 import '../../../controller/map_controller.dart';
 import '../../../controller/store_controller.dart';
 import '../../../helpers/image_picker.dart';
 import '../../../neumorph.dart';
 import '../../../theme.dart';
+
 
 class CreateApartment extends StatefulWidget {
   final String storeId;
@@ -35,16 +34,11 @@ class CreateApartment extends StatefulWidget {
 
 class _CreateApartmentState extends State<CreateApartment> {
   PageController pageController = PageController();
-
   final UserController _userController = Get.find();
   final MapController _mapController = Get.find();
-
   final StoreController _storeController = Get.find();
-
   final _formKey = GlobalKey<FormState>();
-
   final nameController = TextEditingController();
-
   final descriptionController = TextEditingController();
   final addressController = TextEditingController();
   final nightController = TextEditingController();
@@ -85,7 +79,6 @@ class _CreateApartmentState extends State<CreateApartment> {
   String store = '';
   List<String> stores = [];
   List<String> storeIds = [];
-
 
   getLocation(){
     _handlePressButton();

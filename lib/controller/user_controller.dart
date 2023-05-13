@@ -1,21 +1,17 @@
-import 'package:fenix/screens/home/home.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:location/location.dart' as loc;
-import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helpers/widgets/snack_bar.dart';
 import '../models/services/user_services.dart';
 import '../models/user_model.dart';
-import '../screens/auth_screens/create_profile.dart';
 import '../screens/onboarding/loading.dart';
-import '../screens/profile/edit_profile.dart';
 import '../screens/views.dart';
 import 'store_controller.dart';
 
 class UserController extends GetxController {
   String _token = '';
+  String _refreshToken = '';
   var gender = ''.obs;
   UserModel? user;
 
@@ -26,10 +22,13 @@ class UserController extends GetxController {
   var isFetchingUserLocation = true.obs;
 
   String getToken() => _token;
+  String getRefreshToken() => _refreshToken;
 
   UserModel? getUser() => user;
 
   setToken(token) => _token = token;
+
+  setRefresh(refreshToken) => _refreshToken = refreshToken;
 
   fetchUser(token) {
     UserServices.getUser((status, response) {
@@ -111,9 +110,10 @@ class UserController extends GetxController {
     });
   }
 
-  setPersistToken(token) async{
+  setPersistToken(token,refreshToken) async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', token);
+    await prefs.setString('refreshToken', refreshToken);
   }
 
 

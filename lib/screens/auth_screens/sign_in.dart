@@ -62,7 +62,7 @@ class SignIn extends StatelessWidget {
                     kSpacing,
                     TextFieldWidget(hint: "Password",
                       textController: _accountController.password,
-                      suffixIcon: Icon(Icons.remove_red_eye_outlined),
+                      suffixIcon: const Icon(Icons.remove_red_eye_outlined),
                       validator: (value) =>
                           PasswordValidator.validate(value!),),
 
@@ -199,11 +199,11 @@ class SignIn extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                 Icon(Icons.person, color: Color(0xFF414B5A),size: 15,),
+                                 const Icon(Icons.person, color: Color(0xFF414B5A),size: 15,),
                                 tinyH5Space(),
 
                                 Text("Forgot Email", style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                                    color:  Color(0xFF414B5A).withOpacity(0.8),
+                                    color:  const Color(0xFF414B5A).withOpacity(0.8),
                                     fontSize: 12.w,
                                   fontWeight: FontWeight.w800
                                 ),),

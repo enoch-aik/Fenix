@@ -24,6 +24,7 @@ class ProductController extends GetxController {
 
   boot() {
     getApartments(token, Category().property[0]);
+    getProducts(token, Category().homeCategories[3]);
   }
 
   getApartments(token, type) {
@@ -40,13 +41,13 @@ class ProductController extends GetxController {
   }
 
   getProducts(token, category) {
-    isFetchingApartments(true);
+    isFetchingProducts(true);
     ProductServices.getProductsByCategory((status, response) {
-      isFetchingApartments(false);
+      isFetchingProducts(false);
       if (status) {
-        apartmentList.value = response['data'];
+        productList.value = response['data'];
       } else {
-        apartmentList.value = [];
+        productList.value = [];
         print('Error - $response');
       }
     }, token, category);

@@ -37,6 +37,7 @@ class _HomeState extends State<Home> {
   String homeTab = 'Dacha';
   String token = '';
   String storeId = '';
+  String tab = '';
   final UserController _userController = Get.find();
   final StoreController _storeController = Get.put(StoreController());
   final ProductController _productController = Get.put(ProductController());
@@ -51,18 +52,15 @@ class _HomeState extends State<Home> {
     super.initState();
   }
 
-
-
   boot() async {
     token = _userController.getToken();
-     // _storeController.getStores(token);
+    // _storeController.getStores(token);
     storeId = _storeController.getDefaultStoreId();
     _storeController.getProducts(token, storeId);
     _storeController.getApartments(token, storeId);
     _storeController.getVehicles(token, storeId);
     _mapController.getApartments(token,
-        longitude: -88.14801,
-        latitude: 36.74582);
+        longitude: -88.14801, latitude: 36.74582);
     _productController.getApartments(token, "dacha");
   }
 
@@ -71,8 +69,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(
-        preferredSize: Size(MediaQuery.of(context).size.width,
-            height() * 0.2),
+        preferredSize: Size(MediaQuery.of(context).size.width, height() * 0.2),
         child: Container(
           decoration: BoxDecoration(
             gradient: gradient(
@@ -94,7 +91,7 @@ class _HomeState extends State<Home> {
               ),
               const SizedBox(width: 10),
               InkWell(
-                onTap: ()=>Get.to(()=>SearchScreen()),
+                onTap: () => Get.to(() => SearchScreen()),
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.050,
                   width: MediaQuery.of(context).size.width,
@@ -117,13 +114,13 @@ class _HomeState extends State<Home> {
                       hintStyle: Theme.of(context)
                           .textTheme
                           .bodyText1!
-                          .copyWith(fontSize: 15.w, color: Colors.grey.shade500),
+                          .copyWith(
+                              fontSize: 15.w, color: Colors.grey.shade500),
                       prefixIcon: const Icon(Icons.search),
                     ),
                   ),
                 ),
               ),
-
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.052,
                 child: ListView(
@@ -134,40 +131,49 @@ class _HomeState extends State<Home> {
                       title: "Dacha",
                       color: white,
                       onTap: () => setState(() {
+                        tab = 'dacha';
 
                         _productController.getApartments(token, "dacha");
                       }),
                     ),
                     MenuTitle(
-                        icon: "houseRental.png",
-                        title: "House",
-                        color: white,
+                      icon: "houseRental.png",
+                      title: "House",
+                      color: white,
                       onTap: () => setState(() {
+                        tab = 'house';
 
                         _productController.getApartments(token, "house");
                       }),
                     ),
                     MenuTitle(
-                        icon: "apartment.png",
-                        title: "Apartment",
-                        color: white,
+                      icon: "apartment.png",
+                      title: "Apartment",
+                      color: white,
                       onTap: () => setState(() {
+                        tab = 'apartment';
+
                         _productController.getApartments(token, "apartment");
                       }),
                     ),
                     MenuTitle(
-                        icon: "carRental.png",
-                        title: "Car",
-                        color: white,
-                        onTap: () => Get.to(() => const VehicleList())),
-
+                      icon: "carRental.png",
+                      title: "Car",
+                      color: white,
+                      onTap: () => setState(() {
+                        tab = 'car';
+                        _productController.getProducts(token, "car");
+                      }),
+                    ),
                     MenuTitle(
-                        icon: "television.png",
-                        title: "Electronics",
-                        color: white,
-                        onTap: () => setState(() {
-                          _productController.getProducts(token, "electronics");
-                        })),
+                      icon: "television.png",
+                      title: "Electronics",
+                      color: white,
+                      onTap: () => setState(() {
+                        tab = 'electronics';
+                        _productController.getProducts(token, "electronics");
+                      }),
+                    ),
                   ],
                 ),
               ),
@@ -474,8 +480,8 @@ class _HomeState extends State<Home> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-               ProductWidget(),
-               ProductWidget(),
+              ProductWidget(),
+              ProductWidget(),
             ],
           ),
           Container(
@@ -630,8 +636,8 @@ class _HomeState extends State<Home> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-                ProductWidget(),
-                ProductWidget(),
+              ProductWidget(),
+              ProductWidget(),
             ],
           ),
           smallSpace(),
@@ -653,50 +659,120 @@ class _HomeState extends State<Home> {
                     fontWeight: FontWeight.w700),
               )),
 
-
-          Obx(
-              ()=> _productController.isFetchingApartments.isTrue
-                  ? const Center(child: CircularProgressIndicator())
-                  : _productController.apartmentList.isEmpty
-                  ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment:
-                    CrossAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.add_box, size: 30),
-                      smallSpace(),
-                      const Text(
-                          'There are no apartment listed yet'),
-                    ],
-                  ))
-                  :GridView.builder(
-                primary: false,
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.5,
-                  childAspectRatio: 1 / 2,
-                  mainAxisSpacing: 0,
-                  crossAxisSpacing: 0,
-                ),
-                itemCount: _productController.apartmentList.length,
-                itemBuilder: (context, index) {
-                  var item =  _productController.apartmentList[index];
-                  return  InkWell(
-                    onTap: () {
-                   Get.to(() => ApartmentDetails(apartment: _productController.apartmentList[index],));
-                    },
-                    child: item['category'] == "Electronics" ? ProductWidget(
-                        title: item['title'],
-                        price: item['price']['amount'].toString(),
-                        location: item) : ProductWidget(
-                        title: item['title'],
-                        price: item['rentPrice']['month'].toString(),
-                        location: item),
-
-                  );
-                }),
-          ),
+          tab == 'car'
+              ? Obx(
+                  () => _productController.isFetchingProducts.isTrue
+                      ? const Center(child: CircularProgressIndicator())
+                      : _productController.productList.isEmpty
+                          ? empty('car')
+                          : GridView.builder(
+                              primary: false,
+                              shrinkWrap: true,
+                              gridDelegate:
+                                  SliverGridDelegateWithMaxCrossAxisExtent(
+                                      maxCrossAxisExtent:
+                                          MediaQuery.of(context).size.width *
+                                              0.5,
+                                      childAspectRatio: 1 / 2,
+                                      mainAxisSpacing: 0,
+                                      crossAxisSpacing: 0),
+                              itemCount: _productController.productList.length,
+                              itemBuilder: (context, index) {
+                                var item =
+                                    _productController.productList[index];
+                                return InkWell(
+                                    onTap: () {
+                                      Get.to(() => ProductDetails(
+                                            product: _productController
+                                                .productList[index],
+                                          ));
+                                    },
+                                    child: ProductWidget(
+                                        title: item['title'],
+                                        category: 'Cars',
+                                        price:
+                                            item['price']['amount'].toString(),
+                                        location: item));
+                              }),
+                )
+              : tab == 'electronics'
+                  ? Obx(
+                      () => _productController.isFetchingProducts.isTrue
+                          ? const Center(child: CircularProgressIndicator())
+                          : _productController.productList.isEmpty
+                              ? empty('electronics')
+                              : GridView.builder(
+                                  primary: false,
+                                  shrinkWrap: true,
+                                  gridDelegate:
+                                      SliverGridDelegateWithMaxCrossAxisExtent(
+                                          maxCrossAxisExtent:
+                                              MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.5,
+                                          childAspectRatio: 1 / 2,
+                                          mainAxisSpacing: 0,
+                                          crossAxisSpacing: 0),
+                                  itemCount:
+                                      _productController.productList.length,
+                                  itemBuilder: (context, index) {
+                                    var item =
+                                        _productController.productList[index];
+                                    return InkWell(
+                                        onTap: () {
+                                          Get.to(() => ProductDetails(
+                                                product: _productController
+                                                    .productList[index],
+                                              ));
+                                        },
+                                        child: ProductWidget(
+                                            title: item['title'],
+                                            price: item['price']['amount']
+                                                .toString(),
+                                            category: 'Electronics',
+                                            location: item));
+                                  }),
+                    )
+                  : Obx(
+                      () => _productController.isFetchingApartments.isTrue
+                          ? const Center(child: CircularProgressIndicator())
+                          : _productController.apartmentList.isEmpty
+                              ? empty(tab)
+                              : GridView.builder(
+                                  primary: false,
+                                  shrinkWrap: true,
+                                  gridDelegate:
+                                      SliverGridDelegateWithMaxCrossAxisExtent(
+                                          maxCrossAxisExtent:
+                                              MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.5,
+                                          childAspectRatio: 1 / 2,
+                                          mainAxisSpacing: 0,
+                                          crossAxisSpacing: 0),
+                                  itemCount:
+                                      _productController.apartmentList.length,
+                                  itemBuilder: (context, index) {
+                                    var item =
+                                        _productController.apartmentList[index];
+                                    return InkWell(
+                                      onTap: () {
+                                        Get.to(() => ApartmentDetails(
+                                              apartment: _productController
+                                                  .apartmentList[index],
+                                            ));
+                                      },
+                                      child: ProductWidget(
+                                          title: item['title'],
+                                          category: item['apartmentType'],
+                                          price: item['rentPrice']['month']
+                                              .toString(),
+                                          location: item),
+                                    );
+                                  }),
+                    )
 
           // Container(
           //   height: 276.w,
@@ -778,23 +854,27 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
 }
 
 class ProductWidget extends StatelessWidget {
-
-  String title;
+  String title, category;
   var location;
   String price;
 
   final UserController _userController = Get.find();
 
-  ProductWidget({
-    Key? key,
-    this.title = "" , this.location = "", this.price = ""
-  }) : super(key: key);
+  ProductWidget(
+      {Key? key,
+      this.title = "",
+      this.location = "",
+      this.price = "",
+      this.category = ""})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print(category);
     return Stack(
       children: [
         Container(
@@ -825,8 +905,9 @@ class ProductWidget extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.455,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.w),
-                  image: const DecorationImage(
-                    image: AssetImage("assets/images/house.png"),
+                  image: DecorationImage(
+                    image: AssetImage(
+                        "assets/images/${category == "Electronics" ? 'electronics' : category == "Cars" ? 'car' : 'house'}.png"),
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -849,7 +930,8 @@ class ProductWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(title,
+                            Text(
+                              title,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1!
@@ -895,30 +977,34 @@ class ProductWidget extends StatelessWidget {
                                 ),
                               ],
                             ),
-                                Obx( () => _userController.isFetchingUserLocation.isFalse ? Row(
-                              children: [
-                                const Icon(Icons.location_on),
-                                SizedBox(
-                                  width: 10.w,
-                                ),
-                                // ${distanceInKm(
-                                //   _userController.userCurrentPosition!.value.latitude,
-                                //   _userController.userCurrentPosition!.value.longitude,
-                                //   location['location']['latitude'],
-                                //   location['location']['longitude'],
-                                // ).toString()}
-                               Text("124Km",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1!
-                                      .copyWith(
-                                          fontSize: 11.w,
-                                          color: const Color(0xFF334669)
-                                              .withOpacity(0.6),
-                                          fontWeight: FontWeight.w400),
-                                )
-                              ],) : tiny5Space() ),
-
+                            Obx(() => _userController
+                                    .isFetchingUserLocation.isFalse
+                                ? Row(
+                                    children: [
+                                      const Icon(Icons.location_on),
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
+                                      // ${distanceInKm(
+                                      //   _userController.userCurrentPosition!.value.latitude,
+                                      //   _userController.userCurrentPosition!.value.longitude,
+                                      //   location['location']['latitude'],
+                                      //   location['location']['longitude'],
+                                      // ).toString()}
+                                      Text(
+                                        "124Km",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1!
+                                            .copyWith(
+                                                fontSize: 11.w,
+                                                color: const Color(0xFF334669)
+                                                    .withOpacity(0.6),
+                                                fontWeight: FontWeight.w400),
+                                      )
+                                    ],
+                                  )
+                                : tiny5Space()),
                             Row(
                               children: [
                                 const Icon(Icons.fire_truck),
@@ -965,4 +1051,19 @@ class ProductWidget extends StatelessWidget {
       ],
     );
   }
+}
+
+
+Center empty(title) {
+  return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          mediumSpace(),
+          Image.asset('assets/images/icons/empty-cart.png',color: grey,),
+          smallSpace(),
+          Text('There are no $title listed yet',style: TextStyle(color: grey,fontSize: 14),),
+        ],
+      ));
 }

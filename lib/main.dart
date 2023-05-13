@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(390, 844),
+      designSize: const Size(390, 844),
       minTextAdapt: true,
       builder: (context, child) => GetMaterialApp(
         title: 'Fenix',
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         },
         transitionDuration: const Duration(milliseconds: 250),
         defaultTransition: Transition.zoom,
-        home: SplashScreen(),
+        home: const SplashScreen(),
       ),
     );
   }

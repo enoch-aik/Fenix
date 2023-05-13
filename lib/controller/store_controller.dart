@@ -269,19 +269,20 @@ class StoreController extends GetxController {
       },
       "rentAvailability": {"startDate": startDate, "endDate": endDate},
       "specifics": {
-        "bedroom": double.parse(bedroom),
-        "bathroom": double.parse(bathroom),
-        "shower": double.parse(shower),
-        "toilet": double.parse(toilet),
-        "floor": double.parse(floor),
-        "squareMetre": double.parse(sqMeter),
+        "bedroom": double.parse(bedroom??'1'),
+        "bathroom": double.parse(bathroom??'1'),
+        "shower": double.parse(shower??'1'),
+        "toilet": double.parse(toilet??'1'),
+        "floor": double.parse(floor??'1'),
+        "squareMetre": double.parse(sqMeter??'0'),
         "amenities": amenities,
       },
       "rules": {
-        "occupant": double.parse(occupantsNumber),
+        "occupant": double.parse(occupantsNumber??'1'),
         "pet": pet,
         "smoke": smoke
-      },
+      }
+
     };
     print(data);
     Get.to(() => const Loading());
@@ -299,5 +300,29 @@ class StoreController extends GetxController {
         CustomSnackBar.failedSnackBar('Failed', '$response');
       }
     }, token, storeId, data);
+
+
+    // StoreServices.uploadFile(
+    //     token: token,
+    //     data: data,
+    //     storeId: storeId,
+    //     productId: '',
+    //     category: '',
+    //     images: media
+    //
+    //     //   (status, response) {
+    //     //   print('==> $response');
+    //     //   getApartments(token, storeId);
+    //     //   if (status) {
+    //     //     Get.back();
+    //     //     Get.back();
+    //     //     getProducts(token, storeId);
+    //     //     CustomSnackBar.successSnackBar('Great!', 'Store created successfully');
+    //     //   } else {
+    //     //     Get.back();
+    //     //     CustomSnackBar.failedSnackBar('Failed', '$response');
+    //     //   }
+    //     // }, token, storeId, data
+    //     );
   }
 }

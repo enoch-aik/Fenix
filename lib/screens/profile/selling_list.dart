@@ -1,3 +1,4 @@
+import 'package:fenix/screens/home/home.dart';
 import 'package:fenix/screens/profile/create_selling_post/create_apartment.dart';
 import 'package:fenix/screens/profile/create_selling_post/create_car.dart';
 import 'package:fenix/screens/profile/product_list_widget.dart';
@@ -118,6 +119,9 @@ class _SellingListState extends State<SellingList> {
                             dacha = storeController.apartmentList
                                 .where((e) => e['apartmentType'] == 'dacha')
                                 .toList();
+                            for(var i in storeController.apartmentList ){
+                            print(i['apartmentType']);}
+
                           });
                         }),
                     MenuTitle(
@@ -176,23 +180,7 @@ class _SellingListState extends State<SellingList> {
                       () => storeController.isFetchingProducts.isTrue
                           ? const Center(child: CircularProgressIndicator())
                           : storeController.productList.isEmpty
-                              ? Center(
-                                  child: InkWell(
-                                  onTap: () => Get.to(() => CreateProduct(
-                                        storeId: storeId,
-                                      )),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      const Icon(Icons.add_box, size: 30),
-                                      smallSpace(),
-                                      const Text(
-                                          'You do not have any store yet'),
-                                    ],
-                                  ),
-                                ))
+                              ? empty(tab)
                               : GridView.builder(
                                   primary: false,
                                   shrinkWrap: true,
@@ -210,7 +198,9 @@ class _SellingListState extends State<SellingList> {
                                   itemBuilder: (context, i) {
                                     var item = storeController.productList[i];
 
-                                    return ProductListWidget(product: item,image:'assets/images/headset.png');
+                                    return ProductListWidget(
+                                        product: item,
+                                        image: 'assets/images/headset.png');
                                   }),
                     ),
                   if (tab == 'Car')
@@ -218,22 +208,7 @@ class _SellingListState extends State<SellingList> {
                       () => storeController.isFetchingVehicles.isTrue
                           ? const Center(child: CircularProgressIndicator())
                           : storeController.vehicleList.isEmpty
-                              ? Center(
-                                  child: InkWell(
-                                  onTap: () => Get.to(() => CreateCar(
-                                        storeId: storeId,
-                                      )),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      const Icon(Icons.add_box, size: 30),
-                                      smallSpace(),
-                                      const Text('You do not have any car yet'),
-                                    ],
-                                  ),
-                                ))
+                              ? empty(tab)
                               : GridView.builder(
                                   primary: false,
                                   shrinkWrap: true,
@@ -250,7 +225,9 @@ class _SellingListState extends State<SellingList> {
                                   itemCount: storeController.vehicleList.length,
                                   itemBuilder: (context, i) {
                                     var item = storeController.vehicleList[i];
-                                    return ProductListWidget(product: item,image:'assets/images/car copy.jpg');
+                                    return ProductListWidget(
+                                        product: item,
+                                        image: 'assets/images/car copy.jpg');
                                   }),
                     ),
                   if (tab == 'Apartment')
@@ -258,24 +235,7 @@ class _SellingListState extends State<SellingList> {
                       () => storeController.isFetchingApartments.isTrue
                           ? const Center(child: CircularProgressIndicator())
                           : apartment.isEmpty
-                              ? Center(
-                                  child: InkWell(
-                                  onTap: () => Get.to(() => CreateApartment(
-                                        storeId: storeId,
-                                        apartmentType: 'Apartment',
-                                      )),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      const Icon(Icons.add_box, size: 30),
-                                      smallSpace(),
-                                      const Text(
-                                          'You do not have any apartmentList yet'),
-                                    ],
-                                  ),
-                                ))
+                              ? empty(tab)
                               : GridView.builder(
                                   primary: false,
                                   shrinkWrap: true,
@@ -300,24 +260,7 @@ class _SellingListState extends State<SellingList> {
                       () => storeController.isFetchingApartments.isTrue
                           ? const Center(child: CircularProgressIndicator())
                           : house.isEmpty
-                              ? Center(
-                                  child: InkWell(
-                                  onTap: () => Get.to(() => CreateApartment(
-                                        storeId: storeId,
-                                        apartmentType: 'House',
-                                      )),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      const Icon(Icons.add_box, size: 30),
-                                      smallSpace(),
-                                      const Text(
-                                          'You do not have any apartmentList yet'),
-                                    ],
-                                  ),
-                                ))
+                              ? empty(tab)
                               : GridView.builder(
                                   primary: false,
                                   shrinkWrap: true,
@@ -343,24 +286,7 @@ class _SellingListState extends State<SellingList> {
                       () => storeController.isFetchingApartments.isTrue
                           ? const Center(child: CircularProgressIndicator())
                           : dacha.isEmpty
-                              ? Center(
-                                  child: InkWell(
-                                  onTap: () => Get.to(() => CreateApartment(
-                                        storeId: storeId,
-                                        apartmentType: 'Dacha',
-                                      )),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      const Icon(Icons.add_box, size: 30),
-                                      smallSpace(),
-                                      const Text(
-                                          'You do not have any apartmentList yet'),
-                                    ],
-                                  ),
-                                ))
+                              ? empty(tab)
                               : GridView.builder(
                                   primary: false,
                                   shrinkWrap: true,
@@ -377,7 +303,6 @@ class _SellingListState extends State<SellingList> {
                                   itemCount: dacha.length,
                                   itemBuilder: (context, i) {
                                     var item = dacha[i];
-
                                     return ProductListWidget(product: item);
                                   }),
                     ),

@@ -91,15 +91,19 @@ class StoreServices {
     }
   }
 
-  uploadFile(token, storeId, productId,category, images) async {
+  static uploadFile({token,data, storeId, productId, category, images}) async {
     Map<String, String> headers = {
       "Accept": "application/json",
       "Authorization": "Bearer $token"
     };
 
-    var uri = Uri.parse('$storesUrl/$storeId/$category/$productId/media');
+    var uri = Uri.parse('$storesUrl/$storeId/apartments');
+    // var uri = Uri.parse('$storesUrl/$storeId/$category/$productId/media');
 
     var request = http.MultipartRequest("POST", uri);
+
+    // request.fields['fileType'] = 'video';
+    request.fields.addEntries(data);
 
     for (var i in images) {
       request.files
