@@ -908,7 +908,7 @@ class ProductWidget extends StatelessWidget {
                   image: DecorationImage(
                     image: AssetImage(
                         "assets/images/${category == "Electronics" ? 'electronics' : category == "Cars" ? 'car' : 'house'}.png"),
-                    fit: BoxFit.fill,
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),

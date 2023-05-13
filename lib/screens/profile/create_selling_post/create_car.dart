@@ -501,14 +501,14 @@ class _CreateCarState extends State<CreateCar> {
                     ],
                   ),
                   kSpacing,
-                  title('Category'),
-                  kSpacing,
-
-                  TextFieldWidget(
-                    hint: "Category",
-                    textController: categoryController,
-                    suffixIcon: const Icon(Icons.expand_more),
-                  ),
+                  // title('Category'),
+                  // kSpacing,
+                  //
+                  // TextFieldWidget(
+                  //   hint: "Category",
+                  //   textController: categoryController,
+                  //   suffixIcon: const Icon(Icons.expand_more),
+                  // ),
                   kSpacing,
                   title('Description'),
                   kSpacing,
@@ -723,7 +723,8 @@ class _CreateCarState extends State<CreateCar> {
                               deliveryAddress: deliveryLocationController.text,
                               price: priceController.text,
                               shippingPrice: deliveryPriceController.text,
-                              category: categoryController.text,
+                              // category: categoryController.text,
+                              category: 'Cars',
                               brand: brandController.text,
                               color: colorController.text,
                               description: descriptionController.text,

@@ -1,4 +1,5 @@
 import 'package:fenix/screens/home/home.dart';
+import 'package:fenix/screens/products/apartment_details.dart';
 import 'package:fenix/screens/profile/create_selling_post/create_apartment.dart';
 import 'package:fenix/screens/profile/create_selling_post/create_car.dart';
 import 'package:fenix/screens/profile/product_list_widget.dart';
@@ -12,6 +13,7 @@ import '../../controller/store_controller.dart';
 import '../../controller/user_controller.dart';
 import '../../theme.dart';
 import '../onboarding/constants.dart';
+import '../products/product_details.dart';
 import 'create_selling_post/create_product.dart';
 
 class SellingList extends StatefulWidget {
@@ -33,9 +35,10 @@ class _SellingListState extends State<SellingList> {
     final StoreController storeController = Get.find();
     final UserController userController = Get.find();
     var storeId = widget.storeId ?? storeController.getDefaultStoreId();
-    storeController.getProducts(userController.getToken(), storeId);
-    storeController.getVehicles(userController.getToken(), storeId);
-    storeController.getApartments(userController.getToken(), storeId);
+    var token = userController.getToken();
+    storeController.getProducts(token, storeId);
+    storeController.getVehicles(token, storeId);
+    storeController.getApartments(token, storeId);
 
     return Scaffold(
       appBar: AppBar(
@@ -108,6 +111,7 @@ class _SellingListState extends State<SellingList> {
                 height: MediaQuery.of(context).size.height * 0.052,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: BODY_PADDING),
                   children: [
                     MenuTitle(
                         icon: "Dacha.png",
@@ -119,9 +123,9 @@ class _SellingListState extends State<SellingList> {
                             dacha = storeController.apartmentList
                                 .where((e) => e['apartmentType'] == 'dacha')
                                 .toList();
-                            for(var i in storeController.apartmentList ){
-                            print(i['apartmentType']);}
-
+                            for (var i in storeController.apartmentList) {
+                              print(i['apartmentType']);
+                            }
                           });
                         }),
                     MenuTitle(
@@ -171,142 +175,177 @@ class _SellingListState extends State<SellingList> {
               ),
             ),
             Expanded(
-              child: ListView(
-                physics: const ClampingScrollPhysics(),
-                children: [
-                  SizedBox(height: 20.w),
-                  if (tab == 'Electronics')
-                    Obx(
-                      () => storeController.isFetchingProducts.isTrue
-                          ? const Center(child: CircularProgressIndicator())
-                          : storeController.productList.isEmpty
-                              ? empty(tab)
-                              : GridView.builder(
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  gridDelegate:
-                                      SliverGridDelegateWithMaxCrossAxisExtent(
-                                          maxCrossAxisExtent:
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.5,
-                                          childAspectRatio: 1 / 2.7,
-                                          mainAxisSpacing: 0,
-                                          crossAxisSpacing: 0),
-                                  itemCount: storeController.productList.length,
-                                  itemBuilder: (context, i) {
-                                    var item = storeController.productList[i];
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  tab == 'Electronics'
+                      ? await storeController.getProducts(token, storeId)
+                      : tab == 'Car'
+                          ? await storeController.getVehicles(token, storeId)
+                          : await storeController.getApartments(token, storeId);
+                },
+                child: ListView(
+                  physics: const ClampingScrollPhysics(),
+                  children: [
+                    SizedBox(height: 20.w),
+                    if (tab == 'Electronics')
+                      Obx(
+                        () => storeController.isFetchingProducts.isTrue
+                            ? const Center(child: CircularProgressIndicator())
+                            : storeController.productList.isEmpty
+                                ? empty(tab)
+                                : GridView.builder(
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    gridDelegate:
+                                        SliverGridDelegateWithMaxCrossAxisExtent(
+                                            maxCrossAxisExtent:
+                                                MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.5,
+                                            childAspectRatio: 1 / 2.7,
+                                            mainAxisSpacing: 0,
+                                            crossAxisSpacing: 0),
+                                    itemCount:
+                                        storeController.productList.length,
+                                    itemBuilder: (context, i) {
+                                      var item = storeController.productList[i];
 
-                                    return ProductListWidget(
-                                        product: item,
-                                        image: 'assets/images/headset.png');
-                                  }),
-                    ),
-                  if (tab == 'Car')
-                    Obx(
-                      () => storeController.isFetchingVehicles.isTrue
-                          ? const Center(child: CircularProgressIndicator())
-                          : storeController.vehicleList.isEmpty
-                              ? empty(tab)
-                              : GridView.builder(
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  gridDelegate:
-                                      SliverGridDelegateWithMaxCrossAxisExtent(
-                                          maxCrossAxisExtent:
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.5,
-                                          childAspectRatio: 1 / 2.7,
-                                          mainAxisSpacing: 0,
-                                          crossAxisSpacing: 0),
-                                  itemCount: storeController.vehicleList.length,
-                                  itemBuilder: (context, i) {
-                                    var item = storeController.vehicleList[i];
-                                    return ProductListWidget(
-                                        product: item,
-                                        image: 'assets/images/car copy.jpg');
-                                  }),
-                    ),
-                  if (tab == 'Apartment')
-                    Obx(
-                      () => storeController.isFetchingApartments.isTrue
-                          ? const Center(child: CircularProgressIndicator())
-                          : apartment.isEmpty
-                              ? empty(tab)
-                              : GridView.builder(
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  gridDelegate:
-                                      SliverGridDelegateWithMaxCrossAxisExtent(
-                                          maxCrossAxisExtent:
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.5,
-                                          childAspectRatio: 1 / 2.7,
-                                          mainAxisSpacing: 0,
-                                          crossAxisSpacing: 0),
-                                  itemCount: apartment.length,
-                                  itemBuilder: (context, i) {
-                                    var item = apartment[i];
-                                    return ProductListWidget(product: item);
-                                  }),
-                    ),
-                  if (tab == 'House')
-                    Obx(
-                      () => storeController.isFetchingApartments.isTrue
-                          ? const Center(child: CircularProgressIndicator())
-                          : house.isEmpty
-                              ? empty(tab)
-                              : GridView.builder(
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  gridDelegate:
-                                      SliverGridDelegateWithMaxCrossAxisExtent(
-                                          maxCrossAxisExtent:
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.5,
-                                          childAspectRatio: 1 / 2.7,
-                                          mainAxisSpacing: 0,
-                                          crossAxisSpacing: 0),
-                                  itemCount: house.length,
-                                  itemBuilder: (context, i) {
-                                    var item = house[i];
+                                      return InkWell(onTap: () {
+                                        Get.to(() => ProductDetails(
+                                            product: item
+                                        ));
+                                      },
+                                        child: ProductListWidget(
+                                            product: item,
+                                            image: 'assets/images/headset.png'),
+                                      );
+                                    }),
+                      ),
+                    if (tab == 'Car')
+                      Obx(
+                        () => storeController.isFetchingVehicles.isTrue
+                            ? const Center(child: CircularProgressIndicator())
+                            : storeController.vehicleList.isEmpty
+                                ? empty(tab)
+                                : GridView.builder(
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    gridDelegate:
+                                        SliverGridDelegateWithMaxCrossAxisExtent(
+                                            maxCrossAxisExtent:
+                                                MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.5,
+                                            childAspectRatio: 1 / 2.7,
+                                            mainAxisSpacing: 0,
+                                            crossAxisSpacing: 0),
+                                    itemCount:
+                                        storeController.vehicleList.length,
+                                    itemBuilder: (context, i) {
+                                      var item = storeController.vehicleList[i];
+                                      return InkWell(onTap: () {
+                                        Get.to(() => ProductDetails(
+                                          product: item
+                                        ));
+                                      },
+                                        child: ProductListWidget(
+                                            product: item,
+                                            image: 'assets/images/car copy.jpg'),
+                                      );
+                                    }),
+                      ),
+                    if (tab == 'Apartment')
+                      Obx(
+                        () => storeController.isFetchingApartments.isTrue
+                            ? const Center(child: CircularProgressIndicator())
+                            : apartment.isEmpty
+                                ? empty(tab)
+                                : GridView.builder(
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    gridDelegate:
+                                        SliverGridDelegateWithMaxCrossAxisExtent(
+                                            maxCrossAxisExtent:
+                                                MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.5,
+                                            childAspectRatio: 1 / 2.7,
+                                            mainAxisSpacing: 0,
+                                            crossAxisSpacing: 0),
+                                    itemCount: apartment.length,
+                                    itemBuilder: (context, i) {
+                                      var item = apartment[i];
+                                      return InkWell(onTap: () {
+                                        Get.to(() => ApartmentDetails(
+                                            apartment: item
+                                        ));
+                                      },child: ProductListWidget(product: item));
+                                    }),
+                      ),
+                    if (tab == 'House')
+                      Obx(
+                        () => storeController.isFetchingApartments.isTrue
+                            ? const Center(child: CircularProgressIndicator())
+                            : house.isEmpty
+                                ? empty(tab)
+                                : GridView.builder(
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    gridDelegate:
+                                        SliverGridDelegateWithMaxCrossAxisExtent(
+                                            maxCrossAxisExtent:
+                                                MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.5,
+                                            childAspectRatio: 1 / 2.7,
+                                            mainAxisSpacing: 0,
+                                            crossAxisSpacing: 0),
+                                    itemCount: house.length,
+                                    itemBuilder: (context, i) {
+                                      var item = house[i];
 
-                                    return ProductListWidget(product: item);
-                                  }),
-                    ),
-                  if (tab == 'Dacha')
-                    Obx(
-                      () => storeController.isFetchingApartments.isTrue
-                          ? const Center(child: CircularProgressIndicator())
-                          : dacha.isEmpty
-                              ? empty(tab)
-                              : GridView.builder(
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  gridDelegate:
-                                      SliverGridDelegateWithMaxCrossAxisExtent(
-                                          maxCrossAxisExtent:
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.5,
-                                          childAspectRatio: 1 / 2.7,
-                                          mainAxisSpacing: 0,
-                                          crossAxisSpacing: 0),
-                                  itemCount: dacha.length,
-                                  itemBuilder: (context, i) {
-                                    var item = dacha[i];
-                                    return ProductListWidget(product: item);
-                                  }),
-                    ),
-                ],
+                                      return InkWell(onTap: () {
+                                        Get.to(() => ApartmentDetails(
+                                            apartment: item
+                                        ));
+                                      },child: ProductListWidget(product: item));
+                                    }),
+                      ),
+                    if (tab == 'Dacha')
+                      Obx(
+                        () => storeController.isFetchingApartments.isTrue
+                            ? const Center(child: CircularProgressIndicator())
+                            : dacha.isEmpty
+                                ? empty(tab)
+                                : GridView.builder(
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    gridDelegate:
+                                        SliverGridDelegateWithMaxCrossAxisExtent(
+                                            maxCrossAxisExtent:
+                                                MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.5,
+                                            childAspectRatio: 1 / 2.7,
+                                            mainAxisSpacing: 0,
+                                            crossAxisSpacing: 0),
+                                    itemCount: dacha.length,
+                                    itemBuilder: (context, i) {
+                                      var item = dacha[i];
+                                      return InkWell(onTap: () {
+                                        Get.to(() => ApartmentDetails(
+                                            apartment: item
+                                        ));
+                                      },child: ProductListWidget(product: item));
+                                    }),
+                      ),
+                  ],
+                ),
               ),
             ),
           ],

@@ -53,7 +53,7 @@ class _ProductDetailsState extends State<ProductDetails>
                 .size
                 .height * 0.13),
         child: Container(
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
             gradient: gradient(
               const Color(0xFF1A9AFF),
               const Color(0xFF54FADC),
@@ -551,7 +551,7 @@ class _ProductDetailsState extends State<ProductDetails>
             property: "Features: ${widget.product['specifics']['features']}",
           ),
           ProductDetailProperty(
-            property: "Category: ${widget.product['specifics']['category']['name']}",
+            property: "Category: ${widget.product['category']}",
           ),
           ProductDetailProperty(
             property: "Color: ${widget.product['specifics']['color']}",
@@ -582,7 +582,7 @@ class _ProductDetailsState extends State<ProductDetails>
           Padding(
             padding: const EdgeInsets.all(10),
             child: KText(
-              "${widget.product['specifics']['condition']} ${widget.product['title']}, ${widget.product['specifics']['category']['name']}, ${widget.product['specifics']['category']['subcategory']}, ${widget.product['description']}",
+              "${widget.product['description']}",
               fontSize: 15.w,
             ),
           ),

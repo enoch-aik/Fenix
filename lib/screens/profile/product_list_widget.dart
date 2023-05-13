@@ -45,7 +45,7 @@ class ProductListWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10.w),
                       image:  DecorationImage(
                         image: AssetImage(image??"assets/images/house.png"),
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
