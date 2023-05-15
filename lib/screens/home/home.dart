@@ -1,4 +1,5 @@
 import 'package:fenix/const.dart';
+import 'package:fenix/controller/account_controller.dart';
 import 'package:fenix/controller/store_controller.dart';
 import 'package:fenix/controller/user_controller.dart';
 import 'package:fenix/helpers/distance_calculator.dart';
@@ -40,6 +41,7 @@ class _HomeState extends State<Home> {
   String tab = '';
   final UserController _userController = Get.find();
   final StoreController _storeController = Get.put(StoreController());
+  final AccountController _accountController = Get.put(AccountController());
   final ProductController _productController = Get.put(ProductController());
   final MapController _mapController = Get.put(MapController());
 
@@ -59,6 +61,7 @@ class _HomeState extends State<Home> {
     _storeController.getProducts(token, storeId);
     _storeController.getApartments(token, storeId);
     _storeController.getVehicles(token, storeId);
+    _accountController.getWishList(token);
     _mapController.getApartments(token,
         longitude: -88.14801, latitude: 36.74582);
     _productController.getApartments(token, "dacha");

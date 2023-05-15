@@ -7,12 +7,14 @@ import '../screens/onboarding/loading.dart';
 
 class StoreController extends GetxController {
   var storeList = [].obs;
+  var wishList = [].obs;
   var productList = [].obs;
   var vehicleList = [].obs;
   var apartmentList = [].obs;
   var isFetchingStore = true.obs;
   var isFetchingProducts = true.obs;
   var isFetchingVehicles = true.obs;
+  var isFetchingWishes = true.obs;
   var isFetchingApartments = true.obs;
   String _id = '';
 

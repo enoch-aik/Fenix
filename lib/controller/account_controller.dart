@@ -21,7 +21,10 @@ class AccountController extends GetxController {
   TextEditingController get password => _password;
   final TextEditingController _password = TextEditingController();
 
- createWishList(token,data) async {
+  var wishList = [].obs;
+  var isFetchingWishes = true.obs;
+
+  createWishList(token,data) async {
     Get.to(() => const Loading(
       navigateScreen: AcctCreationSuccess(),
     ));
@@ -40,14 +43,15 @@ class AccountController extends GetxController {
 
 
   getWishList(token) async {
+    isFetchingWishes(true);
+
     AccountServices.getWishList((status, response) {
       print('==> $response');
       if (status) {
-
-
+        wishList.value = response['data'];
       } else {
-        Get.back();
-        CustomSnackBar.failedSnackBar('Failed', '$response');
+        wishList.value = [];
+        print('Error - $response');
       }
     },token);
   }
