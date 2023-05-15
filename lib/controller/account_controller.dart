@@ -21,6 +21,39 @@ class AccountController extends GetxController {
   TextEditingController get password => _password;
   final TextEditingController _password = TextEditingController();
 
+ createWishList(token,data) async {
+    Get.to(() => const Loading(
+      navigateScreen: AcctCreationSuccess(),
+    ));
+
+    AccountServices.createWishList((status, response) {
+      print('==> $response');
+      if (status) {
+
+
+      } else {
+        Get.back();
+        CustomSnackBar.failedSnackBar('Failed', '$response');
+      }
+    },token,data);
+  }
+
+
+  getWishList(token) async {
+    AccountServices.getWishList((status, response) {
+      print('==> $response');
+      if (status) {
+
+
+      } else {
+        Get.back();
+        CustomSnackBar.failedSnackBar('Failed', '$response');
+      }
+    },token);
+  }
+
+
+
   signUp() async {
     Get.to(() => const Loading(
           navigateScreen: AcctCreationSuccess(),

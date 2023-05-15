@@ -6,6 +6,7 @@ const String logoutUrl ="$baseUrl/accounts/logout";
 const String profileUrl ="$baseUrl/accounts/profile";
 const String mapUrl ="$baseUrl/accounts/search";
 const String storesUrl ="$baseUrl/stores";
+const String wishListUrl ="$baseUrl/accounts/wishlist";
 const String apartmentUrl ="$baseUrl/apartments?type";
 const String productUrl ="$baseUrl/products?category";
 const String chatUrl ="$baseUrl/chats";

@@ -211,14 +211,17 @@ class _SellingListState extends State<SellingList> {
                                     itemBuilder: (context, i) {
                                       var item = storeController.productList[i];
 
-                                      return InkWell(onTap: () {
-                                        Get.to(() => ProductDetails(
-                                            product: item
-                                        ));
-                                      },
+                                      return InkWell(
+                                        onTap: () {
+                                          Get.to(() =>
+                                              ProductDetails(product: item));
+                                        },
                                         child: ProductListWidget(
                                             product: item,
-                                            image: 'assets/images/headset.png'),
+                                            isNetwork: item['media'].isNotEmpty,
+                                            image: item['media'].isNotEmpty
+                                                ? item['media'][0]['url']
+                                                : "assets/images/Rectangle 7.png"),
                                       );
                                     }),
                       ),
@@ -245,14 +248,17 @@ class _SellingListState extends State<SellingList> {
                                         storeController.vehicleList.length,
                                     itemBuilder: (context, i) {
                                       var item = storeController.vehicleList[i];
-                                      return InkWell(onTap: () {
-                                        Get.to(() => ProductDetails(
-                                          product: item
-                                        ));
-                                      },
-                                        child: ProductListWidget(
+                                      return InkWell(
+                                        onTap: () {
+                                          Get.to(() =>
+                                              ProductDetails(product: item));
+                                        },
+                                        child:  ProductListWidget(
                                             product: item,
-                                            image: 'assets/images/car copy.jpg'),
+                                            isNetwork: item['media'].isNotEmpty,
+                                            image: item['media'].isNotEmpty
+                                                ? item['media'][0]['url']
+                                                : "assets/images/cars.png"),
                                       );
                                     }),
                       ),
@@ -278,11 +284,13 @@ class _SellingListState extends State<SellingList> {
                                     itemCount: apartment.length,
                                     itemBuilder: (context, i) {
                                       var item = apartment[i];
-                                      return InkWell(onTap: () {
-                                        Get.to(() => ApartmentDetails(
-                                            apartment: item
-                                        ));
-                                      },child: ProductListWidget(product: item));
+                                      return InkWell(
+                                          onTap: () {
+                                            Get.to(() => ApartmentDetails(
+                                                apartment: item));
+                                          },
+                                          child:
+                                              ProductListWidget(product: item));
                                     }),
                       ),
                     if (tab == 'House')
@@ -308,11 +316,13 @@ class _SellingListState extends State<SellingList> {
                                     itemBuilder: (context, i) {
                                       var item = house[i];
 
-                                      return InkWell(onTap: () {
-                                        Get.to(() => ApartmentDetails(
-                                            apartment: item
-                                        ));
-                                      },child: ProductListWidget(product: item));
+                                      return InkWell(
+                                          onTap: () {
+                                            Get.to(() => ApartmentDetails(
+                                                apartment: item));
+                                          },
+                                          child:
+                                              ProductListWidget(product: item));
                                     }),
                       ),
                     if (tab == 'Dacha')
@@ -337,11 +347,13 @@ class _SellingListState extends State<SellingList> {
                                     itemCount: dacha.length,
                                     itemBuilder: (context, i) {
                                       var item = dacha[i];
-                                      return InkWell(onTap: () {
-                                        Get.to(() => ApartmentDetails(
-                                            apartment: item
-                                        ));
-                                      },child: ProductListWidget(product: item));
+                                      return InkWell(
+                                          onTap: () {
+                                            Get.to(() => ApartmentDetails(
+                                                apartment: item));
+                                          },
+                                          child:
+                                              ProductListWidget(product: item));
                                     }),
                       ),
                   ],

@@ -502,7 +502,7 @@ class TextFieldWidget extends StatelessWidget {
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
           hintText: hint,
-          labelText: hint,
+          // labelText: hint,
           hintStyle: Theme.of(context)
               .textTheme
               .bodyText1!

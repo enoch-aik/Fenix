@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 import 'api_docs.dart';
@@ -91,38 +93,39 @@ class StoreServices {
     }
   }
 
-  static uploadFile({token,data, storeId, productId, category, images}) async {
+  static uploadFile(Function callback,
+      {token, storeId, productId, category, images}) async {
     Map<String, String> headers = {
       "Accept": "application/json",
       "Authorization": "Bearer $token"
     };
 
-    var uri = Uri.parse('$storesUrl/$storeId/apartments');
-    // var uri = Uri.parse('$storesUrl/$storeId/$category/$productId/media');
+    var uri = Uri.parse('$storesUrl/$storeId/$category/$productId/media');
 
     var request = http.MultipartRequest("POST", uri);
 
     // request.fields['fileType'] = 'video';
-    request.fields.addEntries(data);
 
     for (var i in images) {
-      request.files
-          .add(await http.MultipartFile.fromPath('media', i.path));
+      print(i.path);
+      request.files.add(await http.MultipartFile.fromPath('media', i.path));
     }
 
     request.headers.addAll(headers);
 
     var response = await request.send();
-    print(response.statusCode);
-    print(response.reasonPhrase);
 
-    // if (response.statusCode.toString() == '200' ||
-    //     response.statusCode.toString() == '201') {
-    //   response.stream.transform(utf8.decoder).listen((value) {
-    //     setState(() {
-    //       var body = jsonDecode(value);
-    //     });
-    //   });
-    // }
+    print(response.reasonPhrase);
+    print(response.statusCode);
+    print(response.request?.url);
+    if (response.statusCode.toString() == '200' ||
+        response.statusCode.toString() == '201') {
+      response.stream.transform(utf8.decoder).listen((value) {
+        var body = jsonDecode(value);
+        callback(true, body);
+      });
+    } else {
+      callback(false, response);
+    }
   }
 }

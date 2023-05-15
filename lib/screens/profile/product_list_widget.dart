@@ -6,8 +6,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../onboarding/constants.dart';
 
 class ProductListWidget extends StatelessWidget {
-  const ProductListWidget({Key? key, this.product,this.image}) : super(key: key);
-  final product,image;
+  const ProductListWidget(
+      {Key? key, this.product, this.image, this.isNetwork = false})
+      : super(key: key);
+  final product, image, isNetwork;
 
   @override
   Widget build(BuildContext context) {
@@ -33,20 +35,25 @@ class ProductListWidget extends StatelessWidget {
                       color: Colors.white.withOpacity(0.3),
                       spreadRadius: 2,
                       blurRadius: 3,
-                      offset: const Offset(-3, -6), // changes position of shadow
+                      offset:
+                          const Offset(-3, -6), // changes position of shadow
                     ),
                   ]),
               child: Column(
                 children: [
                   Container(
+
                     height: MediaQuery.of(context).size.height * 0.25,
                     width: MediaQuery.of(context).size.width * 0.455,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.w),
-                      image:  DecorationImage(
-                        image: AssetImage(image??"assets/images/house.png"),
-                        fit: BoxFit.cover,
-                      ),
+                      image: isNetwork == true
+                          ? DecorationImage(
+                              image: NetworkImage(image), fit: BoxFit.cover)
+                          : DecorationImage(
+                              image: AssetImage(
+                                  image ?? "assets/images/house.png"),
+                              fit: BoxFit.cover),
                     ),
                   ),
                   SizedBox(
@@ -68,7 +75,8 @@ class ProductListWidget extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  product['title']??    "Delivery info will  be here dg likseller offer sajncnask...",
+                                  product['title'] ??
+                                      "Delivery info will  be here dg likseller offer sajncnask...",
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyText1!
@@ -77,7 +85,6 @@ class ProductListWidget extends StatelessWidget {
                                           color: const Color(0xFF334669),
                                           fontWeight: FontWeight.w700),
                                 ),
-
                                 Row(
                                   children: [
                                     RatingBar(

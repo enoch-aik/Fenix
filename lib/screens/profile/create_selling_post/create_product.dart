@@ -76,7 +76,6 @@ class _CreateProductState extends State<CreateProduct> {
   List<String> stores = [];
   List<String> storeIds = [];
 
-
   Future<dynamic> showImagePickers({isPhoto = true}) {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
@@ -104,13 +103,14 @@ class _CreateProductState extends State<CreateProduct> {
                               child: InkWell(
                                 onTap: () async {
                                   Get.back();
-
                                   var selectedImage = isPhoto
                                       ? await openCamera()
                                       : await openVideoCamera();
                                   if (selectedImage != null) {
                                     setState(() {
-                                      _image = selectedImage;
+                                      isPhoto
+                                          ? images.add(selectedImage)
+                                          : videos.add(selectedImage);
                                     });
                                   }
                                 },
@@ -149,7 +149,9 @@ class _CreateProductState extends State<CreateProduct> {
                                       : await openVideoGallery();
                                   if (selectedImage != null) {
                                     setState(() {
-                                      _image = selectedImage;
+                                      isPhoto
+                                          ? images.add(selectedImage)
+                                          : videos.add(selectedImage);
                                     });
                                   }
                                 },
@@ -238,8 +240,7 @@ class _CreateProductState extends State<CreateProduct> {
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(
-        preferredSize: Size(MediaQuery.of(context).size.width,
-            height() * 0.1),
+        preferredSize: Size(MediaQuery.of(context).size.width, height() * 0.1),
         child: Container(
           decoration: BoxDecoration(
             gradient: gradient(
@@ -333,7 +334,7 @@ class _CreateProductState extends State<CreateProduct> {
                         );
                       }).toList(),
                       onChanged: (val) {
-                        var index =  stores.indexOf(val!);
+                        var index = stores.indexOf(val!);
                         setState(() {
                           store = val;
                         });
@@ -437,14 +438,14 @@ class _CreateProductState extends State<CreateProduct> {
                     hint: "Storage Capacity",
                     textController: capacityController,
                   ),
-                  kSpacing,
-                  // title('Category'),
                   // kSpacing,
-                  TextFieldWidget(
-                    hint: "Category",
-                    textController: categoryController,
-                    enabled: false,
-                  ),
+                  // // title('Category'),
+                  // // kSpacing,
+                  // TextFieldWidget(
+                  //   hint: "Category",
+                  //   textController: categoryController,
+                  //   enabled: false,
+                  // ),
                   kSpacing,
                   TextFieldWidget(
                     hint: "Sub-Category",
@@ -540,28 +541,28 @@ class _CreateProductState extends State<CreateProduct> {
                         onTap: () {
                           if (_formKey.currentState!.validate()) {
                             _storeController.createNewProduct(
-                              _userController.getToken(),
-                              storeId: storeId,
-                              title: nameController.text,
-                              discount: discountController.text,
-                              plan: 'Basic',
-                              deliveryAddress: deliveryController.text,
-                              deliveryCity: deliveryLocationController.text,
-                              shippingCost: deliveryPriceController.text,
-                              capacity: capacityController.text,
-                              quantity: quantityController.text,
-                              price: priceController.text,
-                              size: sizeController.text,
-                              material: materialController.text,
-                              category: categoryController.text,
-                              subCategory: subcategoryController.text,
-                              condition: conditionController.text,
-                              brand: brandController.text,
-                              coordinate: "12.345678, -98.765432",
-                              features: featuresController.text,
-                              color: colorController.text,
-                              description: descriptionController.text,
-                            );
+                                _userController.getToken(),
+                                storeId: _storeController.getDefaultStoreId(),
+                                title: nameController.text,
+                                discount: discountController.text,
+                                plan: 'Basic',
+                                deliveryAddress: deliveryController.text,
+                                deliveryCity: deliveryLocationController.text,
+                                shippingCost: deliveryPriceController.text,
+                                capacity: capacityController.text,
+                                quantity: quantityController.text,
+                                price: priceController.text,
+                                size: sizeController.text,
+                                material: materialController.text,
+                                category: categoryController.text,
+                                subCategory: subcategoryController.text,
+                                condition: conditionController.text,
+                                brand: brandController.text,
+                                coordinate: "12.345678, -98.765432",
+                                features: featuresController.text,
+                                color: colorController.text,
+                                description: descriptionController.text,
+                                media: images);
                           } else {
                             CustomSnackBar.failedSnackBar('Error',
                                 'Ensure that all required fields are filled');

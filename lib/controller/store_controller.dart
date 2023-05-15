@@ -98,39 +98,41 @@ class StoreController extends GetxController {
     }, token, {"name": name, "description": description, "location": location});
   }
 
-  createNewProduct(
-    token, {
-    storeId,
-    color,
-    price,
-    title,
-    category,
-    plan,
-    condition,
-    capacity,
-    brand,
-    discount,
-    size,
-    material,
-    coordinate,
-    features,
-    shippingCost,
-    subCategory,
-    description,
-    deliveryAddress,
-    deliveryCity,
-    quantity,
-  }) async {
+  createNewProduct(token,
+      {storeId,
+      color,
+      price,
+      title,
+      category,
+      plan,
+      condition,
+      capacity,
+      brand,
+      discount,
+      size,
+      material,
+      coordinate,
+      features,
+      shippingCost,
+      subCategory,
+      description,
+      deliveryAddress,
+      deliveryCity,
+      quantity,
+      media}) async {
     Get.to(() => const Loading());
     StoreServices.createProduct((status, response) {
       print('==> $response');
       getProducts(token, storeId);
       if (status) {
         Get.back();
-        Get.back();
-        getProducts(token, storeId);
-        CustomSnackBar.successSnackBar(
-            'Great!', 'Product created successfully');
+        // Get.back();
+        uploadMedia(
+            token: token,
+            storeId: storeId,
+            itemId: response['data']['id'],
+            media: media,
+            category: 'products');
       } else {
         Get.back();
         CustomSnackBar.failedSnackBar('Failed', '$response');
@@ -192,10 +194,16 @@ class StoreController extends GetxController {
       getVehicles(token, storeId);
       if (status) {
         Get.back();
-        Get.back();
-        getProducts(token, storeId);
-        CustomSnackBar.successSnackBar(
-            'Great!', 'Product created successfully');
+        // Get.back();
+        uploadMedia(
+            token: token,
+            storeId: storeId,
+            itemId: response['data']['id'],
+            media: media,
+            category: 'vehicles');
+
+        // CustomSnackBar.successSnackBar(
+        //     'Great!', 'Product created successfully');
       } else {
         Get.back();
         CustomSnackBar.failedSnackBar('Failed', '$response');
@@ -269,20 +277,19 @@ class StoreController extends GetxController {
       },
       "rentAvailability": {"startDate": startDate, "endDate": endDate},
       "specifics": {
-        "bedroom": double.parse(bedroom??'1'),
-        "bathroom": double.parse(bathroom??'1'),
-        "shower": double.parse(shower??'1'),
-        "toilet": double.parse(toilet??'1'),
-        "floor": double.parse(floor??'1'),
-        "squareMetre": double.parse(sqMeter??'0'),
+        "bedroom": double.parse(bedroom ?? '1'),
+        "bathroom": double.parse(bathroom ?? '1'),
+        "shower": double.parse(shower ?? '1'),
+        "toilet": double.parse(toilet ?? '1'),
+        "floor": double.parse(floor ?? '1'),
+        "squareMetre": double.parse(sqMeter ?? '0'),
         "amenities": amenities,
       },
       "rules": {
-        "occupant": double.parse(occupantsNumber??'1'),
+        "occupant": double.parse(occupantsNumber ?? '1'),
         "pet": pet,
         "smoke": smoke
       }
-
     };
     print(data);
     Get.to(() => const Loading());
@@ -292,37 +299,48 @@ class StoreController extends GetxController {
       getApartments(token, storeId);
       if (status) {
         Get.back();
-        Get.back();
-        getProducts(token, storeId);
-        CustomSnackBar.successSnackBar('Great!', 'Store created successfully');
+        uploadMedia(
+            token: token,
+            storeId: storeId,
+            itemId: response['data']['id'],
+            media: media,
+            category: 'apartments');
+        // Get.back();
+        // getApartments(token, storeId);
+        // CustomSnackBar.successSnackBar('Great!', 'Store created successfully');
       } else {
         Get.back();
         CustomSnackBar.failedSnackBar('Failed', '$response');
       }
     }, token, storeId, data);
+  }
 
+  uploadMedia({token, storeId, itemId, category, media}) async {
+    StoreServices.uploadFile((status, response) {
+      print('==> $response');
+      if (status) {
+        print('Successs   ==> $response');
+        if(category=='products') {
+          getProducts(token, storeId);
+        }
+        if(category=='vehicles') {
+          getVehicles(token, storeId);
+        }
+        if(category=='apartments') {
+          getApartments(token, storeId);
+        }
 
-    // StoreServices.uploadFile(
-    //     token: token,
-    //     data: data,
-    //     storeId: storeId,
-    //     productId: '',
-    //     category: '',
-    //     images: media
-    //
-    //     //   (status, response) {
-    //     //   print('==> $response');
-    //     //   getApartments(token, storeId);
-    //     //   if (status) {
-    //     //     Get.back();
-    //     //     Get.back();
-    //     //     getProducts(token, storeId);
-    //     //     CustomSnackBar.successSnackBar('Great!', 'Store created successfully');
-    //     //   } else {
-    //     //     Get.back();
-    //     //     CustomSnackBar.failedSnackBar('Failed', '$response');
-    //     //   }
-    //     // }, token, storeId, data
-    //     );
+        Get.back();
+        CustomSnackBar.successSnackBar(
+            'Great!', 'New $category created successfully');
+      } else {
+        print('Errororor   ==> $response');
+      }
+    },
+        token: token,
+        storeId: storeId,
+        productId: itemId,
+        category: category,
+        images: media);
   }
 }
