@@ -1,3 +1,4 @@
+import 'package:fenix/helpers/widgets.dart';
 import 'package:fenix/screens/home/home.dart';
 import 'package:fenix/screens/products/apartment_details.dart';
 import 'package:fenix/screens/profile/create_selling_post/create_apartment.dart';
@@ -60,20 +61,12 @@ class _SellingListState extends State<SellingList> {
                   alignment: Alignment.centerLeft,
                   child: Row(
                     children: [
-                      InkWell(
-                        onTap: () {
-                          Get.back();
-                        },
-                        child: const Icon(
-                          Icons.arrow_back_ios,
-                          color: Colors.white,
-                        ),
-                      ),
+                       backArrow(),
                       Text(
                         "Your Selling List",
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 25.w,
+                            fontSize: 28.w,
                             fontWeight: FontWeight.w500,
                             shadows: [
                               Shadow(

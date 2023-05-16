@@ -16,6 +16,8 @@ class UserController extends GetxController {
   UserModel? user;
 
 
+  var wishList = [].obs;
+
   Position? _currentPosition;
 
   Rx<Position>?  userCurrentPosition;
@@ -91,6 +93,18 @@ class UserController extends GetxController {
     Get.to(() => const Views());
     Get.put(StoreController());
     getCurrentLocation();
+  }
+
+
+  getUserWishlist(token) {
+    UserServices.getWishlist((status, response) {
+      if (status) {
+        wishList.value = response['data'];
+      } else {
+        wishList.value = [];
+        print('Error - $response');
+      }
+    }, token);
   }
 
   getCurrentLocation() async{

@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import '../../controller/account_controller.dart';
 import '../../controller/store_controller.dart';
 import '../home/home.dart';
+import '../../helpers/widgets.dart';
 import '../home/search.dart';
 import '../onboarding/constants.dart';
 
@@ -20,6 +21,7 @@ class WishList extends StatefulWidget {
 }
 
 class _WishListState extends State<WishList> {
+
   List title = [
     "Your Account",
     "Your Message",
@@ -65,19 +67,13 @@ class _WishListState extends State<WishList> {
               ),
               Row(
                 children: [
-                  InkWell(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.white,
-                      )),
+                  backArrow(),
+
                   InkWell(
                     onTap: () => Get.to(() => SearchScreen()),
                     child: Container(
                       height: MediaQuery.of(context).size.height * 0.050,
-                      width: MediaQuery.of(context).size.width * 0.85,
+                      width: MediaQuery.of(context).size.width * 0.80,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(13.w),
                         color: Colors.white,
@@ -87,6 +83,7 @@ class _WishListState extends State<WishList> {
                           fontSize: 16.w,
                         ),
                         enabled: false,
+
                         decoration: InputDecoration(
                           enabledBorder: InputBorder.none,
                           focusedBorder: InputBorder.none,
@@ -107,13 +104,17 @@ class _WishListState extends State<WishList> {
                   ),
                 ],
               ),
+
+
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.010,
               )
+
             ],
           ),
         ),
       ),
+
       body: Container(
         color: Color(0xFFE4EFF9),
         child: ListView(

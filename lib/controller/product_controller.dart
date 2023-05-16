@@ -1,6 +1,7 @@
 import 'package:fenix/controller/user_controller.dart';
 import 'package:get/get.dart';
 import '../helpers/categories.dart';
+import '../helpers/widgets/snack_bar.dart';
 import '../models/services/product_services.dart';
 import '../models/services/store_services.dart';
 
@@ -66,4 +67,22 @@ class ProductController extends GetxController {
       }
     }, token, storeId);
   }
+
+  addProductToWishlist(token,
+      {productId}) {
+    ProductServices.addToWishlist((status, response) {
+      print(response);
+      if (status) {
+        CustomSnackBar.successSnackBar(
+            'Success', 'Profile created successfully');
+      } else {
+        Get.back();
+        CustomSnackBar.failedSnackBar('Failed', '$response');
+      }
+    }, {
+    "productId": productId,
+    }, token);
+  }
+
+
 }

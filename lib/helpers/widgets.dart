@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fenix/screens/onboarding/auth_board.dart';
 import 'package:fenix/screens/onboarding/constants.dart';
 import 'package:fenix/theme.dart';
@@ -565,10 +567,24 @@ class DropDownWidget extends StatelessWidget {
 }
 
 
+Widget backArrow(){
+  return IconButton(
+      onPressed: (){
+        Get.back();
+      },
+      icon: (Platform.isIOS)
+          ? Icon(Icons.arrow_back_ios, color: Colors.white, size: 29.w,)
+          : Icon(Icons.arrow_back,  color: Colors.white, size: 29.w,),
+      );
+}
+
+
 List lottieSlides = [
   Image.asset("assets/images/lottieAnimOne.png"),
   Image.asset("assets/images/lottieAnimOne.png"),
   Image.asset("assets/images/lottieAnimOne.png"),
 ];
+
+
 
 // margin: EdgeInsets.symmetric(vertical: 17.w, horizontal: 24.w),

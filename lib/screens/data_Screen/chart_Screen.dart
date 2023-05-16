@@ -2,6 +2,7 @@ import 'package:fenix/screens/views.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import '../../const.dart';
 import '../onboarding/constants.dart';
 import 'bar_chart.dart';
 import 'chart.dart';
@@ -21,7 +22,7 @@ class _ChartsState extends State<Charts> {
       backgroundColor: Color(0xFFE4F0FA),
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width,
-            MediaQuery.of(context).size.height * 0.183),
+            height() * 0.2),
         child: Container(
           decoration: BoxDecoration(
               gradient: gradient(
@@ -64,13 +65,13 @@ class _ChartsState extends State<Charts> {
                     hintStyle: Theme.of(context)
                         .textTheme
                         .bodyText1!
-                        .copyWith(fontSize: 15.w, color: Colors.grey.shade500),
-                    prefixIcon: Icon(Icons.search),
+                        .copyWith(fontSize: 17.w, color: Colors.grey.shade500),
+                    suffixIcon: Icon(Icons.search, size: 30.w),
                   ),
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.052,
+                height: MediaQuery.of(context).size.height * 0.072,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
@@ -106,9 +107,9 @@ class _ChartsState extends State<Charts> {
           ),
         ),
       ),
-      body: ListView(
+      body: Column(
         children: [
-          SizedBox(height: Get.height * 0.08),
+          SizedBox(height: Get.height * 0.02),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 60.w, vertical: 5.w),
             decoration: neumorph().copyWith(
@@ -137,15 +138,16 @@ class _ChartsState extends State<Charts> {
               ),
             ),
           ),
-          SizedBox(height: Get.height * 0.05),
+          SizedBox(height: Get.height * 0.03),
           Container(
-              height: Get.height * 0.3,
+              height: Get.height * 0.24,
               margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.w),
               decoration: neumorph(),
               child: LineGraph()),
           SizedBox(height: 10),
           Container(
-              height: Get.height * 0.3,
+              height: Get.height * 0.22,
+              width: width() * 0.9,
               margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.w),
               child: BarChartScreen()),
         ],

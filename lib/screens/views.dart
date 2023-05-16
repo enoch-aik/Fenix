@@ -129,11 +129,11 @@ class MenuTitle extends StatelessWidget {
         padding:  EdgeInsets.only(right: 24.w),
         child: Row(
           children: [
-            Image.asset("assets/images/icons/$icon",height: 18,color: color??black),
+            Image.asset("assets/images/icons/$icon",height: 24.w,color: color??black),
             SizedBox(width: 5.w,),
             Text(title,
             style: Theme.of(context).textTheme.bodyText2!.copyWith(
-              fontSize: 15.w,
+              fontSize: 19.w,
               fontWeight: FontWeight.w600
                 ,color: color??black
             ),),

@@ -1,5 +1,4 @@
 import 'package:fenix/const.dart';
-import 'package:fenix/controller/account_controller.dart';
 import 'package:fenix/controller/store_controller.dart';
 import 'package:fenix/controller/user_controller.dart';
 import 'package:fenix/helpers/distance_calculator.dart';
@@ -17,6 +16,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../controller/account_controller.dart';
 import '../../controller/map_controller.dart';
 import '../../controller/product_controller.dart';
 import '../../helpers/icons/custom_icons_icons.dart';
@@ -104,7 +104,7 @@ class _HomeState extends State<Home> {
                   ),
                   child: TextField(
                     style: TextStyle(
-                      fontSize: 16.w,
+                      fontSize: 19.w,
                     ),
                     enabled: false,
                     decoration: InputDecoration(
@@ -118,14 +118,14 @@ class _HomeState extends State<Home> {
                           .textTheme
                           .bodyText1!
                           .copyWith(
-                              fontSize: 15.w, color: Colors.grey.shade500),
-                      prefixIcon: const Icon(Icons.search),
+                              fontSize: 17.w, color: Colors.grey.shade500),
+                      suffixIcon: Icon(Icons.search, size: 30.w),
                     ),
                   ),
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.052,
+                height: MediaQuery.of(context).size.height * 0.072,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
@@ -769,12 +769,19 @@ class _HomeState extends State<Home> {
                                                   .apartmentList[index],
                                             ));
                                       },
-                                      child: ProductWidget(
+                                      child: getProduct(
                                           title: item['title'],
                                           category: item['apartmentType'],
                                           price: item['rentPrice']['month']
                                               .toString(),
-                                          location: item),
+                                          location: item,
+                                              icon: FontAwesomeIcons.solidHeart,
+                                              onTap:  (){
+                                            setState(() {
+                                              // icon = FontAwesomeIcons.solidHeart;
+                                            });
+                                          })
+
                                     );
                                   }),
                     )
@@ -860,6 +867,26 @@ class _HomeState extends State<Home> {
     );
   }
 
+  Widget getProduct({title, category, price, location, icon, onTap}){
+    return Stack(
+      children: [
+        ProductWidget(),
+          Positioned(
+            top: 7,
+            right: 20,
+            child: InkWell(
+              onTap: onTap,
+              child: Icon(
+                icon,
+                color: kTextBlackColor,
+              ),
+            ),
+          ),
+
+      ],
+    );
+  }
+
 }
 
 class ProductWidget extends StatelessWidget {
@@ -880,180 +907,168 @@ class ProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print(category);
-    return Stack(
-      children: [
-        Container(
-          height: MediaQuery.of(context).size.height * 0.42,
-          width: MediaQuery.of(context).size.width * 0.452,
-          margin: EdgeInsets.symmetric(horizontal: 9.w),
-          decoration: BoxDecoration(
-              color: const Color(0xFFDAE5F2),
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.42,
+      width: MediaQuery.of(context).size.width * 0.452,
+      margin: EdgeInsets.symmetric(horizontal: 9.w),
+      decoration: BoxDecoration(
+          color: const Color(0xFFDAE5F2),
+          borderRadius: BorderRadius.circular(10.w),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 1,
+              blurRadius: 2,
+              offset: const Offset(0, 1), // changes position of shadow
+            ),
+            BoxShadow(
+              color: Colors.white.withOpacity(0.3),
+              spreadRadius: 2,
+              blurRadius: 3,
+              offset: const Offset(-3, -6), // changes position of shadow
+            ),
+          ]),
+      child: Column(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height * 0.25,
+            width: MediaQuery.of(context).size.width * 0.455,
+            decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.w),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 1,
-                  blurRadius: 2,
-                  offset: const Offset(0, 1), // changes position of shadow
-                ),
-                BoxShadow(
-                  color: Colors.white.withOpacity(0.3),
-                  spreadRadius: 2,
-                  blurRadius: 3,
-                  offset: const Offset(-3, -6), // changes position of shadow
-                ),
-              ]),
-          child: Column(
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.25,
-                width: MediaQuery.of(context).size.width * 0.455,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.w),
-                  image: DecorationImage(
-                    image: AssetImage(
-                        "assets/images/${category == "Electronics" ? 'electronics' : category == "Cars" ? 'car' : 'house'}.png"),
-                    fit: BoxFit.cover,
-                  ),
-                ),
+              image: DecorationImage(
+                image: AssetImage(
+                    "assets/images/${category == "Electronics" ? 'electronics' : category == "Cars" ? 'car' : 'house'}.png"),
+                fit: BoxFit.cover,
               ),
-              SizedBox(
-                height: 10.w,
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.15,
-                width: MediaQuery.of(context).size.width * 0.455,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 7.w),
-                      child: SizedBox(
-                        height: 100.w,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            ),
+          ),
+          SizedBox(
+            height: 10.w,
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height * 0.15,
+            width: MediaQuery.of(context).size.width * 0.455,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 7.w),
+                  child: SizedBox(
+                    height: 100.w,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          title,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(
+                                  fontSize: 12.w,
+                                  color: const Color(0xFF334669),
+                                  fontWeight: FontWeight.w700),
+                        ),
+                        Row(
                           children: [
+                            RatingBar(
+                                initialRating: 1,
+                                direction: Axis.horizontal,
+                                allowHalfRating: true,
+                                itemCount: 5,
+                                itemSize: 18.w,
+                                ignoreGestures: true,
+                                ratingWidget: RatingWidget(
+                                    full: const Icon(Icons.star,
+                                        color: Colors.orange),
+                                    half: const Icon(
+                                      Icons.star_half,
+                                      color: Colors.orange,
+                                    ),
+                                    empty: const Icon(
+                                      Icons.star_outline,
+                                      color: Colors.grey,
+                                    )),
+                                onRatingUpdate: (value) {}),
+                            SizedBox(
+                              width: 10.w,
+                            ),
                             Text(
-                              title,
+                              "259 reviews.",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .copyWith(
+                                      fontSize: 10.w,
+                                      color: const Color(0xFF334669)
+                                          .withOpacity(0.6),
+                                      fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                        Obx(() => _userController
+                                .isFetchingUserLocation.isFalse
+                            ? Row(
+                                children: [
+                                  const Icon(Icons.location_on),
+                                  SizedBox(
+                                    width: 10.w,
+                                  ),
+                                  // ${distanceInKm(
+                                  //   _userController.userCurrentPosition!.value.latitude,
+                                  //   _userController.userCurrentPosition!.value.longitude,
+                                  //   location['location']['latitude'],
+                                  //   location['location']['longitude'],
+                                  // ).toString()}
+                                  Text(
+                                    "124Km",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .copyWith(
+                                            fontSize: 11.w,
+                                            color: const Color(0xFF334669)
+                                                .withOpacity(0.6),
+                                            fontWeight: FontWeight.w400),
+                                  )
+                                ],
+                              )
+                            : tiny5Space()),
+                        Row(
+                          children: [
+                            const Icon(Icons.fire_truck),
+                            SizedBox(
+                              width: 10.w,
+                            ),
+                            Text(
+                              "Free Shipping",
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1!
                                   .copyWith(
                                       fontSize: 12.w,
-                                      color: const Color(0xFF334669),
-                                      fontWeight: FontWeight.w700),
-                            ),
-                            Row(
-                              children: [
-                                RatingBar(
-                                    initialRating: 1,
-                                    direction: Axis.horizontal,
-                                    allowHalfRating: true,
-                                    itemCount: 5,
-                                    itemSize: 18.w,
-                                    ignoreGestures: true,
-                                    ratingWidget: RatingWidget(
-                                        full: const Icon(Icons.star,
-                                            color: Colors.orange),
-                                        half: const Icon(
-                                          Icons.star_half,
-                                          color: Colors.orange,
-                                        ),
-                                        empty: const Icon(
-                                          Icons.star_outline,
-                                          color: Colors.grey,
-                                        )),
-                                    onRatingUpdate: (value) {}),
-                                SizedBox(
-                                  width: 10.w,
-                                ),
-                                Text(
-                                  "259 reviews.",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1!
-                                      .copyWith(
-                                          fontSize: 10.w,
-                                          color: const Color(0xFF334669)
-                                              .withOpacity(0.6),
-                                          fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            ),
-                            Obx(() => _userController
-                                    .isFetchingUserLocation.isFalse
-                                ? Row(
-                                    children: [
-                                      const Icon(Icons.location_on),
-                                      SizedBox(
-                                        width: 10.w,
-                                      ),
-                                      // ${distanceInKm(
-                                      //   _userController.userCurrentPosition!.value.latitude,
-                                      //   _userController.userCurrentPosition!.value.longitude,
-                                      //   location['location']['latitude'],
-                                      //   location['location']['longitude'],
-                                      // ).toString()}
-                                      Text(
-                                        "124Km",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1!
-                                            .copyWith(
-                                                fontSize: 11.w,
-                                                color: const Color(0xFF334669)
-                                                    .withOpacity(0.6),
-                                                fontWeight: FontWeight.w400),
-                                      )
-                                    ],
-                                  )
-                                : tiny5Space()),
-                            Row(
-                              children: [
-                                const Icon(Icons.fire_truck),
-                                SizedBox(
-                                  width: 10.w,
-                                ),
-                                Text(
-                                  "Free Shipping",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1!
-                                      .copyWith(
-                                          fontSize: 12.w,
-                                          color: const Color(0xFF0F7D46),
-                                          fontWeight: FontWeight.w500),
-                                )
-                              ],
-                            ),
+                                      color: const Color(0xFF0F7D46),
+                                      fontWeight: FontWeight.w500),
+                            )
                           ],
                         ),
-                      ),
+                      ],
                     ),
-                    Text(
-                      "${price}  so’m",
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                          fontSize: 15.w,
-                          color: const Color(0xFFCE242B),
-                          fontWeight: FontWeight.w800),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
+                Text(
+                  "${price}  so’m",
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      fontSize: 15.w,
+                      color: const Color(0xFFCE242B),
+                      fontWeight: FontWeight.w800),
+                ),
+              ],
+            ),
           ),
-        ),
-        Positioned(
-          top: 7,
-          right: 20,
-          child: Icon(
-            FontAwesomeIcons.heart,
-            color: kTextBlackColor,
-          ),
-        )
-      ],
+        ],
+      ),
     );
   }
 }
