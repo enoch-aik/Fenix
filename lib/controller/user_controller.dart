@@ -19,7 +19,7 @@ class UserController extends GetxController {
   var gender = ''.obs;
   UserModel? user;
   Position? _currentPosition;
-  Rx<Position>?  userCurrentPosition;
+  Rx<Position>? userCurrentPosition;
   var isFetchingUserLocation = true.obs;
   var isFetchingWishes = true.obs;
   var wishList = [].obs;
@@ -38,6 +38,7 @@ class UserController extends GetxController {
   }
 
   String getToken() => _token;
+
   String getRefreshToken() => _refreshToken;
 
   UserModel? getUser() => user;
@@ -53,8 +54,9 @@ class UserController extends GetxController {
         setUser(response);
       } else {
         if (response.toString().contains('profile yet')) {
-          CustomSnackBar.failedSnackBar('Welcome!', 'Update your profile to continue');
-          Get.off(() =>  Views());
+          CustomSnackBar.failedSnackBar(
+              'Welcome!', 'Update your profile to continue');
+          Get.off(() => Views());
         } else {
           CustomSnackBar.failedSnackBar('Failed', '$response');
         }
@@ -62,7 +64,8 @@ class UserController extends GetxController {
     }, token);
   }
 
-  updateProfile(token, {phoneNumber, gender, address, city, country, username}) {
+  updateProfile(token,
+      {phoneNumber, gender, address, city, country, username}) {
     Get.to(() => const Loading());
     UserServices.updateUser((status, response) {
       if (status) {
@@ -74,7 +77,14 @@ class UserController extends GetxController {
 
         CustomSnackBar.failedSnackBar('Failed', '$response');
       }
-    }, {"phoneNumber":phoneNumber, "gender": gender, "address": address, "city": city, "country": country, "username": username }, token);
+    }, {
+      "phoneNumber": phoneNumber,
+      "gender": gender,
+      "address": address,
+      "city": city,
+      "country": country,
+      "username": username
+    }, token);
   }
 
   createProfile(token,
@@ -109,18 +119,18 @@ class UserController extends GetxController {
     getCurrentLocation();
   }
 
-  getCurrentLocation() async{
+  getCurrentLocation() async {
     isFetchingUserLocation(true);
-    await Geolocator
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best, forceAndroidLocationManager: true)
-        .then((Position position) async{
-          print("++++====${position}");
-        _currentPosition = position;
-        userCurrentPosition = position.obs;
-        isFetchingUserLocation(false);
-        print("++++++${_currentPosition!.latitude}");
-        print("=======${userCurrentPosition!.value.latitude.obs}");
-
+    await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.best,
+            forceAndroidLocationManager: true)
+        .then((Position position) async {
+      print("++++====${position}");
+      _currentPosition = position;
+      userCurrentPosition = position.obs;
+      isFetchingUserLocation(false);
+      print("++++++${_currentPosition!.latitude}");
+      print("=======${userCurrentPosition!.value.latitude.obs}");
     }).catchError((e) {
       print(e);
     });
@@ -138,6 +148,16 @@ class UserController extends GetxController {
     }, token, {"productId": productId});
   }
 
+  deleteItemFromWishList(token, productId) async {
+    UserServices.deleteFromWishList((status, response) {
+      if (status) {
+        CustomSnackBar.successSnackBar('Cool', 'Product deleted from wishlist');
+        getWishList(token);
+      } else {
+        CustomSnackBar.failedSnackBar('Failed', '$response');
+      }
+    }, token, productId);
+  }
 
   getWishList(token) async {
     isFetchingWishes(true);
@@ -153,12 +173,9 @@ class UserController extends GetxController {
     }, token);
   }
 
-
-  setPersistToken(token,refreshToken) async{
+  setPersistToken(token, refreshToken) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', token);
     await prefs.setString('refreshToken', refreshToken);
   }
-
-
 }

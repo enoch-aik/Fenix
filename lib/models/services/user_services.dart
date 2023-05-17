@@ -27,6 +27,18 @@ class UserServices {
     }
   }
 
+  static deleteFromWishList(
+      Function callback, token,productId) async {
+    var response =
+    await ApiServices.initialiseDeleteRequest(url: '$wishListUrl/productId', data:{}, token: token);
+    print(response);
+    if (response is String) {
+      callback(false, response);
+    } else {
+      callback(true, response);
+    }
+  }
+
   static getWishList(
       Function callback, token) async {
     var response =
