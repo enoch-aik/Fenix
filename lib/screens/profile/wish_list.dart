@@ -145,7 +145,6 @@ class WishList extends StatelessWidget {
                     var item = userController.wishList[i];
                     return InkWell(
                       onTap: () {
-
                       },
                       child:  ProductListWidget(
                           product: item,
