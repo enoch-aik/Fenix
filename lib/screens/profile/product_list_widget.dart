@@ -179,6 +179,7 @@ class ProductListWidget extends StatelessWidget {
                 ],
               ),
             ),
+
             Positioned(
               top: 7,
               right: 20,
