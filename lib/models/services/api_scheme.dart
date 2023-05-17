@@ -27,6 +27,26 @@ class ApiServices {
     return await http.post(uri, body: jsonString, headers: headers);
   }
 
+
+  static makeDeleteRequest({apiUrl, data, token}) async {
+    final uri = Uri.parse(apiUrl);
+    final jsonString = json.encode(data);
+    var headers;
+    if (token == null) {
+      headers = {
+        HttpHeaders.contentTypeHeader: 'application/json',
+      };
+    } else {
+      headers = {
+        'accept': 'application/json',
+        'token': '$token',
+        'Content-Type': 'application/json',
+        HttpHeaders.authorizationHeader: 'Bearer $token',
+      };
+    }
+    return await http.delete(uri, body: jsonString, headers: headers);
+  }
+
   static makePatchRequest({apiUrl, data, token}) async {
     final uri = Uri.parse(apiUrl);
     final jsonString = json.encode(data);
@@ -61,19 +81,6 @@ class ApiServices {
     return await http.get(uri, headers: headers);
   }
 
-  static makeDeleteRequest({apiUrl, data, token}) async {
-    var uri = Uri.parse(apiUrl);
-    final jsonString = json.encode(data);
-
-    var headers = {
-      'accept': 'application/json',
-      'token': 'Bearer $token',
-      HttpHeaders.authorizationHeader: 'Bearer $token',
-      'Content-Type': 'application/json'
-    };
-
-    return await http.delete(uri, body: jsonString, headers: headers);
-  }
 
   static initialisePostRequest(
       {required data, required String url, token}) async {
@@ -83,6 +90,44 @@ class ApiServices {
       print(url);
 
       http.Response response = await ApiServices.makePostRequest(
+          apiUrl: url, data: data, token: token);
+      var body = jsonDecode(response.body);
+      print(response.statusCode);
+      print(response.body);
+      if (ApiServices.isRequestSuccessful(response.statusCode)) {
+        print('Success');
+        return body;
+      } else {
+        print('i am here now ERROR');
+        return ApiServices.handleError(response);
+      }
+    } catch (e) {
+      print('Errororor - $e');
+      if (e.toString().contains('Expired')||e.toString().contains('Invalid Token')) {
+
+        UserController userController = Get.find();
+        userController.setPersistToken(null,null);
+        Get.offAll(
+              () => SignIn(),
+        );
+      }
+      if (e.toString().contains('HandshakeException')) {
+        return 'Check your internet connection';
+      } else {
+        return e.toString();
+      }
+    }
+  }
+
+
+  static initialiseDeleteRequest(
+      {required data, required String url, token}) async {
+    try {
+      print(token);
+      print(data);
+      print(url);
+
+      http.Response response = await ApiServices.makeDeleteRequest(
           apiUrl: url, data: data, token: token);
       var body = jsonDecode(response.body);
       print(response.statusCode);

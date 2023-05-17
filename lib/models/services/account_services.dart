@@ -31,6 +31,31 @@ class AccountServices {
     }
   }
 
+
+  static changePassword(
+      Function callback,data,token) async {
+    var response =
+    await ApiServices.initialisePostRequest(url: changePasswordUrl, token: token,data: data);
+    print(response);
+    if (response is String) {
+      callback(false, response);
+    } else {
+      callback(true, response);
+    }
+  }
+
+  static deleteAccount(
+      Function callback,data,token) async {
+    var response =
+    await ApiServices.initialiseDeleteRequest(url: changePasswordUrl, token: token,data: data);
+    print(response);
+    if (response is String) {
+      callback(false, response);
+    } else {
+      callback(true, response);
+    }
+  }
+
   static registerUser(Function callback,
       {email, firstName, lastName, password}) async {
     var data = {

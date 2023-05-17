@@ -21,7 +21,6 @@ class AccountController extends GetxController {
   TextEditingController get password => _password;
   final TextEditingController _password = TextEditingController();
 
-
   signUp() async {
     Get.to(() => const Loading(
           navigateScreen: AcctCreationSuccess(),
@@ -60,6 +59,45 @@ class AccountController extends GetxController {
     }, email: _email.text, password: _password.text);
   }
 
+  changePassword(token, oldPassword, newPassword) async {
+    Get.to(() => const Loading(
+          navigateScreen: AcctCreationSuccess(),
+        ));
+    AccountServices.changePassword((status, response) {
+      Get.back();
+
+      if (status) {
+        Get.back();
+        CustomSnackBar.successSnackBar(
+            'Great', 'Password changed successfully');
+      } else {
+        Get.back();
+        CustomSnackBar.failedSnackBar('Failed', '$response');
+      }
+    }, token, {"oldPassword": oldPassword, "newPassword": newPassword});
+  }
+
+
+  deleteAccount(token, oldPassword, newPassword) async {
+    Get.to(() => const Loading(
+          navigateScreen: AcctCreationSuccess(),
+        ));
+    AccountServices.changePassword((status, response) {
+      Get.back();
+
+      if (status) {
+        CustomSnackBar.successSnackBar(
+            'Great', 'Account deleted successfully');
+        Get.offAll(() => SignIn());
+
+
+      } else {
+        Get.back();
+        CustomSnackBar.failedSnackBar('Failed', '$response');
+      }
+    }, token, {"oldPassword": oldPassword, "newPassword": newPassword});
+  }
+
   refreshToken(token) async {
     AccountServices.refreshToken((status, response) {
       if (status) {
@@ -90,7 +128,7 @@ class AccountController extends GetxController {
       if (status) {
         CustomSnackBar.successSnackBar('Logout Successful!', '$response');
 
-        Get.to(() => SignIn());
+        Get.offAll(() => SignIn());
       } else {
         Get.back();
 
