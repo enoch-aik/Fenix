@@ -10,7 +10,7 @@
    <application
         android:label="fenix"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
 
        <meta-data android:name="com.google.android.geo.API_KEY"
            android:value="AIzaSyAF4MpzRg37JHeA7zScoZzAmp7ERH9uQhg"/>

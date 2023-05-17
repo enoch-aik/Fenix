@@ -20,13 +20,14 @@ class MyApp extends StatelessWidget {
       designSize: const Size(390, 844),
       minTextAdapt: true,
       builder: (context, child) => GetMaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Fenix',
         theme: theme,
         onInit: () {
           Get.put(AccountController());
         },
         transitionDuration: const Duration(milliseconds: 250),
-        defaultTransition: Transition.zoom,
+        defaultTransition: Transition.native,
         home: const SplashScreen(),
       ),
     );

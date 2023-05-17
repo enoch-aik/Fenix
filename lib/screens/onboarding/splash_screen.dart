@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fenix/const.dart';
 import 'package:fenix/controller/account_controller.dart';
 import 'package:fenix/helpers/widgets.dart';
 import 'package:fenix/screens/onboarding/onboarding_one.dart';
@@ -33,52 +34,50 @@ class _SplashScreenState extends State<SplashScreen> {
     AccountController accountController = Get.put(AccountController());
     Timer(
         const Duration(seconds: 3),
-        () =>token == null
-            ? Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>  const OnboardingOne()
-                   )) : accountController.setUser(token,refreshToken:refreshToken)
-
-    );
+        () => token == null
+            ? Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const OnboardingOne()))
+            : accountController.setUser(token, refreshToken: refreshToken));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE4F0FA),
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 78.w),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.asset(
-                  "assets/images/logoFrame.png",
-                  fit: BoxFit.fill,
-                ),
-                Text(
-                  "Developed by Khasan.A",
-                  style: TextStyle(
-                      color: Colors.grey.shade800,
-                      fontSize: 16.w,
-                      fontWeight: FontWeight.w200),
-                )
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 100,
-            child: LoadingIndicator(
-              indicatorType: Indicator.ballPulseSync,
-              colors: [Color(0xFF28D7AD)],
-            ),
-          ),
-          const BottomHillsWidget()
-        ],
-      ),
-    );
+        backgroundColor: const Color(0xFFE4F0FA),
+        body: Image.asset('assets/images/Splash.gif', fit: BoxFit.cover,height: height(),width: width(),)
+
+        // Stack(
+        //   alignment: Alignment.center,
+        //   children: [
+        //     Padding(
+        //       padding: EdgeInsets.symmetric(vertical: 78.w),
+        //       child: Column(
+        //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //         children: [
+        //           Image.asset(
+        //             "assets/images/logoFrame.png",
+        //             fit: BoxFit.fill,
+        //           ),
+        //           Text(
+        //             "Developed by Khasan.A",
+        //             style: TextStyle(
+        //                 color: Colors.grey.shade800,
+        //                 fontSize: 16.w,
+        //                 fontWeight: FontWeight.w200),
+        //           )
+        //         ],
+        //       ),
+        //     ),
+        //     const SizedBox(
+        //       height: 100,
+        //       child: LoadingIndicator(
+        //         indicatorType: Indicator.ballPulseSync,
+        //         colors: [Color(0xFF28D7AD)],
+        //       ),
+        //     ),
+        //     const BottomHillsWidget()
+        //   ],
+        // ),
+        );
   }
 }
