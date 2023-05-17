@@ -185,16 +185,16 @@ class _MapState extends State<Map> {
                 child: Column(
                   children: [
                     SizedBox(height: 40.w,),
-                    MapIcons(Image.asset("assets/images/icons/apartment.png",), grey, type: "apartment",
+                    MapIcons(Image.asset("assets/images/icons/apartment.png", color: white), black, type: "apartment",
                         onTap: (){
                       filterApartments("apartment");
 
                         }),
-                    MapIcons(Image.asset("assets/images/icons/houseRental.png",), grey,type: "house",
+                    MapIcons(Image.asset("assets/images/icons/houseRental.png", color: white,), black,type: "house",
                         onTap: (){
                           filterApartments("house");
                         }),
-                    MapIcons(Image.asset("assets/images/icons/Dacha.png",), grey,type: "dacha",
+                    MapIcons(Image.asset("assets/images/icons/Dacha.png", color: white,), black,type: "dacha",
                     onTap: (){
                       filterApartments("dacha");
                     }),
@@ -310,7 +310,7 @@ InkWell _customMarkerWidget(String text, Color color,{onTap}) {
           color: color,
           borderRadius: BorderRadius.circular(20.w),),
       child: Container(
-        padding: EdgeInsets.all(5.w),
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 3.w),
         decoration: BoxDecoration(
             color: Color(0xFFC9C9C9),
             borderRadius: BorderRadius.circular(20.w),),

@@ -120,7 +120,7 @@ class _UserProfileState extends State<UserProfile> {
                     "Hello, Khasan",
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize: 24.w,
+                        fontSize: 28.w,
                         shadows: [
                           Shadow(
                               color: Colors.black.withOpacity(0.2),
@@ -232,15 +232,15 @@ class _UserProfileState extends State<UserProfile> {
                     Text(
                       "Recently Viewed Items",
                       style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 17.w,
+                          color: dark,
+                          fontSize: 19.w,
                           fontWeight: FontWeight.w700),
                     ),
                     Text(
                       "See all",
                       style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 13.w,
+                        color: dark,
+                        fontSize: 18.w,
                         fontWeight: FontWeight.w400,
                       ),
                     )

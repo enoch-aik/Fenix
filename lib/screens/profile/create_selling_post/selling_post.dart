@@ -1,5 +1,6 @@
 import 'package:fenix/const.dart';
 import 'package:fenix/helpers/categories.dart';
+import 'package:fenix/helpers/widgets.dart';
 import 'package:fenix/screens/profile/create_selling_post/create_apartment.dart';
 import 'package:fenix/screens/profile/create_selling_post/create_product.dart';
 import 'package:flutter/material.dart';
@@ -45,17 +46,11 @@ class _SellingPostState extends State<SellingPost> {
             children: [
               Row(
                 children: [
-                  InkWell(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: const Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                      )),
+                  backArrow(),
+
                   Container(
                     height: MediaQuery.of(context).size.height * 0.050,
-                    width: MediaQuery.of(context).size.width * 0.85,
+                    width: MediaQuery.of(context).size.width * 0.80,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(13.w),
                       color: Colors.white,
@@ -76,11 +71,12 @@ class _SellingPostState extends State<SellingPost> {
                             .textTheme
                             .bodyText1!
                             .copyWith(
-                                fontSize: 15.w, color: Colors.grey.shade500),
-                        prefixIcon: const Icon(Icons.search),
-                        suffixIcon: const Icon(
+                                fontSize: 17.w, color: Colors.grey.shade500),
+                        prefixIcon: Icon(Icons.search, size: 30.w,),
+                        suffixIcon: Icon(
                           Icons.qr_code_scanner,
                           color: primary,
+                          size: 26.w,
                         ),
                       ),
                     ),

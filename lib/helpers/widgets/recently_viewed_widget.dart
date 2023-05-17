@@ -10,6 +10,7 @@ class RecentlyViewed extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 138.w,
+      width: MediaQuery.of(context).size.width * 0.8,
       margin: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.w),
       child: Row(
         children: [
@@ -21,7 +22,7 @@ class RecentlyViewed extends StatelessWidget {
           ),
           SizedBox(width: 10.w,),
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.6,
+            width: MediaQuery.of(context).size.width * 0.46,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,

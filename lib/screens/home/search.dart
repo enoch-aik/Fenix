@@ -72,6 +72,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 width: 10,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InkWell(
                       onTap: () {
@@ -80,17 +81,18 @@ class _SearchScreenState extends State<SearchScreen> {
                       child: Icon(
                         Icons.arrow_back_ios,
                         color: Colors.white,
+                        size: 30.w,
                       )),
                   Container(
                     height: MediaQuery.of(context).size.height * 0.050,
-                    width: MediaQuery.of(context).size.width * 0.85,
+                    width: MediaQuery.of(context).size.width * 0.82,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(13.w),
                       color: Colors.white,
                     ),
                     child: TextField(
                       style: TextStyle(
-                        fontSize: 16.w,
+                        fontSize: 18.w,
                       ),
                       decoration: InputDecoration(
                         enabledBorder: InputBorder.none,
@@ -104,8 +106,8 @@ class _SearchScreenState extends State<SearchScreen> {
                             .textTheme
                             .bodyText1!
                             .copyWith(
-                                fontSize: 15.w, color: Colors.grey.shade500),
-                        prefixIcon: Icon(Icons.search),
+                                fontSize: 18.w, color: Colors.grey.shade500),
+                        suffixIcon: Icon(Icons.search, size: 30.w,),
                       ),
                     ),
                   ),

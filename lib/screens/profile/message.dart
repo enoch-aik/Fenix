@@ -1,4 +1,5 @@
 import 'package:fenix/const.dart';
+import 'package:fenix/helpers/widgets.dart';
 import 'package:fenix/screens/profile/chat_screen.dart';
 import 'package:fenix/theme.dart';
 import 'package:flutter/material.dart';
@@ -50,16 +51,11 @@ class _MessagesState extends State<Messages> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            InkWell(
-                                              onTap: () => Get.back(),
-                                              child: Icon(
-                                                Icons.arrow_back,
-                                                color: white,
-                                              ),
-                                            ),
+                                            backArrow(),
+
                                             Text(
                                               'Messages',
-                                              style: TextStyle(color: white),
+                                              style: TextStyle(color: white, fontSize: 23.w),
                                             ),
                                             SizedBox(width: 5)
                                           ],
@@ -123,6 +119,19 @@ class _MessagesState extends State<Messages> {
                           color: Color(0xFF1F4167),
                           gradient:
                               gradient(Color(0xFF000000), Color(0xFF182845))),
+                        child: ListView(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  backArrow(),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                     ))
                   : Expanded(
                       child: Container(
@@ -135,9 +144,10 @@ class _MessagesState extends State<Messages> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text('Edit', style: TextStyle(color: white)),
+                                backArrow(),
+                                Text('Edit', style: TextStyle(color: white, fontSize:22.w)),
                               ],
                             ),
                           ),
