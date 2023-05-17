@@ -444,7 +444,8 @@ class TextFieldWidget extends StatelessWidget {
   TextEditingController? textController;
   String? Function(String?)? validator;
   bool? enabled;
-  int? maxLine;
+  bool obscureText;
+  int maxLine;
   TextInputType? keyboardType;
   Function()? onTap;
   List<TextInputFormatter>? inputFormatters;
@@ -454,8 +455,9 @@ class TextFieldWidget extends StatelessWidget {
       required this.hint,
       this.prefixIcon,
       this.suffixIcon,
+      this.obscureText=false,
       this.enabled,
-      this.maxLine,
+      this.maxLine=1,
       this.textController,
       this.keyboardType,
       this.inputFormatters,
@@ -493,6 +495,7 @@ class TextFieldWidget extends StatelessWidget {
         inputFormatters:inputFormatters,
         validator: validator,
         controller: textController,
+        obscureText: obscureText,
         decoration: InputDecoration(
           enabledBorder: InputBorder.none,
           disabledBorder: InputBorder.none,

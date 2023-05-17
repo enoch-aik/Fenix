@@ -1,4 +1,5 @@
 import 'package:fenix/const.dart';
+import 'package:fenix/controller/user_controller.dart';
 import 'package:fenix/screens/profile/product_list_widget.dart';
 import 'package:fenix/screens/views.dart';
 import 'package:fenix/theme.dart';
@@ -12,28 +13,16 @@ import '../home/home.dart';
 import '../home/search.dart';
 import '../onboarding/constants.dart';
 
-class WishList extends StatefulWidget {
+class WishList extends StatelessWidget {
   const WishList({Key? key}) : super(key: key);
 
-  @override
-  State<WishList> createState() => _WishListState();
-}
 
-class _WishListState extends State<WishList> {
-  List title = [
-    "Your Account",
-    "Your Message",
-    "Create Selling Post",
-    "Subscribe",
-    "Your Wishlist",
-    "Your Selling",
-    "Language",
-  ];
 
   @override
   Widget build(BuildContext context) {
     final AccountController accountController = Get.find();
-
+    final UserController userController = Get.find();
+    accountController.getWishList(userController.getToken());
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width,
@@ -41,8 +30,8 @@ class _WishListState extends State<WishList> {
         child: Container(
           decoration: BoxDecoration(
             gradient: gradient(
-              Color(0xFF1A9AFF),
-              Color(0xFF54FADC),
+              const Color(0xFF1A9AFF),
+              const Color(0xFF54FADC),
             ),
           ),
           padding: EdgeInsets.only(top: 55.h, left: 12.w, right: 12.w),
@@ -60,7 +49,7 @@ class _WishListState extends State<WishList> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Row(
@@ -69,12 +58,12 @@ class _WishListState extends State<WishList> {
                       onTap: () {
                         Get.back();
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.arrow_back_ios,
                         color: Colors.white,
                       )),
                   InkWell(
-                    onTap: () => Get.to(() => SearchScreen()),
+                    onTap: () => Get.to(() => const SearchScreen()),
                     child: Container(
                       height: MediaQuery.of(context).size.height * 0.050,
                       width: MediaQuery.of(context).size.width * 0.85,
@@ -100,7 +89,7 @@ class _WishListState extends State<WishList> {
                               .bodyText1!
                               .copyWith(
                                   fontSize: 15.w, color: Colors.grey.shade500),
-                          prefixIcon: Icon(Icons.search),
+                          prefixIcon: const Icon(Icons.search),
                         ),
                       ),
                     ),
@@ -115,21 +104,21 @@ class _WishListState extends State<WishList> {
         ),
       ),
       body: Container(
-        color: Color(0xFFE4EFF9),
+        color: const Color(0xFFE4EFF9),
         child: ListView(
-          physics: ClampingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 12, 8, 5),
               child: Row(
                 children: [
-                  Icon(Icons.favorite, color: blue),
+                  const Icon(Icons.favorite, color: blue),
                   tinyHSpace(),
-                  Text('Your Wishlist'),
+                  const Text('Your Wishlist'),
                 ],
               ),
             ),
-            Divider(color: primary),
+            const Divider(color: primary),
             SizedBox(
               height: 20.w,
             ),
@@ -161,10 +150,10 @@ class _WishListState extends State<WishList> {
                       },
                       child:  ProductListWidget(
                           product: item,
-                          isNetwork: item['media'].isNotEmpty,
-                          image: item['media'].isNotEmpty
+                          isNetwork: item['media']!=null && item['media'].isNotEmpty,
+                          image: item['media']!=null && item['media'].isNotEmpty
                               ? item['media'][0]['url']
-                              : "assets/images/cars.png"),
+                              : "assets/images/electronics.png"),
                     );
                   }),
             ),

@@ -94,7 +94,7 @@ class _HomeState extends State<Home> {
               ),
               const SizedBox(width: 10),
               InkWell(
-                onTap: () => Get.to(() => SearchScreen()),
+                onTap: () => Get.to(() => const SearchScreen()),
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.050,
                   width: MediaQuery.of(context).size.width,
@@ -697,7 +697,7 @@ class _HomeState extends State<Home> {
                                         category: 'Cars',
                                         price:
                                             item['price']['amount'].toString(),
-                                        location: item));
+                                        product: item));
                               }),
                 )
               : tab == 'electronics'
@@ -736,7 +736,7 @@ class _HomeState extends State<Home> {
                                             price: item['price']['amount']
                                                 .toString(),
                                             category: 'Electronics',
-                                            location: item));
+                                            product: item));
                                   }),
                     )
                   : Obx(
@@ -774,7 +774,7 @@ class _HomeState extends State<Home> {
                                           category: item['apartmentType'],
                                           price: item['rentPrice']['month']
                                               .toString(),
-                                          location: item),
+                                          product: item),
                                     );
                                   }),
                     )
@@ -864,22 +864,24 @@ class _HomeState extends State<Home> {
 
 class ProductWidget extends StatelessWidget {
   String title, category;
-  var location;
+  var product;
   String price;
 
   final UserController _userController = Get.find();
+  final AccountController _accountController = Get.find();
 
   ProductWidget(
       {Key? key,
       this.title = "",
-      this.location = "",
       this.price = "",
+        required this.product,
       this.category = ""})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     print(category);
+    print(product);
     return Stack(
       children: [
         Container(
@@ -918,7 +920,7 @@ class ProductWidget extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 10.w,
+                height: 10.w
               ),
               Container(
                 height: MediaQuery.of(context).size.height * 0.15,
@@ -1033,7 +1035,7 @@ class ProductWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "${price}  so’m",
+                      "$price  so’m",
                       style: Theme.of(context).textTheme.bodyText1!.copyWith(
                           fontSize: 15.w,
                           color: const Color(0xFFCE242B),
@@ -1048,9 +1050,19 @@ class ProductWidget extends StatelessWidget {
         Positioned(
           top: 7,
           right: 20,
-          child: Icon(
-            FontAwesomeIcons.heart,
-            color: kTextBlackColor,
+          child: InkWell(
+            onTap: ()=>_accountController.addItemToWishList(_userController.getToken(), product['id']),
+            child: Container(
+              decoration: const BoxDecoration(color: Colors.white,shape: BoxShape.circle),
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Icon(
+                  FontAwesomeIcons.heart,
+                  color: kTextBlackColor,
+                  size: 20,
+                ),
+              ),
+            ),
           ),
         )
       ],
@@ -1068,7 +1080,7 @@ Center empty(title) {
           mediumSpace(),
           Image.asset('assets/images/icons/empty-cart.png',color: grey,),
           smallSpace(),
-          Text('There are no $title listed yet',style: TextStyle(color: grey,fontSize: 14),),
+          Text('There are no $title listed yet',style: const TextStyle(color: grey,fontSize: 14),),
         ],
       ));
 }

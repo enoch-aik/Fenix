@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:fenix/controller/account_controller.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,12 +17,23 @@ class UserController extends GetxController {
   String _refreshToken = '';
   var gender = ''.obs;
   UserModel? user;
-
-
   Position? _currentPosition;
-
   Rx<Position>?  userCurrentPosition;
   var isFetchingUserLocation = true.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    autoRefreshToken();
+  }
+
+  autoRefreshToken() {
+    AccountController accountController = Get.find();
+    Timer.periodic(const Duration(minutes: 10), (timer) {
+      print(timer.tick);
+      accountController.refreshToken(getToken());
+    });
+  }
 
   String getToken() => _token;
   String getRefreshToken() => _refreshToken;

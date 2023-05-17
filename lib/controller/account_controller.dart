@@ -24,39 +24,31 @@ class AccountController extends GetxController {
   var wishList = [].obs;
   var isFetchingWishes = true.obs;
 
-  createWishList(token,data) async {
-    Get.to(() => const Loading(
-      navigateScreen: AcctCreationSuccess(),
-    ));
-
+  addItemToWishList(token, productId) async {
     AccountServices.createWishList((status, response) {
       print('==> $response');
       if (status) {
-
-
+        CustomSnackBar.successSnackBar('Cool', 'Product added to wishlist');
+        getWishList(token);
       } else {
-        Get.back();
         CustomSnackBar.failedSnackBar('Failed', '$response');
       }
-    },token,data);
+    }, token, {"productId": productId});
   }
-
 
   getWishList(token) async {
     isFetchingWishes(true);
-
     AccountServices.getWishList((status, response) {
       print('==> $response');
+      isFetchingWishes(false);
       if (status) {
         wishList.value = response['data'];
       } else {
         wishList.value = [];
         print('Error - $response');
       }
-    },token);
+    }, token);
   }
-
-
 
   signUp() async {
     Get.to(() => const Loading(
@@ -112,7 +104,7 @@ class AccountController extends GetxController {
     var userController = Get.put(UserController());
     userController.setToken(token);
     userController.setRefresh(refreshToken);
-    userController.setPersistToken(token,refreshToken);
+    userController.setPersistToken(token, refreshToken);
     if (isFetchUser != false) {
       userController.fetchUser(token);
     }

@@ -1,3 +1,4 @@
+import 'package:fenix/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -42,7 +43,6 @@ class ProductListWidget extends StatelessWidget {
               child: Column(
                 children: [
                   Container(
-
                     height: MediaQuery.of(context).size.height * 0.25,
                     width: MediaQuery.of(context).size.width * 0.455,
                     decoration: BoxDecoration(
@@ -182,9 +182,16 @@ class ProductListWidget extends StatelessWidget {
             Positioned(
               top: 7,
               right: 20,
-              child: Icon(
-                FontAwesomeIcons.heart,
-                color: kTextBlackColor,
+              child: Container(
+                decoration: const BoxDecoration(color: white, shape: BoxShape.circle),
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Icon(
+                    FontAwesomeIcons.heart,
+                    color: kTextBlackColor,
+                    size: 20,
+                  ),
+                ),
               ),
             )
           ],
