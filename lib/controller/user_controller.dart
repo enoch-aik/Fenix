@@ -128,7 +128,7 @@ class UserController extends GetxController {
   }
 
   addItemToWishList(token, productId) async {
-    AccountServices.createWishList((status, response) {
+    UserServices.createWishList((status, response) {
       print('==> $response');
       if (status) {
         CustomSnackBar.successSnackBar('Cool', 'Product added to wishlist');
@@ -142,7 +142,7 @@ class UserController extends GetxController {
 
   getWishList(token) async {
     isFetchingWishes(true);
-    AccountServices.getWishList((status, response) {
+    UserServices.getWishList((status, response) {
       print('==> $response');
       isFetchingWishes(false);
       if (status) {

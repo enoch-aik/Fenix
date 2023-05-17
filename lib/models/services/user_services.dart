@@ -15,6 +15,30 @@ class UserServices {
   }
 
 
+  static createWishList(
+      Function callback, token,data) async {
+    var response =
+    await ApiServices.initialisePostRequest(url: wishListUrl, data:data, token: token);
+    print(response);
+    if (response is String) {
+      callback(false, response);
+    } else {
+      callback(true, response);
+    }
+  }
+
+  static getWishList(
+      Function callback, token) async {
+    var response =
+    await ApiServices.initialiseGetRequest(url: wishListUrl,  token: token);
+    print(response);
+    if (response is String) {
+      callback(false, response);
+    } else {
+      callback(true, response);
+    }
+  }
+
   static updateUser(
       Function callback,data,token) async {
     var response =

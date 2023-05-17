@@ -923,7 +923,7 @@ class ProductWidget extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.455,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
                       padding: EdgeInsets.only(left: 7.w),
@@ -1030,12 +1030,17 @@ class ProductWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Text(
-                      "$price  so’m",
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                          fontSize: 15.w,
-                          color: const Color(0xFFCE242B),
-                          fontWeight: FontWeight.w800),
+                    Padding(
+                      padding: EdgeInsets.only(left: 7.w),
+
+                      child: Text(
+                        "$price  so’m",
+                        textAlign: TextAlign.start,
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            fontSize: 15.w,
+                            color: const Color(0xFFCE242B),
+                            fontWeight: FontWeight.w800),
+                      ),
                     ),
                   ],
                 ),

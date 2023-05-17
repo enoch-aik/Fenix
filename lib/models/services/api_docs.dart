@@ -10,4 +10,4 @@ const String wishListUrl ="$baseUrl/accounts/wishlist";
 const String apartmentUrl ="$baseUrl/apartments?type";
 const String productUrl ="$baseUrl/products?category";
 const String wishlistUrl ="$baseUrl/accounts/wishlist";
-const String chatUrl ="$baseUrl/chats";
+const String chatUrl ="wss://qaqnuz.herokuapp.com/chats";
