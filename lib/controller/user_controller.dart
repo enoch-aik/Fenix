@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helpers/widgets/snack_bar.dart';
+import '../models/services/account_services.dart';
 import '../models/services/user_services.dart';
 import '../models/user_model.dart';
 import '../screens/onboarding/loading.dart';
@@ -20,6 +21,8 @@ class UserController extends GetxController {
   Position? _currentPosition;
   Rx<Position>?  userCurrentPosition;
   var isFetchingUserLocation = true.obs;
+  var isFetchingWishes = true.obs;
+  var wishList = [].obs;
 
   @override
   void onInit() {
@@ -123,6 +126,34 @@ class UserController extends GetxController {
       print(e);
     });
   }
+
+  addItemToWishList(token, productId) async {
+    AccountServices.createWishList((status, response) {
+      print('==> $response');
+      if (status) {
+        CustomSnackBar.successSnackBar('Cool', 'Product added to wishlist');
+        getWishList(token);
+      } else {
+        CustomSnackBar.failedSnackBar('Failed', '$response');
+      }
+    }, token, {"productId": productId});
+  }
+
+
+  getWishList(token) async {
+    isFetchingWishes(true);
+    AccountServices.getWishList((status, response) {
+      print('==> $response');
+      isFetchingWishes(false);
+      if (status) {
+        wishList.value = response['data'];
+      } else {
+        wishList.value = [];
+        print('Error - $response');
+      }
+    }, token);
+  }
+
 
   setPersistToken(token,refreshToken) async{
     SharedPreferences prefs = await SharedPreferences.getInstance();

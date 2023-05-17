@@ -21,34 +21,6 @@ class AccountController extends GetxController {
   TextEditingController get password => _password;
   final TextEditingController _password = TextEditingController();
 
-  var wishList = [].obs;
-  var isFetchingWishes = true.obs;
-
-  addItemToWishList(token, productId) async {
-    AccountServices.createWishList((status, response) {
-      print('==> $response');
-      if (status) {
-        CustomSnackBar.successSnackBar('Cool', 'Product added to wishlist');
-        getWishList(token);
-      } else {
-        CustomSnackBar.failedSnackBar('Failed', '$response');
-      }
-    }, token, {"productId": productId});
-  }
-
-  getWishList(token) async {
-    isFetchingWishes(true);
-    AccountServices.getWishList((status, response) {
-      print('==> $response');
-      isFetchingWishes(false);
-      if (status) {
-        wishList.value = response['data'];
-      } else {
-        wishList.value = [];
-        print('Error - $response');
-      }
-    }, token);
-  }
 
   signUp() async {
     Get.to(() => const Loading(

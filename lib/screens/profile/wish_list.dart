@@ -20,9 +20,8 @@ class WishList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AccountController accountController = Get.find();
     final UserController userController = Get.find();
-    accountController.getWishList(userController.getToken());
+    userController.getWishList(userController.getToken());
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width,
@@ -123,9 +122,9 @@ class WishList extends StatelessWidget {
               height: 20.w,
             ),
             Obx(
-                  () => accountController.isFetchingWishes.isTrue
+                  () => userController.isFetchingWishes.isTrue
                   ? const Center(child: CircularProgressIndicator())
-                  : accountController.wishList.isEmpty
+                  : userController.wishList.isEmpty
                   ? empty('Wishlist')
                   : GridView.builder(
                   primary: false,
@@ -141,9 +140,9 @@ class WishList extends StatelessWidget {
                       mainAxisSpacing: 0,
                       crossAxisSpacing: 0),
                   itemCount:
-                  accountController.wishList.length,
+                  userController.wishList.length,
                   itemBuilder: (context, i) {
-                    var item = accountController.wishList[i];
+                    var item = userController.wishList[i];
                     return InkWell(
                       onTap: () {
 
