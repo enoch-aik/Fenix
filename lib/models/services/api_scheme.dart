@@ -101,7 +101,7 @@ class ApiServices {
         return ApiServices.handleError(response);
       }
     } catch (e) {
-      print('Errororor - $e');
+      print('Error - $e');
       if (e.toString().contains('Expired') ||
           e.toString().contains('Invalid Token')) {
         AccountController accountController = Get.find();

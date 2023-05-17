@@ -13,6 +13,7 @@ import '../../onboarding/constants.dart';
 
 class ChangePassword extends StatelessWidget {
   ChangePassword({Key? key}) : super(key: key);
+
   final _formKey = GlobalKey<FormState>();
   final UserController _userController = Get.find();
   final AccountController accountController = Get.find();
@@ -116,17 +117,19 @@ class ChangePassword extends StatelessWidget {
                     DefaultButton(
                       title: 'Save',
                       onPress: () {
-                        CustomDialogs.showNoticeDialog(
-                            message:
-                                "Remember this new password on your next login.\nAre you sure you want to continue?",
-                            closeText: 'Cancel',
-                            okText: 'Confirm',
-                            onClick: () {
-                              accountController.changePassword(
-                                  _userController.getToken(),
-                                  oldPassController.text,
-                                  newPassController.text);
-                            });
+                        if (_formKey.currentState!.validate()) {
+                          CustomDialogs.showNoticeDialog(
+                              message:
+                                  "Remember this new password on your next login.\nAre you sure you want to continue?",
+                              closeText: 'Cancel',
+                              okText: 'Confirm',
+                              onClick: () {
+                                accountController.changePassword(
+                                    _userController.getToken(),
+                                    oldPassController.text,
+                                    newPassController.text);
+                              });
+                        }
                       },
                     )
                   ],
