@@ -19,6 +19,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../../controller/map_controller.dart';
 import '../../controller/product_controller.dart';
+import '../../helpers/categories.dart';
 import '../../helpers/icons/custom_icons_icons.dart';
 import '../../helpers/widgets/top_rated_Items.dart';
 import '../../theme.dart';
@@ -135,7 +136,12 @@ class _HomeState extends State<Home> {
                       onTap: () => setState(() {
                         tab = 'dacha';
 
-                        _productController.getApartments(token, "dacha");
+                        _productController.getApartments(
+                            token,
+                            Category()
+                                .homeCategories[0]
+                                .toString()
+                                .toLowerCase());
                       }),
                     ),
                     MenuTitle(
@@ -145,7 +151,12 @@ class _HomeState extends State<Home> {
                       onTap: () => setState(() {
                         tab = 'house';
 
-                        _productController.getApartments(token, "house");
+                        _productController.getApartments(
+                            token,
+                            Category()
+                                .homeCategories[2]
+                                .toString()
+                                .toLowerCase());
                       }),
                     ),
                     MenuTitle(
@@ -155,7 +166,12 @@ class _HomeState extends State<Home> {
                       onTap: () => setState(() {
                         tab = 'apartment';
 
-                        _productController.getApartments(token, "apartment");
+                        _productController.getApartments(
+                            token,
+                            Category()
+                                .homeCategories[1]
+                                .toString()
+                                .toLowerCase());
                       }),
                     ),
                     MenuTitle(
@@ -164,7 +180,12 @@ class _HomeState extends State<Home> {
                       color: white,
                       onTap: () => setState(() {
                         tab = 'car';
-                        _productController.getProducts(token, "car");
+                        _productController.getProducts(
+                            token,
+                            Category()
+                                .homeCategories[3]
+                                .toString()
+                                .toLowerCase());
                       }),
                     ),
                     MenuTitle(
@@ -173,7 +194,12 @@ class _HomeState extends State<Home> {
                       color: white,
                       onTap: () => setState(() {
                         tab = 'electronics';
-                        _productController.getProducts(token, "electronics");
+                        _productController.getProducts(
+                            token,
+                            Category()
+                                .homeCategories[4]
+                                .toString()
+                                .toLowerCase());
                       }),
                     ),
                   ],
@@ -1032,7 +1058,6 @@ class ProductWidget extends StatelessWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 7.w),
-
                       child: Text(
                         "$price  so’m",
                         textAlign: TextAlign.start,
@@ -1055,8 +1080,8 @@ class ProductWidget extends StatelessWidget {
             onTap: () => _userController.addItemToWishList(
                 _userController.getToken(), product['id']),
             child: Container(
-              decoration: const BoxDecoration(
-                  color: Colors.white, shape: BoxShape.circle),
+              decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.2), shape: BoxShape.circle),
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Icon(

@@ -19,6 +19,7 @@ class LogoutCard extends StatefulWidget {
 class _LogoutCardState extends State<LogoutCard> {
 
    String token = '';
+   String refreshToken = '';
    final AccountController _accountController = Get.find();
    final UserController _userController = Get.find();
 
@@ -32,6 +33,7 @@ class _LogoutCardState extends State<LogoutCard> {
 
    boot()async{
      token =  _userController.getToken();
+     refreshToken =  _userController.getRefreshToken();
    }
 
   @override
@@ -90,7 +92,7 @@ class _LogoutCardState extends State<LogoutCard> {
               Expanded(
                 child: InkWell(
                   onTap: (){
-                    _accountController.signOut(token);
+                    _accountController.signOut(refreshToken);
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(left: 15),

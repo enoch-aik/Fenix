@@ -60,12 +60,9 @@ class AccountController extends GetxController {
   }
 
   changePassword(token, oldPassword, newPassword) async {
-    Get.to(() => const Loading(
-          navigateScreen: AcctCreationSuccess(),
-        ));
+    Get.to(() => const Loading(navigateScreen: AcctCreationSuccess()));
     AccountServices.changePassword((status, response) {
       Get.back();
-
       if (status) {
         Get.back();
         CustomSnackBar.successSnackBar(
@@ -77,20 +74,13 @@ class AccountController extends GetxController {
     }, token, {"oldPassword": oldPassword, "newPassword": newPassword});
   }
 
-
   deleteAccount(token, oldPassword, newPassword) async {
-    Get.to(() => const Loading(
-          navigateScreen: AcctCreationSuccess(),
-        ));
+    Get.to(() => const Loading(navigateScreen: AcctCreationSuccess()));
     AccountServices.changePassword((status, response) {
       Get.back();
-
       if (status) {
-        CustomSnackBar.successSnackBar(
-            'Great', 'Account deleted successfully');
+        CustomSnackBar.successSnackBar('Great', 'Account deleted successfully');
         Get.offAll(() => SignIn());
-
-
       } else {
         Get.back();
         CustomSnackBar.failedSnackBar('Failed', '$response');
@@ -98,11 +88,11 @@ class AccountController extends GetxController {
     }, token, {"oldPassword": oldPassword, "newPassword": newPassword});
   }
 
-  refreshToken(token) async {
+  refreshToken(token,{fetchUser=false}) async {
     AccountServices.refreshToken((status, response) {
       if (status) {
         setUser(response['data']['accessToken'],
-            refreshToken: response['data']['refreshToken'], isFetchUser: false);
+            refreshToken: response['data']['refreshToken'], isFetchUser: fetchUser);
       } else {
         Get.back();
         CustomSnackBar.failedSnackBar('Failed', '$response');

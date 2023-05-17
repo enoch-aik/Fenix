@@ -37,8 +37,9 @@ class _SplashScreenState extends State<SplashScreen> {
         () => token == null
             ? Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => const OnboardingOne()))
-            : accountController.setUser(token, refreshToken: refreshToken));
+            : accountController.refreshToken( refreshToken,fetchUser : true));
   }
+
 
   @override
   Widget build(BuildContext context) {

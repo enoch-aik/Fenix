@@ -181,6 +181,42 @@ color: color??lightGreen,
 }
 
 
+class TransparentButton extends StatelessWidget {
+  final String? title;
+  final onPress;
+  final color;
+
+  const TransparentButton({
+    Key? key,
+    this.title,
+    this.onPress,
+    this.color,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onPress,
+      child: Container(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(title.toString(),
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 16,
+                  color: primary)),
+        ),
+        decoration: BoxDecoration(
+            border: Border.all(color: primary),
+
+            borderRadius: BorderRadius.circular(12)),
+      ),
+    );
+  }
+}
+
+
 class SwipeToggleButton extends StatelessWidget {
   Widget child;
 
