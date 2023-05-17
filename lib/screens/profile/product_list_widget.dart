@@ -183,7 +183,8 @@ class ProductListWidget extends StatelessWidget {
               top: 7,
               right: 20,
               child: Container(
-                decoration: const BoxDecoration(color: white, shape: BoxShape.circle),
+                decoration: BoxDecoration(
+                    color: white.withOpacity(0.6), shape: BoxShape.circle),
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Icon(

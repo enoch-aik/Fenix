@@ -1081,7 +1081,7 @@ class ProductWidget extends StatelessWidget {
                 _userController.getToken(), product['id']),
             child: Container(
               decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.2), shape: BoxShape.circle),
+                  color: Colors.white.withOpacity(0.6), shape: BoxShape.circle),
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Icon(
