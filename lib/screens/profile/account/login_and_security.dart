@@ -10,6 +10,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../../../controller/user_controller.dart';
 import '../../onboarding/constants.dart';
+import 'change_password.dart';
 
 class LoginAndSecurity extends StatelessWidget {
   LoginAndSecurity({Key? key}) : super(key: key);
@@ -120,20 +121,23 @@ class LoginAndSecurity extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Reset Password",
-                          style: TextStyle(
-                            fontSize: 15.w,
-                            fontWeight: FontWeight.w500,
+                    InkWell(
+                      onTap: () => Get.to(() => ChangePassword()),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Reset Password",
+                            style: TextStyle(
+                              fontSize: 15.w,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                        ),
-                        const Icon(
-                          Icons.arrow_forward,
-                        )
-                      ],
+                          const Icon(
+                            Icons.arrow_forward,
+                          )
+                        ],
+                      ),
                     ),
                     Divider(
                       thickness: 1,

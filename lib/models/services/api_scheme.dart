@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:fenix/controller/account_controller.dart';
 import 'package:fenix/controller/user_controller.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -26,7 +27,6 @@ class ApiServices {
     }
     return await http.post(uri, body: jsonString, headers: headers);
   }
-
 
   static makeDeleteRequest({apiUrl, data, token}) async {
     final uri = Uri.parse(apiUrl);
@@ -81,7 +81,6 @@ class ApiServices {
     return await http.get(uri, headers: headers);
   }
 
-
   static initialisePostRequest(
       {required data, required String url, token}) async {
     try {
@@ -103,13 +102,11 @@ class ApiServices {
       }
     } catch (e) {
       print('Errororor - $e');
-      if (e.toString().contains('Expired')||e.toString().contains('Invalid Token')) {
-
+      if (e.toString().contains('Expired') ||
+          e.toString().contains('Invalid Token')) {
+        AccountController accountController = Get.find();
         UserController userController = Get.find();
-        userController.setPersistToken(null,null);
-        Get.offAll(
-              () => SignIn(),
-        );
+        accountController.refreshToken(userController.getRefreshToken());
       }
       if (e.toString().contains('HandshakeException')) {
         return 'Check your internet connection';
@@ -118,7 +115,6 @@ class ApiServices {
       }
     }
   }
-
 
   static initialiseDeleteRequest(
       {required data, required String url, token}) async {
@@ -141,13 +137,11 @@ class ApiServices {
       }
     } catch (e) {
       print('Errororor - $e');
-      if (e.toString().contains('Expired')||e.toString().contains('Invalid Token')) {
-
+      if (e.toString().contains('Expired') ||
+          e.toString().contains('Invalid Token')) {
+        AccountController accountController = Get.find();
         UserController userController = Get.find();
-        userController.setPersistToken(null,null);
-        Get.offAll(
-              () => SignIn(),
-        );
+        accountController.refreshToken(userController.getRefreshToken());
       }
       if (e.toString().contains('HandshakeException')) {
         return 'Check your internet connection';
@@ -172,12 +166,11 @@ class ApiServices {
       }
     } catch (e) {
       print(e.toString());
-      if (e.toString().contains('Expired')||e.toString().contains('Invalid Token')) {
+      if (e.toString().contains('Expired') ||
+          e.toString().contains('Invalid Token')) {
+        AccountController accountController = Get.find();
         UserController userController = Get.find();
-        userController.setPersistToken(null,null);
-        Get.offAll(
-              () => SignIn(),
-        );
+        accountController.refreshToken(userController.getRefreshToken());
       }
       return e.toString();
     }
@@ -201,13 +194,11 @@ class ApiServices {
       }
     } catch (e) {
       print('Erroror - - - - - $e');
-      if (e.toString().contains('Expired')||e.toString().contains('Invalid Token')) {
-
+      if (e.toString().contains('Expired') ||
+          e.toString().contains('Invalid Token')) {
+        AccountController accountController = Get.find();
         UserController userController = Get.find();
-        userController.setPersistToken(null,null);
-        Get.offAll(
-          () => SignIn(),
-        );
+        accountController.refreshToken(userController.getRefreshToken());
       }
       return e.toString();
     }

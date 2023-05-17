@@ -134,7 +134,8 @@ class SignUp extends StatelessWidget {
                                   return "Password does not match";
                                 }
                                 return null;
-                              }),
+                              }
+                              ),
                           kSpacing,
                           // Row(
                           //   mainAxisAlignment: MainAxisAlignment.spaceBetween,

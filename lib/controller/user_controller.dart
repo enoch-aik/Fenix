@@ -33,7 +33,6 @@ class UserController extends GetxController {
   autoRefreshToken() {
     AccountController accountController = Get.find();
     Timer.periodic(const Duration(minutes: 10), (timer) {
-      print(timer.tick);
       accountController.refreshToken(getRefreshToken());
     });
   }
