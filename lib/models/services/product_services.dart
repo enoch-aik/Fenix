@@ -29,17 +29,7 @@ class ProductServices {
     }
   }
 
-  static addToWishlist(
-      Function callback,data,token) async {
-    var response =
-    await ApiServices.initialisePostRequest(url: wishlistUrl, token: token,data: data);
-    print(response);
-    if (response is String) {
-      callback(false, response);
-    } else {
-      callback(true, response);
-    }
-  }
+
 
 
 }

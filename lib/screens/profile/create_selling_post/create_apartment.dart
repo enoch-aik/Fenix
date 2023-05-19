@@ -42,6 +42,7 @@ class _CreateApartmentState extends State<CreateApartment> {
   final descriptionController = TextEditingController();
   final addressController = TextEditingController();
   final nightController = TextEditingController();
+  final priceController = TextEditingController();
   final weekController = TextEditingController();
   final monthController = TextEditingController();
 
@@ -1257,6 +1258,7 @@ Future<void> displayPrediction(
                                   ? 'rental'
                                   : 'sale',
                               apartmentType: widget.apartmentType,
+                              salePrice: priceController.text,
                               nightAmount: nightController.text,
                               weekAmount: weekController.text,
                               monthAmount: monthController.text,

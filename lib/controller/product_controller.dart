@@ -68,21 +68,5 @@ class ProductController extends GetxController {
     }, token, storeId);
   }
 
-  addProductToWishlist(token,
-      {productId}) {
-    ProductServices.addToWishlist((status, response) {
-      print(response);
-      if (status) {
-        CustomSnackBar.successSnackBar(
-            'Success', 'Profile created successfully');
-      } else {
-        Get.back();
-        CustomSnackBar.failedSnackBar('Failed', '$response');
-      }
-    }, {
-    "productId": productId,
-    }, token);
-  }
-
 
 }

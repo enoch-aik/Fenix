@@ -279,11 +279,16 @@ class _SellingListState extends State<SellingList> {
                                       var item = apartment[i];
                                       return InkWell(
                                           onTap: () {
-                                            Get.to(() => ApartmentDetails(
-                                                apartment: item));
+                                            print(item['media'][0]['url']);
+                                            // Get.to(() => ApartmentDetails(
+                                            //     apartment: item));
                                           },
                                           child:
-                                              ProductListWidget(product: item));
+                                              ProductListWidget( product: item,
+                                                  isNetwork: item['media'].isNotEmpty,
+                                                  image: item['media'].isNotEmpty
+                                                      ? item['media'][1]['url']
+                                                      : "assets/images/cars.png"),);
                                     }),
                       ),
                     if (tab == 'House')

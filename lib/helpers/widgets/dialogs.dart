@@ -126,6 +126,7 @@ class CustomDialogs {
       onClose,
       onClick,
       isMessageWidget = false}) {
+    print(image);
     return Get.bottomSheet(
       Container(
         decoration: const BoxDecoration(
@@ -149,8 +150,8 @@ class CustomDialogs {
                     child: image != null
                         ? Image.asset(
                             image,
-                            height: 35,
-                            width: 35,
+                            height: 45,
+                            width: 45,
                           )
                         : const Icon(Icons.priority_high, size: 30, color: red),
                   ),
