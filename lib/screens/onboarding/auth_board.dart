@@ -1,5 +1,6 @@
 import 'package:fenix/const.dart';
 import 'package:fenix/helpers/widgets.dart';
+import 'package:fenix/screens/auth_screens/resend_verification_mail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -117,7 +118,12 @@ class AuthBoard extends StatelessWidget {
                           },
                           child: ButtonWidget(title: "Create Account"),
                         ),
-                        ButtonWidget(title: "Continue as Guest"),
+                        InkWell(
+                          onTap: (){
+                            Get.to(() => ResendVerificationMail());
+                          },
+                            child: ButtonWidget(title: "Verify Account"),
+                        ),
                       ],
                     ),
 

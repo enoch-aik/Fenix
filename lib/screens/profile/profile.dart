@@ -11,8 +11,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../controller/account_controller.dart';
 import '../../helpers/widgets/dialogs.dart';
-import '../../helpers/widgets/logout_card_widget.dart';
-import '../auth_screens/create_profile.dart';
 import '../onboarding/constants.dart';
 import 'account/account.dart';
 import 'create_selling_post/selling_post.dart';
