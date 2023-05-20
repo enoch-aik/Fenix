@@ -28,6 +28,7 @@ class ApiServices {
     return await http.post(uri, body: jsonString, headers: headers);
   }
 
+
   static makeDeleteRequest({apiUrl, data, token}) async {
     final uri = Uri.parse(apiUrl);
     final jsonString = json.encode(data);
