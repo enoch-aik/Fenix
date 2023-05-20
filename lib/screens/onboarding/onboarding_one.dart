@@ -66,13 +66,7 @@ class OnboardingOne extends StatelessWidget {
                     ),
                     SizedBox(height: 40.w,),
 
-                    Text("Developed by Khasan.A",
-                      style: TextStyle(
-                          color: Colors.grey.shade800,
-                        fontSize: 16.w,
-                          fontWeight: FontWeight.w200
 
-                      ),)
                   ],
                 ),
               ],

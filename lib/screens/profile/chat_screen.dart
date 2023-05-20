@@ -135,7 +135,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               Expanded(
                                 child: TextFormField(
                                   decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.zero,
+                                      contentPadding: EdgeInsets.symmetric(horizontal: 15.w),
                                       suffixIcon: IconButton(
                                           onPressed: () {},
                                           icon:

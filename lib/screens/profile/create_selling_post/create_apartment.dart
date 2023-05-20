@@ -701,7 +701,7 @@ Future<void> displayPrediction(
                         hint: "Search location",
                         textController: addressController,
                         onTap: () => getLocation(),
-                        suffixIcon: InkWell(
+                        suffix: InkWell(
                             onTap: (){
                               _handlePressButton();
                             },child: const Icon(Icons.location_on_outlined)),
