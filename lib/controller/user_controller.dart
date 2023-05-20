@@ -22,6 +22,8 @@ class UserController extends GetxController {
   Rx<Position>? userCurrentPosition;
   var isFetchingUserLocation = true.obs;
   var isFetchingWishes = true.obs;
+  var isLoadingLikes = false.obs;
+  var selectedId = ''.obs;
   var wishList = [].obs;
 
   @override
@@ -129,27 +131,37 @@ class UserController extends GetxController {
       _currentPosition = position;
       userCurrentPosition = position.obs;
       isFetchingUserLocation(false);
-      print("++++++${_currentPosition!.latitude}");
-      print("=======${userCurrentPosition!.value.latitude.obs}");
     }).catchError((e) {
       print(e);
     });
   }
 
-  addItemToWishList(token, productId) async {
+  addItemToWishList(token, productId, String category) async {
+    isLoadingLikes(true);
+    selectedId(productId);
+    var categoryId =
+        category.toLowerCase() == 'electronics' ? 'productId' : 'apartmentId';
     UserServices.createWishList((status, response) {
-      print('==> $response');
+      isLoadingLikes(false);
+      selectedId('');
+
       if (status) {
         CustomSnackBar.successSnackBar('Cool', 'Product added to wishlist');
         getWishList(token);
       } else {
         CustomSnackBar.failedSnackBar('Failed', '$response');
       }
-    }, token, {"productId": productId});
+    }, token, {categoryId: productId});
   }
 
   deleteItemFromWishList(token, productId) async {
+    isLoadingLikes(true);
+    selectedId(productId);
+
     UserServices.deleteFromWishList((status, response) {
+      isLoadingLikes(false);
+      selectedId('');
+
       if (status) {
         CustomSnackBar.successSnackBar('Cool', 'Product deleted from wishlist');
         getWishList(token);

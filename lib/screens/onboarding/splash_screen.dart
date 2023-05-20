@@ -32,6 +32,8 @@ class _SplashScreenState extends State<SplashScreen> {
     var token = prefs.getString('token');
     var refreshToken = prefs.getString('refreshToken');
     AccountController accountController = Get.put(AccountController());
+    print(token);
+    print(refreshToken);
     Timer(
         const Duration(seconds: 3),
         () => token == null
@@ -46,39 +48,6 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
         backgroundColor: const Color(0xFFE4F0FA),
         body: Image.asset('assets/images/Splash.gif', fit: BoxFit.cover,height: height(),width: width(),)
-
-        // Stack(
-        //   alignment: Alignment.center,
-        //   children: [
-        //     Padding(
-        //       padding: EdgeInsets.symmetric(vertical: 78.w),
-        //       child: Column(
-        //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //         children: [
-        //           Image.asset(
-        //             "assets/images/logoFrame.png",
-        //             fit: BoxFit.fill,
-        //           ),
-        //           Text(
-        //             "Developed by Khasan.A",
-        //             style: TextStyle(
-        //                 color: Colors.grey.shade800,
-        //                 fontSize: 16.w,
-        //                 fontWeight: FontWeight.w200),
-        //           )
-        //         ],
-        //       ),
-        //     ),
-        //     const SizedBox(
-        //       height: 100,
-        //       child: LoadingIndicator(
-        //         indicatorType: Indicator.ballPulseSync,
-        //         colors: [Color(0xFF28D7AD)],
-        //       ),
-        //     ),
-        //     const BottomHillsWidget()
-        //   ],
-        // ),
         );
   }
 }

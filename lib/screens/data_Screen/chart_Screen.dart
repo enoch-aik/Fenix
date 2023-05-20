@@ -21,8 +21,7 @@ class _ChartsState extends State<Charts> {
     return Scaffold(
       backgroundColor: Color(0xFFE4F0FA),
       appBar: PreferredSize(
-        preferredSize: Size(MediaQuery.of(context).size.width,
-            height() * 0.2),
+        preferredSize: Size(MediaQuery.of(context).size.width, height() * 0.2),
         child: Container(
           decoration: BoxDecoration(
               gradient: gradient(
@@ -107,7 +106,7 @@ class _ChartsState extends State<Charts> {
           ),
         ),
       ),
-      body: Column(
+      body: ListView(
         children: [
           SizedBox(height: Get.height * 0.02),
           Container(
@@ -130,10 +129,7 @@ class _ChartsState extends State<Charts> {
               child: Center(
                 child: Text(
                   'Tez Orada!',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1!
-                      .copyWith(fontSize: 20.w, fontWeight: FontWeight.w700),
+                  style: TextStyle(fontSize: 20.w, fontWeight: FontWeight.w700)
                 ),
               ),
             ),
@@ -148,8 +144,12 @@ class _ChartsState extends State<Charts> {
           Container(
               height: Get.height * 0.22,
               width: width() * 0.9,
+              decoration: neumorph(),
+
               margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.w),
               child: BarChartScreen()),
+          SizedBox(height: 10),
+
         ],
       ),
     );

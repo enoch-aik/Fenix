@@ -179,18 +179,17 @@ class ProductListWidget extends StatelessWidget {
                 ],
               ),
             ),
-
             Positioned(
               top: 7,
               right: 20,
               child: Container(
                 decoration: BoxDecoration(
                     color: white.withOpacity(0.6), shape: BoxShape.circle),
-                child: Padding(
-                  padding: const EdgeInsets.all(4.0),
+                child: const Padding(
+                  padding: EdgeInsets.all(4.0),
                   child: Icon(
-                    FontAwesomeIcons.heart,
-                    color: kTextBlackColor,
+                    Icons.favorite_outline,
+                    color: Colors.blue,
                     size: 20,
                   ),
                 ),
@@ -217,55 +216,59 @@ class Button extends StatelessWidget {
   String btnText;
   Color? textColor;
   Color? btnColor;
+  void Function()? onTap;
 
-  Button({Key? key, required this.btnText, this.textColor, this.btnColor})
+  Button({Key? key, required this.btnText, this.textColor, this.btnColor, this.onTap})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      margin: EdgeInsets.symmetric(horizontal: 25.w, vertical: 7.w),
-      padding: EdgeInsets.symmetric(vertical: 5.w),
-      decoration: BoxDecoration(
-        color: btnColor ?? const Color(0xFFE4EFF9),
-        borderRadius: BorderRadius.circular(8.w),
-        border: Border.all(color: const Color(0xFf334669), width: 0.1),
-        gradient: LinearGradient(
-            colors: [
-              btnColor ?? Colors.white,
-              btnColor ?? const Color(0xFFDBE6F2).withOpacity(0.2),
-              btnColor ?? const Color(0xFF8F9FAE).withOpacity(0.2),
-            ],
-            stops: [
-              0.0,
-              0.5,
-              1.0
-            ],
-            begin: FractionalOffset.topLeft,
-            end: FractionalOffset.bottomRight,
-            tileMode: TileMode.repeated),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            spreadRadius: 0,
-            blurRadius: 5,
-            offset: const Offset(1, 0), // changes position of shadow
-          ),
-          BoxShadow(
-            color: Colors.white.withOpacity(0.4),
-            spreadRadius: 1,
-            blurRadius: 3,
-            offset: const Offset(1, 1), // changes position of shadow
-          ),
-        ],
-      ),
-      child: Text(
-        btnText,
-        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-            fontSize: 14.w,
-            fontWeight: FontWeight.w800,
-            color: textColor ?? kTextBlackColor),
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        alignment: Alignment.center,
+        margin: EdgeInsets.symmetric(horizontal: 25.w, vertical: 7.w),
+        padding: EdgeInsets.symmetric(vertical: 5.w),
+        decoration: BoxDecoration(
+          color: btnColor ?? const Color(0xFFE4EFF9),
+          borderRadius: BorderRadius.circular(8.w),
+          border: Border.all(color: const Color(0xFf334669), width: 0.1),
+          gradient: LinearGradient(
+              colors: [
+                btnColor ?? Colors.white,
+                btnColor ?? const Color(0xFFDBE6F2).withOpacity(0.2),
+                btnColor ?? const Color(0xFF8F9FAE).withOpacity(0.2),
+              ],
+              stops: [
+                0.0,
+                0.5,
+                1.0
+              ],
+              begin: FractionalOffset.topLeft,
+              end: FractionalOffset.bottomRight,
+              tileMode: TileMode.repeated),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              spreadRadius: 0,
+              blurRadius: 5,
+              offset: const Offset(1, 0), // changes position of shadow
+            ),
+            BoxShadow(
+              color: Colors.white.withOpacity(0.4),
+              spreadRadius: 1,
+              blurRadius: 3,
+              offset: const Offset(1, 1), // changes position of shadow
+            ),
+          ],
+        ),
+        child: Text(
+          btnText,
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+              fontSize: 14.w,
+              fontWeight: FontWeight.w800,
+              color: textColor ?? kTextBlackColor),
+        ),
       ),
     );
   }

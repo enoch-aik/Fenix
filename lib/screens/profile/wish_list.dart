@@ -1,9 +1,11 @@
 import 'package:fenix/const.dart';
 import 'package:fenix/controller/user_controller.dart';
+import 'package:fenix/helpers/widgets/dialogs.dart';
 import 'package:fenix/screens/profile/product_list_widget.dart';
 import 'package:fenix/screens/views.dart';
 import 'package:fenix/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -16,12 +18,11 @@ import '../onboarding/constants.dart';
 class WishList extends StatelessWidget {
   const WishList({Key? key}) : super(key: key);
 
-
-
   @override
   Widget build(BuildContext context) {
     final UserController userController = Get.find();
     userController.getWishList(userController.getToken());
+    String token = userController.getToken();
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width,
@@ -40,7 +41,7 @@ class WishList extends StatelessWidget {
             children: [
               Align(
                 alignment: Alignment.centerLeft,
-                child: Container(
+                child: SizedBox(
                   height: MediaQuery.of(context).size.height * 0.055,
                   child: Image.asset(
                     "assets/images/fenix_c.png",
@@ -122,132 +123,219 @@ class WishList extends StatelessWidget {
               height: 20.w,
             ),
             Obx(
-                  () => userController.isFetchingWishes.isTrue
+              () => userController.isFetchingWishes.isTrue
                   ? const Center(child: CircularProgressIndicator())
                   : userController.wishList.isEmpty
-                  ? empty('Wishlist')
-                  : GridView.builder(
-                  primary: false,
-                  shrinkWrap: true,
-                  gridDelegate:
-                  SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent:
-                      MediaQuery.of(context)
-                          .size
-                          .width *
-                          0.5,
-                      childAspectRatio: 1 / 2.7,
-                      mainAxisSpacing: 0,
-                      crossAxisSpacing: 0),
-                  itemCount:
-                  userController.wishList.length,
-                  itemBuilder: (context, i) {
-                    var item = userController.wishList[i];
-                    return InkWell(
-                      onTap: () {
-                      },
-                      child:  ProductListWidget(
-                          product: item,
-                          isNetwork: item['media']!=null && item['media'].isNotEmpty,
-                          image: item['media']!=null && item['media'].isNotEmpty
-                              ? item['media'][0]['url']
-                              : "assets/images/electronics.png"),
-                    );
-                  }),
+                      ? empty('Wishlist')
+                      : GridView.builder(
+                          primary: false,
+                          shrinkWrap: true,
+                          gridDelegate:
+                              SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent:
+                                      MediaQuery.of(context).size.width * 0.5,
+                                  childAspectRatio: 1 / 2.5,
+                                  mainAxisSpacing: 0,
+                                  crossAxisSpacing: 0),
+                          itemCount: userController.wishList.length,
+                          itemBuilder: (context, i) {
+                            var item = userController.wishList[i];
+                            return InkWell(
+                              onTap: () {},
+                              child: wishedItem(item, i, userController, token),
+                            );
+                          }),
             ),
-            // SizedBox(
-            //   height: 20.w,
-            // ),
-            // Padding(
-            //     padding: EdgeInsets.all(14.w),
-            //     child: Row(
-            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //       children: [
-            //         Text(
-            //           "Your Post List",
-            //           style: TextStyle(
-            //               color: Colors.black,
-            //               fontSize: 17.w,
-            //               fontWeight: FontWeight.w700),
-            //         ),
-            //         Text(
-            //           "See all",
-            //           style: TextStyle(
-            //             color: Colors.black,
-            //             fontSize: 13.w,
-            //             fontWeight: FontWeight.w400,
-            //           ),
-            //         )
-            //       ],
-            //     )),
-            // GridView.builder(
-            //     gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            //         maxCrossAxisExtent: 200,
-            //         childAspectRatio: 1.3 / 1,
-            //         crossAxisSpacing: 0,
-            //         mainAxisSpacing: 0),
-            //     itemCount: 9,
-            //     physics: NeverScrollableScrollPhysics(),
-            //     shrinkWrap: true,
-            //     itemBuilder: (BuildContext ctx, index) {
-            //       return Column(
-            //         children: [
-            //           Container(
-            //             height: 66.w,
-            //             width: MediaQuery.of(context).size.width * 0.3,
-            //             alignment: Alignment.center,
-            //             margin: EdgeInsets.symmetric(
-            //                 horizontal: 10.w, vertical: 5.w),
-            //             decoration: BoxDecoration(
-            //               color: Color(0xFFE4EFF9),
-            //               borderRadius: BorderRadius.circular(17.w),
-            //               border:
-            //                   Border.all(color: Color(0xFf334669), width: 0.1),
-            //               gradient: LinearGradient(
-            //                   colors: [
-            //                     Colors.white,
-            //                     Color(0xFFDBE6F2).withOpacity(0.2),
-            //                     Color(0xFF8F9FAE).withOpacity(0.2),
-            //                   ],
-            //                   stops: [
-            //                     0.0,
-            //                     0.5,
-            //                     1.0
-            //                   ],
-            //                   begin: FractionalOffset.topLeft,
-            //                   end: FractionalOffset.bottomRight,
-            //                   tileMode: TileMode.repeated),
-            //               boxShadow: [
-            //                 BoxShadow(
-            //                   color: Colors.grey.withOpacity(0.3),
-            //                   spreadRadius: 0,
-            //                   blurRadius: 5,
-            //                   offset:
-            //                       Offset(1, 0), // changes position of shadow
-            //                 ),
-            //                 BoxShadow(
-            //                   color: Colors.white.withOpacity(0.4),
-            //                   spreadRadius: 1,
-            //                   blurRadius: 3,
-            //                   offset:
-            //                       Offset(1, 1), // changes position of shadow
-            //                 ),
-            //               ],
-            //             ),
-            //           ),
-            //           Text(
-            //             "great house for...",
-            //             style: Theme.of(context).textTheme.bodyText1!.copyWith(
-            //                 fontSize: 11.w,
-            //                 fontWeight: FontWeight.w300,
-            //                 color: Colors.black),
-            //           ),
-            //         ],
-            //       );
-            //     }),
           ],
         ),
       ),
+    );
+  }
+
+  wishedItem(product, index, UserController userController, token) {
+    return Column(
+      children: [
+        Stack(
+          children: [
+            Container(
+              height: height() * 0.42,
+              width: width() * 0.452,
+              margin: EdgeInsets.symmetric(horizontal: 9.w),
+              decoration: BoxDecoration(
+                  color: const Color(0xFFDAE5F2),
+                  borderRadius: BorderRadius.circular(10.w),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 1,
+                      blurRadius: 2,
+                      offset: const Offset(0, 1), // changes position of shadow
+                    ),
+                    BoxShadow(
+                      color: Colors.white.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 3,
+                      offset:
+                          const Offset(-3, -6), // changes position of shadow
+                    ),
+                  ]),
+              child: Column(
+                children: [
+                  Container(
+                    height: height() * 0.25,
+                    width: width() * 0.455,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.w),
+                      image: const DecorationImage(
+                          image: AssetImage("assets/images/house.png"),
+                          fit: BoxFit.cover),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.w
+                  ),
+                  SizedBox(
+                    height: height() * 0.15,
+                    width: width() * 0.455,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 7.w),
+                          child: SizedBox(
+                            height: 100.w,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  product['title'] ??
+                                      "Delivery info will  be here dg likseller offer sajncnask...",
+                                  style: TextStyle(
+                                      fontSize: 12.w,
+                                      color: const Color(0xFF334669),
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                Row(
+                                  children: [
+                                    RatingBar(
+                                        initialRating: 1,
+                                        direction: Axis.horizontal,
+                                        allowHalfRating: true,
+                                        itemCount: 5,
+                                        itemSize: 18.w,
+                                        ignoreGestures: true,
+                                        ratingWidget: RatingWidget(
+                                            full: const Icon(Icons.star,
+                                                color: Colors.orange),
+                                            half: const Icon(
+                                              Icons.star_half,
+                                              color: Colors.orange,
+                                            ),
+                                            empty: const Icon(
+                                              Icons.star_outline,
+                                              color: Colors.grey,
+                                            )),
+                                        onRatingUpdate: (value) {}),
+                                    SizedBox(
+                                      width: 10.w,
+                                    ),
+                                    Text(
+                                      "259 reviews.",
+                                      style: TextStyle(
+                                          fontSize: 10.w,
+                                          color: const Color(0xFF334669)
+                                              .withOpacity(0.6),
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    const Icon(Icons.location_on),
+                                    SizedBox(
+                                      width: 10.w,
+                                    ),
+                                    Text(
+                                      "United State, Florida 3340",
+                                      style: TextStyle(
+                                          fontSize: 11.w,
+                                          color: const Color(0xFF334669)
+                                              .withOpacity(0.6),
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    const Icon(Icons.fire_truck),
+                                    SizedBox(
+                                      width: 10.w,
+                                    ),
+                                    Text(
+                                      "Free Shipping",
+                                      style: TextStyle(
+                                          fontSize: 12.w,
+                                          color: const Color(0xFF0F7D46),
+                                          fontWeight: FontWeight.w500),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Text(
+                          "17,000   so’m",
+                          style: TextStyle(
+                              fontSize: 15.w,
+                              color: const Color(0xFFCE242B),
+                              fontWeight: FontWeight.w800),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              top: 7,
+              right: 20,
+              child: Container(
+                decoration: BoxDecoration(
+                    color: white.withOpacity(0.6), shape: BoxShape.circle),
+                child: const Padding(
+                  padding: EdgeInsets.all(4.0),
+                  child: Icon(
+                    Icons.favorite,
+                    color: Colors.blue,
+                    size: 25,
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+        SizedBox(height: 10.w),
+        Button(btnText: "See the Post"),
+        Button(
+          onTap: () {
+            CustomDialogs.showNoticeDialog(
+                message:
+                    'Do you really want to remove this item from your wish list?\n\nYou won\'t see it here again',
+                okText: 'Yes, remove',
+                closeText: 'Cancel',
+                onClick: () {
+                  Get.back();
+                  userController.deleteItemFromWishList(token, product['id']);
+                });
+          },
+          btnText: "Delete Post",
+          textColor: Colors.white,
+          btnColor: const Color(0xFFCE242B),
+        )
+      ],
     );
   }
 }

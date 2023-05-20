@@ -150,7 +150,6 @@ class _HomeState extends State<Home> {
                       color: white,
                       onTap: () => setState(() {
                         tab = 'house';
-
                         _productController.getApartments(
                             token,
                             Category()
@@ -892,7 +891,6 @@ class ProductWidget extends StatelessWidget {
   String price;
 
   final UserController _userController = Get.find();
-  final AccountController _accountController = Get.find();
 
   ProductWidget(
       {Key? key,
@@ -904,8 +902,6 @@ class ProductWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(category);
-    print(product);
     return Stack(
       children: [
         Container(
@@ -1006,34 +1002,31 @@ class ProductWidget extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            Obx(() => _userController
-                                    .isFetchingUserLocation.isFalse
-                                ? Row(
-                                    children: [
-                                      const Icon(Icons.location_on),
-                                      SizedBox(
-                                        width: 10.w,
-                                      ),
-                                      // ${distanceInKm(
-                                      //   _userController.userCurrentPosition!.value.latitude,
-                                      //   _userController.userCurrentPosition!.value.longitude,
-                                      //   location['location']['latitude'],
-                                      //   location['location']['longitude'],
-                                      // ).toString()}
-                                      Text(
-                                        "124Km",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1!
-                                            .copyWith(
+                            Obx(() =>
+                                _userController.isFetchingUserLocation.isFalse
+                                    ? Row(
+                                        children: [
+                                          const Icon(Icons.location_on),
+                                          SizedBox(
+                                            width: 10.w,
+                                          ),
+                                          // ${distanceInKm(
+                                          //   _userController.userCurrentPosition!.value.latitude,
+                                          //   _userController.userCurrentPosition!.value.longitude,
+                                          //   location['location']['latitude'],
+                                          //   location['location']['longitude'],
+                                          // ).toString()}
+                                          Text(
+                                            "124Km",
+                                            style: TextStyle(
                                                 fontSize: 11.w,
                                                 color: const Color(0xFF334669)
                                                     .withOpacity(0.6),
                                                 fontWeight: FontWeight.w400),
+                                          )
+                                        ],
                                       )
-                                    ],
-                                  )
-                                : tiny5Space()),
+                                    : tiny5Space()),
                             Row(
                               children: [
                                 const Icon(Icons.fire_truck),
@@ -1042,13 +1035,10 @@ class ProductWidget extends StatelessWidget {
                                 ),
                                 Text(
                                   "Free Shipping",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1!
-                                      .copyWith(
-                                          fontSize: 12.w,
-                                          color: const Color(0xFF0F7D46),
-                                          fontWeight: FontWeight.w500),
+                                  style: TextStyle(
+                                      fontSize: 12.w,
+                                      color: const Color(0xFF0F7D46),
+                                      fontWeight: FontWeight.w500),
                                 )
                               ],
                             ),
@@ -1059,7 +1049,7 @@ class ProductWidget extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(left: 7.w),
                       child: Text(
-                        "$price  so’m",
+                        "$price so’m",
                         textAlign: TextAlign.start,
                         style: Theme.of(context).textTheme.bodyText1!.copyWith(
                             fontSize: 15.w,
@@ -1077,17 +1067,36 @@ class ProductWidget extends StatelessWidget {
           top: 7,
           right: 20,
           child: InkWell(
-            onTap: () => _userController.addItemToWishList(
-                _userController.getToken(), product['id']),
+            onTap: () {
+              product['isLiked']
+                  ? _userController.deleteItemFromWishList(
+                      _userController.getToken(),
+                      product['id'],
+                    )
+                  : _userController.addItemToWishList(
+                      _userController.getToken(), product['id'], category);
+            },
             child: Container(
               decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.6), shape: BoxShape.circle),
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
-                child: Icon(
-                  FontAwesomeIcons.heart,
-                  color: kTextBlackColor,
-                  size: 20,
+                child: Obx(
+                  () => (_userController.isLoadingLikes.isTrue &&
+                          _userController.selectedId.value == product['id'])
+                      ? const Center(
+                          child: SizedBox(
+                          height: 30,
+                          width: 30,
+                          child: CircularProgressIndicator.adaptive(),
+                        ))
+                      : Icon(
+                          product['isLiked']
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                          color: product['isLiked'] ? blue : kTextBlackColor,
+                          size: 23,
+                        ),
                 ),
               ),
             ),
