@@ -12,6 +12,8 @@ class ProductController extends GetxController {
   var isFetchingProducts = true.obs;
   var isFetchingVehicles = true.obs;
   var isFetchingApartments = true.obs;
+  var isFetchingDacha = true.obs;
+  var isFetchingHouse = true.obs;
   String token = '';
 
   @override
@@ -29,7 +31,7 @@ class ProductController extends GetxController {
   }
 
   getApartments(token, type) {
-    isFetchingApartments(true);
+    // isFetchingApartments(true);
     ProductServices.getApartmentsByType((status, response) {
       isFetchingApartments(false);
       if (status) {
@@ -42,7 +44,7 @@ class ProductController extends GetxController {
   }
 
   getProducts(token, category) {
-    isFetchingProducts(true);
+    // isFetchingProducts(true);
     ProductServices.getProductsByCategory((status, response) {
       isFetchingProducts(false);
       if (status) {
@@ -54,19 +56,6 @@ class ProductController extends GetxController {
     }, token, category);
   }
 
-  getVehicles(token, storeId) {
-    isFetchingVehicles(true);
-    StoreServices.getVehicles((status, response) {
-      isFetchingVehicles(false);
-
-      if (status) {
-        vehicleList.value = response['data'];
-      } else {
-        vehicleList.value = [];
-        print('Error - $response');
-      }
-    }, token, storeId);
-  }
 
 
 }

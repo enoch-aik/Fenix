@@ -1068,7 +1068,7 @@ class ProductWidget extends StatelessWidget {
               product['isLiked']
                   ? _userController.deleteItemFromWishList(
                       _userController.getToken(),
-                      product['id'],
+                      product['id'],category
                     )
                   : _userController.addItemToWishList(
                       _userController.getToken(), product['id'], category);

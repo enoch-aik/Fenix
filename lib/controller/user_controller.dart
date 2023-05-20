@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:fenix/controller/account_controller.dart';
+import 'package:fenix/controller/product_controller.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -139,13 +140,22 @@ class UserController extends GetxController {
   addItemToWishList(token, productId, String category) async {
     isLoadingLikes(true);
     selectedId(productId);
-    var categoryId =
-        category.toLowerCase() == 'electronics' ? 'productId' : 'apartmentId';
+    var categoryId = (category.toLowerCase() == 'electronics' ||
+            category.toLowerCase() == 'cars')
+        ? 'productId'
+        : 'apartmentId';
     UserServices.createWishList((status, response) {
       isLoadingLikes(false);
       selectedId('');
 
       if (status) {
+        ProductController productController = Get.find();
+        if ((category.toLowerCase() == 'electronics' ||
+            category.toLowerCase() == 'cars')) {
+          productController.getProducts(token, category);
+        } else {
+          productController.getApartments(token, category);
+        }
         CustomSnackBar.successSnackBar('Cool', 'Product added to wishlist');
         getWishList(token);
       } else {
@@ -154,7 +164,7 @@ class UserController extends GetxController {
     }, token, {categoryId: productId});
   }
 
-  deleteItemFromWishList(token, productId) async {
+  deleteItemFromWishList(token, productId,category) async {
     isLoadingLikes(true);
     selectedId(productId);
 
@@ -163,6 +173,13 @@ class UserController extends GetxController {
       selectedId('');
 
       if (status) {
+        ProductController productController = Get.find();
+        if ((category.toLowerCase() == 'electronics' ||
+            category.toLowerCase() == 'cars')) {
+          productController.getProducts(token, category);
+        } else {
+          productController.getApartments(token, category);
+        }
         CustomSnackBar.successSnackBar('Cool', 'Product deleted from wishlist');
         getWishList(token);
       } else {
