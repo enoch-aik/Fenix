@@ -114,10 +114,7 @@ class _HomeState extends State<Home> {
                           horizontal: 15,
                           vertical: MediaQuery.of(context).size.height * 0.015),
                       hintText: "Search Fenix",
-                      hintStyle: Theme.of(context)
-                          .textTheme
-                          .bodyText1!
-                          .copyWith(
+                      hintStyle: TextStyle(
                               fontSize: 15.w, color: Colors.grey.shade500),
                       prefixIcon: const Icon(Icons.search),
                     ),
