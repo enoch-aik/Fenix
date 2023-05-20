@@ -6,6 +6,7 @@ import 'package:fenix/screens/onboarding/reset_email.dart';
 import 'package:fenix/screens/onboarding/reset_password.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import '../../controller/account_controller.dart';
@@ -19,6 +20,9 @@ class SignIn extends StatelessWidget {
   PageController pageController = PageController();
   final AccountController _accountController = Get.find();
   final _formKey = GlobalKey<FormState>();
+
+  RxBool obscure = false.obs;
+  Rx<IconData> obscureIcon = FontAwesomeIcons.eye.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -63,12 +67,26 @@ class SignIn extends StatelessWidget {
                       validator: (value) => EmailValidator.validate(value!),
                     ),
                     kSpacing,
-                    TextFieldWidget(
+                    Obx(() => TextFieldWidget(
                         hint: "Password",
                         textController: _accountController.password,
-                        obscureText: true,
+                        obscureText: obscure.value,
+                        suffixIcon: InkWell(
+                          onTap: (){
+                            if(obscure.value == true){
+                              obscure.value = false;
+                              obscureIcon.value =  FontAwesomeIcons.eye;
+                            }
+                            else{
+                              obscure.value = true;
+                              obscureIcon.value =  FontAwesomeIcons.eyeSlash;
+                            }
+                          },
+                          child: Obx(() => Icon(obscureIcon.value)),
+                        ),
+
                         validator: (value) =>
-                            PasswordValidator.validate(value!)),
+                            PasswordValidator.validate(value!)),),
                     kSpacing,
                     kSpacing,
                     Row(

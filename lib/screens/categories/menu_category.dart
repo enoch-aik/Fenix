@@ -24,7 +24,7 @@ class _MenuCategoryState extends State<MenuCategory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE4F0FA),
+      backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width,  height() * 0.155),
         child: Container(
@@ -47,7 +47,7 @@ class _MenuCategoryState extends State<MenuCategory> {
                 ),
               ),
 
-              SizedBox(width: 10,),
+              const SizedBox(width: 10,),
               Container(
                 height: 45,
                 width: MediaQuery.of(context).size.width,
@@ -63,13 +63,13 @@ class _MenuCategoryState extends State<MenuCategory> {
                   decoration: InputDecoration(
                     enabledBorder: InputBorder.none,
                     focusedBorder: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                     hintText: "Search Fenix",
                     hintStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
                         fontSize: 15.w,
                         color: Colors.grey.shade500
                     ),
-                    prefixIcon: Icon(Icons.search),
+                    prefixIcon: const Icon(Icons.search),
                   ),
                 ),
               ),
@@ -105,7 +105,7 @@ class _MenuCategoryState extends State<MenuCategory> {
                       mainAxisSpacing: 10),
                   itemCount: Category().allCategories.length,
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (BuildContext ctx, index) {
                     return InkWell(
                       onTap: (){
@@ -123,7 +123,7 @@ class _MenuCategoryState extends State<MenuCategory> {
                       },
                       child: Container(
                         padding: EdgeInsets.all(3.w),
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           image: DecorationImage(image: AssetImage("assets/images/categoryCard.png"),fit: BoxFit.fill)
                         ),
                         child: Stack(
@@ -162,19 +162,19 @@ class ProductWidget extends StatelessWidget {
           width: MediaQuery.of(context).size.width * 0.455,
           margin: EdgeInsets.symmetric(horizontal: 5.w),
           decoration: BoxDecoration(
-              color: Color(0xFFDAE5F2),
+              color: const Color(0xFFDAE5F2),
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.5),
                   spreadRadius: 1,
                   blurRadius: 2,
-                  offset: Offset(0, 1), // changes position of shadow
+                  offset: const Offset(0, 1), // changes position of shadow
                 ),
                 BoxShadow(
                   color: Colors.white.withOpacity(0.3),
                   spreadRadius: 2,
                   blurRadius: 3,
-                  offset: Offset(-3, -6), // changes position of shadow
+                  offset: const Offset(-3, -6), // changes position of shadow
                 ),
               ]
           ),
@@ -183,7 +183,7 @@ class ProductWidget extends StatelessWidget {
               Container(
                 height: MediaQuery.of(context).size.height * 0.25,
                 width: MediaQuery.of(context).size.width * 0.455,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(image: AssetImage("assets/images/house.png"), fit: BoxFit.fill,),
                 ),
               ),
@@ -204,7 +204,7 @@ class ProductWidget extends StatelessWidget {
                           Text("Delivery info will  be here dg likseller offer sajncnask...",
                             style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                 fontSize: 12.w,
-                                color: Color(0xFF334669),
+                                color: const Color(0xFF334669),
                                 fontWeight: FontWeight.w700
                             ),),
                           Row(
@@ -233,31 +233,31 @@ class ProductWidget extends StatelessWidget {
                               Text("259 reviews.",
                                 style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                     fontSize: 10.w,
-                                    color: Color(0xFF334669).withOpacity(0.6),
+                                    color: const Color(0xFF334669).withOpacity(0.6),
                                     fontWeight: FontWeight.w500
                                 ),),
                             ],
                           ),
                           Row(
                             children: [
-                              Icon(Icons.location_on),
+                              const Icon(Icons.location_on),
                               SizedBox(width: 10.w,),
                               Text("United State, Florida 3340",
                                 style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                     fontSize: 11.w,
-                                    color: Color(0xFF334669).withOpacity(0.6),
+                                    color: const Color(0xFF334669).withOpacity(0.6),
                                     fontWeight: FontWeight.w400
                                 ),),
                             ],
                           ),
                           Row(
                             children: [
-                              Icon(Icons.fire_truck),
+                              const Icon(Icons.fire_truck),
                               SizedBox(width: 10.w,),
                               Text("Free Shipping",
                                 style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                     fontSize: 12.w,
-                                    color: Color(0xFF0F7D46),
+                                    color: const Color(0xFF0F7D46),
                                     fontWeight: FontWeight.w500
                                 ),)
                             ],
@@ -270,7 +270,7 @@ class ProductWidget extends StatelessWidget {
                     Text("17,000   so’m",
                       style: Theme.of(context).textTheme.bodyText1!.copyWith(
                           fontSize: 15.w,
-                          color: Color(0xFFCE242B),
+                          color: const Color(0xFFCE242B),
                           fontWeight: FontWeight.w800
                       ),),
                   ],

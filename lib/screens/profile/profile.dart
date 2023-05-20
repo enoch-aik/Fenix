@@ -7,10 +7,10 @@ import 'package:fenix/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../controller/account_controller.dart';
 import '../../helpers/widgets/dialogs.dart';
-import '../../helpers/widgets/logout_card_widget.dart';
-import '../auth_screens/create_profile.dart';
 import '../onboarding/constants.dart';
 import 'account/account.dart';
 import 'create_selling_post/selling_post.dart';
@@ -29,6 +29,11 @@ class UserProfile extends StatefulWidget {
 class _UserProfileState extends State<UserProfile> {
   final UserController _userController = Get.find();
   final StoreController _storeController = Get.find();
+  final AccountController _accountController = Get.find();
+
+  var refreshToken;
+
+
 
   List title = [
     "Your Account",
@@ -76,7 +81,16 @@ class _UserProfileState extends State<UserProfile> {
                   ),
                   InkWell(
                     onTap: () async {
-                      Get.bottomSheet(LogoutCard());
+                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                      refreshToken = prefs.getString('refreshToken');
+                      CustomDialogs.showNoticeDialog(
+                        message:  "Please don't leave 😭",
+                          image:  "assets/images/icons/logout.png",
+                          closeText: 'Cancel',
+                          okText: 'Confirm',
+                          onClick: () {
+                           _accountController.signOut(refreshToken);
+                          });
                     },
                     child: Icon(
                       Icons.logout,

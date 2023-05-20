@@ -2,9 +2,11 @@ import 'package:fenix/controller/user_controller.dart';
 import 'package:fenix/helpers/widgets/snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/services/account_services.dart';
 import '../screens/auth_screens/sign_in.dart';
+import '../screens/auth_screens/verification_mail_success.dart';
 import '../screens/onboarding/account_creation_success.dart';
 import '../screens/onboarding/loading.dart';
 
@@ -114,10 +116,11 @@ class AccountController extends GetxController {
     Get.to(() => Loading(
           navigateScreen: SignIn(),
         ));
-    AccountServices.loginOutUser((status, response) {
+    AccountServices.loginOutUser((status, response) async{
       if (status) {
         CustomSnackBar.successSnackBar('Logout Successful!', '$response');
-
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.clear();
         Get.offAll(() => SignIn());
       } else {
         Get.back();
@@ -125,5 +128,20 @@ class AccountController extends GetxController {
         CustomSnackBar.failedSnackBar('Logout Failed', '$response');
       }
     }, token);
+  }
+
+  resendVerificationEmail(email) async {
+    Get.to(() =>  Loading(navigateScreen: VerificationMailSuccess()));
+    AccountServices.resendVerificationEmail((status, response) {
+      Get.back();
+      if (status) {
+        Get.back();
+        CustomSnackBar.successSnackBar(
+            'Great', 'Verification mail sent successfully');
+      } else {
+        Get.back();
+        CustomSnackBar.failedSnackBar('Failed', '$response');
+      }
+    }, {"email": email});
   }
 }

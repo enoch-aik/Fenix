@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:fenix/const.dart';
 import 'package:fenix/controller/account_controller.dart';
 import 'package:fenix/helpers/widgets.dart';
+import 'package:fenix/screens/auth_screens/sign_in.dart';
 import 'package:fenix/screens/onboarding/onboarding_one.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';

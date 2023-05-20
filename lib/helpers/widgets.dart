@@ -323,7 +323,7 @@ class WelcomeCards extends StatelessWidget {
                           onTap: () {
                             if (pageController.page != 0.0) {
                               pageController.previousPage(
-                                  duration: const Duration(milliseconds: 500),
+                                  duration: const Duration(milliseconds: 200),
                                   curve: Curves.easeIn);
                             } else {
                               Get.back();
@@ -335,7 +335,7 @@ class WelcomeCards extends StatelessWidget {
                           onTap: () {
                             if (pageController.page != 2.0) {
                               pageController.nextPage(
-                                  duration: const Duration(milliseconds: 500),
+                                  duration: const Duration(milliseconds: 200),
                                   curve: Curves.easeIn);
                             } else {
                               Get.to(() => AuthBoard());

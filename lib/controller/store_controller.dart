@@ -262,7 +262,8 @@ class StoreController extends GetxController {
       occupantsNumber,
       floor,
       amenities,
-      media}) async {
+      media,
+      salePrice,}) async {
     var data = {
       "title": title,
       "description": description,
@@ -272,10 +273,11 @@ class StoreController extends GetxController {
       },
       "propertyType": propertyType,
       "apartmentType": apartmentType.toString().toLowerCase(),
+      "salePrice": 300,
       "rentPrice": {
-        "night": double.parse(nightAmount),
-        "week": double.parse(weekAmount),
-        "month": double.parse(monthAmount)
+        "night": double.parse(nightAmount ?? "0"),
+        "week": double.parse(weekAmount ?? "0"),
+        "month": double.parse(monthAmount ?? "0")
       },
       "rentAvailability": {"startDate": startDate, "endDate": endDate},
       "specifics": {
