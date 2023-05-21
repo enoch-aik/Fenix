@@ -164,7 +164,7 @@ class UserController extends GetxController {
     }, token, {categoryId: productId});
   }
 
-  deleteItemFromWishList(token, productId,category) async {
+  deleteItemFromWishList(token, productId, category) async {
     isLoadingLikes(true);
     selectedId(productId);
 
@@ -185,7 +185,7 @@ class UserController extends GetxController {
       } else {
         CustomSnackBar.failedSnackBar('Failed', '$response');
       }
-    }, token, productId);
+    }, token, productId, category);
   }
 
   getWishList(token) async {

@@ -46,7 +46,7 @@ class _LoadingState extends State<Loading> {
                   decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                          image: AssetImage('assets/images/circle_sh.png'))),
+                          image: AssetImage('assets/images/fenix_loading.png'))),
                 ),
                 Column(
                   children: [

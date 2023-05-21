@@ -28,11 +28,21 @@ class UserServices {
   }
 
   static deleteFromWishList(
-      Function callback, token,productId) async {
+      Function callback, token, productId, category) async {
+    print(category);
+    var data = (category == "car") ? {
+      "vehicleId" : productId,
+    } : (category == "apartment" || category == "dacha" || category == "house") ? {
+      "apartmentId" : productId,
+    } : {
+      "productId" : productId,
+    };
+
     var response =
-    await ApiServices.initialiseDeleteRequest(url: '$wishListUrl/$productId', data:{}, token: token);
+    await ApiServices.initialiseDeleteRequest(url: wishListUrl, data:data, token: token);
     print(response);
     if (response is String) {
+
       callback(false, response);
     } else {
       callback(true, response);

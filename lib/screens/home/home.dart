@@ -1075,7 +1075,7 @@ class ProductWidget extends StatelessWidget {
             },
             child: Container(
               decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.6), shape: BoxShape.circle),
+                  color: product['isLiked'] ? Color(0xFFFA4788) : Colors.transparent, shape: BoxShape.circle),
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Obx(
@@ -1091,7 +1091,7 @@ class ProductWidget extends StatelessWidget {
                           product['isLiked']
                               ? Icons.favorite
                               : Icons.favorite_border,
-                          color: product['isLiked'] ? blue : kTextBlackColor,
+                          color: product['isLiked'] ? white : kTextBlackColor,
                           size: 23,
                         ),
                 ),
