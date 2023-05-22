@@ -1,4 +1,5 @@
 
+import 'package:fenix/const.dart';
 import 'package:fenix/helpers/widgets.dart';
 import 'package:fenix/icons/arrow_back_icon_icons.dart';
 import 'package:fenix/screens/onboarding/reset_password_next.dart';
@@ -17,75 +18,79 @@ class ResetPassword extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFE4F0FA),
-      body: ListView(
-        children: [
-          WidgetsPad(
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-
-                    Column(
+      body: SingleChildScrollView(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            children: [
+              WidgetsPad(
+                  child: Form(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.07,
-                          child: Image.asset("assets/images/logoFrame.png",fit: BoxFit.fill,),
-                        ),
-                        kSpacing,
 
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                        Column(
                           children: [
-                            Icon(Icons.lock, color: Color(0xFF2A3750),),
-                            Text("Reset Password",
-                              style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                                  fontSize: 21,
-                                  shadows: [
-                                    Shadow(color: Colors.black.withOpacity(0.25), offset: Offset(0,1), blurRadius: 4)
-                                  ]
-                              ),),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.07,
+                              child: Image.asset("assets/images/logoFrame.png",fit: BoxFit.fill,),
+                            ),
+                            kSpacing,
+
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.lock, color: Color(0xFF2A3750),),
+                                Text("Reset Password",
+                                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                      fontSize: 21,
+                                      shadows: [
+                                        Shadow(color: Colors.black.withOpacity(0.25), offset: Offset(0,1), blurRadius: 4)
+                                      ]
+                                  ),),
+                              ],
+                            ),
+                            kSpacing, kSpacing, kSpacing,
+                            TextFieldWidget(hint: "Enter Your Email",),
+
+                            kSpacing,
+                            TextFieldWidget(hint: "First Name",),
+                            kSpacing,
+                            TextFieldWidget(hint: "Last Name",),
+                            kSpacing, kSpacing,
                           ],
                         ),
-                        kSpacing, kSpacing, kSpacing,
-                        TextFieldWidget(hint: "Enter Your Email",),
 
-                        kSpacing,
-                        TextFieldWidget(hint: "First Name",),
-                        kSpacing,
-                        TextFieldWidget(hint: "Last Name",),
-                        kSpacing, kSpacing,
+
+
+
+                        InkWell(
+                          onTap:(){
+                            Get.to(() => ResetPasswordNext());
+                          },
+                          child: ButtonWidget(title: "Next"),
+                        ),
+
                       ],
                     ),
+                  )),
+              SizedBox(height:  MediaQuery.of(context).size.height * 0.025,),
 
-
-
-
-                    InkWell(
-                      onTap:(){
-                        Get.to(() => ResetPasswordNext());
-                      },
-                      child: ButtonWidget(title: "Next"),
-                    ),
-
-                  ],
+              InkWell(
+                onTap: (){
+                  Get.back();
+                },
+                child: Align(
+                  alignment:Alignment.bottomLeft,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.w),
+                    child: backButtonThree,
+                  ),
                 ),
-              )),
-          SizedBox(height:  MediaQuery.of(context).size.height * 0.025,),
-
-          InkWell(
-            onTap: (){
-              Get.back();
-            },
-            child: Align(
-              alignment:Alignment.bottomLeft,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: backButtonThree,
-              ),
-            ),
-          )
-        ],
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

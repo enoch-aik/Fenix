@@ -17,88 +17,93 @@ class VerificationMailSuccess extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFE4F0FA),
-      body: ListView(
-        children: [
-          WidgetsPad(
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: SingleChildScrollView(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            children: [
+              WidgetsPad(
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.2,
-                          child: Image.asset("assets/images/logoFrame.png",fit: BoxFit.fill,),
+
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.2,
+                              child: Image.asset("assets/images/logoFrame.png",fit: BoxFit.fill,),
+                            ),
+                            kLargeSpacing,
+
+                            Text("A verification link has been sent to your email",
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                  color: Color(0xFF288827),
+                                  fontSize: 25.w,
+                                  shadows: [
+                                    Shadow(color: Colors.black.withOpacity(0.25), offset: Offset(0,1), blurRadius: 4)
+                                  ]
+                              ),),
+
+                            kLargeSpacing,
+                            kLargeSpacing,
+
+
+                            Text("Please go to your email app and click on the link to verify",
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                  color: Color(0xFF31456A).withOpacity(0.6),
+                                  fontSize: 18.w,
+                                  shadows: [
+                                    Shadow(color: Colors.black.withOpacity(0.25), offset: Offset(0,1), blurRadius: 4)
+                                  ]
+                              ),),
+
+
+                          ],
                         ),
-                        kLargeSpacing,
-
-                        Text("A verification link has been sent to your email",
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                              color: Color(0xFF288827),
-                              fontSize: 25.w,
-                              shadows: [
-                                Shadow(color: Colors.black.withOpacity(0.25), offset: Offset(0,1), blurRadius: 4)
-                              ]
-                          ),),
-
-                        kLargeSpacing,
-                        kLargeSpacing,
 
 
-                        Text("Please go to your email app and click on the link to verify",
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                              color: Color(0xFF31456A).withOpacity(0.6),
-                              fontSize: 18.w,
-                              shadows: [
-                                Shadow(color: Colors.black.withOpacity(0.25), offset: Offset(0,1), blurRadius: 4)
-                              ]
-                          ),),
 
+
+                        InkWell(
+                          onTap:() async {
+                            // Android: Will open mail app or show native picker.
+                            // iOS: Will open mail app if single mail app found.
+                            var result = await OpenMailApp.openMailApp(
+                              nativePickerTitle: 'Select email app to open',
+                            );
+
+                            // If no mail apps found, show error
+                            if (!result.didOpen && !result.canOpen) {
+                              // showNoMailAppsDialog(context);
+
+                              // iOS: if multiple mail apps found, show dialog to select.
+                              // There is no native intent/default app system in iOS so
+                              // you have to do it yourself.
+                            } else if (!result.didOpen && result.canOpen) {
+                              showDialog(
+                                context: context,
+                                builder: (_) {
+                                  return MailAppPickerDialog(
+                                    mailApps: result.options,
+                                  );
+                                },
+                              );
+                            }
+                          },
+                          child: ButtonWidget(title: "Open Email App"),
+                        ),
 
                       ],
                     ),
-
-
-
-
-                    InkWell(
-                      onTap:() async {
-                        // Android: Will open mail app or show native picker.
-                        // iOS: Will open mail app if single mail app found.
-                        var result = await OpenMailApp.openMailApp(
-                          nativePickerTitle: 'Select email app to open',
-                        );
-
-                        // If no mail apps found, show error
-                        if (!result.didOpen && !result.canOpen) {
-                          // showNoMailAppsDialog(context);
-
-                          // iOS: if multiple mail apps found, show dialog to select.
-                          // There is no native intent/default app system in iOS so
-                          // you have to do it yourself.
-                        } else if (!result.didOpen && result.canOpen) {
-                          showDialog(
-                            context: context,
-                            builder: (_) {
-                              return MailAppPickerDialog(
-                                mailApps: result.options,
-                              );
-                            },
-                          );
-                        }
-                      },
-                      child: ButtonWidget(title: "Open Email App"),
-                    ),
-
-                  ],
-                ),
-              )),
-        ],
+                  )),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -363,36 +363,18 @@ class WidgetsPad extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 17.w, horizontal: 24.w),
-      child: Center(
-        child: Container(
-          height: MediaQuery.of(context).size.height * 0.8,
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height * 0.72,
-          ),
-          width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 12.w),
-          decoration: BoxDecoration(
-            color: const Color(0xFFE3EDF7),
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 0,
-                blurRadius: 1,
-                offset: const Offset(0.8, 0.5), // changes position of shadow
-              ),
-              const BoxShadow(
-                color: Colors.white,
-                spreadRadius: 0,
-                blurRadius: 1,
-                offset: Offset(-1, -1), // changes position of shadow
-              ),
-            ],
-          ),
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 17.w, horizontal: 24.w),
+        child: Center(
           child: Container(
-            padding: EdgeInsets.all(13.w),
+            // height: MediaQuery.of(context).size.height * 0.8,
+            // constraints: BoxConstraints(
+            //   maxHeight: MediaQuery.of(context).size.height * 0.72,
+            // ),
+            margin: EdgeInsets.only(top: 40.w),
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 12.w),
             decoration: BoxDecoration(
               color: const Color(0xFFE3EDF7),
               borderRadius: BorderRadius.circular(16),
@@ -401,17 +383,38 @@ class WidgetsPad extends StatelessWidget {
                   color: Colors.grey.withOpacity(0.5),
                   spreadRadius: 0,
                   blurRadius: 1,
-                  offset: const Offset(0.5, 0.1), // changes position of shadow
+                  offset: const Offset(0.8, 0.5), // changes position of shadow
                 ),
                 const BoxShadow(
                   color: Colors.white,
                   spreadRadius: 0,
                   blurRadius: 1,
-                  offset: Offset(-0.5, -0.5), // changes position of shadow
+                  offset: Offset(-1, -1), // changes position of shadow
                 ),
               ],
             ),
-            child: child,
+            child: Container(
+              padding: EdgeInsets.all(13.w),
+              decoration: BoxDecoration(
+                color: const Color(0xFFE3EDF7),
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 0,
+                    blurRadius: 1,
+                    offset: const Offset(0.5, 0.1), // changes position of shadow
+                  ),
+                  const BoxShadow(
+                    color: Colors.white,
+                    spreadRadius: 0,
+                    blurRadius: 1,
+                    offset: Offset(-0.5, -0.5), // changes position of shadow
+                  ),
+                ],
+              ),
+              child: child,
+            ),
           ),
         ),
       ),

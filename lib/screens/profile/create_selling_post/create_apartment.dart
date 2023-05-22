@@ -7,11 +7,12 @@ import 'package:fenix/helpers/widgets/snack_bar.dart';
 import 'package:fenix/screens/onboarding/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
+// import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_api_headers/google_api_headers.dart';
-import 'package:google_maps_webservice/places.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_places_for_flutter/google_places_for_flutter.dart';
+// import 'package:google_maps_webservice/places.dart';
 import 'package:intl/intl.dart';
 import '../../../controller/map_controller.dart';
 import '../../../controller/store_controller.dart';
@@ -82,54 +83,53 @@ class _CreateApartmentState extends State<CreateApartment> {
   List<String> storeIds = [];
 
   getLocation(){
-    _handlePressButton();
+    // _handlePressButton();
   }
 
-  Future<void> _handlePressButton() async {
-    void onError(PlacesAutocompleteResponse response) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(response.errorMessage ?? 'Unknown error'),
-        ),
-      );
-    }
-
-    final p = await PlacesAutocomplete.show(
-      context: context,
-      apiKey: _mapController.googleApikey,
-      onError: onError,
-      mode: Mode.overlay,
-      language: 'en',
-      components: [Component(Component.country, 'US')],
-      resultTextStyle: Theme.of(context).textTheme.subtitle1,
-    );
-
-    await displayPrediction(p, ScaffoldMessenger.of(context));
-  }
-
-
-Future<void> displayPrediction(
-    Prediction? p, ScaffoldMessengerState messengerState) async {
-  if (p == null) {
-    return;
-  }
-
-  final _places = GoogleMapsPlaces(
-    apiKey: _mapController.googleApikey,
-    apiHeaders: await const GoogleApiHeaders().getHeaders(),
-  );
-
-  final detail = await _places.getDetailsByPlaceId(p.placeId!);
-  final geometry = detail.result.geometry!;
-  final lat = geometry.location.lat;
-  final lng = geometry.location.lng;
-
-  setState(() {
-    addressController.text = p.description!;
-    latitude = lat;
-    longitude = lng;
-  });
-}
+//   Future<void> _handlePressButton() async {
+//     void onError(PlacesAutocompleteResponse response) {
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(
+//           content: Text(response.errorMessage ?? 'Unknown error'),
+//         ),
+//       );
+//     }
+//
+//     final p = await PlacesAutocomplete.show(
+//       context: context,
+//       apiKey: _mapController.googleApikey,
+//       onError: onError,
+//       mode: Mode.overlay,
+//       language: 'en',
+//       components: [Component(Component.country, 'US')],
+//       resultTextStyle: Theme.of(context).textTheme.subtitle1,
+//     );
+//
+//     await displayPrediction(p, ScaffoldMessenger.of(context));
+//   }
+//
+//
+// Future<void> displayPrediction(
+//     Prediction? p, ScaffoldMessengerState messengerState) async {
+//   if (p == null) {
+//     return;
+//   }
+//
+//   final _places = GoogleMapsPlaces(
+//     apiKey: _mapController.googleApikey,
+//   );
+//
+//   final detail = await _places.getDetailsByPlaceId(p.placeId!);
+//   final geometry = detail.result.geometry!;
+//   final lat = geometry.location.lat;
+//   final lng = geometry.location.lng;
+//
+//   setState(() {
+//     addressController.text = p.description!;
+//     latitude = lat;
+//     longitude = lng;
+//   });
+// }
 
   Future<dynamic> showImagePickers({isPhoto = true}) {
     return showModalBottomSheet(
@@ -695,19 +695,26 @@ Future<void> displayPrediction(
                   title('Set House location'),
                   kSpacing,
                   subText('Set the property location'),
-                  Column(
-                    children: [
-                      TextFieldWidget(
-                        hint: "Search location",
-                        textController: addressController,
-                        onTap: () => getLocation(),
-                        suffix: InkWell(
-                            onTap: (){
-                              _handlePressButton();
-                            },child: const Icon(Icons.location_on_outlined)),
-                        validator: (value) => FieldValidator.validate(value!),
-                      ),
-                    ],
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10.2),
+                    child: SearchGooglePlacesWidget(
+                      placeType: PlaceType.address, // PlaceType.cities, PlaceType.geocode, PlaceType.region etc
+                      placeholder: "Search location",
+                      apiKey: _mapController.googleApikey,
+                      onSearch: (Place place) {},
+                      onSelected: (Place place) async {
+                        addressController.text = place.description!;
+                        place.geolocation!.then((value) {
+                          LatLng location = value!.coordinates;
+                          setState(() {
+                            latitude = location.latitude;
+                            longitude = location.longitude;
+                          });
+                        });
+
+
+                      },
+                    ),
                   ),
                   kSpacing,
                   title('Choose one of the options'),

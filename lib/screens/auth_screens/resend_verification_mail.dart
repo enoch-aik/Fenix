@@ -3,6 +3,7 @@ import 'package:fenix/helpers/widgets.dart';
 import 'package:fenix/screens/auth_screens/verification_mail_success.dart';
 import 'package:fenix/screens/onboarding/reset_password_next.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../controller/account_controller.dart';
@@ -19,72 +20,76 @@ class ResendVerificationMail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFE4F0FA),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          WidgetsPad(
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-
-                    Column(
+      body: SingleChildScrollView(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            children: [
+              WidgetsPad(
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.07,
-                          child: Image.asset("assets/images/logoFrame.png",fit: BoxFit.fill,),
-                        ),
-                        kSpacing,
 
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                        Column(
                           children: [
-                            Text("Resend Verification Mail",
-                              style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                                  fontSize: 21,
-                                  shadows: [
-                                    Shadow(color: Colors.black.withOpacity(0.25), offset: Offset(0,1), blurRadius: 4)
-                                  ]
-                              ),),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.07,
+                              child: Image.asset("assets/images/logoFrame.png",fit: BoxFit.fill,),
+                            ),
+                            kSpacing,
+
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("Resend Verification Mail",
+                                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                      fontSize: 21,
+                                      shadows: [
+                                        Shadow(color: Colors.black.withOpacity(0.25), offset: Offset(0,1), blurRadius: 4)
+                                      ]
+                                  ),),
+                              ],
+                            ),
+                            kSpacing, kSpacing, kSpacing,
+
+                            TextFieldWidget(hint: "Enter Your Email",
+                            textController: _accountController.email,),
+
                           ],
                         ),
-                        kSpacing, kSpacing, kSpacing,
 
-                        TextFieldWidget(hint: "Enter Your Email",
-                        textController: _accountController.password,),
+
+                        InkWell(
+                          onTap:(){
+                            if(_formKey.currentState!.validate()){
+                              _accountController.resendVerificationEmail(_accountController.email.text);
+                            }
+                          },
+                          child: ButtonWidget(title: "Send"),
+                        ),
 
                       ],
                     ),
+                  )),
+              // SizedBox(height:  MediaQuery.of(context).size.height * 0.025,),
 
-
-                    InkWell(
-                      onTap:(){
-                        if(_formKey.currentState!.validate()){
-                          _accountController.resendVerificationEmail(_accountController.email.text);
-                        }
-                      },
-                      child: ButtonWidget(title: "Send"),
-                    ),
-
-                  ],
+              InkWell(
+                onTap: (){
+                  Get.back();
+                },
+                child: Align(
+                  alignment:Alignment.bottomLeft,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.w),
+                    child: backButtonThree,
+                  ),
                 ),
-              )),
-          // SizedBox(height:  MediaQuery.of(context).size.height * 0.025,),
-
-          InkWell(
-            onTap: (){
-              Get.back();
-            },
-            child: Align(
-              alignment:Alignment.bottomLeft,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: backButtonThree,
-              ),
-            ),
-          )
-        ],
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

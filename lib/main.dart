@@ -12,6 +12,7 @@ import 'controller/account_controller.dart';
 import 'models/services/api_docs.dart';
 
 void main() {
+
   runApp(const MyApp());
 }
 
