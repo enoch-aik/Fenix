@@ -167,6 +167,14 @@ class UserController extends GetxController {
   deleteItemFromWishList(token, productId, category) async {
     isLoadingLikes(true);
     selectedId(productId);
+    print(category);
+    var categoryId = (category == "car")
+        ? 'vehicleId'
+        : (category == "apartment" ||
+                category == "dacha" ||
+                category == "house")
+            ? "apartmentId"
+            : "productId";
 
     UserServices.deleteFromWishList((status, response) {
       isLoadingLikes(false);
@@ -185,7 +193,7 @@ class UserController extends GetxController {
       } else {
         CustomSnackBar.failedSnackBar('Failed', '$response');
       }
-    }, token, productId, category);
+    }, token, {categoryId: productId});
   }
 
   getWishList(token) async {

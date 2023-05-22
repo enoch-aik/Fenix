@@ -1075,7 +1075,7 @@ class ProductWidget extends StatelessWidget {
             },
             child: Container(
               decoration: BoxDecoration(
-                  color: product['isLiked'] ? Color(0xFFFA4788) : Colors.transparent, shape: BoxShape.circle),
+                  color: product['isLiked'] ? const Color(0xFFFA4788) : Colors.transparent, shape: BoxShape.circle),
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Obx(
