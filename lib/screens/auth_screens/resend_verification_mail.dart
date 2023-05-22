@@ -13,17 +13,18 @@ class ResendVerificationMail extends StatelessWidget {
   ResendVerificationMail({Key? key}) : super(key: key);
 
   final AccountController _accountController = Get.find();
-
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFE4F0FA),
-      body: ListView(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           WidgetsPad(
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height,
+              child: Form(
+                key: _formKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -57,11 +58,11 @@ class ResendVerificationMail extends StatelessWidget {
                     ),
 
 
-
-
                     InkWell(
                       onTap:(){
-                        _accountController.resendVerificationEmail(_accountController.email.text);
+                        if(_formKey.currentState!.validate()){
+                          _accountController.resendVerificationEmail(_accountController.email.text);
+                        }
                       },
                       child: ButtonWidget(title: "Send"),
                     ),
@@ -69,7 +70,7 @@ class ResendVerificationMail extends StatelessWidget {
                   ],
                 ),
               )),
-          SizedBox(height:  MediaQuery.of(context).size.height * 0.025,),
+          // SizedBox(height:  MediaQuery.of(context).size.height * 0.025,),
 
           InkWell(
             onTap: (){

@@ -328,7 +328,14 @@ class WishList extends StatelessWidget {
                 closeText: 'Cancel',
                 onClick: () {
                   Get.back();
-                  userController.deleteItemFromWishList(token, product['id'],'electronics');
+                  userController.deleteItemFromWishList(
+                      token, (product['apartmentId'] != null) ? product['apartmentId']
+                      : (product['productId'] != null) ? product['productId']
+                      : product['vehicleId'],
+
+                      (product['apartmentId'] != null) ? "apartment"
+                          : (product['productId'] != null) ? "product"
+                          : "car");
                 });
           },
           btnText: "Delete Post",

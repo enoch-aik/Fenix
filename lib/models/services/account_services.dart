@@ -90,7 +90,7 @@ class AccountServices {
   static resendVerificationEmail(
       Function callback,data) async {
     var response =
-    await ApiServices.initialisePostRequest(url: logoutUrl, data: data);
+    await ApiServices.initialisePostRequest(url: resentVerificationUrl, data: data);
     print(response);
     if (response is String) {
       callback(false, response);

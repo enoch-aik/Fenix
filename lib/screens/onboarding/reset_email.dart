@@ -17,7 +17,8 @@ class ResetEmail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFE4F0FA),
-      body: ListView(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           WidgetsPad(
               child: SizedBox(
@@ -70,8 +71,7 @@ class ResetEmail extends StatelessWidget {
             ],
           ),
               )),
-          SizedBox(height:  MediaQuery.of(context).size.height * 0.025,),
-
+          kSpacing,
           InkWell(
             onTap: (){
               Get.back();

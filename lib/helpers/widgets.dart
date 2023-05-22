@@ -368,6 +368,9 @@ class WidgetsPad extends StatelessWidget {
       child: Center(
         child: Container(
           height: MediaQuery.of(context).size.height * 0.8,
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.72,
+          ),
           width: MediaQuery.of(context).size.width,
           padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 12.w),
           decoration: BoxDecoration(
@@ -478,7 +481,7 @@ class CustomWidgetsPad extends StatelessWidget {
 class TextFieldWidget extends StatelessWidget {
   String hint;
   Widget? prefixIcon;
-  Widget? suffixIcon;
+  Widget? suffix;
   TextEditingController? textController;
   String? Function(String?)? validator;
   bool? enabled;
@@ -492,7 +495,7 @@ class TextFieldWidget extends StatelessWidget {
       {Key? key,
       required this.hint,
       this.prefixIcon,
-      this.suffixIcon,
+      this.suffix,
       this.obscureText=false,
       this.enabled,
       this.maxLine=1,
@@ -553,7 +556,7 @@ class TextFieldWidget extends StatelessWidget {
               .bodyText1!
               .copyWith(fontSize: 15.w, color: Colors.grey.shade400),
           prefixIcon: prefixIcon,
-          suffixIcon: suffixIcon,
+          suffix: suffix,
         ),
       ),
     );
