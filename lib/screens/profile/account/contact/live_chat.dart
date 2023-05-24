@@ -134,7 +134,7 @@ class _LiveChatScreenState extends State<LiveChatScreen> {
                               Expanded(
                                 child: TextFormField(
                                   decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.zero,
+                                      contentPadding: EdgeInsets.symmetric(horizontal: 15.w),
                                       suffixIcon: IconButton(
                                           onPressed: () {},
                                           icon:

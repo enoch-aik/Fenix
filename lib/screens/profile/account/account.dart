@@ -19,11 +19,14 @@ class Account extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: AppBar(
-          title: SizedBox(
-            height: 46.h,
-            child: Image.asset(
-              "assets/images/fenixWhite2.png",
-              fit: BoxFit.fill,
+          title: Expanded(
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Image.asset(
+                "assets/images/fenixmall_white.png",
+                color: white,
+                height: height() * 0.075,
+              ),
             ),
           ),
           automaticallyImplyLeading: false,
@@ -56,10 +59,7 @@ class Account extends StatelessWidget {
           centerTitle: false,
           flexibleSpace: Container(
             decoration: BoxDecoration(
-              gradient: gradient2(
-                const Color(0xFF46E0C4),
-                const Color(0xFF59B5C0),
-              ),
+              gradient: appBarGradient,
             ),
           )),
       body: Column(
@@ -70,10 +70,7 @@ class Account extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 10.w),
             margin: EdgeInsets.only(bottom: 20.w),
             decoration: BoxDecoration(
-              gradient: gradient2(
-                const Color(0xFF41F0D1),
-                const Color(0xFF4A9A9E),
-              ),
+              gradient: appBarGradient,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,

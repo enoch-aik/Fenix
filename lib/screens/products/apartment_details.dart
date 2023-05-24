@@ -62,77 +62,77 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  height: MediaQuery
-                      .of(context)
-                      .size
-                      .height * 0.06,
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerLeft,
                   child: Image.asset(
-                    "assets/images/fenix_c.png",
+                    "assets/images/fenixmall_white.png",
                     color: white,
-                    fit: BoxFit.fill,
+                    height: height() * 0.075,
                   ),
                 ),
               ),
               const SizedBox(
                 width: 10,
               ),
-              Row(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: const Icon(
-                      Icons.arrow_back_ios,
-                      color: Colors.white,
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () => Get.to(() => const SearchScreen()),
-                    child: Container(
-                      height: MediaQuery
-                          .of(context)
-                          .size
-                          .height * 0.050,
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width * 0.85,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(13.w),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: Icon(
+                        Icons.arrow_back_ios,
                         color: Colors.white,
+                        size: 30.w,
                       ),
-                      child: TextField(
-                        style: TextStyle(
-                          fontSize: 16.w,
+                    ),
+                    InkWell(
+                      onTap: () => Get.to(() => const SearchScreen()),
+                      child: Container(
+                        height: MediaQuery
+                            .of(context)
+                            .size
+                            .height * 0.050,
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width * 0.82,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(13.w),
+                          color: Colors.white,
                         ),
-                        enabled: false,
-                        decoration: InputDecoration(
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 15,
-                              vertical:
-                              MediaQuery
-                                  .of(context)
-                                  .size
-                                  .height * 0.015),
-                          hintText: "Search Fenix",
-                          hintStyle: Theme
-                              .of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(
-                              fontSize: 15.w, color: Colors.grey.shade500),
-                          prefixIcon: const Icon(Icons.search),
+                        child: TextField(
+                          style: TextStyle(
+                            fontSize: 16.w,
+                          ),
+                          enabled: false,
+                          decoration: InputDecoration(
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 15,
+                                vertical:
+                                MediaQuery
+                                    .of(context)
+                                    .size
+                                    .height * 0.015),
+                            hintText: "Search Fenix",
+                            hintStyle: Theme
+                                .of(context)
+                                .textTheme
+                                .bodyText1!
+                                .copyWith(
+                                fontSize: 15.w, color: Colors.grey.shade500),
+                            prefixIcon: const Icon(Icons.search),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               SizedBox(
                 height: MediaQuery
@@ -159,14 +159,11 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
                       });
                     },
                     itemBuilder: (c, i) =>
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Image.asset(
-                              "assets/images/house.png",
-                              fit: BoxFit.cover,
-                            ),
+                        ClipRRect(
+                          // borderRadius: BorderRadius.circular(12),
+                          child: Image.asset(
+                            "assets/images/house.png",
+                            fit: BoxFit.cover,
                           ),
                         ),
                     itemCount: 3,

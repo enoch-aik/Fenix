@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:get/get.dart';
 
+import '../../const.dart';
 import 'onboarding_two.dart';
 
 class OnboardingOne extends StatelessWidget {
@@ -14,7 +15,7 @@ class OnboardingOne extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color(0xFFE4F0FA),
       body: Stack(
-        alignment: Alignment.center,
+        alignment: Alignment.bottomCenter,
         children: [
 
 
@@ -23,7 +24,10 @@ class OnboardingOne extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image.asset("assets/images/logoFrame.png",fit: BoxFit.fill,),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20.w, horizontal: 10.w),
+                  child: Image.asset("assets/images/fenixgradientblue.png",fit: BoxFit.fill,),
+                ),
 
                 Column(
                   children: [
@@ -73,7 +77,7 @@ class OnboardingOne extends StatelessWidget {
             ),
           ),
 
-          BottomHillsWidget()
+          Positioned(bottom:-50, child:  BottomHillsWidget())
         ],
       ),
     );

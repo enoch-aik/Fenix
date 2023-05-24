@@ -46,12 +46,12 @@ class _ProductDetailsState extends State<ProductDetails>
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width,
-            MediaQuery.of(context).size.height * 0.13),
+            height() * 0.17),
         child: Container(
           decoration: BoxDecoration(
             gradient: gradient(
-              const Color(0xFF1A9AFF),
-              const Color(0xFF54FADC),
+              const Color(0xFF691232),
+              const Color(0xFF1770A2),
             ),
           ),
           padding: EdgeInsets.only(top: 55.h, left: 12.w, right: 12.w),
@@ -59,13 +59,13 @@ class _ProductDetailsState extends State<ProductDetails>
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.06,
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerLeft,
                   child: Image.asset(
-                    "assets/images/fenix_c.png",
-                    fit: BoxFit.fill,
+                    "assets/images/fenixmall_white.png",
+                    color: white,
+                    height: height() * 0.075,
                   ),
                 ),
               ),
@@ -73,21 +73,22 @@ class _ProductDetailsState extends State<ProductDetails>
                 width: 10,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InkWell(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: const Icon(
-                      Icons.arrow_back_ios,
-                      color: Colors.white,
-                    ),
-                  ),
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.white,
+                        size: 30.w,
+                      )),
                   InkWell(
                     onTap: () => Get.to(() => SearchScreen()),
                     child: Container(
                       height: MediaQuery.of(context).size.height * 0.050,
-                      width: MediaQuery.of(context).size.width * 0.85,
+                      width: MediaQuery.of(context).size.width * 0.82,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(13.w),
                         color: Colors.white,
@@ -837,29 +838,7 @@ class _ProductDetailsState extends State<ProductDetails>
               ),
             ),
           ),
-          Row(
-            children: [
-              Expanded(
-                child: ACControl(
-                  acState: ac,
-                  onTempChanged: (angle) {
-                    temperature = ((angle / (math.pi * 2)) * 100).toInt();
-                    setState(() {});
-                  },
-                ),
-              ),
-              smallSpace(),
-              Expanded(
-                child: ACControl(
-                  acState: ac,
-                  onTempChanged: (angle) {
-                    temperature = ((angle / (math.pi * 2)) * 100).toInt();
-                    setState(() {});
-                  },
-                ),
-              ),
-            ],
-          ),
+
           Container(
               width: MediaQuery.of(context).size.width,
               height: 40.w,

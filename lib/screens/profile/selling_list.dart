@@ -43,17 +43,20 @@ class _SellingListState extends State<SellingList> {
 
     return Scaffold(
       appBar: AppBar(
-          title: SizedBox(
-            height: 46.h,
-            child: Image.asset(
-              "assets/images/fenixWhite2.png",
-              fit: BoxFit.fill,
+          title: Expanded(
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Image.asset(
+                "assets/images/fenixmall_white.png",
+                color: white,
+                height: height() * 0.075,
+              ),
             ),
           ),
           bottom: PreferredSize(
             preferredSize: Size(
               MediaQuery.of(context).size.width,
-              MediaQuery.of(context).size.width * 0.15,
+              height() * 0.065,
             ),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.w),
@@ -66,7 +69,7 @@ class _SellingListState extends State<SellingList> {
                         "Your Selling List",
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 28.w,
+                            fontSize: 27.w,
                             fontWeight: FontWeight.w500,
                             shadows: [
                               Shadow(
@@ -83,10 +86,7 @@ class _SellingListState extends State<SellingList> {
           centerTitle: false,
           flexibleSpace: Container(
             decoration: BoxDecoration(
-              gradient: gradient2(
-                const Color(0xFF46E0C4),
-                const Color(0xFF59B5C0),
-              ),
+              gradient: appBarGradient,
             ),
           )),
       body: Container(
@@ -95,10 +95,7 @@ class _SellingListState extends State<SellingList> {
           children: [
             Container(
               decoration: BoxDecoration(
-                gradient: gradient2(
-                  const Color(0xFF46E0C4),
-                  const Color(0xFF59B5C0),
-                ),
+                gradient: appBarGradient,
               ),
               child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.052,

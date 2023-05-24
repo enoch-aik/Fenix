@@ -57,17 +57,17 @@ class _LoadingState extends State<Loading> {
                         colors: [Color(0xFF28D7AD)],
                       ),
                     ),
-                    Text(
-                      "Developed by Khasan.A",
-                      style: TextStyle(
-                          color: Colors.grey.shade800, fontSize: 16.w),
-                    ),
+                    // Text(
+                    //   "Developed by Khasan.A",
+                    //   style: TextStyle(
+                    //       color: Colors.grey.shade800, fontSize: 16.w),
+                    // ),
                   ],
                 )
               ],
             ),
           ),
-          const BottomHillsWidget()
+          Positioned(bottom:-50, child:  BottomHillsWidget())
         ],
       ),
     );

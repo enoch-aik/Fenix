@@ -21,13 +21,10 @@ class _ChartsState extends State<Charts> {
     return Scaffold(
       backgroundColor: Color(0xFFE4F0FA),
       appBar: PreferredSize(
-        preferredSize: Size(MediaQuery.of(context).size.width, height() * 0.2),
+        preferredSize: Size(MediaQuery.of(context).size.width, height() * 0.16),
         child: Container(
           decoration: BoxDecoration(
-              gradient: gradient(
-                const Color(0xFF691232),
-                const Color(0xFF1770A2),
-              ),
+              gradient: appBarGradient,
               border:
                   Border(bottom: BorderSide(color: Colors.purple, width: 2))),
           padding: EdgeInsets.only(top: 55.h, left: 12.w, right: 12.w),
@@ -35,11 +32,14 @@ class _ChartsState extends State<Charts> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Align(
-                alignment: Alignment.center,
-                child: Image.asset(
-                  "assets/images/fenix_c.png",
-                  color: Colors.white,
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Image.asset(
+                    "assets/images/fenixmall_white.png",
+                    color: white,
+                    height: height() * 0.075,
+                  ),
                 ),
               ),
               SizedBox(width: 10),
@@ -69,39 +69,7 @@ class _ChartsState extends State<Charts> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.072,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    MenuTitle(
-                      icon: "Dacha.png",
-                      title: "Dacha",
-                      color: white,
-                    ),
-                    MenuTitle(
-                      icon: "houseRental.png",
-                      title: "House Rental",
-                      color: white,
-                    ),
-                    MenuTitle(
-                      icon: "apartment.png",
-                      title: "Apartment",
-                      color: white,
-                    ),
-                    MenuTitle(
-                      icon: "carRental.png",
-                      title: "Car Rental",
-                      color: white,
-                    ),
-                    MenuTitle(
-                      icon: "storeRental.png",
-                      title: "Store Rental",
-                      color: white,
-                    ),
-                  ],
-                ),
-              ),
+
             ],
           ),
         ),

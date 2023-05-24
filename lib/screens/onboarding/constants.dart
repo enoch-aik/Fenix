@@ -26,7 +26,7 @@ Widget forwardButton = Image.asset("assets/images/forwardButton.png");
 LinearGradient gradient(a,b) {
   return LinearGradient(
       colors: [
-        a,b
+       a,b
       ],
       stops: [0.0, 1.0],
       begin: FractionalOffset.topLeft,
