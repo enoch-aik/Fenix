@@ -1,14 +1,9 @@
-import 'dart:io';
-
 import 'package:fenix/const.dart';
 import 'package:fenix/controller/user_controller.dart';
 import 'package:fenix/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:web_socket_channel/io.dart';
-
-import '../../models/services/api_docs.dart';
 import '../onboarding/constants.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -22,27 +17,18 @@ class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = TextEditingController();
   String token = '';
   final UserController _userController = Get.find();
-  late IOWebSocketChannel _channel; //
 
 
   @override
   void initState() {
     token = _userController.getToken();
-     _channel = IOWebSocketChannel.connect(chatUrl, headers: {
-      HttpHeaders.authorizationHeader: 'Bearer $token',
-    }); //cha
     super.initState();
   }
 
-  void _sendMessage() {
-    if (_controller.text.isNotEmpty) {
-      _channel.sink.add(_controller.text);
-    }
-  }
+
 
   @override
   void dispose() {
-    _channel.sink.close();
     _controller.dispose();
     super.dispose();
   }

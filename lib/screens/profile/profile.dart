@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../controller/account_controller.dart';
 import '../../helpers/widgets/dialogs.dart';
+import '../chat.dart';
 import '../onboarding/constants.dart';
 import 'account/account.dart';
 import 'create_selling_post/selling_post.dart';
@@ -161,7 +162,7 @@ class _UserProfileState extends State<UserProfile> {
                   return InkWell(
                     onTap: () {
                       if (index == 0) Get.to(() => const Account());
-                      if (index == 1) Get.to(() => const Messages());
+                      if (index == 1) Get.to(() => const Chat());
                       if (index == 2) {
                         (_userController.getUser()!.address == '' ||
                                 _userController.getUser()!.mobileNumber == '')

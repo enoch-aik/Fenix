@@ -5,7 +5,7 @@ import 'package:fenix/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
+import '../../controller/user_controller.dart';
 import '../onboarding/constants.dart';
 
 class Messages extends StatefulWidget {
@@ -17,20 +17,38 @@ class Messages extends StatefulWidget {
 
 class _MessagesState extends State<Messages> {
   String selectedTab = 'chat';
+  final TextEditingController _controller = TextEditingController();
+  String token = '';
+  final UserController _userController = Get.find();
+
+
+  @override
+  void initState() {
+    token = _userController.getToken();
+    super.initState();
+  }
+
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF0777FB),
+      backgroundColor: const Color(0xFF0777FB),
       body: Column(
         children: [
           selectedTab == 'chat'
               ? Expanded(
                   child: Container(
                     decoration: BoxDecoration(
-                        color: Color(0xFF1F4167),
+                        color: const Color(0xFF1F4167),
                         gradient:
-                            gradient(Color(0xFF1F4167), Color(0xFF0777FB))),
+                            gradient(const Color(0xFF1F4167), const Color(0xFF0777FB))),
                     child: SafeArea(
                         bottom: false,
                         child: Column(
@@ -57,7 +75,7 @@ class _MessagesState extends State<Messages> {
                                               'Messages',
                                               style: TextStyle(color: white, fontSize: 23.w),
                                             ),
-                                            SizedBox(width: 5)
+                                            const SizedBox(width: 5)
                                           ],
                                         ),
                                       ),
@@ -66,7 +84,7 @@ class _MessagesState extends State<Messages> {
                                         height: 120,
                                         child: ListView.separated(
                                           scrollDirection: Axis.horizontal,
-                                          padding: EdgeInsets.only(left: 15),
+                                          padding: const EdgeInsets.only(left: 15),
                                           itemCount: 7,
                                           shrinkWrap: true,
                                           itemBuilder: (c, i) => userAvatar(i),
@@ -84,21 +102,21 @@ class _MessagesState extends State<Messages> {
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 8.w, vertical: 5.w),
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.vertical(
+                                          borderRadius: const BorderRadius.vertical(
                                               top: Radius.circular(50)),
-                                          color: Color(0xFF1F4167),
-                                          gradient: gradient(Color(0xFF000000),
-                                              Color(0xFF182845))),
+                                          color: const Color(0xFF1F4167),
+                                          gradient: gradient(const Color(0xFF000000),
+                                              const Color(0xFF182845))),
                                       child: ListView(
                                         children: [
                                           smallSpace(),
                                           ListView.separated(
                                             physics:
-                                                NeverScrollableScrollPhysics(),
+                                                const NeverScrollableScrollPhysics(),
                                             itemCount: 7,
                                             shrinkWrap: true,
                                             itemBuilder: (c, i) => chatUser(),
-                                            separatorBuilder: (c, i) => Divider(
+                                            separatorBuilder: (c, i) => const Divider(
                                                 color: grey, thickness: 0.1),
                                           ),
                                         ],
@@ -116,9 +134,9 @@ class _MessagesState extends State<Messages> {
                   ? Expanded(
                       child: Container(
                       decoration: BoxDecoration(
-                          color: Color(0xFF1F4167),
+                          color: const Color(0xFF1F4167),
                           gradient:
-                              gradient(Color(0xFF000000), Color(0xFF182845))),
+                              gradient(const Color(0xFF000000), const Color(0xFF182845))),
                         child: ListView(
                           children: [
                             Padding(
@@ -136,9 +154,9 @@ class _MessagesState extends State<Messages> {
                   : Expanded(
                       child: Container(
                       decoration: BoxDecoration(
-                          color: Color(0xFF1F4167),
+                          color: const Color(0xFF1F4167),
                           gradient:
-                              gradient(Color(0xFF000000), Color(0xFF182845))),
+                              gradient(const Color(0xFF000000), const Color(0xFF182845))),
                       child: ListView(
                         children: [
                           Padding(
@@ -157,7 +175,7 @@ class _MessagesState extends State<Messages> {
                             width: 128,
                           ),
                           smallSpace(),
-                          Center(
+                          const Center(
                               child: Text(
                             'Khasan Akmalov',
                             style: TextStyle(color: Colors.white),
@@ -165,10 +183,10 @@ class _MessagesState extends State<Messages> {
                           verticalSpace(0.08),
                           Container(
                               decoration: BoxDecoration(
-                                  color: Color(0xFF1F4167),
+                                  color: const Color(0xFF1F4167),
                                   borderRadius: BorderRadius.circular(5)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
+                              child: const Padding(
+                                padding: EdgeInsets.all(10.0),
                                 child: Center(
                                     child: Text(
                                   'Fenix Message Center',
@@ -188,10 +206,10 @@ class _MessagesState extends State<Messages> {
                     )),
           Container(
             decoration: BoxDecoration(
-                color: Color(0xFF1F4167),
-                gradient: gradient(Color(0xFF1F4167), Color(0xFF0777FB))),
+                color: const Color(0xFF1F4167),
+                gradient: gradient(const Color(0xFF1F4167), const Color(0xFF0777FB))),
             child: Padding(
-              padding: EdgeInsets.fromLTRB(30, 10, 30, 17),
+              padding: const EdgeInsets.fromLTRB(30, 10, 30, 17),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -201,7 +219,7 @@ class _MessagesState extends State<Messages> {
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: selectedTab == 'notification'
-                                ? Color(0xFF1F4167)
+                                ? const Color(0xFF1F4167)
                                 : null),
                         child: Padding(
                           padding: const EdgeInsets.all(5.0),
@@ -219,7 +237,7 @@ class _MessagesState extends State<Messages> {
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: selectedTab == 'chat'
-                                ? Color(0xFF1F4167)
+                                ? const Color(0xFF1F4167)
                                 : null),
                         child: Padding(
                           padding: const EdgeInsets.all(5.0),
@@ -236,7 +254,7 @@ class _MessagesState extends State<Messages> {
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: selectedTab == 'setting'
-                              ? Color(0xFF1F4167)
+                              ? const Color(0xFF1F4167)
                               : null),
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
@@ -260,7 +278,7 @@ class _MessagesState extends State<Messages> {
   Container userDetail(title, desc) {
     return Container(
       decoration: BoxDecoration(
-          color: Color(0xFF1F4167), borderRadius: BorderRadius.circular(5)),
+          color: const Color(0xFF1F4167), borderRadius: BorderRadius.circular(5)),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 20),
         child: Row(
@@ -269,13 +287,13 @@ class _MessagesState extends State<Messages> {
                 flex: 2,
                 child: Text(
                   title,
-                  style: TextStyle(color: lightGrey, fontSize: 17),
+                  style: const TextStyle(color: lightGrey, fontSize: 17),
                 )),
             Expanded(
                 flex: 3,
                 child: Text(
                   desc,
-                  style: TextStyle(color: lightGrey, fontSize: 17),
+                  style: const TextStyle(color: lightGrey, fontSize: 17),
                 )),
           ],
         ),
@@ -287,7 +305,7 @@ class _MessagesState extends State<Messages> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
-        onTap: ()=>Get.to(()=>ChatScreen()),
+        onTap: ()=>Get.to(()=>const ChatScreen()),
         child: Row(
           children: [
             Stack(
@@ -321,7 +339,7 @@ class _MessagesState extends State<Messages> {
                     ],
                   ),
                   tiny5Space(),
-                  Text(
+                  const Text(
                     'no pracujemy z domu przez 5 ...',
                     style: TextStyle(color: light, fontSize: 15),
                   ),
@@ -347,7 +365,7 @@ class _MessagesState extends State<Messages> {
                 'assets/images/icons/Ellipse 1.png',
               ),
             ),
-            Positioned(
+            const Positioned(
                 bottom: 0,
                 right: 0,
                 child: Icon(Icons.circle, color: Colors.green))
@@ -356,7 +374,7 @@ class _MessagesState extends State<Messages> {
         tiny5Space(),
         Text(
           'Barry $i',
-          style: TextStyle(color: white, fontSize: 14),
+          style: const TextStyle(color: white, fontSize: 14),
         )
       ],
     );
