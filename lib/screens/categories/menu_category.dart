@@ -27,7 +27,7 @@ class _MenuCategoryState extends State<MenuCategory> {
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(
-        preferredSize: Size(MediaQuery.of(context).size.width,  height() * 0.165),
+        preferredSize: Size(MediaQuery.of(context).size.width,  height() * 0.15),
         child: Container(
           decoration: new BoxDecoration(
             gradient:  gradient(
@@ -46,36 +46,34 @@ class _MenuCategoryState extends State<MenuCategory> {
                   child: Image.asset(
                     "assets/images/fenixmall_white.png",
                     color: white,
-                    height: height() * 0.065,
                   ),
                 ),
               ),
 
-             SizedBox(width: 10.w,),
-              Expanded(
-                child: Container(
+             tiny5Space(),
+              Container(
 
-                  width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.only(bottom: 10.w),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(13.w),
-                    color: Colors.white,
+                width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.only(bottom: 10.w),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(13.w),
+                  color: Colors.white,
+                ),
+                child: TextField(
+                  style: TextStyle(
+                    fontSize: 16.w,
                   ),
-                  child: TextField(
-                    style: TextStyle(
-                      fontSize: 16.w,
+                  decoration: InputDecoration(
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 15),
+                    labelText: "Search Fenix",
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    labelStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        fontSize: 15.w,
+                        color: Colors.grey.shade500
                     ),
-                    decoration: InputDecoration(
-                      enabledBorder: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                      hintText: "Search Fenix",
-                      hintStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
-                          fontSize: 15.w,
-                          color: Colors.grey.shade500
-                      ),
-                      prefixIcon: const Icon(Icons.search),
-                    ),
+                    suffixIcon: const Icon(Icons.search),
                   ),
                 ),
               ),

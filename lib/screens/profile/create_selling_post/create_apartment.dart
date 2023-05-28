@@ -315,8 +315,7 @@ class _CreateApartmentState extends State<CreateApartment> {
             height() * 0.1),
         child: Container(
           decoration: BoxDecoration(
-            gradient:
-                gradient(const Color(0xFF1A9AFF), const Color(0xFF54FADC)),
+            gradient: appBarGradient,
           ),
           padding: EdgeInsets.only(top: 55.h, left: 12.w, right: 12.w),
           child: Column(
@@ -325,15 +324,7 @@ class _CreateApartmentState extends State<CreateApartment> {
             children: [
               Row(
                 children: [
-                  IconButton(
-                      onPressed: (){
-                        Get.back();
-                      },
-                      icon: Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                        size: 29.w,
-                      )),
+                  backArrow(),
                   Container(
                     height: MediaQuery.of(context).size.height * 0.050,
                     width: MediaQuery.of(context).size.width * 0.80,

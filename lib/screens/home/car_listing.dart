@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 
 import '../../controller/store_controller.dart';
 import '../../controller/user_controller.dart';
+import '../../helpers/icons/custom_icons_fenix_icons.dart';
 import '../../helpers/widgets/top_rated_Items.dart';
 import '../../theme.dart';
 import '../onboarding/constants.dart';
@@ -100,13 +101,13 @@ class _VehicleListState extends State<VehicleList> {
                   scrollDirection: Axis.horizontal,
                   children: [
                     MenuTitle(
-                        icon: "Dacha.png",
+                        icon: CustomIconsFenix.dacha,
                         title: "Dacha",
                         onTap: () => Get.back()),
-                    MenuTitle(icon: "houseRental.png", title: "House Rental"),
-                    MenuTitle(icon: "apartment.png", title: "Apartment"),
-                    MenuTitle(icon: "carRental.png", title: "Car Rental"),
-                    MenuTitle(icon: "storeRental.png", title: "Store Rental"),
+                    MenuTitle(icon: CustomIconsFenix.house, title: "House Rental"),
+                    MenuTitle(icon: CustomIconsFenix.apartment, title: "Apartment"),
+                    MenuTitle(icon: CustomIconsFenix.car, title: "Car Rental"),
+                    MenuTitle(icon: CustomIconsFenix.vector__3_, title: "Store Rental"),
                   ],
                 ),
               ),

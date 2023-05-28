@@ -3,6 +3,7 @@ import 'package:fenix/controller/account_controller.dart';
 import 'package:fenix/controller/store_controller.dart';
 import 'package:fenix/controller/user_controller.dart';
 import 'package:fenix/helpers/distance_calculator.dart';
+import 'package:fenix/helpers/icons/custom_icons_fenix_icons.dart';
 import 'package:fenix/helpers/widgets/recently_viewed_widget.dart';
 import 'package:fenix/screens/dealsDetails.dart';
 import 'package:fenix/screens/home/house_rent.dart';
@@ -72,7 +73,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(
-        preferredSize: Size(MediaQuery.of(context).size.width, height() * 0.21),
+        preferredSize: Size(MediaQuery.of(context).size.width, height() * 0.18),
         child: Container(
           decoration: BoxDecoration(
             gradient: appBarGradient,
@@ -103,18 +104,13 @@ class _HomeState extends State<Home> {
                     color: Colors.white,
                   ),
                   child: TextField(
-                    style: TextStyle(
-                      fontSize: 16.w,
-                    ),
                     enabled: false,
                     decoration: InputDecoration(
                       enabledBorder: InputBorder.none,
                       focusedBorder: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: MediaQuery.of(context).size.height * 0.015),
-                      hintText: "Search Fenix",
-                      hintStyle: TextStyle(
+                      contentPadding: EdgeInsets.symmetric(horizontal: 15,),
+                      label: Text("Search Fenix"),
+                      labelStyle: TextStyle(
                               fontSize: 15.w, color: Colors.grey.shade500),
                       suffixIcon: const Icon(Icons.search),
                     ),
@@ -130,7 +126,7 @@ class _HomeState extends State<Home> {
                       scrollDirection: Axis.horizontal,
                       children: [
                         MenuTitle(
-                          icon: "Dacha.png",
+                          icon: CustomIconsFenix.dacha,
                           title: "Dacha",
                           color: white,
                           onTap: () => setState(() {
@@ -145,7 +141,7 @@ class _HomeState extends State<Home> {
                           }),
                         ),
                         MenuTitle(
-                          icon: "houseRental.png",
+                          icon: CustomIconsFenix.house,
                           title: "House",
                           color: white,
                           onTap: () => setState(() {
@@ -159,7 +155,7 @@ class _HomeState extends State<Home> {
                           }),
                         ),
                         MenuTitle(
-                          icon: "apartment.png",
+                          icon: CustomIconsFenix.apartment,
                           title: "Apartment",
                           color: white,
                           onTap: () => setState(() {
@@ -174,7 +170,7 @@ class _HomeState extends State<Home> {
                           }),
                         ),
                         MenuTitle(
-                          icon: "carRental.png",
+                          icon: FontAwesomeIcons.car,
                           title: "Car",
                           color: white,
                           onTap: () => setState(() {
@@ -188,7 +184,7 @@ class _HomeState extends State<Home> {
                           }),
                         ),
                         MenuTitle(
-                          icon: "television.png",
+                          icon: CustomIconsFenix.vector__3_,
                           title: "Electronics",
                           color: white,
                           onTap: () => setState(() {

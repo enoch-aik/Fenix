@@ -34,10 +34,7 @@ class _SellingPostState extends State<SellingPost> {
             height() * 0.1),
         child: Container(
           decoration: BoxDecoration(
-            gradient: gradient(
-              const Color(0xFF1A9AFF),
-              const Color(0xFF54FADC),
-            ),
+            gradient: appBarGradient,
           ),
           padding: EdgeInsets.only(top: 55.h, left: 12.w, right: 12.w),
           child: Column(

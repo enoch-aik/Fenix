@@ -75,7 +75,9 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/fenixLogoCircled.png"
+  image_path: "assets/images/fenixLogoNew.png"
+  adaptive_icon_background: "assets/images/fenixLogoNew.png"
+  adaptive_icon_foreground: "assets/images/fenixLogoNew.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -100,6 +102,9 @@ flutter:
     - family: CustomIcons
       fonts:
         - asset: assets/fonts/CustomIcons.ttf
+    - family: CustomIconsFenix
+      fonts:
+        - asset: assets/fonts/CustomIconsFenix.ttf
     - family: ProfileIconBlack
       fonts:
         - asset: assets/fonts/ProfileIconBlack.ttf
