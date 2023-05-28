@@ -176,6 +176,7 @@ class _UserProfileState extends State<UserProfile> {
                                       ['location'].toString(),
                                 ));
                       }
+
                       if (index == 3) Get.to(() => const Subscribe());
                       if (index == 4) Get.to(() => const WishList());
                       if (index == 5) Get.to(() => const StoreList());
