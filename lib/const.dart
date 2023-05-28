@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:fenix/screens/onboarding/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,6 +15,11 @@ const double INPUT_FIELD_RADIUS = 3.0;
 
 double height() => Get.height;
 double width() => Get.width;
+
+LinearGradient appBarGradient = gradient(
+  const Color(0xFF691232),
+  const Color(0xFF1770A2),
+);
 
 smallHSpace() => const SizedBox(width: 20);
 tinyHSpace() => const SizedBox(width: 10);

@@ -40,10 +40,10 @@ class SignIn extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: height() * 0.2,
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 20.w),
                       child: Image.asset(
-                        "assets/images/logoFrame.png",
+                        "assets/images/fenixgradientblue.png",
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -83,7 +83,7 @@ class SignIn extends StatelessWidget {
                               obscureIcon.value =  FontAwesomeIcons.eyeSlash;
                             }
                           },
-                          child: Obx(() => Icon(obscureIcon.value)),
+                          child: Obx(() => Icon(obscureIcon.value, color: primary,)),
                         ),
 
                         validator: (value) =>
@@ -250,7 +250,7 @@ class SignIn extends StatelessWidget {
                 alignment: Alignment.bottomLeft,
                 child: InkWell(
                   onTap: () {
-                    Get.off(() => AuthBoard());
+                    Get.back();
                   },
                   child: backButtonThree,
                 ),

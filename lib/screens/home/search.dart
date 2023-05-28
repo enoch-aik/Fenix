@@ -58,60 +58,62 @@ class _SearchScreenState extends State<SearchScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Align(
-                alignment: Alignment.center,
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.055,
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerLeft,
                   child: Image.asset(
-                    "assets/images/fenixWhite2.png",
-                    fit: BoxFit.fill,
+                    "assets/images/fenixmall_white.png",
+                    color: white,
+                    height: height() * 0.075,
                   ),
                 ),
               ),
               SizedBox(
                 width: 10,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  InkWell(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: Icon(
-                        Icons.arrow_back_ios,
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InkWell(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.white,
+                          size: 30.w,
+                        )),
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.050,
+                      width: MediaQuery.of(context).size.width * 0.82,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(13.w),
                         color: Colors.white,
-                        size: 30.w,
-                      )),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.050,
-                    width: MediaQuery.of(context).size.width * 0.82,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(13.w),
-                      color: Colors.white,
-                    ),
-                    child: TextField(
-                      style: TextStyle(
-                        fontSize: 18.w,
                       ),
-                      decoration: InputDecoration(
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 15,
-                            vertical:
-                                MediaQuery.of(context).size.height * 0.015),
-                        hintText: "Search Fenix",
-                        hintStyle: Theme.of(context)
-                            .textTheme
-                            .bodyText1!
-                            .copyWith(
-                                fontSize: 18.w, color: Colors.grey.shade500),
-                        suffixIcon: Icon(Icons.search, size: 30.w,),
+                      child: TextField(
+                        style: TextStyle(
+                          fontSize: 18.w,
+                        ),
+                        decoration: InputDecoration(
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 15,
+                              vertical:
+                                  MediaQuery.of(context).size.height * 0.015),
+                          hintText: "Search Fenix",
+                          hintStyle: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(
+                                  fontSize: 18.w, color: Colors.grey.shade500),
+                          suffixIcon: Icon(Icons.search, size: 30.w,),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.010,

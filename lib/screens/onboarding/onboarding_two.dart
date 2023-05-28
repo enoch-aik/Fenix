@@ -28,7 +28,7 @@ class OnboardingTwo extends StatelessWidget {
 
           // ButtonWidget(title: "Next",),
 
-          BottomHillsWidget()
+          Positioned(bottom:-50, child:  BottomHillsWidget())
         ],
       ),
     );

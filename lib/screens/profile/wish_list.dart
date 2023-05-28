@@ -26,75 +26,72 @@ class WishList extends StatelessWidget {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width,
-            MediaQuery.of(context).size.height * 0.123),
+            height() * 0.165),
         child: Container(
           decoration: BoxDecoration(
-            gradient: gradient(
-              const Color(0xFF1A9AFF),
-              const Color(0xFF54FADC),
-            ),
+            gradient: appBarGradient,
           ),
           padding: EdgeInsets.only(top: 55.h, left: 12.w, right: 12.w),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.055,
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerLeft,
                   child: Image.asset(
-                    "assets/images/fenix_c.png",
-                    fit: BoxFit.fill,
+                    "assets/images/fenixmall_white.png",
+                    color: white,
+                    height: height() * 0.075,
                   ),
                 ),
               ),
-              const SizedBox(
-                width: 10,
-              ),
-              Row(
-                children: [
-                  InkWell(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: const Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.white,
-                      )),
-                  InkWell(
-                    onTap: () => Get.to(() => const SearchScreen()),
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.050,
-                      width: MediaQuery.of(context).size.width * 0.85,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(13.w),
-                        color: Colors.white,
-                      ),
-                      child: TextField(
-                        style: TextStyle(
-                          fontSize: 16.w,
+              tiny5Space(),
+              Expanded(
+                child: Row(
+                  children: [
+                    InkWell(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: const Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.white,
+                        )),
+                    InkWell(
+                      onTap: () => Get.to(() => const SearchScreen()),
+                      child: Container(
+                        // height: MediaQuery.of(context).size.height * 0.050,
+                        width: MediaQuery.of(context).size.width * 0.85,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(13.w),
+                          color: Colors.white,
                         ),
-                        enabled: false,
-                        decoration: InputDecoration(
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 15,
-                              vertical:
-                                  MediaQuery.of(context).size.height * 0.015),
-                          hintText: "Search Fenix",
-                          hintStyle: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(
-                                  fontSize: 15.w, color: Colors.grey.shade500),
-                          prefixIcon: const Icon(Icons.search),
+                        child: TextField(
+                          style: TextStyle(
+                            fontSize: 16.w,
+                          ),
+                          enabled: false,
+                          decoration: InputDecoration(
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 15,
+                                vertical:
+                                    MediaQuery.of(context).size.height * 0.015),
+                            hintText: "Search Fenix",
+                            hintStyle: Theme.of(context)
+                                .textTheme
+                                .bodyText1!
+                                .copyWith(
+                                    fontSize: 15.w, color: Colors.grey.shade500),
+                            prefixIcon: const Icon(Icons.search),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.010,

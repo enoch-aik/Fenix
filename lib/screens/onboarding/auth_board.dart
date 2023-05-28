@@ -28,10 +28,10 @@ class AuthBoard extends StatelessWidget {
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.18,
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 15.w),
                       child: Image.asset(
-                        "assets/images/logoFrame.png",
+                        "assets/images/fenixgradientpurple.png",
                       ),
                     ),
                     smallSpace(),
@@ -141,7 +141,7 @@ class AuthBoard extends StatelessWidget {
               ],
             ),
           ),
-          const BottomHillsWidget()
+          Positioned(bottom:-50, child:  BottomHillsWidget())
         ],
       ),
     );

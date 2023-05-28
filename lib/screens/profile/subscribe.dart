@@ -18,10 +18,7 @@ class Subscribe extends StatelessWidget {
             MediaQuery.of(context).size.height * 0.02),
         child: Container(
           decoration: BoxDecoration(
-            gradient: gradient(
-              const Color(0xFF1A9AFF),
-              const Color(0xFF54FADC),
-            ),
+            gradient: appBarGradient,
           ),
           padding: EdgeInsets.only(top: 55.h, left: 12.w, right: 12.w),
           child: Column(

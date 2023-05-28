@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 
 import '../../const.dart';
 import '../../helpers/widgets/top_rated_Items.dart';
+import '../../theme.dart';
 import '../onboarding/constants.dart';
 
 class MenuCategory extends StatefulWidget {
@@ -26,7 +27,7 @@ class _MenuCategoryState extends State<MenuCategory> {
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(
-        preferredSize: Size(MediaQuery.of(context).size.width,  height() * 0.155),
+        preferredSize: Size(MediaQuery.of(context).size.width,  height() * 0.165),
         child: Container(
           decoration: new BoxDecoration(
             gradient:  gradient(
@@ -39,37 +40,42 @@ class _MenuCategoryState extends State<MenuCategory> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: SizedBox(
-                  height: 46.h,
-                  child: Image.asset("assets/images/fenixWhilte.png",fit: BoxFit.fill,),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Image.asset(
+                    "assets/images/fenixmall_white.png",
+                    color: white,
+                    height: height() * 0.065,
+                  ),
                 ),
               ),
 
-              const SizedBox(width: 10,),
-              Container(
-                height: 45,
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.only(bottom: 10.w),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(13.w),
-                  color: Colors.white,
-                ),
-                child: TextField(
-                  style: TextStyle(
-                    fontSize: 16.w,
+             SizedBox(width: 10.w,),
+              Expanded(
+                child: Container(
+
+                  width: MediaQuery.of(context).size.width,
+                  margin: EdgeInsets.only(bottom: 10.w),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(13.w),
+                    color: Colors.white,
                   ),
-                  decoration: InputDecoration(
-                    enabledBorder: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                    hintText: "Search Fenix",
-                    hintStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        fontSize: 15.w,
-                        color: Colors.grey.shade500
+                  child: TextField(
+                    style: TextStyle(
+                      fontSize: 16.w,
                     ),
-                    prefixIcon: const Icon(Icons.search),
+                    decoration: InputDecoration(
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                      hintText: "Search Fenix",
+                      hintStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
+                          fontSize: 15.w,
+                          color: Colors.grey.shade500
+                      ),
+                      prefixIcon: const Icon(Icons.search),
+                    ),
                   ),
                 ),
               ),

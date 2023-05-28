@@ -72,27 +72,27 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(
-        preferredSize: Size(MediaQuery.of(context).size.width, height() * 0.2),
+        preferredSize: Size(MediaQuery.of(context).size.width, height() * 0.21),
         child: Container(
           decoration: BoxDecoration(
-            gradient: gradient(
-              const Color(0xFF691232),
-              const Color(0xFF1770A2),
-            ),
+            gradient: appBarGradient,
           ),
           padding: EdgeInsets.only(top: 50.h, left: 12.w, right: 12.w),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Align(
-                alignment: Alignment.center,
-                child: Image.asset(
-                  "assets/images/fenix_c.png",
-                  color: white,
+              Expanded(
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Image.asset(
+                    "assets/images/fenixmall_white.png",
+                    color: white,
+                    height: height() * 0.075,
+                  ),
                 ),
               ),
-              const SizedBox(width: 10),
+              SizedBox(height: 10.w),
               InkWell(
                 onTap: () => Get.to(() => const SearchScreen()),
                 child: Container(
@@ -116,89 +116,94 @@ class _HomeState extends State<Home> {
                       hintText: "Search Fenix",
                       hintStyle: TextStyle(
                               fontSize: 15.w, color: Colors.grey.shade500),
-                      prefixIcon: const Icon(Icons.search),
+                      suffixIcon: const Icon(Icons.search),
                     ),
                   ),
                 ),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.052,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    MenuTitle(
-                      icon: "Dacha.png",
-                      title: "Dacha",
-                      color: white,
-                      onTap: () => setState(() {
-                        tab = 'dacha';
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.052,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        MenuTitle(
+                          icon: "Dacha.png",
+                          title: "Dacha",
+                          color: white,
+                          onTap: () => setState(() {
+                            tab = 'dacha';
 
-                        _productController.getApartments(
-                            token,
-                            Category()
-                                .homeCategories[0]
-                                .toString()
-                                .toLowerCase());
-                      }),
-                    ),
-                    MenuTitle(
-                      icon: "houseRental.png",
-                      title: "House",
-                      color: white,
-                      onTap: () => setState(() {
-                        tab = 'house';
-                        _productController.getApartments(
-                            token,
-                            Category()
-                                .homeCategories[2]
-                                .toString()
-                                .toLowerCase());
-                      }),
-                    ),
-                    MenuTitle(
-                      icon: "apartment.png",
-                      title: "Apartment",
-                      color: white,
-                      onTap: () => setState(() {
-                        tab = 'apartment';
+                            _productController.getApartments(
+                                token,
+                                Category()
+                                    .homeCategories[0]
+                                    .toString()
+                                    .toLowerCase());
+                          }),
+                        ),
+                        MenuTitle(
+                          icon: "houseRental.png",
+                          title: "House",
+                          color: white,
+                          onTap: () => setState(() {
+                            tab = 'house';
+                            _productController.getApartments(
+                                token,
+                                Category()
+                                    .homeCategories[2]
+                                    .toString()
+                                    .toLowerCase());
+                          }),
+                        ),
+                        MenuTitle(
+                          icon: "apartment.png",
+                          title: "Apartment",
+                          color: white,
+                          onTap: () => setState(() {
+                            tab = 'apartment';
 
-                        _productController.getApartments(
-                            token,
-                            Category()
-                                .homeCategories[1]
-                                .toString()
-                                .toLowerCase());
-                      }),
+                            _productController.getApartments(
+                                token,
+                                Category()
+                                    .homeCategories[1]
+                                    .toString()
+                                    .toLowerCase());
+                          }),
+                        ),
+                        MenuTitle(
+                          icon: "carRental.png",
+                          title: "Car",
+                          color: white,
+                          onTap: () => setState(() {
+                            tab = 'car';
+                            _productController.getProducts(
+                                token,
+                                Category()
+                                    .homeCategories[3]
+                                    .toString()
+                                    .toLowerCase());
+                          }),
+                        ),
+                        MenuTitle(
+                          icon: "television.png",
+                          title: "Electronics",
+                          color: white,
+                          onTap: () => setState(() {
+                            tab = 'electronics';
+                            _productController.getProducts(
+                                token,
+                                Category()
+                                    .homeCategories[4]
+                                    .toString()
+                                    .toLowerCase());
+                          }),
+                        ),
+                      ],
                     ),
-                    MenuTitle(
-                      icon: "carRental.png",
-                      title: "Car",
-                      color: white,
-                      onTap: () => setState(() {
-                        tab = 'car';
-                        _productController.getProducts(
-                            token,
-                            Category()
-                                .homeCategories[3]
-                                .toString()
-                                .toLowerCase());
-                      }),
-                    ),
-                    MenuTitle(
-                      icon: "television.png",
-                      title: "Electronics",
-                      color: white,
-                      onTap: () => setState(() {
-                        tab = 'electronics';
-                        _productController.getProducts(
-                            token,
-                            Category()
-                                .homeCategories[4]
-                                .toString()
-                                .toLowerCase());
-                      }),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ],

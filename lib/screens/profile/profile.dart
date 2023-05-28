@@ -9,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../const.dart';
 import '../../controller/account_controller.dart';
 import '../../helpers/widgets/dialogs.dart';
 import '../chat.dart';
@@ -56,12 +57,10 @@ class _UserProfileState extends State<UserProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: SizedBox(
-            height: 46.h,
-            child: Image.asset(
-              "assets/images/fenixWhite2.png",
-              fit: BoxFit.fill,
-            ),
+          title: Image.asset(
+            "assets/images/fenixmall_white.png",
+            color: Colors.white,
+            height: height() * 0.070,
           ),
           automaticallyImplyLeading: false,
           actions: [
@@ -107,15 +106,13 @@ class _UserProfileState extends State<UserProfile> {
           centerTitle: false,
           flexibleSpace: Container(
             decoration: BoxDecoration(
-              gradient: gradient2(
-                const Color(0xFF46E0C4),
-                const Color(0xFF59B5C0),
-              ),
+              gradient: appBarGradient,
             ),
           )),
       body: Container(
         color: const Color(0xFFE4EFF9),
         child: ListView(
+          physics: ClampingScrollPhysics(),
           children: [
             Container(
               height: 50.w,
@@ -123,10 +120,7 @@ class _UserProfileState extends State<UserProfile> {
               padding: EdgeInsets.symmetric(horizontal: 10.w),
               margin: EdgeInsets.only(bottom: 20.w),
               decoration: BoxDecoration(
-                gradient: gradient2(
-                  const Color(0xFF41F0D1),
-                  const Color(0xFF4A9A9E),
-                ),
+                gradient: appBarGradient,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -158,6 +152,7 @@ class _UserProfileState extends State<UserProfile> {
                     mainAxisSpacing: 10),
                 itemCount: 8,
                 shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (BuildContext ctx, index) {
                   return InkWell(
                     onTap: () {

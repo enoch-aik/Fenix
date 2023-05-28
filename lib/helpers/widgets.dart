@@ -529,8 +529,11 @@ class TextFieldWidget extends StatelessWidget {
         ],
       ),
       child: TextFormField(
-        style: const TextStyle(
-          fontSize: 14,
+        style: Theme.of(context)
+            .textTheme
+            .bodyText1!
+            .copyWith(
+          fontSize: 18.w,
         ),
         onTap: onTap,
         maxLines: maxLine,
@@ -540,6 +543,7 @@ class TextFieldWidget extends StatelessWidget {
         validator: validator,
         controller: textController,
         obscureText: obscureText,
+        cursorColor: primary,
         decoration: InputDecoration(
           enabledBorder: InputBorder.none,
           disabledBorder: InputBorder.none,
@@ -553,11 +557,11 @@ class TextFieldWidget extends StatelessWidget {
           hintStyle: Theme.of(context)
               .textTheme
               .bodyText1!
-              .copyWith(fontSize: 15.w, color: Colors.grey.shade400),
+              .copyWith(fontSize: 16.w, color: Colors.grey.shade400),
           labelStyle: Theme.of(context)
               .textTheme
               .bodyText1!
-              .copyWith(fontSize: 15.w, color: Colors.grey.shade400),
+              .copyWith(fontSize: 16.w, color: Colors.grey.shade400),
           prefixIcon: prefixIcon,
           suffix: suffix,
         ),
