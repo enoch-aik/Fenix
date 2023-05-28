@@ -138,7 +138,7 @@ class SignIn extends StatelessWidget {
                       child: ButtonWidget(title: "Sign In"),
                     ),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.13,
+                      height: MediaQuery.of(context).size.height * 0.12,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -254,7 +254,7 @@ class SignIn extends StatelessWidget {
                   },
                   child: backButtonThree,
                 ),
-              )
+              ),
             ],
           ),
         ),

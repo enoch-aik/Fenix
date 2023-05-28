@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:fenix/const.dart';
 import 'package:fenix/screens/onboarding/auth_board.dart';
 import 'package:fenix/screens/onboarding/constants.dart';
 import 'package:fenix/theme.dart';
@@ -15,17 +16,20 @@ class BottomHillsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: Container(
-        height: 120,
-        width: MediaQuery.of(context).size.width,
-        decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/images/bottomHills.png"),
-                fit: BoxFit.fitWidth)),
-      ),
-    );
+    // return Align(
+    //   alignment: Alignment.bottomCenter,
+    //   child: Container(
+    //     height: 120,
+    //     width: MediaQuery.of(context).size.width,
+    //     decoration: const BoxDecoration(
+    //         image: DecorationImage(
+    //             image: AssetImage("assets/images/bottomHills.png"),
+    //             fit: BoxFit.fitWidth)),
+    //   ),
+    // );
+
+    return Image.asset("assets/images/bottomHills.png",width:width(),fit: BoxFit.fill);
+
   }
 }
 

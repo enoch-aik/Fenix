@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
 class Loading extends StatefulWidget {
-  const Loading({Key? key,  this.navigateScreen}) : super(key: key);
+  const Loading({Key? key, this.navigateScreen}) : super(key: key);
   final Widget? navigateScreen;
 
   @override
@@ -28,46 +28,40 @@ class _LoadingState extends State<Loading> {
     // TODO: implement dispose
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
-      body: Stack(
-        alignment: Alignment.center,
+      body: Column(
         children: [
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 78.w),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: Get.height * 0.4,
-                  height: Get.width * 0.9,
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: AssetImage('assets/images/fenix_loading.png'))),
-                ),
-                Column(
-                  children: [
-                    const SizedBox(
-                      height: 100,
-                      child: LoadingIndicator(
-                        indicatorType: Indicator.ballPulseSync,
-                        colors: [Color(0xFF28D7AD)],
-                      ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 78.w),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: Get.height * 0.4,
+                    height: Get.width * 0.9,
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image:
+                                AssetImage('assets/images/fenix_loading.png'))),
+                  ),
+                  const SizedBox(
+                    height: 100,
+                    child: LoadingIndicator(
+                      indicatorType: Indicator.ballPulseSync,
+                      colors: [Color(0xFF28D7AD)],
                     ),
-                    // Text(
-                    //   "Developed by Khasan.A",
-                    //   style: TextStyle(
-                    //       color: Colors.grey.shade800, fontSize: 16.w),
-                    // ),
-                  ],
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           ),
-          Positioned(bottom:-50, child:  BottomHillsWidget())
+          const BottomHillsWidget()
         ],
       ),
     );

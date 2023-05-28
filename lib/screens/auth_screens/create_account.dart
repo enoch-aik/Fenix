@@ -121,7 +121,7 @@ class SignUp extends StatelessWidget {
                           // ),
                           kSpacing,
                           TextFieldWidget(
-                            hint: "New Password",
+                            hint: "Password",
                             textController: _accountController.password,
                             validator: (value) =>
                                 PasswordValidator.validate(value!),

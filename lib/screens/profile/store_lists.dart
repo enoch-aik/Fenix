@@ -32,14 +32,12 @@ class StoreList extends StatelessWidget {
           },
           label: const Text('Add Store', style: TextStyle(color: background))),
       appBar: AppBar(
-          title: Expanded(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Image.asset(
-                "assets/images/fenixmall_white.png",
-                color: white,
-                height: height() * 0.075,
-              ),
+          title: Align(
+            alignment: Alignment.centerLeft,
+            child: Image.asset(
+              "assets/images/fenixmall_white.png",
+              color: white,
+              height: height() * 0.075,
             ),
           ),
           automaticallyImplyLeading: false,

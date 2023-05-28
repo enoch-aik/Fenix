@@ -29,7 +29,7 @@ class AuthBoard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 15.w),
+                      padding: EdgeInsets.fromLTRB(0, 10.w, 0, 10.w),
                       child: Image.asset(
                         "assets/images/fenixgradientpurple.png",
                       ),
@@ -46,15 +46,15 @@ class AuthBoard extends StatelessWidget {
                                     color: Colors.blueGrey.withOpacity(0.15),
                                     spreadRadius: 12,
                                     blurRadius: 13,
-                                    offset:
-                                        const Offset(6, 6), // changes position of shadow
+                                    offset: const Offset(
+                                        6, 6), // changes position of shadow
                                   ),
                                   BoxShadow(
                                     color: Colors.white.withOpacity(1),
                                     spreadRadius: 1,
                                     blurRadius: 1,
-                                    offset: const Offset(
-                                        -0.2, -0.2), // changes position of shadow
+                                    offset: const Offset(-0.2,
+                                        -0.2), // changes position of shadow
                                   ),
                                 ]),
                             height: MediaQuery.of(context).size.height * 0.25,
@@ -77,8 +77,8 @@ class AuthBoard extends StatelessWidget {
                                           ),
                                           TextSpan(
                                               text: "Fenix",
-                                              style:
-                                                  TextStyle(color: Colors.redAccent)),
+                                              style: TextStyle(
+                                                  color: Colors.redAccent)),
                                           TextSpan(
                                             text:
                                                 "\nThe Unique and\nMulti-Functional Online Store\nin Uzbekistan.",
@@ -102,7 +102,7 @@ class AuthBoard extends StatelessWidget {
                         )
                       ],
                     ),
-                    verticalSpace(0.04),
+                    verticalSpace(0.02),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -119,14 +119,13 @@ class AuthBoard extends StatelessWidget {
                           child: ButtonWidget(title: "Create Account"),
                         ),
                         InkWell(
-                          onTap: (){
+                          onTap: () {
                             Get.to(() => ResendVerificationMail());
                           },
-                            child: ButtonWidget(title: "Verify Account"),
+                          child: ButtonWidget(title: "Verify Account"),
                         ),
                       ],
                     ),
-
                     InkWell(
                       onTap: () {
                         Get.back();
@@ -141,7 +140,7 @@ class AuthBoard extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(bottom:-50, child:  BottomHillsWidget())
+          Positioned(bottom: -50, child: BottomHillsWidget())
         ],
       ),
     );

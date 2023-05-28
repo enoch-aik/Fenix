@@ -936,7 +936,7 @@ class ProductWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.w),
                   image: DecorationImage(
                     image: AssetImage(
-                        "assets/images/${category == "Electronics" ? 'electronics' : category == "Cars" ? 'car' : 'house'}.png"),
+                        "assets/images/${category == "Electronics" ? 'electronics' : category == "Cars" ? 'cars' : 'house'}.png"),
                     fit: BoxFit.cover,
                   ),
                 ),
