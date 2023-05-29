@@ -43,14 +43,12 @@ class _SellingListState extends State<SellingList> {
 
     return Scaffold(
       appBar: AppBar(
-          title: Expanded(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Image.asset(
-                "assets/images/fenixmall_white.png",
-                color: white,
-                height: height() * 0.075,
-              ),
+          title: Align(
+            alignment: Alignment.centerLeft,
+            child: Image.asset(
+              "assets/images/fenixmall_white.png",
+              color: white,
+              height: height() * 0.075,
             ),
           ),
           bottom: PreferredSize(
@@ -106,7 +104,7 @@ class _SellingListState extends State<SellingList> {
                     MenuTitle(
                         icon: "Dacha.png",
                         title: "Dacha",
-                        color: tab == "Dacha" ? dark : white,
+                        color: tab == "Dacha" ? white : Colors.transparent,
                         onTap: () {
                           setState(() {
                             tab = "Dacha";
@@ -121,7 +119,7 @@ class _SellingListState extends State<SellingList> {
                     MenuTitle(
                         icon: "houseRental.png",
                         title: "House",
-                        color: tab == "House" ? dark : white,
+                        color: tab == "House" ?white : Colors.transparent,
                         onTap: () {
                           setState(() {
                             tab = "House";
@@ -133,7 +131,7 @@ class _SellingListState extends State<SellingList> {
                     MenuTitle(
                         icon: "apartment.png",
                         title: "Apartment",
-                        color: tab == "Apartment" ? dark : white,
+                        color: tab == "Apartment" ?white : Colors.transparent,
                         onTap: () {
                           setState(() {
                             tab = "Apartment";
@@ -145,7 +143,7 @@ class _SellingListState extends State<SellingList> {
                     MenuTitle(
                         icon: "carRental.png",
                         title: "Car",
-                        color: tab == "Car" ? dark : white,
+                        color: tab == "Car" ? white : Colors.transparent,
                         onTap: () {
                           setState(() {
                             tab = "Car";
@@ -154,7 +152,7 @@ class _SellingListState extends State<SellingList> {
                     MenuTitle(
                         icon: "television.png",
                         title: "Electronics",
-                        color: tab == "Electronics" ? dark : white,
+                        color: tab == "Electronics" ? white : Colors.transparent,
                         onTap: () {
                           setState(() {
                             tab = "Electronics";
@@ -284,7 +282,7 @@ class _SellingListState extends State<SellingList> {
                                               ProductListWidget( product: item,
                                                   isNetwork: item['media'].isNotEmpty,
                                                   image: item['media'].isNotEmpty
-                                                      ? item['media'][1]['url']
+                                                      ? item['media'][0]['url']
                                                       : "assets/images/cars.png"),);
                                     }),
                       ),

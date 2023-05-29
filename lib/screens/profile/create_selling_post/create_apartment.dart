@@ -272,17 +272,12 @@ class _CreateApartmentState extends State<CreateApartment> {
         initialDate: DateTime.now(),
         firstDate: DateTime.now(),
         lastDate: DateTime(
-            DateTime.now().year, DateTime.now().month + 4, DateTime.now().day));
+            DateTime.now().year+7, DateTime.now().month + 4, DateTime.now().day));
 
     // return '';
   }
 
-  Future selectTime() {
-    return showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    );
-  }
+
 
   List<String>? getStoreListNames() {
     for (var i = 0; i < _storeController.storeList.length; i++) {
@@ -1071,7 +1066,7 @@ class _CreateApartmentState extends State<CreateApartment> {
                                 keyboardType: const TextInputType.numberWithOptions(
                                     decimal: true),
                                 hint: "Price",
-                                textController: nightController),
+                                textController: priceController),
                           ),
                           smallHSpace(),
                           tinyH5Space(),

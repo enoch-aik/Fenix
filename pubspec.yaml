@@ -52,6 +52,7 @@ dependencies:
   geolocator: ^9.0.2
   permission_handler:
   location:
+  shimmer:
   socket_io_client: ^2.0.2
 #  flutter_google_places_hoc081098: ^1.2.0
 #  google_maps_webservice:

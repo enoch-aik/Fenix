@@ -31,7 +31,7 @@ class ProductController extends GetxController {
   }
 
   getApartments(token, type) {
-    // isFetchingApartments(true);
+    isFetchingApartments(true);
     ProductServices.getApartmentsByType((status, response) {
       isFetchingApartments(false);
       if (status) {
@@ -44,7 +44,7 @@ class ProductController extends GetxController {
   }
 
   getProducts(token, category) {
-    // isFetchingProducts(true);
+    isFetchingProducts(true);
     ProductServices.getProductsByCategory((status, response) {
       isFetchingProducts(false);
       if (status) {

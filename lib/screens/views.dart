@@ -1,4 +1,3 @@
-
 import 'package:fenix/const.dart';
 import 'package:fenix/controller/user_controller.dart';
 import 'package:fenix/helpers/icons/custom_icons_icons.dart';
@@ -25,7 +24,7 @@ class Views extends StatefulWidget {
 
 class _HomeState extends State<Views> with TickerProviderStateMixin {
   int _selectedIndex = 1;
-final UserController userController = Get.put(UserController());
+  final UserController userController = Get.put(UserController());
   TabController? _tabController;
 
   @override
@@ -51,7 +50,8 @@ final UserController userController = Get.put(UserController());
     return Scaffold(
       backgroundColor: Color(0xFFE4EFF9),
       body: TabBarView(
-        physics: NeverScrollableScrollPhysics(), // swipe navigation handling is not supported
+        physics: NeverScrollableScrollPhysics(),
+        // swipe navigation handling is not supported
         controller: _tabController,
         children: [
           Map(),
@@ -74,33 +74,68 @@ final UserController userController = Get.put(UserController());
             backgroundColor: Colors.transparent,
             elevation: 0,
             type: BottomNavigationBarType.fixed,
-            items:  <BottomNavigationBarItem>[
+            items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: Icon(Icons.map_outlined,color: Colors.white.withOpacity(0.44), size: 35.w,),
-                activeIcon: Icon(Icons.map,color: Colors.white, size: 35.w,),
+                icon: Icon(
+                  Icons.map_outlined,
+                  color: Colors.white.withOpacity(0.44),
+                  size: 35.w,
+                ),
+                activeIcon: Icon(
+                  Icons.map,
+                  color: Colors.white,
+                  size: 35.w,
+                ),
                 label: '',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.home_outlined,color: Colors.white.withOpacity(0.44), size: 35.w,),
-                activeIcon: Icon(Icons.home,color: Colors.white, size: 35.w,),
+                icon: Icon(
+                  Icons.home_outlined,
+                  color: Colors.white.withOpacity(0.44),
+                  size: 35.w,
+                ),
+                activeIcon: Icon(
+                  Icons.home,
+                  color: Colors.white,
+                  size: 35.w,
+                ),
                 label: '',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle_outlined, size: 30.w, color: Colors.white.withOpacity(0.44),),
-                activeIcon: Icon(Icons.account_circle, size: 30.w, color: Colors.white,),
+                icon: Icon(
+                  Icons.account_circle_outlined,
+                  size: 30.w,
+                  color: Colors.white.withOpacity(0.44),
+                ),
+                activeIcon: Icon(
+                  Icons.account_circle,
+                  size: 30.w,
+                  color: Colors.white,
+                ),
                 label: '',
               ),
               BottomNavigationBarItem(
-                icon: Icon(CustomIcons.hammer,color: Colors.white.withOpacity(0.44),size: 30.w),
-                activeIcon: Icon(CustomIcons.hammer,color: Colors.white, size: 30.w),
+                icon: Icon(CustomIcons.hammer,
+                    color: Colors.white.withOpacity(0.44), size: 30.w),
+                activeIcon:
+                    Icon(CustomIcons.hammer, color: Colors.white, size: 30.w),
                 label: '',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.menu_outlined,color: Colors.white.withOpacity(0.44), size: 30.w,),
-                activeIcon:  Icon(Icons.menu,color: Colors.white, size: 30.w,),
+                icon: Icon(
+                  Icons.menu_outlined,
+                  color: Colors.white.withOpacity(0.44),
+                  size: 30.w,
+                ),
+                activeIcon: Icon(
+                  Icons.menu,
+                  color: Colors.white,
+                  size: 30.w,
+                ),
                 label: '',
               ),
-            ], // This trailing comma makes auto-formatting nicer for build methods.
+            ],
+            // This trailing comma makes auto-formatting nicer for build methods.
             currentIndex: _selectedIndex,
             selectedItemColor: Colors.white,
             onTap: _onItemTapped,
@@ -115,28 +150,36 @@ class MenuTitle extends StatelessWidget {
   void Function()? onTap;
   String icon;
   String title;
-  Color? color;
+  Color color;
 
-  MenuTitle({
-    Key? key, required this.title, required this.icon,this.color,this.onTap
-  }) : super(key: key);
+  MenuTitle(
+      {Key? key,
+      required this.title,
+      required this.icon,
+      this.color = Colors.transparent,
+      this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: Padding(
-        padding:  EdgeInsets.only(right: 24.w),
+      child: Container(
+        decoration: BoxDecoration(
+            border: Border(bottom: BorderSide(color: color, width: 3))),
+        margin: EdgeInsets.only(right: 25),
         child: Row(
           children: [
-            Image.asset("assets/images/icons/$icon",height: 24.w,color: color??black),
-            SizedBox(width: 5.w,),
-            Text(title,
-            style: Theme.of(context).textTheme.bodyText2!.copyWith(
-              fontSize: 19.w,
-              fontWeight: FontWeight.w600
-                ,color: color??black
-            ),),
+            Image.asset("assets/images/icons/$icon",
+                height: 24.w, color: white),
+            SizedBox(
+              width: 5.w,
+            ),
+            Text(
+              title,
+              style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                  fontSize: 19.w, fontWeight: FontWeight.w600, color: white),
+            ),
           ],
         ),
       ),

@@ -127,7 +127,7 @@ class StoreController extends GetxController {
       print('==> $response');
       getProducts(token, storeId);
       if (status) {
-        Get.back();
+        // Get.back();
         // Get.back();
         uploadMedia(
             token: token,
@@ -195,7 +195,7 @@ class StoreController extends GetxController {
     StoreServices.createVehicle((status, response) {
       getVehicles(token, storeId);
       if (status) {
-        Get.back();
+        // Get.back();
         // Get.back();
         uploadMedia(
             token: token,
@@ -239,31 +239,37 @@ class StoreController extends GetxController {
     });
   }
 
-  createNewApartment(token,
-      {storeId,
-      bool? smoke,
-      bool? pet,
-      title,
-      description,
-      longitude,
-      latitude,
-      propertyType,
-      apartmentType,
-      nightAmount,
-      weekAmount,
-      monthAmount,
-      startDate,
-      endDate,
-      bedroom,
-      shower,
-      bathroom,
-      sqMeter,
-      toilet,
-      occupantsNumber,
-      floor,
-      amenities,
-      media,
-      salePrice,}) async {
+  createNewApartment(
+    token, {
+    storeId,
+    bool? smoke,
+    bool? pet,
+    title,
+    description,
+    longitude,
+    latitude,
+    propertyType,
+    apartmentType,
+    nightAmount,
+    weekAmount,
+    monthAmount,
+    startDate,
+    endDate,
+    bedroom,
+    shower,
+    bathroom,
+    sqMeter,
+    toilet,
+    occupantsNumber,
+    floor,
+    amenities,
+    media,
+    salePrice,
+  }) async {
+    print('sale==> $salePrice');
+    print('night==> $nightAmount');
+    print('week==> $weekAmount');
+    print('month==> $monthAmount');
     var data = {
       "title": title,
       "description": description,
@@ -273,24 +279,24 @@ class StoreController extends GetxController {
       },
       "propertyType": propertyType,
       "apartmentType": apartmentType.toString().toLowerCase(),
-      "salePrice": 300,
+      "salePrice":double.parse(salePrice == '' ? "0" : salePrice),
       "rentPrice": {
-        "night": double.parse(nightAmount ?? "0"),
-        "week": double.parse(weekAmount ?? "0"),
-        "month": double.parse(monthAmount ?? "0")
+        "night": double.parse(nightAmount == '' ? "0" : nightAmount),
+        "week": double.parse(weekAmount == '' ? "0" : weekAmount),
+        "month": double.parse(monthAmount == '' ? "0" : monthAmount)
       },
       "rentAvailability": {"startDate": startDate, "endDate": endDate},
       "specifics": {
-        "bedroom": double.parse(bedroom ?? '1'),
-        "bathroom": double.parse(bathroom ?? '1'),
-        "shower": double.parse(shower ?? '1'),
-        "toilet": double.parse(toilet ?? '1'),
-        "floor": double.parse(floor ?? '1'),
-        "squareMetre": double.parse(sqMeter ?? '0'),
+        "bedroom": double.parse(bedroom=='' ? '1':bedroom),
+        "bathroom": double.parse( bathroom=='' ? '1':bathroom),
+        "shower": double.parse(shower=='' ? '1':shower),
+        "toilet": double.parse(toilet=='' ? '1':toilet),
+        "floor": double.parse(floor ==''? '1':floor),
+        "squareMetre": double.parse(sqMeter=='' ? '0':sqMeter),
         "amenities": amenities,
       },
       "rules": {
-        "occupant": double.parse(occupantsNumber ?? '1'),
+        "occupant": double.parse(occupantsNumber ==''? '1':occupantsNumber),
         "pet": pet,
         "smoke": smoke
       }
@@ -302,7 +308,6 @@ class StoreController extends GetxController {
       print('==> $response');
       getApartments(token, storeId);
       if (status) {
-        Get.back();
         uploadMedia(
             token: token,
             storeId: storeId,
@@ -324,17 +329,19 @@ class StoreController extends GetxController {
       print('==> $response');
       if (status) {
         print('Successs   ==> $response');
-        if(category=='products') {
+        if (category == 'products') {
           getProducts(token, storeId);
         }
-        if(category=='vehicles') {
+        if (category == 'vehicles') {
           getVehicles(token, storeId);
         }
-        if(category=='apartments') {
+        if (category == 'apartments') {
           getApartments(token, storeId);
         }
 
         Get.back();
+        Get.back();
+
         CustomSnackBar.successSnackBar(
             'Great!', 'New $category created successfully');
       } else {

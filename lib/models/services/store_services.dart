@@ -104,11 +104,10 @@ class StoreServices {
 
     var request = http.MultipartRequest("POST", uri);
 
-    // request.fields['fileType'] = 'video';
 
     for (var i in images) {
       print(i.path);
-      request.files.add(await http.MultipartFile.fromPath('media', i.path));
+      request.files.add(await http.MultipartFile.fromPath('media', i.path, filename: 'myImage.png'));
     }
 
     request.headers.addAll(headers);

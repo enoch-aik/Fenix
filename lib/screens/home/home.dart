@@ -16,6 +16,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../controller/map_controller.dart';
 import '../../controller/product_controller.dart';
@@ -27,6 +28,7 @@ import '../onboarding/constants.dart';
 import '../products/apartment_details.dart';
 import '../profile/product_list.dart';
 import 'car_listing.dart';
+import 'widgets/loader.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -115,7 +117,7 @@ class _HomeState extends State<Home> {
                           vertical: MediaQuery.of(context).size.height * 0.015),
                       hintText: "Search Fenix",
                       hintStyle: TextStyle(
-                              fontSize: 15.w, color: Colors.grey.shade500),
+                          fontSize: 15.w, color: Colors.grey.shade500),
                       suffixIcon: const Icon(Icons.search),
                     ),
                   ),
@@ -123,7 +125,7 @@ class _HomeState extends State<Home> {
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  padding: const EdgeInsets.symmetric(vertical: 2),
                   child: SizedBox(
                     height: MediaQuery.of(context).size.height * 0.052,
                     child: ListView(
@@ -131,8 +133,8 @@ class _HomeState extends State<Home> {
                       children: [
                         MenuTitle(
                           icon: "Dacha.png",
-                          title: "Dacha",
-                          color: white,
+                          title: "dacha",
+                          color: tab == 'dacha' ? white : Colors.transparent,
                           onTap: () => setState(() {
                             tab = 'dacha';
 
@@ -147,7 +149,7 @@ class _HomeState extends State<Home> {
                         MenuTitle(
                           icon: "houseRental.png",
                           title: "House",
-                          color: white,
+                          color: tab == 'house' ? white : Colors.transparent,
                           onTap: () => setState(() {
                             tab = 'house';
                             _productController.getApartments(
@@ -161,7 +163,8 @@ class _HomeState extends State<Home> {
                         MenuTitle(
                           icon: "apartment.png",
                           title: "Apartment",
-                          color: white,
+                          color:
+                              tab == 'apartment' ? white : Colors.transparent,
                           onTap: () => setState(() {
                             tab = 'apartment';
 
@@ -176,7 +179,7 @@ class _HomeState extends State<Home> {
                         MenuTitle(
                           icon: "carRental.png",
                           title: "Car",
-                          color: white,
+                          color: tab == 'car' ? white : Colors.transparent,
                           onTap: () => setState(() {
                             tab = 'car';
                             _productController.getProducts(
@@ -190,7 +193,8 @@ class _HomeState extends State<Home> {
                         MenuTitle(
                           icon: "television.png",
                           title: "Electronics",
-                          color: white,
+                          color:
+                              tab == 'electronics' ? white : Colors.transparent,
                           onTap: () => setState(() {
                             tab = 'electronics';
                             _productController.getProducts(
@@ -671,6 +675,7 @@ class _HomeState extends State<Home> {
           //     ],
           //   ),
           // ],),
+
           smallSpace(),
           Container(
               width: MediaQuery.of(context).size.width,
@@ -693,7 +698,7 @@ class _HomeState extends State<Home> {
           tab == 'car'
               ? Obx(
                   () => _productController.isFetchingProducts.isTrue
-                      ? const Center(child: CircularProgressIndicator())
+                      ? const Loader()
                       : _productController.productList.isEmpty
                           ? empty('car')
                           : GridView.builder(
@@ -729,7 +734,7 @@ class _HomeState extends State<Home> {
               : tab == 'electronics'
                   ? Obx(
                       () => _productController.isFetchingProducts.isTrue
-                          ? const Center(child: CircularProgressIndicator())
+                          ? const Loader()
                           : _productController.productList.isEmpty
                               ? empty('electronics')
                               : GridView.builder(
@@ -767,7 +772,7 @@ class _HomeState extends State<Home> {
                     )
                   : Obx(
                       () => _productController.isFetchingApartments.isTrue
-                          ? const Center(child: CircularProgressIndicator())
+                          ? const Loader()
                           : _productController.apartmentList.isEmpty
                               ? empty(tab)
                               : GridView.builder(
@@ -1072,15 +1077,16 @@ class ProductWidget extends StatelessWidget {
             onTap: () {
               product['isLiked']
                   ? _userController.deleteItemFromWishList(
-                      _userController.getToken(),
-                      product['id'],category
-                    )
+                      _userController.getToken(), product['id'], category)
                   : _userController.addItemToWishList(
                       _userController.getToken(), product['id'], category);
             },
             child: Container(
               decoration: BoxDecoration(
-                  color: product['isLiked'] ? const Color(0xFFFA4788) : Colors.transparent, shape: BoxShape.circle),
+                  color: product['isLiked']
+                      ? const Color(0xFFFA4788)
+                      : Colors.transparent,
+                  shape: BoxShape.circle),
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Obx(
