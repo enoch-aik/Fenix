@@ -131,7 +131,6 @@ class _HomeState extends State<Home> {
                           icon: CustomIconsFenix.dacha,
                           title: "Dacha",
                           color: tab == 'dacha' ? white : Colors.transparent,
-
                           onTap: () => setState(() {
                             tab = 'dacha';
 
