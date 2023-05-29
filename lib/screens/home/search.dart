@@ -1,4 +1,5 @@
 import 'package:fenix/const.dart';
+import 'package:fenix/helpers/widgets.dart';
 import 'package:fenix/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -45,7 +46,7 @@ class _SearchScreenState extends State<SearchScreen> {
       backgroundColor: Color(0xFFE4F0FA),
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width,
-            height() * 0.18),
+            height() * 0.15),
         child: Container(
           decoration: BoxDecoration(
             gradient: gradient(
@@ -64,60 +65,44 @@ class _SearchScreenState extends State<SearchScreen> {
                   child: Image.asset(
                     "assets/images/fenixmall_white.png",
                     color: white,
-                    height: height() * 0.075,
                   ),
                 ),
               ),
-              SizedBox(
-                width: 10,
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    InkWell(
-                        onTap: () {
-                          Get.back();
-                        },
-                        child: Icon(
-                          Icons.arrow_back_ios,
-                          color: Colors.white,
-                          size: 30.w,
-                        )),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.050,
-                      width: MediaQuery.of(context).size.width * 0.82,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(13.w),
-                        color: Colors.white,
+
+              tiny5Space(),
+              Row(
+                children: [
+                  backArrow(),
+                  Container(
+                    width: width() * 0.80,
+                    margin: EdgeInsets.only(bottom: 10.w),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(13.w),
+                      color: Colors.white,
+                    ),
+                    child: TextField(
+                      style: TextStyle(
+                        fontSize: 16.w,
                       ),
-                      child: TextField(
-                        style: TextStyle(
-                          fontSize: 18.w,
+                      decoration: InputDecoration(
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 15),
+                        labelText: "Search Fenix",
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        labelStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            fontSize: 15.w,
+                            color: Colors.grey.shade500
                         ),
-                        decoration: InputDecoration(
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 15,
-                              vertical:
-                                  MediaQuery.of(context).size.height * 0.015),
-                          hintText: "Search Fenix",
-                          hintStyle: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(
-                                  fontSize: 18.w, color: Colors.grey.shade500),
-                          suffixIcon: Icon(Icons.search, size: 30.w,),
-                        ),
+                        suffixIcon: const Icon(Icons.search),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.010,
-              )
+
+
+
             ],
           ),
         ),

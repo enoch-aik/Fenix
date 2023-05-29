@@ -7,11 +7,13 @@ import 'package:fenix/screens/profile/product_list_widget.dart';
 import 'package:fenix/screens/views.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import '../../const.dart';
 import '../../controller/store_controller.dart';
 import '../../controller/user_controller.dart';
+import '../../helpers/icons/custom_icons_fenix_icons.dart';
 import '../../theme.dart';
 import '../onboarding/constants.dart';
 import '../products/product_details.dart';
@@ -102,7 +104,7 @@ class _SellingListState extends State<SellingList> {
                   padding: const EdgeInsets.symmetric(horizontal: BODY_PADDING),
                   children: [
                     MenuTitle(
-                        icon: "Dacha.png",
+                        icon: CustomIconsFenix.dacha,
                         title: "Dacha",
                         color: tab == "Dacha" ? white : Colors.transparent,
                         onTap: () {
@@ -117,7 +119,7 @@ class _SellingListState extends State<SellingList> {
                           });
                         }),
                     MenuTitle(
-                        icon: "houseRental.png",
+                        icon: CustomIconsFenix.house,
                         title: "House",
                         color: tab == "House" ?white : Colors.transparent,
                         onTap: () {
@@ -129,7 +131,7 @@ class _SellingListState extends State<SellingList> {
                           });
                         }),
                     MenuTitle(
-                        icon: "apartment.png",
+                        icon: CustomIconsFenix.apartment,
                         title: "Apartment",
                         color: tab == "Apartment" ?white : Colors.transparent,
                         onTap: () {
@@ -141,7 +143,7 @@ class _SellingListState extends State<SellingList> {
                           });
                         }),
                     MenuTitle(
-                        icon: "carRental.png",
+                        icon: FontAwesomeIcons.car,
                         title: "Car",
                         color: tab == "Car" ? white : Colors.transparent,
                         onTap: () {
@@ -150,7 +152,7 @@ class _SellingListState extends State<SellingList> {
                           });
                         }),
                     MenuTitle(
-                        icon: "television.png",
+                        icon: CustomIconsFenix.vector__3_,
                         title: "Electronics",
                         color: tab == "Electronics" ? white : Colors.transparent,
                         onTap: () {

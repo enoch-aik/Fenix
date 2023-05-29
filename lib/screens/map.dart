@@ -11,6 +11,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 import '../controller/user_controller.dart';
+import '../helpers/icons/custom_icons_fenix_icons.dart';
 
 
 
@@ -185,16 +186,16 @@ class _MapState extends State<Map> {
                 child: Column(
                   children: [
                     SizedBox(height: 40.w,),
-                    MapIcons(Image.asset("assets/images/icons/apartment.png", color: white), black, type: "apartment",
+                    MapIcons(Icon( CustomIconsFenix.apartment, color: white,), black, type: "apartment",
                         onTap: (){
                       filterApartments("apartment");
 
                         }),
-                    MapIcons(Image.asset("assets/images/icons/houseRental.png", color: white,), black,type: "house",
+                    MapIcons(Icon( CustomIconsFenix.house, color: white,), black,type: "house",
                         onTap: (){
                           filterApartments("house");
                         }),
-                    MapIcons(Image.asset("assets/images/icons/Dacha.png", color: white,), black,type: "dacha",
+                    MapIcons(Icon( CustomIconsFenix.dacha, color: white,), black,type: "dacha",
                     onTap: (){
                       filterApartments("dacha");
                     }),
@@ -209,10 +210,10 @@ class _MapState extends State<Map> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  MapIcons(Icon(Icons.add, color: white, size: 20.w,), black, onTap: zoomIn,),
-                  MapIcons(Icon(Icons.remove, color: white,size: 20.w,),black, onTap: zoomOut),
+                  MapIcons(Icon(CustomIconsFenix.plus, color: white, size: 22.w,), black, onTap: zoomIn,),
+                  MapIcons(Icon(CustomIconsFenix.minus, color: white,size: 22.w,),black, onTap: zoomOut),
                   SizedBox(height: 30.w,),
-                  MapIcons(Transform.rotate(angle: 0.6, child: Icon(Icons.navigation, color: white,size: 20.w,),), black,
+                  MapIcons(Icon(CustomIconsFenix.navigation, color: white,size: 22.w,), black,
                       onTap: (){
                         print(_userController.userCurrentPosition!.value!.longitude);
                         _mapController.googleMapController.animateCamera(

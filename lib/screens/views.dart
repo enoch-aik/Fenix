@@ -1,3 +1,4 @@
+
 import 'package:fenix/const.dart';
 import 'package:fenix/controller/user_controller.dart';
 import 'package:fenix/helpers/icons/custom_icons_icons.dart';
@@ -69,117 +70,116 @@ class _HomeState extends State<Views> with TickerProviderStateMixin {
             const Color(0xFF1770A2),
           ),
         ),
-        child: SizedBox(
-          child: BottomNavigationBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            type: BottomNavigationBarType.fixed,
-            items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.map_outlined,
-                  color: Colors.white.withOpacity(0.44),
-                  size: 35.w,
-                ),
-                activeIcon: Icon(
-                  Icons.map,
-                  color: Colors.white,
-                  size: 35.w,
-                ),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.home_outlined,
-                  color: Colors.white.withOpacity(0.44),
-                  size: 35.w,
-                ),
-                activeIcon: Icon(
-                  Icons.home,
-                  color: Colors.white,
-                  size: 35.w,
-                ),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.account_circle_outlined,
-                  size: 30.w,
-                  color: Colors.white.withOpacity(0.44),
-                ),
-                activeIcon: Icon(
-                  Icons.account_circle,
-                  size: 30.w,
-                  color: Colors.white,
-                ),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(CustomIcons.hammer,
-                    color: Colors.white.withOpacity(0.44), size: 30.w),
-                activeIcon:
-                    Icon(CustomIcons.hammer, color: Colors.white, size: 30.w),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.menu_outlined,
-                  color: Colors.white.withOpacity(0.44),
-                  size: 30.w,
-                ),
-                activeIcon: Icon(
-                  Icons.menu,
-                  color: Colors.white,
-                  size: 30.w,
-                ),
-                label: '',
-              ),
-            ],
-            // This trailing comma makes auto-formatting nicer for build methods.
-            currentIndex: _selectedIndex,
-            selectedItemColor: Colors.white,
-            onTap: _onItemTapped,
-          ),
-        ),
+        child: BottomNav()
       ),
     );
   }
+
+  Widget BottomNav(){
+    return  Container(
+      decoration: BoxDecoration(
+          color: Colors.red,
+          gradient: gradientInverted(
+          const Color(0xFF691232),
+          const Color(0xFF1770A2),
+          ),),
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(30, 00, 30, 23),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            InkWell(
+              onTap: () => _onItemTapped(0),
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Icon(
+                  Icons.map_outlined,
+                  color:
+                  _selectedIndex == 0 ? white : white.withOpacity(0.44),
+                  size: 35.w,
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () => _onItemTapped(1),
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child:  Icon(
+                  Icons.home_outlined,
+                  color:
+                  _selectedIndex == 1 ? white : white.withOpacity(0.44),
+                  size: 35.w,
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () => _onItemTapped(2),
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Icon(
+                  Icons.account_circle_outlined,
+                  color:  _selectedIndex == 2 ? white : white.withOpacity(0.44),
+                  size: 35.w,
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () => _onItemTapped(3),
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Icon(
+                  CustomIcons.hammer,
+                  color:  _selectedIndex == 3 ? white : white.withOpacity(0.44),
+                  size: 30.w,
+                ),
+              ),
+            ),
+
+            InkWell(
+              onTap: () => _onItemTapped(4),
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Icon(
+                  Icons.menu_outlined,
+                  color:  _selectedIndex == 4 ? white : white.withOpacity(0.44),
+                  size: 35.w,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
 }
+}
+
 
 class MenuTitle extends StatelessWidget {
   void Function()? onTap;
-  String icon;
+  IconData icon;
   String title;
-  Color color;
+  Color? color;
 
-  MenuTitle(
-      {Key? key,
-      required this.title,
-      required this.icon,
-      this.color = Colors.transparent,
-      this.onTap})
-      : super(key: key);
+  MenuTitle({
+    Key? key, required this.title, required this.icon,this.color,this.onTap
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-            border: Border(bottom: BorderSide(color: color, width: 3))),
-        margin: EdgeInsets.only(right: 25),
+      child: Padding(
+        padding:  EdgeInsets.only(right: 24.w),
         child: Row(
           children: [
-            Image.asset("assets/images/icons/$icon",
-                height: 24.w, color: white),
-            SizedBox(
-              width: 5.w,
-            ),
-            Text(
-              title,
-              style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                  fontSize: 19.w, fontWeight: FontWeight.w600, color: white),
-            ),
+            Icon(icon,size: 24.w, color: color??black),
+            SizedBox(width: 5.w,),
+            Text(title,
+            style: Theme.of(context).textTheme.bodyText2!.copyWith(
+              fontSize: 19.w,
+              fontWeight: FontWeight.w600
+                ,color: color??black
+            ),),
           ],
         ),
       ),

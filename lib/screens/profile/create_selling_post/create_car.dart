@@ -222,10 +222,7 @@ class _CreateCarState extends State<CreateCar> {
             height() * 0.1),
         child: Container(
           decoration: BoxDecoration(
-            gradient: gradient(
-              const Color(0xFF1A9AFF),
-              const Color(0xFF54FADC),
-            ),
+            gradient: appBarGradient,
           ),
           padding: EdgeInsets.only(top: 55.h, left: 12.w, right: 12.w),
           child: Column(
@@ -234,14 +231,7 @@ class _CreateCarState extends State<CreateCar> {
             children: [
               Row(
                 children: [
-                  InkWell(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: const Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                      )),
+                  backArrow(),
                   Container(
                     height: MediaQuery.of(context).size.height * 0.050,
                     width: MediaQuery.of(context).size.width * 0.85,

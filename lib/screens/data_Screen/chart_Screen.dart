@@ -21,7 +21,7 @@ class _ChartsState extends State<Charts> {
     return Scaffold(
       backgroundColor: Color(0xFFE4F0FA),
       appBar: PreferredSize(
-        preferredSize: Size(MediaQuery.of(context).size.width, height() * 0.16),
+        preferredSize: Size(MediaQuery.of(context).size.width, height() * 0.09),
         child: Container(
           decoration: BoxDecoration(
               gradient: appBarGradient,
@@ -43,32 +43,6 @@ class _ChartsState extends State<Charts> {
                 ),
               ),
               SizedBox(width: 10),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.050,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(13.w),
-                  color: Colors.white,
-                ),
-                child: TextField(
-                  style: TextStyle(
-                    fontSize: 16.w,
-                  ),
-                  decoration: InputDecoration(
-                    enabledBorder: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: MediaQuery.of(context).size.height * 0.015),
-                    hintText: "Search Fenix",
-                    hintStyle: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(fontSize: 17.w, color: Colors.grey.shade500),
-                    suffixIcon: Icon(Icons.search, size: 30.w),
-                  ),
-                ),
-              ),
 
             ],
           ),
@@ -103,14 +77,17 @@ class _ChartsState extends State<Charts> {
             ),
           ),
           SizedBox(height: Get.height * 0.03),
+
           Container(
-              height: Get.height * 0.24,
+              height: Get.height * 0.28,
               margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.w),
               decoration: neumorph(),
               child: LineGraph()),
-          SizedBox(height: 10),
+
+          SizedBox(height: Get.height * 0.03),
+
           Container(
-              height: Get.height * 0.22,
+              height: Get.height * 0.27,
               width: width() * 0.9,
               decoration: neumorph(),
 
