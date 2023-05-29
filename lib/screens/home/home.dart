@@ -142,6 +142,7 @@ class _HomeState extends State<Home> {
                                     .toLowerCase());
                           }),
                         ),
+
                         MenuTitle(
                           icon: CustomIconsFenix.house,
                           title: "House",
