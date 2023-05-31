@@ -1,5 +1,6 @@
 import 'package:fenix/controller/user_controller.dart';
 import 'package:fenix/models/services/api_docs.dart';
+import 'package:fenix/models/services/chat_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -25,6 +26,7 @@ class ChatState extends State<Chat> {
   TextEditingController _messageController = TextEditingController();
   UserController userController = Get.find();
   String token = '';
+  String roomId = '';
   late ScrollController _controller;
   late IO.Socket socket;
 
@@ -61,7 +63,7 @@ class ChatState extends State<Chat> {
 
   Future<void> initSocket() async {
     print('Connecting to chat service');
-    socket = IO.io(chatUrl, <String, dynamic>{
+    socket = IO.io(ChatServices.getChatUrl(roomId), <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false,
       "Authorization": 'Bearer $token'
