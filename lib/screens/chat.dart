@@ -1,11 +1,19 @@
+import 'dart:async';
+
+import 'package:fenix/controller/chat_controller.dart';
 import 'package:fenix/controller/user_controller.dart';
 import 'package:fenix/models/services/api_docs.dart';
 import 'package:fenix/models/services/chat_services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:grouped_list/grouped_list.dart';
+import 'package:intl/intl.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../const.dart';
+import '../theme.dart';
+import 'onboarding/constants.dart';
 
 class MessagesModel {
   static final List<dynamic> messages = [];
@@ -16,82 +24,93 @@ class MessagesModel {
 }
 
 class Chat extends StatefulWidget {
-  const Chat({Key? key}) : super(key: key);
+  const Chat({Key? key, this.userId}) : super(key: key);
+  final String? userId;
 
   @override
   ChatState createState() => ChatState();
 }
 
 class ChatState extends State<Chat> {
-  TextEditingController _messageController = TextEditingController();
+  final TextEditingController _messageController = TextEditingController();
   UserController userController = Get.find();
+  ChatController chatController = Get.put(ChatController());
   String token = '';
-  String roomId = '';
-  late ScrollController _controller;
+  String userId = '';
+
   late IO.Socket socket;
 
   void _sendMessage() {
     String messageText = _messageController.text.trim();
     _messageController.text = '';
-    print(messageText);
     if (messageText != '') {
       var messagePost = {
-        'message': messageText,
-        'sender': 'Dammy',
-        'recipient': 'chat',
-        'time': DateTime.now().toUtc().toString().substring(0, 16)
+        'content': messageText,
       };
-      socket.emit('chat', messagePost);
+      socket.emit('message', messagePost);
+      print('message');
+
+      socket.on('message', (data) => print('sent --- $data'));
+      chatController.getChats(widget.userId);
     }
   }
 
+  void _joinChat() {
+    socket.emit('join-room', []);
+    print('join');
+    socket.on('join-room', (data) => print('==> join $data'));
+  }
 
   @override
   void initState() {
     super.initState();
-    token = userController.getToken();
-    _messageController = TextEditingController();
-    _controller = ScrollController();
-    initSocket();
-    WidgetsBinding.instance.addPostFrameCallback((_) => {
-          _controller.animateTo(
-            0.0,
-            duration: const Duration(milliseconds: 200),
-            curve: Curves.easeIn,
-          )
-        });
+    boot();
   }
 
-  Future<void> initSocket() async {
-    print('Connecting to chat service');
-    socket = IO.io(ChatServices.getChatUrl(roomId), <String, dynamic>{
-      'transports': ['websocket'],
-      'autoConnect': false,
-      "Authorization": 'Bearer $token'
+  boot() async {
+    token = userController.getToken();
+    userId = userController.getUser()!.userId.toString();
+    chatController.getChats(widget.userId??userId);
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (chatController.chatId.isNotEmpty) {
+        timer.cancel();
+        var roomId = chatController.chatId.obs.string;
+        setState(() {});
+        initSocket(roomId);
+      }
     });
-    // IO.OptionBuilder()
-    //     .setTransports(['websocket']) // for Flutter or Dart VM
-    //     .disableAutoConnect()
-    //     .setAuth(
-    //         {"Authorization": 'Bearer $token'}) // disable auto-connection
-    //     .build());
+  }
+
+  Future<void> initSocket(roomId) async {
+    print('Connecting to chat service');
+    String url = ChatServices.getChatUrl(roomId);
+    print(url);
+    socket = IO.io(
+        url,
+        IO.OptionBuilder()
+            .setTransports(['websocket']) // for Flutter or Dart VM
+            .setExtraHeaders(
+                {"Authorization": "Bearer $token"}) // disable auto-connection
+            .build());
 
     socket.connect();
-    socket.on('connect', (_) => print('connect: ${socket.id}'));
-    socket.on('connect_error', (_) => print('connect_error: ${socket.opts}'));
+    socket.onConnect((data) {
+      print('Success --- $data');
+      _joinChat();
+    });
 
-    // socket.on('newChat', (message) {
-    //   print(message);
-    //   setState(() {
-    //     MessagesModel.messages.add(message);
-    //   });
-    // });
-    // socket.on('allChats', (messages) {
-    //   print(messages);
-    //   setState(() {
-    //     MessagesModel.messages.addAll(messages);
-    //   });
-    // });
+    print(socket.opts);
+
+    socket.onError((data) => print('Error --- $data'));
+    socket.onDisconnect((data) => print('Disconnect --- $data'));
+
+    socket.on('join-room', (data) {
+      print(data);
+    });
+
+    socket.on('message', (messages) {
+      print('messages ===> $messages');
+    });
   }
 
   @override
@@ -104,134 +123,194 @@ class ChatState extends State<Chat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
-      appBar: AppBar(
-        backgroundColor: Colors.redAccent,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          color: Colors.white,
-          onPressed: () {
-            socket.disconnect();
+      body: Container(
+        decoration: BoxDecoration(
+            color: const Color(0xFF1F4167),
+            gradient:
+                gradient(const Color(0xFF1F4167), const Color(0xFF0777FB))),
+        child: SafeArea(
+          bottom: false,
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            alignment: Alignment.centerLeft,
+            decoration: BoxDecoration(
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(50)),
+                color: const Color(0xFF1F4167),
+                gradient:
+                    gradient(const Color(0xFF000000), const Color(0xFF182845))),
+            child: Column(
+              children: [
+                mediumSpace(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        onTap: () => Get.back(),
+                        child: const Icon(
+                          Icons.arrow_back,
+                          color: white,
+                        ),
+                      ),
+                      const Text(
+                        'Danny Hopkins',
+                        style: TextStyle(color: white),
+                      ),
+                      Image.asset(
+                        'assets/images/icons/Ellipse 1.png',
+                        height: 40,
+                        width: 40,
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Obx(
+                    () => chatController.isLoadingChats.isTrue
+                        ? const Center(child: CircularProgressIndicator())
+                        : Column(
+                            children: [
+                              Expanded(
+                                child: GroupedListView<dynamic, String>(
+                                  elements: chatController.chats.value,
+                                  padding: const EdgeInsets.all(0),
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  groupBy: (item) => DateFormat('yyyy-MM-dd')
+                                      .format(DateTime.parse(
+                                          item['createdAt'].toString()))
+                                      .toString(),
+                                  groupHeaderBuilder: (item) => Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 15, 0, 8),
+                                    child: Center(
+                                      child: Text(
+                                        DateFormat('yyyy-MM-dd')
+                                                    .format(DateTime.parse(
+                                                        item['createdAt']
+                                                            .toString()))
+                                                    .toString() ==
+                                                DateFormat('yyyy-MM-dd')
+                                                    .format(DateTime.now())
+                                                    .toString()
+                                            ? 'Today'
+                                            : DateFormat.MMMEd().format(
+                                                DateTime.parse(item['createdAt']
+                                                    .toString())),
+                                        style: const TextStyle(
+                                          fontSize: 13,
+                                            color: white,fontWeight: FontWeight.w300),
+                                      ),
+                                    ),
+                                  ),
+                                  groupSeparatorBuilder:
+                                      (String groupByValue) => smallSpace(),
+                                  itemBuilder: (context, dynamic message) {
+                                    print(message);
+                                    print(userId);
+                                    return (message['senderId'] == userId)
+                                        ? outgoing('${message['text']}')
+                                        : incoming('${message['text']}');
+                                  },
+                                  order: GroupedListOrder.ASC, // optional
+                                ),
+                              ),
 
-            Navigator.pop(context);
-          },
-        ),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: width() * 0.60,
-              child: const Text(
-                'Chat',
-                style: TextStyle(fontSize: 15, color: Colors.white),
-                textAlign: TextAlign.left,
-              ),
-            ),
-          ],
-        ),
-      ),
-      body: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            bottom: 60,
-            width: width(),
-            child: ListView.builder(
-              controller: _controller,
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              reverse: true,
-              cacheExtent: 1000,
-              itemCount: MessagesModel.messages.length,
-              itemBuilder: (BuildContext context, int index) {
-                var message = MessagesModel
-                    .messages[MessagesModel.messages.length - index - 1];
-                return (message['sender'] == 'Dammy')
-                    ? Container(
-                        constraints: BoxConstraints(maxWidth: width() * 0.7),
-                        decoration:
-                            const BoxDecoration(color: Colors.greenAccent),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('@${message['time']}',
-                                style: const TextStyle(
-                                    color: Colors.grey, fontSize: 10)),
-                            Text('${message['message']}',
-                                style: const TextStyle(
-                                    color: Colors.black, fontSize: 16))
-                          ],
-                        ),
-                      )
-                    : Container(
-                        constraints: BoxConstraints(maxWidth: width() * 0.7),
-                        decoration:
-                            const BoxDecoration(color: Colors.purpleAccent),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('${message['sender']} @${message['time']}',
-                                style: const TextStyle(
-                                    color: Colors.grey, fontSize: 10)),
-                            Text('${message['message']}',
-                                style: const TextStyle(
-                                    color: Colors.black, fontSize: 16))
-                          ],
-                        ),
-                      );
-              },
+                              Container(
+                                decoration: BoxDecoration(
+                                    color: const Color(0xFF1F4167),
+                                    borderRadius: const BorderRadius.vertical(
+                                        top: Radius.circular(15)),
+                                    gradient: gradient(const Color(0xFF1F4167),
+                                        const Color(0xFF000000))),
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(20, 10, 20, 17),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                          decoration: const BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: white),
+                                          child: const Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Icon(
+                                                Icons.camera_alt_outlined,
+                                                size: 20),
+                                          )),
+                                      tinyHSpace(),
+                                      Expanded(
+                                        child: TextFormField(
+                                          controller: _messageController,
+                                          decoration: InputDecoration(
+                                              contentPadding:
+                                                  EdgeInsets.symmetric(
+                                                      horizontal: 15.w),
+                                              suffixIcon: IconButton(
+                                                  onPressed: () {
+                                                    _sendMessage();
+                                                    // _joinChat();
+                                                  },
+                                                  icon: const Icon(
+                                                      Icons.send_outlined)),
+                                              fillColor: white,
+                                              filled: true,
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(30),
+                                                  borderSide: const BorderSide(
+                                                      color: white))),
+                                        ),
+                                      ),
+                                      tinyH5Space(),
+                                      const Icon(
+                                        Icons.mic_none_outlined,
+                                        color: white,
+                                        size: 35,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                  ),
+                ),
+              ],
             ),
           ),
-          Positioned(
-            bottom: 0,
-            child: Container(
-              height: 60,
-              color: Colors.white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: width() * 0.80,
-                    padding: const EdgeInsets.only(left: 10, right: 5),
-                    child: TextField(
-                      controller: _messageController,
-                      cursorColor: Colors.black,
-                      decoration: const InputDecoration(
-                        hintText: "Message",
-                        labelStyle:
-                            TextStyle(fontSize: 15, color: Colors.black),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                        ),
-                        disabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                        counterText: '',
-                      ),
-                      style: const TextStyle(fontSize: 15),
-                      keyboardType: TextInputType.text,
-                      maxLength: 500,
-                    ),
-                  ),
-                  SizedBox(
-                    width: width() * 0.20,
-                    child: IconButton(
-                      icon: const Icon(Icons.send, color: Colors.redAccent),
-                      onPressed: () {
-                        _sendMessage();
-                      },
-                    ),
-                  )
-                ],
-              ),
-            ),
-          )
-        ],
+        ),
       ),
     );
+  }
+
+  Container incoming(message) {
+    return Container(
+        padding: const EdgeInsets.fromLTRB(25, 10, 25, 10),
+        margin: const EdgeInsets.only(right: 30),
+        decoration: BoxDecoration(
+            color: Colors.grey.withOpacity(0.4),
+            borderRadius: BorderRadius.circular(20)),
+        child: Text(
+          message,
+          style: const TextStyle(color: white, fontSize: 14, height: 1.5),
+        ));
+  }
+
+  Container outgoing(message) {
+    return Container(
+        padding: const EdgeInsets.fromLTRB(25, 10, 25, 10),
+        margin: const EdgeInsets.only(left: 30,bottom: 20),
+        decoration: BoxDecoration(
+            color: lightGrey, borderRadius: BorderRadius.circular(20)),
+        child: Text(
+          message,
+          textAlign: TextAlign.end,
+          style: const TextStyle(color: white, fontSize: 14, height: 1.5),
+        ));
   }
 }

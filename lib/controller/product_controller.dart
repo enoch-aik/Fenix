@@ -14,23 +14,26 @@ class ProductController extends GetxController {
   var isFetchingApartments = true.obs;
   var isFetchingDacha = true.obs;
   var isFetchingHouse = true.obs;
-  String token = '';
 
   @override
   void onInit() {
-    // TODO: implement onInit
-    UserController userController = Get.find();
-    token = userController.getToken();
+
     boot();
     super.onInit();
   }
 
-  boot() {
-    getApartments(token, Category().property[0]);
-    getProducts(token, Category().homeCategories[3]);
+ String getUserToken(){
+    UserController userController = Get.find();
+  var  token = userController.getToken();
+    return token;
   }
 
-  getApartments(token, type) {
+  boot() {
+    getApartments(  Category().property[0]);
+    getProducts(  Category().homeCategories[3]);
+  }
+
+  getApartments( type) {
     isFetchingApartments(true);
     ProductServices.getApartmentsByType((status, response) {
       isFetchingApartments(false);
@@ -40,30 +43,30 @@ class ProductController extends GetxController {
         apartmentList.value = [];
         print('Error - $response');
       }
-    }, token, type);
+    },  getUserToken(), type);
   }
 
-  clearSearch(token, category) {
+  clearSearch( category) {
     if (category == 'car') {
-      getProducts(token, category);
+      getProducts( category);
     } else if (category == 'electronics') {
-      getProducts(token, category);
+      getProducts( category);
     } else {
-      getApartments(token, category);
+      getApartments(  category);
     }
   }
 
-  searchStore(token, category, searchWord) {
+  searchStore( category, searchWord) {
     if (category == 'car') {
-      searchVehicle(token, searchWord);
+      searchVehicle( searchWord);
     } else if (category == 'electronics') {
-      searchVehicle(token, searchWord);
+      searchVehicle( searchWord);
     } else {
-      searchApartments(token, searchWord);
+      searchApartments( searchWord);
     }
   }
 
-  searchApartments(token, searchWord) {
+  searchApartments( searchWord) {
     isFetchingApartments(true);
     ProductServices.getApartmentsByTitle((status, response) {
       isFetchingApartments(false);
@@ -73,10 +76,10 @@ class ProductController extends GetxController {
         apartmentList.value = [];
         print('Error - $response');
       }
-    }, token, searchWord);
+    },  getUserToken(), searchWord);
   }
 
-  searchVehicle(token, searchWord) {
+  searchVehicle( searchWord) {
     isFetchingProducts(true);
     ProductServices.getVehiclesByTitle((status, response) {
       isFetchingProducts(false);
@@ -86,10 +89,10 @@ class ProductController extends GetxController {
         productList.value = [];
         print('Error - $response');
       }
-    }, token, searchWord);
+    },  getUserToken(), searchWord);
   }
 
-  searchProduct(token, searchWord) {
+  searchProduct( searchWord) {
     isFetchingProducts(true);
     ProductServices.getProductsByTitle((status, response) {
       isFetchingProducts(false);
@@ -99,10 +102,10 @@ class ProductController extends GetxController {
         productList.value = [];
         print('Error - $response');
       }
-    }, token, searchWord);
+    },  getUserToken(), searchWord);
   }
 
-  getProducts(token, category) {
+  getProducts( category) {
     isFetchingProducts(true);
     ProductServices.getProductsByCategory((status, response) {
       isFetchingProducts(false);
@@ -112,6 +115,6 @@ class ProductController extends GetxController {
         productList.value = [];
         print('Error - $response');
       }
-    }, token, category);
+    },  getUserToken(), category);
   }
 }

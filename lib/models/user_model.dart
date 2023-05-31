@@ -1,6 +1,7 @@
 class UserModel {
   UserModel({
     required this.id,
+    required this.userId,
     required this.email,
     required this.mobileNumber,
     required this.firstName,
@@ -13,6 +14,7 @@ class UserModel {
   });
 
   String? id;
+  String? userId;
   String? email;
   String? mobileNumber;
   String? firstName;
@@ -25,6 +27,7 @@ class UserModel {
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         id: json["id"],
+    userId: json["userId"],
         email: json["email"] ?? '',
         mobileNumber: json["phoneNumber"] ?? '',
         firstName: json["firstName"] ?? '',

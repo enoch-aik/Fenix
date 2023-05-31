@@ -68,21 +68,17 @@ class _HomeState extends State<Home> {
     _userController.getWishList(token);
     _mapController.getApartments(token,
         longitude: -88.14801, latitude: 36.74582);
-    _productController.getApartments(token, "dacha");
+    _productController.getApartments("dacha");
   }
 
   @override
   Widget build(BuildContext context) {
-    token = _userController.getToken();
-
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width, height() * 0.18),
         child: Container(
-          decoration: BoxDecoration(
-            gradient: appBarGradient,
-          ),
+          decoration: BoxDecoration(gradient: appBarGradient),
           padding: EdgeInsets.only(top: 50.h, left: 12.w, right: 12.w),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -104,10 +100,9 @@ class _HomeState extends State<Home> {
                   setState(() {});
                 },
                 controller: searchWordController,
-                onSubmitted: (v) =>
-                    _productController.searchStore(token, tab, v),
+                onSubmitted: (v) => _productController.searchStore(tab, v),
                 onEditingComplete: () => _productController.searchStore(
-                    token, tab, searchWordController.text),
+                    tab, searchWordController.text),
                 onTapOutside: (v) {
                   FocusScope.of(context).unfocus();
                 },
@@ -127,7 +122,7 @@ class _HomeState extends State<Home> {
                             searchWordController.text = '';
                             FocusScope.of(context).unfocus();
                             setState(() {});
-                            _productController.clearSearch(token, tab);
+                            _productController.clearSearch(tab);
                           },
                           icon: const Icon(Icons.close),
                         ),
@@ -148,12 +143,10 @@ class _HomeState extends State<Home> {
                           onTap: () => setState(() {
                             tab = 'dacha';
 
-                            _productController.getApartments(
-                                token,
-                                Category()
-                                    .homeCategories[0]
-                                    .toString()
-                                    .toLowerCase());
+                            _productController.getApartments(Category()
+                                .homeCategories[0]
+                                .toString()
+                                .toLowerCase());
                           }),
                         ),
                         MenuTitle(
@@ -162,12 +155,10 @@ class _HomeState extends State<Home> {
                           color: tab == 'house' ? white : Colors.transparent,
                           onTap: () => setState(() {
                             tab = 'house';
-                            _productController.getApartments(
-                                token,
-                                Category()
-                                    .homeCategories[2]
-                                    .toString()
-                                    .toLowerCase());
+                            _productController.getApartments(Category()
+                                .homeCategories[2]
+                                .toString()
+                                .toLowerCase());
                           }),
                         ),
                         MenuTitle(
@@ -178,12 +169,10 @@ class _HomeState extends State<Home> {
                           onTap: () => setState(() {
                             tab = 'apartment';
 
-                            _productController.getApartments(
-                                token,
-                                Category()
-                                    .homeCategories[1]
-                                    .toString()
-                                    .toLowerCase());
+                            _productController.getApartments(Category()
+                                .homeCategories[1]
+                                .toString()
+                                .toLowerCase());
                           }),
                         ),
                         MenuTitle(
@@ -192,12 +181,10 @@ class _HomeState extends State<Home> {
                           color: tab == 'car' ? white : Colors.transparent,
                           onTap: () => setState(() {
                             tab = 'car';
-                            _productController.getProducts(
-                                token,
-                                Category()
-                                    .homeCategories[3]
-                                    .toString()
-                                    .toLowerCase());
+                            _productController.getProducts(Category()
+                                .homeCategories[3]
+                                .toString()
+                                .toLowerCase());
                           }),
                         ),
                         MenuTitle(
@@ -207,12 +194,10 @@ class _HomeState extends State<Home> {
                               tab == 'electronics' ? white : Colors.transparent,
                           onTap: () => setState(() {
                             tab = 'electronics';
-                            _productController.getProducts(
-                                token,
-                                Category()
-                                    .homeCategories[4]
-                                    .toString()
-                                    .toLowerCase());
+                            _productController.getProducts(Category()
+                                .homeCategories[4]
+                                .toString()
+                                .toLowerCase());
                           }),
                         ),
                       ],
@@ -226,7 +211,7 @@ class _HomeState extends State<Home> {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          _productController.clearSearch(token, tab);
+          _productController.clearSearch(tab);
         },
         child: ListView(
           physics: const ClampingScrollPhysics(),

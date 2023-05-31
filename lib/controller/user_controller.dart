@@ -152,9 +152,9 @@ class UserController extends GetxController {
         ProductController productController = Get.find();
         if ((category.toLowerCase() == 'electronics' ||
             category.toLowerCase() == 'cars')) {
-          productController.getProducts(token, category);
+          productController.getProducts(category);
         } else {
-          productController.getApartments(token, category);
+          productController.getApartments(category);
         }
         CustomSnackBar.successSnackBar('Cool', 'Product added to wishlist');
         getWishList(token);
@@ -184,9 +184,9 @@ class UserController extends GetxController {
         ProductController productController = Get.find();
         if ((category.toLowerCase() == 'electronics' ||
             category.toLowerCase() == 'cars')) {
-          productController.getProducts(token, category);
+          productController.getProducts(category);
         } else {
-          productController.getApartments(token, category);
+          productController.getApartments(category);
         }
         CustomSnackBar.successSnackBar('Cool', 'Product deleted from wishlist');
         getWishList(token);

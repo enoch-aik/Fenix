@@ -13,6 +13,7 @@ import '../../helpers/icons/custom_icons_icons.dart';
 import '../../helpers/widgets/slider.dart';
 import '../../neumorph.dart';
 import '../../theme.dart';
+import '../chat.dart';
 import '../home/search.dart';
 import '../onboarding/constants.dart';
 
@@ -29,14 +30,18 @@ class _ProductDetailsState extends State<ProductDetails>
   int temperature = 0;
   int currentIn = 0;
   ValueNotifier<bool> ac = ValueNotifier(false);
-
+var product;
   TabController? _tabController;
 
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
+    setState(() =>
+      product = widget.product
+    );
     _tabController = TabController(initialIndex: 0, length: 2, vsync: this);
+    super.initState();
+
   }
 
   @override
@@ -450,13 +455,16 @@ class _ProductDetailsState extends State<ProductDetails>
               ),
             ),
           ),
-          Buttons(
-            child: Center(
-              child: KText(
-                "Message Seller",
-                color: const Color(0xFF1994F5),
-                fontWeight: FontWeight.w700,
-                fontSize: 18.w,
+          InkWell(
+            onTap: ()=>Get.to(()=>Chat(userId: product['Store']['userId'],)),
+            child: Buttons(
+              child: Center(
+                child: KText(
+                  "Message Seller",
+                  color: const Color(0xFF1994F5),
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18.w,
+                ),
               ),
             ),
           ),

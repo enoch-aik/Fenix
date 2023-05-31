@@ -5,29 +5,25 @@ import 'package:get/get.dart';
 class ChatController extends GetxController {
   var chats = [].obs;
   var isLoadingChats = true.obs;
-  String token = '';
-  String userId = '';
-
-  @override
-  void onInit() {
-    // TODO: implement onInit
+var chatId = ''.obs;
+  String getToken() {
     UserController userController = Get.find();
-    token = userController.getToken();
-    userId = userController.getUser()!.id!;
-    getStores();
-    super.onInit();
+    var token = userController.getToken();
+    return token;
   }
 
-  getStores() {
+
+  getChats(vendorId) {
     isLoadingChats(true);
     ChatServices.getUserChats((status, response) {
       isLoadingChats(false);
       if (status) {
-        chats.value = response['data'];
+        chats.value = response['data']['messages'];
+        chatId.value = response['data']['chatId'];
       } else {
         chats.value = [];
         print('Chat Error - $response');
       }
-    }, token, userId);
+    }, getToken(), vendorId);
   }
 }
