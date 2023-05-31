@@ -43,6 +43,16 @@ class ProductController extends GetxController {
     }, token, type);
   }
 
+  clearSearch(token, category) {
+    if (category == 'car') {
+      getProducts(token, category);
+    } else if (category == 'electronics') {
+      getProducts(token, category);
+    } else {
+      getApartments(token, category);
+    }
+  }
+
   searchStore(token, category, searchWord) {
     if (category == 'car') {
       searchVehicle(token, searchWord);

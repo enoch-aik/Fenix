@@ -43,7 +43,7 @@ class _HomeState extends State<Home> {
   String token = '';
   String storeId = '';
   String tab = '';
-  String searchWord = '';
+  final searchWordController = TextEditingController();
   final UserController _userController = Get.find();
   final StoreController _storeController = Get.put(StoreController());
   final AccountController _accountController = Get.put(AccountController());
@@ -97,41 +97,38 @@ class _HomeState extends State<Home> {
                 ),
               ),
               SizedBox(height: 10.w),
-              InkWell(
-                // onTap: () => Get.to(() => const SearchScreen()),
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.050,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(13.w),
-                    color: Colors.white,
-                  ),
-                  child: TextField(
-                    // enabled: false,
-                    onChanged: (v) {
-                      if (v.length > 4) {
-                        _productController.searchStore(token, tab, v);
-                      }
-                      setState(() => searchWord = v);
-                    },
-                    onSubmitted: (v) =>
-                        _productController.searchStore(token, tab, v),
-
-                    onEditingComplete: () =>
-                        _productController.searchStore(token, tab, searchWord),
-                    onTapOutside: (v) => FocusScope.of(context).unfocus(),
-                    decoration: InputDecoration(
-                      enabledBorder: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                      ),
-                      label: const Text("Search Fenix"),
-                      labelStyle: TextStyle(
-                          fontSize: 15.w, color: Colors.grey.shade500),
-                      suffixIcon: const Icon(Icons.search),
-                    ),
-                  ),
+              TextField(
+                onChanged: (v) {
+                  setState(() {});
+                },
+                controller: searchWordController,
+                onSubmitted: (v) =>
+                    _productController.searchStore(token, tab, v),
+                onEditingComplete: () => _productController.searchStore(
+                    token, tab, searchWordController.text),
+                onTapOutside: (v) {
+                  FocusScope.of(context).unfocus();
+                },
+                decoration: InputDecoration(
+                  enabledBorder: buildOutlineInputBorder(),
+                  focusedBorder: buildOutlineInputBorder(),
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 15),
+                  hintText: "Search Fenix",
+                  hintStyle:
+                      TextStyle(fontSize: 15.w, color: Colors.grey.shade500),
+                  suffixIcon: searchWordController.text.isEmpty
+                      ? const Icon(Icons.search)
+                      : IconButton(
+                          onPressed: () {
+                            searchWordController.text = '';
+                            FocusScope.of(context).unfocus();
+                            setState(() {});
+                            _productController.clearSearch(token, tab);
+                          },
+                          icon: const Icon(Icons.close),
+                        ),
                 ),
               ),
               Expanded(
@@ -225,681 +222,693 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
-      body: ListView(
-        physics: const ClampingScrollPhysics(),
-        children: [
-          // Column(children: [
-          //   Container(
-          //       height: 30.w,
-          //       width: MediaQuery.of(context).size.width,
-          //       padding: EdgeInsets.symmetric(horizontal: 10.w),
-          //       decoration: BoxDecoration(
-          //         gradient: gradient(
-          //           const Color(0xFF691232),
-          //           const Color(0xFF1770A2),
-          //         ),
-          //       ),
-          //       child: Row(
-          //         children: [
-          //           Icon(Icons.location_on, size: 17.w, color: white),
-          //           Text(
-          //             " Deliver to chicago,iL 5932 ",
-          //             style: Theme.of(context).textTheme.bodyText1!.copyWith(
-          //               fontSize: 13.w,
-          //               color: white,
-          //               fontWeight: FontWeight.w800,
-          //             ),
-          //           ),
-          //         ],
-          //       )),
-          //   SizedBox(
-          //     height: 276.w,
-          //     width: MediaQuery.of(context).size.width,
-          //     child: PageView(
-          //       children: [
-          //         Image.asset(
-          //           "assets/images/cokeAd.png",
-          //           fit: BoxFit.fitWidth,
-          //         ),
-          //         Image.asset(
-          //           "assets/images/logoFrame.png",
-          //           fit: BoxFit.fill,
-          //         ),
-          //         Image.asset(
-          //           "assets/images/logoFrame.png",
-          //           fit: BoxFit.fill,
-          //         ),
-          //         Image.asset(
-          //           "assets/images/logoFrame.png",
-          //           fit: BoxFit.fill,
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          //   kSpacing,
-          //   // Obx(
-          //   //   () => _storeController.getDefaultStoreId()==''
-          //   //       ? const Center(child: CircularProgressIndicator())
-          //   //       : ProductList(
-          //   //           storeId: storeId,
-          //   //           storeName: 'name',
-          //   //           storeLocation: 'location',
-          //   //         ),
-          //   // ),
-          //   kSpacing,
-          //   SizedBox(
-          //     height: 152.w,
-          //     width: MediaQuery.of(context).size.width,
-          //     child: ListView.builder(
-          //       scrollDirection: Axis.horizontal,
-          //       itemCount: 7,
-          //       itemBuilder: (context, index) {
-          //         return InkWell(
-          //           onTap: () {
-          //             // Get.to(() => const ProductDetails());
-          //           },
-          //           child: Container(
-          //             width: 114.w,
-          //             height: 152.w,
-          //             margin: EdgeInsets.all(4.5.w),
-          //             padding: EdgeInsets.all(7.w),
-          //             decoration: BoxDecoration(
-          //                 color: Colors.white,
-          //                 borderRadius: BorderRadius.circular(13.w)),
-          //             child: Image.asset(
-          //               "assets/images/phone.png",
-          //               fit: BoxFit.fill,
-          //             ),
-          //           ),
-          //         );
-          //       },
-          //     ),
-          //   ),
-          //   Container(
-          //       width: MediaQuery.of(context).size.width,
-          //       height: 57.w,
-          //       margin: EdgeInsets.symmetric(vertical: 17.w),
-          //       decoration: const BoxDecoration(
-          //         color: Color(0xFF1F4167),
-          //         gradient: LinearGradient(
-          //             colors: [
-          //               Color(0xFF1F4167),
-          //               Color(0xFF125EB7),
-          //               Color(0xFF0777FB),
-          //             ],
-          //             stops: [
-          //               0.0,
-          //               0.5,
-          //               1.0
-          //             ],
-          //             begin: FractionalOffset.topLeft,
-          //             end: FractionalOffset.bottomRight,
-          //             tileMode: TileMode.repeated),
-          //       ),
-          //       child: Row(
-          //         mainAxisAlignment: MainAxisAlignment.center,
-          //         children: [
-          //           Padding(
-          //               padding: EdgeInsets.only(top: 5.w),
-          //               child: Icon(
-          //                 CustomIcons.crown_badge,
-          //                 color: const Color(0xFFFCC70A),
-          //                 size: 42.w,
-          //               )),
-          //           Text(
-          //             "Top 10 Rated Items",
-          //             style: Theme.of(context).textTheme.bodyText1!.copyWith(
-          //                 fontSize: 18.w,
-          //                 color: Colors.white,
-          //                 fontWeight: FontWeight.w700),
-          //           ),
-          //         ],
-          //       )),
-          //   ListView.builder(
-          //       physics: const NeverScrollableScrollPhysics(),
-          //       itemCount: 1,
-          //       shrinkWrap: true,
-          //       itemBuilder: (context, index) {
-          //         return RatedItemsWidget();
-          //       }),
-          //   Container(
-          //       width: MediaQuery.of(context).size.width,
-          //       height: 40.w,
-          //       alignment: Alignment.centerLeft,
-          //       margin: EdgeInsets.symmetric(vertical: 17.w),
-          //       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.w),
-          //       decoration: BoxDecoration(
-          //           color: const Color(0xFF1F4167),
-          //           gradient: gradient(
-          //               const Color(0xFF1F4167), const Color(0xFF0777FB))),
-          //       child: Text(
-          //         "Recently Viewed Items",
-          //         style: Theme.of(context).textTheme.bodyText1!.copyWith(
-          //             fontSize: 18.w,
-          //             color: Colors.white,
-          //             fontWeight: FontWeight.w700),
-          //       )),
-          //   SizedBox(
-          //     height: 160.w,
-          //     child: ListView.builder(
-          //         itemCount: 5,
-          //         scrollDirection: Axis.horizontal,
-          //         itemBuilder: (context, index) {
-          //           return const RecentlyViewed();
-          //         }),
-          //   ),
-          //   SizedBox(
-          //     height: 160.w,
-          //     child: ListView.builder(
-          //         itemCount: 5,
-          //         scrollDirection: Axis.horizontal,
-          //         itemBuilder: (context, index) {
-          //           return const RecentlyViewed();
-          //         }),
-          //   ),
-          //   Divider(
-          //     color: const Color(0xFF1994F5).withOpacity(0.22),
-          //     thickness: 5,
-          //     height: 50.w,
-          //   ),
-          //   const RecentlyViewed(),
-          //   const RecentlyViewed(),
-          //   const RecentlyViewed(),
-          //   Container(
-          //     height: 276.w,
-          //     width: MediaQuery.of(context).size.width,
-          //     margin: EdgeInsets.only(top: 20.w),
-          //     child: PageView(
-          //       children: [
-          //         Image.asset(
-          //           "assets/images/cokeAd.png",
-          //           fit: BoxFit.fitWidth,
-          //         ),
-          //         Image.asset(
-          //           "assets/images/logoFrame.png",
-          //           fit: BoxFit.fill,
-          //         ),
-          //         Image.asset(
-          //           "assets/images/logoFrame.png",
-          //           fit: BoxFit.fill,
-          //         ),
-          //         Image.asset(
-          //           "assets/images/logoFrame.png",
-          //           fit: BoxFit.fill,
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          //   SizedBox(
-          //     height: 152.w,
-          //     width: MediaQuery.of(context).size.width,
-          //     child: ListView.builder(
-          //       scrollDirection: Axis.horizontal,
-          //       itemCount: 7,
-          //       itemBuilder: (context, index) {
-          //         return Container(
-          //           width: 114.w,
-          //           height: 152.w,
-          //           margin: EdgeInsets.all(4.5.w),
-          //           padding: EdgeInsets.all(7.w),
-          //           decoration: BoxDecoration(
-          //               color: Colors.white,
-          //               borderRadius: BorderRadius.circular(13.w)),
-          //           child: Image.asset(
-          //             "assets/images/phone.png",
-          //             fit: BoxFit.fill,
-          //           ),
-          //         );
-          //       },
-          //     ),
-          //   ),
-          //   Container(
-          //       width: MediaQuery.of(context).size.width,
-          //       height: 57.w,
-          //       alignment: Alignment.centerLeft,
-          //       margin: EdgeInsets.symmetric(vertical: 17.w),
-          //       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.w),
-          //       decoration: BoxDecoration(
-          //           color: const Color(0xFF1F4167),
-          //           gradient: gradient(
-          //               const Color(0xFF1F4167), const Color(0xFF0777FB))),
-          //       child: Row(
-          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //         children: [
-          //           Row(
-          //             children: [
-          //               Icon(
-          //                 CustomIcons.best_selling,
-          //                 color: const Color(0xFFE48C24),
-          //                 size: 37.w,
-          //               ),
-          //               SizedBox(
-          //                 width: 10.w,
-          //               ),
-          //               Text(
-          //                 "Best Selling Items",
-          //                 style: Theme.of(context).textTheme.bodyText1!.copyWith(
-          //                     fontSize: 18.w,
-          //                     color: Colors.white,
-          //                     fontWeight: FontWeight.w700),
-          //               ),
-          //             ],
-          //           ),
-          //           InkWell(
-          //             onTap: () {
-          //               Get.to(() => DealsDetails(title: "Best Selling Items"));
-          //             },
-          //             child: Container(
-          //               height: 24.w,
-          //               width: 75.w,
-          //               decoration: BoxDecoration(
-          //                 color: Colors.white,
-          //                 borderRadius: BorderRadius.circular(12.w),
-          //               ),
-          //               child: Row(
-          //                 mainAxisAlignment: MainAxisAlignment.center,
-          //                 children: [
-          //                   Text(
-          //                     "More",
-          //                     style: Theme.of(context)
-          //                         .textTheme
-          //                         .bodyText1!
-          //                         .copyWith(
-          //                         fontSize: 13.w,
-          //                         fontWeight: FontWeight.w700),
-          //                   ),
-          //                   SizedBox(
-          //                     width: 3.w,
-          //                   ),
-          //                   Icon(
-          //                     Icons.menu,
-          //                     color: kTextBlackColor,
-          //                     size: 15.w,
-          //                   ),
-          //                 ],
-          //               ),
-          //             ),
-          //           )
-          //         ],
-          //       )),
-          //   Row(
-          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //     children: [
-          //       ProductWidget(),
-          //       ProductWidget(),
-          //     ],
-          //   ),
-          //   Container(
-          //       width: MediaQuery.of(context).size.width,
-          //       height: 57.w,
-          //       alignment: Alignment.centerLeft,
-          //       margin: EdgeInsets.symmetric(vertical: 17.w),
-          //       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.w),
-          //       decoration: BoxDecoration(
-          //           color: const Color(0xFF1F4167),
-          //           gradient: gradient(
-          //               const Color(0xFF1F4167), const Color(0xFF0777FB))),
-          //       child: Row(
-          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //         children: [
-          //           Row(
-          //             children: [
-          //               Icon(
-          //                 CustomIcons.top_deals,
-          //                 color: const Color(0xFFE48C24),
-          //                 size: 33.w,
-          //               ),
-          //               SizedBox(
-          //                 width: 10.w,
-          //               ),
-          //               Text(
-          //                 "Top Deals",
-          //                 style: Theme.of(context).textTheme.bodyText1!.copyWith(
-          //                     fontSize: 18.w,
-          //                     color: Colors.white,
-          //                     fontWeight: FontWeight.w700),
-          //               ),
-          //             ],
-          //           ),
-          //           InkWell(
-          //             onTap: () {
-          //               Get.to(() => DealsDetails(
-          //                 title: "Top Deals",
-          //               ));
-          //             },
-          //             child: Container(
-          //               height: 24.w,
-          //               width: 75.w,
-          //               decoration: BoxDecoration(
-          //                 color: Colors.white,
-          //                 borderRadius: BorderRadius.circular(12.w),
-          //               ),
-          //               child: Row(
-          //                 mainAxisAlignment: MainAxisAlignment.center,
-          //                 children: [
-          //                   Text(
-          //                     "More",
-          //                     style: Theme.of(context)
-          //                         .textTheme
-          //                         .bodyText1!
-          //                         .copyWith(
-          //                         fontSize: 13.w,
-          //                         fontWeight: FontWeight.w700),
-          //                   ),
-          //                   SizedBox(
-          //                     width: 3.w,
-          //                   ),
-          //                   Icon(
-          //                     Icons.menu,
-          //                     color: kTextBlackColor,
-          //                     size: 15.w,
-          //                   ),
-          //                 ],
-          //               ),
-          //             ),
-          //           )
-          //         ],
-          //       )),
-          //   Row(
-          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //     children: [
-          //       ProductWidget(),
-          //       ProductWidget(),
-          //     ],
-          //   ),
-          //   Container(
-          //       width: MediaQuery.of(context).size.width,
-          //       height: 57.w,
-          //       alignment: Alignment.centerLeft,
-          //       margin: EdgeInsets.symmetric(vertical: 17.w),
-          //       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.w),
-          //       decoration: BoxDecoration(
-          //           color: const Color(0xFF1F4167),
-          //           gradient: gradient(
-          //               const Color(0xFF1F4167), const Color(0xFF0777FB))),
-          //       child: Row(
-          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //         children: [
-          //           Row(
-          //             children: [
-          //               Icon(
-          //                 CustomIcons.recommended_deals,
-          //                 color: const Color(0xFFE48C24),
-          //                 size: 33.w,
-          //               ),
-          //               SizedBox(
-          //                 width: 10.w,
-          //               ),
-          //               Text(
-          //                 "Recommended Deals",
-          //                 style: Theme.of(context).textTheme.bodyText1!.copyWith(
-          //                     fontSize: 18.w,
-          //                     color: Colors.white,
-          //                     fontWeight: FontWeight.w700),
-          //               ),
-          //             ],
-          //           ),
-          //           InkWell(
-          //             onTap: () {
-          //               Get.to(() => DealsDetails(
-          //                 title: "Recommended Deals",
-          //               ));
-          //             },
-          //             child: Container(
-          //               height: 24.w,
-          //               width: 75.w,
-          //               decoration: BoxDecoration(
-          //                 color: Colors.white,
-          //                 borderRadius: BorderRadius.circular(12.w),
-          //               ),
-          //               child: Row(
-          //                 mainAxisAlignment: MainAxisAlignment.center,
-          //                 children: [
-          //                   Text(
-          //                     "More",
-          //                     style: Theme.of(context)
-          //                         .textTheme
-          //                         .bodyText1!
-          //                         .copyWith(
-          //                         fontSize: 13.w,
-          //                         fontWeight: FontWeight.w700),
-          //                   ),
-          //                   SizedBox(
-          //                     width: 3.w,
-          //                   ),
-          //                   Icon(
-          //                     Icons.menu,
-          //                     color: kTextBlackColor,
-          //                     size: 15.w,
-          //                   ),
-          //                 ],
-          //               ),
-          //             ),
-          //           )
-          //         ],
-          //       )),
-          //   Row(
-          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //     children: [
-          //       ProductWidget(),
-          //       ProductWidget(),
-          //     ],
-          //   ),
-          // ],),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          _productController.clearSearch(token, tab);
+        },
+        child: ListView(
+          physics: const ClampingScrollPhysics(),
+          children: [
+            // Column(children: [
+            //   Container(
+            //       height: 30.w,
+            //       width: MediaQuery.of(context).size.width,
+            //       padding: EdgeInsets.symmetric(horizontal: 10.w),
+            //       decoration: BoxDecoration(
+            //         gradient: gradient(
+            //           const Color(0xFF691232),
+            //           const Color(0xFF1770A2),
+            //         ),
+            //       ),
+            //       child: Row(
+            //         children: [
+            //           Icon(Icons.location_on, size: 17.w, color: white),
+            //           Text(
+            //             " Deliver to chicago,iL 5932 ",
+            //             style: Theme.of(context).textTheme.bodyText1!.copyWith(
+            //               fontSize: 13.w,
+            //               color: white,
+            //               fontWeight: FontWeight.w800,
+            //             ),
+            //           ),
+            //         ],
+            //       )),
+            //   SizedBox(
+            //     height: 276.w,
+            //     width: MediaQuery.of(context).size.width,
+            //     child: PageView(
+            //       children: [
+            //         Image.asset(
+            //           "assets/images/cokeAd.png",
+            //           fit: BoxFit.fitWidth,
+            //         ),
+            //         Image.asset(
+            //           "assets/images/logoFrame.png",
+            //           fit: BoxFit.fill,
+            //         ),
+            //         Image.asset(
+            //           "assets/images/logoFrame.png",
+            //           fit: BoxFit.fill,
+            //         ),
+            //         Image.asset(
+            //           "assets/images/logoFrame.png",
+            //           fit: BoxFit.fill,
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            //   kSpacing,
+            //   // Obx(
+            //   //   () => _storeController.getDefaultStoreId()==''
+            //   //       ? const Center(child: CircularProgressIndicator())
+            //   //       : ProductList(
+            //   //           storeId: storeId,
+            //   //           storeName: 'name',
+            //   //           storeLocation: 'location',
+            //   //         ),
+            //   // ),
+            //   kSpacing,
+            //   SizedBox(
+            //     height: 152.w,
+            //     width: MediaQuery.of(context).size.width,
+            //     child: ListView.builder(
+            //       scrollDirection: Axis.horizontal,
+            //       itemCount: 7,
+            //       itemBuilder: (context, index) {
+            //         return InkWell(
+            //           onTap: () {
+            //             // Get.to(() => const ProductDetails());
+            //           },
+            //           child: Container(
+            //             width: 114.w,
+            //             height: 152.w,
+            //             margin: EdgeInsets.all(4.5.w),
+            //             padding: EdgeInsets.all(7.w),
+            //             decoration: BoxDecoration(
+            //                 color: Colors.white,
+            //                 borderRadius: BorderRadius.circular(13.w)),
+            //             child: Image.asset(
+            //               "assets/images/phone.png",
+            //               fit: BoxFit.fill,
+            //             ),
+            //           ),
+            //         );
+            //       },
+            //     ),
+            //   ),
+            //   Container(
+            //       width: MediaQuery.of(context).size.width,
+            //       height: 57.w,
+            //       margin: EdgeInsets.symmetric(vertical: 17.w),
+            //       decoration: const BoxDecoration(
+            //         color: Color(0xFF1F4167),
+            //         gradient: LinearGradient(
+            //             colors: [
+            //               Color(0xFF1F4167),
+            //               Color(0xFF125EB7),
+            //               Color(0xFF0777FB),
+            //             ],
+            //             stops: [
+            //               0.0,
+            //               0.5,
+            //               1.0
+            //             ],
+            //             begin: FractionalOffset.topLeft,
+            //             end: FractionalOffset.bottomRight,
+            //             tileMode: TileMode.repeated),
+            //       ),
+            //       child: Row(
+            //         mainAxisAlignment: MainAxisAlignment.center,
+            //         children: [
+            //           Padding(
+            //               padding: EdgeInsets.only(top: 5.w),
+            //               child: Icon(
+            //                 CustomIcons.crown_badge,
+            //                 color: const Color(0xFFFCC70A),
+            //                 size: 42.w,
+            //               )),
+            //           Text(
+            //             "Top 10 Rated Items",
+            //             style: Theme.of(context).textTheme.bodyText1!.copyWith(
+            //                 fontSize: 18.w,
+            //                 color: Colors.white,
+            //                 fontWeight: FontWeight.w700),
+            //           ),
+            //         ],
+            //       )),
+            //   ListView.builder(
+            //       physics: const NeverScrollableScrollPhysics(),
+            //       itemCount: 1,
+            //       shrinkWrap: true,
+            //       itemBuilder: (context, index) {
+            //         return RatedItemsWidget();
+            //       }),
+            //   Container(
+            //       width: MediaQuery.of(context).size.width,
+            //       height: 40.w,
+            //       alignment: Alignment.centerLeft,
+            //       margin: EdgeInsets.symmetric(vertical: 17.w),
+            //       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.w),
+            //       decoration: BoxDecoration(
+            //           color: const Color(0xFF1F4167),
+            //           gradient: gradient(
+            //               const Color(0xFF1F4167), const Color(0xFF0777FB))),
+            //       child: Text(
+            //         "Recently Viewed Items",
+            //         style: Theme.of(context).textTheme.bodyText1!.copyWith(
+            //             fontSize: 18.w,
+            //             color: Colors.white,
+            //             fontWeight: FontWeight.w700),
+            //       )),
+            //   SizedBox(
+            //     height: 160.w,
+            //     child: ListView.builder(
+            //         itemCount: 5,
+            //         scrollDirection: Axis.horizontal,
+            //         itemBuilder: (context, index) {
+            //           return const RecentlyViewed();
+            //         }),
+            //   ),
+            //   SizedBox(
+            //     height: 160.w,
+            //     child: ListView.builder(
+            //         itemCount: 5,
+            //         scrollDirection: Axis.horizontal,
+            //         itemBuilder: (context, index) {
+            //           return const RecentlyViewed();
+            //         }),
+            //   ),
+            //   Divider(
+            //     color: const Color(0xFF1994F5).withOpacity(0.22),
+            //     thickness: 5,
+            //     height: 50.w,
+            //   ),
+            //   const RecentlyViewed(),
+            //   const RecentlyViewed(),
+            //   const RecentlyViewed(),
+            //   Container(
+            //     height: 276.w,
+            //     width: MediaQuery.of(context).size.width,
+            //     margin: EdgeInsets.only(top: 20.w),
+            //     child: PageView(
+            //       children: [
+            //         Image.asset(
+            //           "assets/images/cokeAd.png",
+            //           fit: BoxFit.fitWidth,
+            //         ),
+            //         Image.asset(
+            //           "assets/images/logoFrame.png",
+            //           fit: BoxFit.fill,
+            //         ),
+            //         Image.asset(
+            //           "assets/images/logoFrame.png",
+            //           fit: BoxFit.fill,
+            //         ),
+            //         Image.asset(
+            //           "assets/images/logoFrame.png",
+            //           fit: BoxFit.fill,
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            //   SizedBox(
+            //     height: 152.w,
+            //     width: MediaQuery.of(context).size.width,
+            //     child: ListView.builder(
+            //       scrollDirection: Axis.horizontal,
+            //       itemCount: 7,
+            //       itemBuilder: (context, index) {
+            //         return Container(
+            //           width: 114.w,
+            //           height: 152.w,
+            //           margin: EdgeInsets.all(4.5.w),
+            //           padding: EdgeInsets.all(7.w),
+            //           decoration: BoxDecoration(
+            //               color: Colors.white,
+            //               borderRadius: BorderRadius.circular(13.w)),
+            //           child: Image.asset(
+            //             "assets/images/phone.png",
+            //             fit: BoxFit.fill,
+            //           ),
+            //         );
+            //       },
+            //     ),
+            //   ),
+            //   Container(
+            //       width: MediaQuery.of(context).size.width,
+            //       height: 57.w,
+            //       alignment: Alignment.centerLeft,
+            //       margin: EdgeInsets.symmetric(vertical: 17.w),
+            //       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.w),
+            //       decoration: BoxDecoration(
+            //           color: const Color(0xFF1F4167),
+            //           gradient: gradient(
+            //               const Color(0xFF1F4167), const Color(0xFF0777FB))),
+            //       child: Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //         children: [
+            //           Row(
+            //             children: [
+            //               Icon(
+            //                 CustomIcons.best_selling,
+            //                 color: const Color(0xFFE48C24),
+            //                 size: 37.w,
+            //               ),
+            //               SizedBox(
+            //                 width: 10.w,
+            //               ),
+            //               Text(
+            //                 "Best Selling Items",
+            //                 style: Theme.of(context).textTheme.bodyText1!.copyWith(
+            //                     fontSize: 18.w,
+            //                     color: Colors.white,
+            //                     fontWeight: FontWeight.w700),
+            //               ),
+            //             ],
+            //           ),
+            //           InkWell(
+            //             onTap: () {
+            //               Get.to(() => DealsDetails(title: "Best Selling Items"));
+            //             },
+            //             child: Container(
+            //               height: 24.w,
+            //               width: 75.w,
+            //               decoration: BoxDecoration(
+            //                 color: Colors.white,
+            //                 borderRadius: BorderRadius.circular(12.w),
+            //               ),
+            //               child: Row(
+            //                 mainAxisAlignment: MainAxisAlignment.center,
+            //                 children: [
+            //                   Text(
+            //                     "More",
+            //                     style: Theme.of(context)
+            //                         .textTheme
+            //                         .bodyText1!
+            //                         .copyWith(
+            //                         fontSize: 13.w,
+            //                         fontWeight: FontWeight.w700),
+            //                   ),
+            //                   SizedBox(
+            //                     width: 3.w,
+            //                   ),
+            //                   Icon(
+            //                     Icons.menu,
+            //                     color: kTextBlackColor,
+            //                     size: 15.w,
+            //                   ),
+            //                 ],
+            //               ),
+            //             ),
+            //           )
+            //         ],
+            //       )),
+            //   Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       ProductWidget(),
+            //       ProductWidget(),
+            //     ],
+            //   ),
+            //   Container(
+            //       width: MediaQuery.of(context).size.width,
+            //       height: 57.w,
+            //       alignment: Alignment.centerLeft,
+            //       margin: EdgeInsets.symmetric(vertical: 17.w),
+            //       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.w),
+            //       decoration: BoxDecoration(
+            //           color: const Color(0xFF1F4167),
+            //           gradient: gradient(
+            //               const Color(0xFF1F4167), const Color(0xFF0777FB))),
+            //       child: Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //         children: [
+            //           Row(
+            //             children: [
+            //               Icon(
+            //                 CustomIcons.top_deals,
+            //                 color: const Color(0xFFE48C24),
+            //                 size: 33.w,
+            //               ),
+            //               SizedBox(
+            //                 width: 10.w,
+            //               ),
+            //               Text(
+            //                 "Top Deals",
+            //                 style: Theme.of(context).textTheme.bodyText1!.copyWith(
+            //                     fontSize: 18.w,
+            //                     color: Colors.white,
+            //                     fontWeight: FontWeight.w700),
+            //               ),
+            //             ],
+            //           ),
+            //           InkWell(
+            //             onTap: () {
+            //               Get.to(() => DealsDetails(
+            //                 title: "Top Deals",
+            //               ));
+            //             },
+            //             child: Container(
+            //               height: 24.w,
+            //               width: 75.w,
+            //               decoration: BoxDecoration(
+            //                 color: Colors.white,
+            //                 borderRadius: BorderRadius.circular(12.w),
+            //               ),
+            //               child: Row(
+            //                 mainAxisAlignment: MainAxisAlignment.center,
+            //                 children: [
+            //                   Text(
+            //                     "More",
+            //                     style: Theme.of(context)
+            //                         .textTheme
+            //                         .bodyText1!
+            //                         .copyWith(
+            //                         fontSize: 13.w,
+            //                         fontWeight: FontWeight.w700),
+            //                   ),
+            //                   SizedBox(
+            //                     width: 3.w,
+            //                   ),
+            //                   Icon(
+            //                     Icons.menu,
+            //                     color: kTextBlackColor,
+            //                     size: 15.w,
+            //                   ),
+            //                 ],
+            //               ),
+            //             ),
+            //           )
+            //         ],
+            //       )),
+            //   Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       ProductWidget(),
+            //       ProductWidget(),
+            //     ],
+            //   ),
+            //   Container(
+            //       width: MediaQuery.of(context).size.width,
+            //       height: 57.w,
+            //       alignment: Alignment.centerLeft,
+            //       margin: EdgeInsets.symmetric(vertical: 17.w),
+            //       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.w),
+            //       decoration: BoxDecoration(
+            //           color: const Color(0xFF1F4167),
+            //           gradient: gradient(
+            //               const Color(0xFF1F4167), const Color(0xFF0777FB))),
+            //       child: Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //         children: [
+            //           Row(
+            //             children: [
+            //               Icon(
+            //                 CustomIcons.recommended_deals,
+            //                 color: const Color(0xFFE48C24),
+            //                 size: 33.w,
+            //               ),
+            //               SizedBox(
+            //                 width: 10.w,
+            //               ),
+            //               Text(
+            //                 "Recommended Deals",
+            //                 style: Theme.of(context).textTheme.bodyText1!.copyWith(
+            //                     fontSize: 18.w,
+            //                     color: Colors.white,
+            //                     fontWeight: FontWeight.w700),
+            //               ),
+            //             ],
+            //           ),
+            //           InkWell(
+            //             onTap: () {
+            //               Get.to(() => DealsDetails(
+            //                 title: "Recommended Deals",
+            //               ));
+            //             },
+            //             child: Container(
+            //               height: 24.w,
+            //               width: 75.w,
+            //               decoration: BoxDecoration(
+            //                 color: Colors.white,
+            //                 borderRadius: BorderRadius.circular(12.w),
+            //               ),
+            //               child: Row(
+            //                 mainAxisAlignment: MainAxisAlignment.center,
+            //                 children: [
+            //                   Text(
+            //                     "More",
+            //                     style: Theme.of(context)
+            //                         .textTheme
+            //                         .bodyText1!
+            //                         .copyWith(
+            //                         fontSize: 13.w,
+            //                         fontWeight: FontWeight.w700),
+            //                   ),
+            //                   SizedBox(
+            //                     width: 3.w,
+            //                   ),
+            //                   Icon(
+            //                     Icons.menu,
+            //                     color: kTextBlackColor,
+            //                     size: 15.w,
+            //                   ),
+            //                 ],
+            //               ),
+            //             ),
+            //           )
+            //         ],
+            //       )),
+            //   Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       ProductWidget(),
+            //       ProductWidget(),
+            //     ],
+            //   ),
+            // ],),
 
-          smallSpace(),
-          Container(
-              width: MediaQuery.of(context).size.width,
-              height: 40.w,
-              alignment: Alignment.centerLeft,
-              margin: EdgeInsets.symmetric(vertical: 17.w),
-              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.w),
-              decoration: BoxDecoration(
-                  color: const Color(0xFF1F4167),
-                  gradient: gradient(
-                      const Color(0xFF1F4167), const Color(0xFF0777FB))),
-              child: Text(
-                "Regular Selling Items",
-                style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                    fontSize: 18.w,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700),
-              )),
+            smallSpace(),
+            Container(
+                width: MediaQuery.of(context).size.width,
+                height: 40.w,
+                alignment: Alignment.centerLeft,
+                margin: EdgeInsets.symmetric(vertical: 17.w),
+                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.w),
+                decoration: BoxDecoration(
+                    color: const Color(0xFF1F4167),
+                    gradient: gradient(
+                        const Color(0xFF1F4167), const Color(0xFF0777FB))),
+                child: Text(
+                  "Regular Selling Items",
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      fontSize: 18.w,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700),
+                )),
 
-          tab == 'car'
-              ? Obx(
-                  () => _productController.isFetchingProducts.isTrue
-                      ? const Loader()
-                      : _productController.productList.isEmpty
-                          ? empty('car')
-                          : GridView.builder(
-                              primary: false,
-                              shrinkWrap: true,
-                              gridDelegate:
-                                  SliverGridDelegateWithMaxCrossAxisExtent(
-                                      maxCrossAxisExtent:
-                                          MediaQuery.of(context).size.width *
-                                              0.5,
-                                      childAspectRatio: 1 / 2,
-                                      mainAxisSpacing: 0,
-                                      crossAxisSpacing: 0),
-                              itemCount: _productController.productList.length,
-                              itemBuilder: (context, index) {
-                                var item =
-                                    _productController.productList[index];
-                                return InkWell(
-                                    onTap: () {
-                                      Get.to(() => ProductDetails(
-                                            product: _productController
-                                                .productList[index],
-                                          ));
-                                    },
-                                    child: ProductWidget(
-                                        title: item['title'],
-                                        category: 'Cars',
-                                        price:
-                                            item['price']['amount'].toString(),
-                                        product: item));
-                              }),
-                )
-              : tab == 'electronics'
-                  ? Obx(
-                      () => _productController.isFetchingProducts.isTrue
-                          ? const Loader()
-                          : _productController.productList.isEmpty
-                              ? empty('electronics')
-                              : GridView.builder(
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  gridDelegate:
-                                      SliverGridDelegateWithMaxCrossAxisExtent(
-                                          maxCrossAxisExtent:
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.5,
-                                          childAspectRatio: 1 / 2,
-                                          mainAxisSpacing: 0,
-                                          crossAxisSpacing: 0),
-                                  itemCount:
-                                      _productController.productList.length,
-                                  itemBuilder: (context, index) {
-                                    var item =
-                                        _productController.productList[index];
-                                    return InkWell(
-                                        onTap: () {
-                                          Get.to(() => ProductDetails(
-                                                product: _productController
-                                                    .productList[index],
-                                              ));
-                                        },
-                                        child: ProductWidget(
-                                            title: item['title'],
-                                            price: item['price']['amount']
-                                                .toString(),
-                                            category: 'Electronics',
-                                            product: item));
-                                  }),
-                    )
-                  : Obx(
-                      () => _productController.isFetchingApartments.isTrue
-                          ? const Loader()
-                          : _productController.apartmentList.isEmpty
-                              ? empty(tab)
-                              : GridView.builder(
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  gridDelegate:
-                                      SliverGridDelegateWithMaxCrossAxisExtent(
-                                          maxCrossAxisExtent:
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.5,
-                                          childAspectRatio: 1 / 2,
-                                          mainAxisSpacing: 0,
-                                          crossAxisSpacing: 0),
-                                  itemCount:
-                                      _productController.apartmentList.length,
-                                  itemBuilder: (context, index) {
-                                    var item =
-                                        _productController.apartmentList[index];
-                                    return InkWell(
+            tab == 'car'
+                ? Obx(
+                    () => _productController.isFetchingProducts.isTrue
+                        ? const Loader()
+                        : _productController.productList.isEmpty
+                            ? empty('car')
+                            : GridView.builder(
+                                primary: false,
+                                shrinkWrap: true,
+                                gridDelegate:
+                                    SliverGridDelegateWithMaxCrossAxisExtent(
+                                        maxCrossAxisExtent:
+                                            MediaQuery.of(context).size.width *
+                                                0.5,
+                                        childAspectRatio: 1 / 2,
+                                        mainAxisSpacing: 0,
+                                        crossAxisSpacing: 0),
+                                itemCount:
+                                    _productController.productList.length,
+                                itemBuilder: (context, index) {
+                                  var item =
+                                      _productController.productList[index];
+                                  return InkWell(
                                       onTap: () {
-                                        Get.to(() => ApartmentDetails(
-                                              apartment: _productController
-                                                  .apartmentList[index],
+                                        Get.to(() => ProductDetails(
+                                              product: _productController
+                                                  .productList[index],
                                             ));
                                       },
                                       child: ProductWidget(
                                           title: item['title'],
-                                          category: item['apartmentType'],
-                                          price: item['rentPrice']['month']
+                                          category: 'Cars',
+                                          price: item['price']['amount']
                                               .toString(),
-                                          product: item),
-                                    );
-                                  }),
-                    )
+                                          product: item));
+                                }),
+                  )
+                : tab == 'electronics'
+                    ? Obx(
+                        () => _productController.isFetchingProducts.isTrue
+                            ? const Loader()
+                            : _productController.productList.isEmpty
+                                ? empty('electronics')
+                                : GridView.builder(
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    gridDelegate:
+                                        SliverGridDelegateWithMaxCrossAxisExtent(
+                                            maxCrossAxisExtent:
+                                                MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.5,
+                                            childAspectRatio: 1 / 2,
+                                            mainAxisSpacing: 0,
+                                            crossAxisSpacing: 0),
+                                    itemCount:
+                                        _productController.productList.length,
+                                    itemBuilder: (context, index) {
+                                      var item =
+                                          _productController.productList[index];
+                                      return InkWell(
+                                          onTap: () {
+                                            Get.to(() => ProductDetails(
+                                                  product: _productController
+                                                      .productList[index],
+                                                ));
+                                          },
+                                          child: ProductWidget(
+                                              title: item['title'],
+                                              price: item['price']['amount']
+                                                  .toString(),
+                                              category: 'Electronics',
+                                              product: item));
+                                    }),
+                      )
+                    : Obx(
+                        () => _productController.isFetchingApartments.isTrue
+                            ? const Loader()
+                            : _productController.apartmentList.isEmpty
+                                ? empty(tab)
+                                : GridView.builder(
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    gridDelegate:
+                                        SliverGridDelegateWithMaxCrossAxisExtent(
+                                            maxCrossAxisExtent:
+                                                MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.5,
+                                            childAspectRatio: 1 / 2,
+                                            mainAxisSpacing: 0,
+                                            crossAxisSpacing: 0),
+                                    itemCount:
+                                        _productController.apartmentList.length,
+                                    itemBuilder: (context, index) {
+                                      var item = _productController
+                                          .apartmentList[index];
+                                      return InkWell(
+                                        onTap: () {
+                                          Get.to(() => ApartmentDetails(
+                                                apartment: _productController
+                                                    .apartmentList[index],
+                                              ));
+                                        },
+                                        child: ProductWidget(
+                                            title: item['title'],
+                                            category: item['apartmentType'],
+                                            price: item['rentPrice']['month']
+                                                .toString(),
+                                            product: item),
+                                      );
+                                    }),
+                      )
 
-          // Container(
-          //   height: 276.w,
-          //   width: MediaQuery.of(context).size.width,
-          //   margin: EdgeInsets.only(bottom: 20.w),
-          //   child: PageView(
-          //     children: [
-          //       Image.asset(
-          //         "assets/images/cokeAd.png",
-          //         fit: BoxFit.fitWidth,
-          //       ),
-          //       Image.asset(
-          //         "assets/images/logoFrame.png",
-          //         fit: BoxFit.fill,
-          //       ),
-          //       Image.asset(
-          //         "assets/images/logoFrame.png",
-          //         fit: BoxFit.fill,
-          //       ),
-          //       Image.asset(
-          //         "assets/images/logoFrame.png",
-          //         fit: BoxFit.fill,
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          // GridView.builder(
-          //     primary: false,
-          //     shrinkWrap: true,
-          //     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          //       maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.5,
-          //       childAspectRatio: 1 / 2,
-          //       mainAxisSpacing: 0,
-          //       crossAxisSpacing: 0,
-          //     ),
-          //     itemCount: 10,
-          //     itemBuilder: (context, c) {
-          //       return  ProductWidget();
-          //     }),
-          // Container(
-          //   height: 276.w,
-          //   width: MediaQuery.of(context).size.width,
-          //   margin: EdgeInsets.only(bottom: 20.w),
-          //   child: PageView(
-          //     children: [
-          //       Image.asset(
-          //         "assets/images/house.png",
-          //         fit: BoxFit.fitWidth,
-          //       ),
-          //       Image.asset(
-          //         "assets/images/logoFrame.png",
-          //         fit: BoxFit.fill,
-          //       ),
-          //       Image.asset(
-          //         "assets/images/logoFrame.png",
-          //         fit: BoxFit.fill,
-          //       ),
-          //       Image.asset(
-          //         "assets/images/logoFrame.png",
-          //         fit: BoxFit.fill,
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          // GridView.builder(
-          //     primary: false,
-          //     shrinkWrap: true,
-          //     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          //       maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.5,
-          //       childAspectRatio: 1 / 2,
-          //       mainAxisSpacing: 0,
-          //       crossAxisSpacing: 0,
-          //     ),
-          //     itemCount: 10,
-          //     itemBuilder: (context, c) {
-          //       return ProductWidget();
-          //     }),
-        ],
+            // Container(
+            //   height: 276.w,
+            //   width: MediaQuery.of(context).size.width,
+            //   margin: EdgeInsets.only(bottom: 20.w),
+            //   child: PageView(
+            //     children: [
+            //       Image.asset(
+            //         "assets/images/cokeAd.png",
+            //         fit: BoxFit.fitWidth,
+            //       ),
+            //       Image.asset(
+            //         "assets/images/logoFrame.png",
+            //         fit: BoxFit.fill,
+            //       ),
+            //       Image.asset(
+            //         "assets/images/logoFrame.png",
+            //         fit: BoxFit.fill,
+            //       ),
+            //       Image.asset(
+            //         "assets/images/logoFrame.png",
+            //         fit: BoxFit.fill,
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // GridView.builder(
+            //     primary: false,
+            //     shrinkWrap: true,
+            //     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+            //       maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.5,
+            //       childAspectRatio: 1 / 2,
+            //       mainAxisSpacing: 0,
+            //       crossAxisSpacing: 0,
+            //     ),
+            //     itemCount: 10,
+            //     itemBuilder: (context, c) {
+            //       return  ProductWidget();
+            //     }),
+            // Container(
+            //   height: 276.w,
+            //   width: MediaQuery.of(context).size.width,
+            //   margin: EdgeInsets.only(bottom: 20.w),
+            //   child: PageView(
+            //     children: [
+            //       Image.asset(
+            //         "assets/images/house.png",
+            //         fit: BoxFit.fitWidth,
+            //       ),
+            //       Image.asset(
+            //         "assets/images/logoFrame.png",
+            //         fit: BoxFit.fill,
+            //       ),
+            //       Image.asset(
+            //         "assets/images/logoFrame.png",
+            //         fit: BoxFit.fill,
+            //       ),
+            //       Image.asset(
+            //         "assets/images/logoFrame.png",
+            //         fit: BoxFit.fill,
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // GridView.builder(
+            //     primary: false,
+            //     shrinkWrap: true,
+            //     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+            //       maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.5,
+            //       childAspectRatio: 1 / 2,
+            //       mainAxisSpacing: 0,
+            //       crossAxisSpacing: 0,
+            //     ),
+            //     itemCount: 10,
+            //     itemBuilder: (context, c) {
+            //       return ProductWidget();
+            //     }),
+          ],
+        ),
       ),
     );
+  }
+
+  OutlineInputBorder buildOutlineInputBorder() {
+    return OutlineInputBorder(
+        borderRadius: BorderRadius.circular(13.w),
+        borderSide: const BorderSide(color: Colors.white));
   }
 }
 

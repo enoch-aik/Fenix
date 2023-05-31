@@ -41,11 +41,11 @@ class Account extends StatelessWidget {
                     color: Colors.white,
                     size: 27.w,
                   ),
-                  Icon(
-                    Icons.search,
-                    color: Colors.white,
-                    size: 27.w,
-                  ),
+                  // Icon(
+                  //   Icons.search,
+                  //   color: Colors.white,
+                  //   size: 27.w,
+                  // ),
                   Icon(
                     Icons.logout,
                     color: Colors.white,

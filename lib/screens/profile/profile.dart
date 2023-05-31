@@ -33,9 +33,8 @@ class _UserProfileState extends State<UserProfile> {
   final StoreController _storeController = Get.find();
   final AccountController _accountController = Get.find();
 
+  var name = '';
   var refreshToken;
-
-
 
   List title = [
     "Your Account",
@@ -50,6 +49,7 @@ class _UserProfileState extends State<UserProfile> {
 
   @override
   void initState() {
+    name = _userController.getUser()!.firstName.toString();
     super.initState();
   }
 
@@ -74,22 +74,23 @@ class _UserProfileState extends State<UserProfile> {
                     color: Colors.white,
                     size: 27.w,
                   ),
-                  Icon(
-                    Icons.search,
-                    color: Colors.white,
-                    size: 27.w,
-                  ),
+                  // Icon(
+                  //   Icons.search,
+                  //   color: Colors.white,
+                  //   size: 27.w,
+                  // ),
                   InkWell(
                     onTap: () async {
-                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
                       refreshToken = prefs.getString('refreshToken');
                       CustomDialogs.showNoticeDialog(
-                        message:  "Please don't leave 😭",
-                          image:  "assets/images/icons/logout.png",
+                          message: "Please don't leave 😭",
+                          image: "assets/images/icons/logout.png",
                           closeText: 'Cancel',
                           okText: 'Confirm',
                           onClick: () {
-                           _accountController.signOut(refreshToken);
+                            _accountController.signOut(refreshToken);
                           });
                     },
                     child: Icon(
@@ -126,7 +127,7 @@ class _UserProfileState extends State<UserProfile> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Hello, Khasan",
+                    "Hello, $name",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 28.w,
@@ -169,11 +170,14 @@ class _UserProfileState extends State<UserProfile> {
                                   Get.to(() => EditProfile());
                                 })
                             : Get.to(() => SellingPost(
-                                  storeId: _storeController.storeList[0]['id'].toString(),
+                                  storeId: _storeController.storeList[0]['id']
+                                      .toString(),
                                   storeName: _storeController.storeList[0]
-                                      ['name'].toString(),
+                                          ['name']
+                                      .toString(),
                                   storeLocation: _storeController.storeList[0]
-                                      ['location'].toString(),
+                                          ['location']
+                                      .toString(),
                                 ));
                       }
 
