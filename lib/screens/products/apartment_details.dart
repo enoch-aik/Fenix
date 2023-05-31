@@ -1,12 +1,14 @@
 import 'dart:math' as math;
 
 import 'package:fenix/helpers/widgets/text.dart';
+import 'package:fenix/screens/profile/create_selling_post/create_apartment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../const.dart';
 import '../../helpers/icons/custom_icons_icons.dart';
@@ -29,6 +31,7 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
   int temperature = 0;
   int currentIn = 0;
   ValueNotifier<bool> ac = ValueNotifier(false);
+  var apartment;
 
   TabController? _tabController;
 
@@ -37,21 +40,18 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
     // TODO: implement initState
     super.initState();
     _tabController = TabController(initialIndex: 0, length: 2, vsync: this);
+    setState(() => apartment = widget.apartment);
   }
 
   @override
   Widget build(BuildContext context) {
-    print(widget.apartment);
+    print(apartment);
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(
-        preferredSize: Size(MediaQuery
-            .of(context)
-            .size
-            .width,
-            height() * 0.18),
+        preferredSize: Size(MediaQuery.of(context).size.width, height() * 0.18),
         child: Container(
-          decoration:  BoxDecoration(
+          decoration: BoxDecoration(
             gradient: gradient(
               const Color(0xFF691232),
               const Color(0xFF1770A2),
@@ -92,14 +92,8 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
                     InkWell(
                       onTap: () => Get.to(() => const SearchScreen()),
                       child: Container(
-                        height: MediaQuery
-                            .of(context)
-                            .size
-                            .height * 0.050,
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width * 0.82,
+                        height: MediaQuery.of(context).size.height * 0.050,
+                        width: MediaQuery.of(context).size.width * 0.82,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(13.w),
                           color: Colors.white,
@@ -115,17 +109,14 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 15,
                                 vertical:
-                                MediaQuery
-                                    .of(context)
-                                    .size
-                                    .height * 0.015),
+                                    MediaQuery.of(context).size.height * 0.015),
                             hintText: "Search Fenix",
-                            hintStyle: Theme
-                                .of(context)
+                            hintStyle: Theme.of(context)
                                 .textTheme
                                 .bodyText1!
                                 .copyWith(
-                                fontSize: 15.w, color: Colors.grey.shade500),
+                                    fontSize: 15.w,
+                                    color: Colors.grey.shade500),
                             prefixIcon: const Icon(Icons.search),
                           ),
                         ),
@@ -135,10 +126,7 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
                 ),
               ),
               SizedBox(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.010,
+                height: MediaQuery.of(context).size.height * 0.010,
               )
             ],
           ),
@@ -158,30 +146,40 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
                         currentIn = v;
                       });
                     },
-                    itemBuilder: (c, i) =>
-                        ClipRRect(
-                          // borderRadius: BorderRadius.circular(12),
-                          child: Image.asset(
-                            "assets/images/house.png",
-                            fit: BoxFit.cover,
-                          ),
+                    itemBuilder: (c, i) => Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.asset(
+                          "assets/images/house.png",
+                          fit: BoxFit.cover,
                         ),
+                      ),
+                    ),
                     itemCount: 3,
                   )),
               Positioned(
                   right: 20,
                   top: 20,
                   child: Container(
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.circle, color: black),
-                      child: const Padding(
-                        padding: EdgeInsets.all(2.0),
-                        child: Icon(
-                          Icons.favorite_border,
-                          color: white,
-                        ),
-                      ))),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: apartment['isLiked'] ? white : black),
+                      child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(
+                            apartment['isLiked']
+                                ? Icons.favorite
+                                : Icons.favorite_border,
+                            color: apartment['isLiked'] ? red : white,
+                            size: 20,
+                          )
 
+                          // Icon(
+                          //   Icons.favorite_border,
+                          //   color: white,
+                          // ),
+                          ))),
               Positioned(
                 right: 10,
                 left: 10,
@@ -190,12 +188,11 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(
                         3,
-                            (i) =>
-                            Padding(
+                        (i) => Padding(
                               padding: const EdgeInsets.all(3.0),
                               child: Container(
-                                height: currentIn == i? 18:10,
-                                width: currentIn == i? 18:10,
+                                height: currentIn == i ? 18 : 10,
+                                width: currentIn == i ? 18 : 10,
                                 decoration: const BoxDecoration(
                                     image: DecorationImage(
                                         image: AssetImage(
@@ -212,195 +209,349 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                KText(
-                  widget.apartment['title'] ?? "Brand Apple",
-                  color: const Color(0xFF0B85E6),
-                  fontWeight: FontWeight.w700,
-                  fontSize: 19.w,
+                SizedBox(height: 3.w),
+                KText(apartment['title'],
+                    fontWeight: FontWeight.w700, fontSize: 19.w),
+              ],
+            ),
+          ),
+          divider(),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+            child: Row(crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Icon(Icons.star, size: 15),
+                tinyH5Space(),
+                const Text(
+                  '4.75',
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300),
                 ),
-                SizedBox(
-                  height: 3.w,
+              smallHSpace(),
+                const Text(
+                  '105 reviews',
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300),
                 ),
+                smallHSpace(),
+
+                Expanded(
+                  child: Text(
+                    '${apartment['location']}',
+                    style: const TextStyle(
+                        fontSize: 13, fontWeight: FontWeight.w300),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          divider(),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const Text(
+                        'Entire home hosted by\njulia Sanchez',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      tinySpace(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '${apartment['rules']['occupant']} guests',
+                            style: const TextStyle(
+                                fontSize: 13, fontWeight: FontWeight.w300),
+                          ),
+                          Text(
+                            '${apartment['specifics']['bedroom']} Bedroom',
+                            style: const TextStyle(
+                                fontSize: 13, fontWeight: FontWeight.w300),
+                          ),
+                          Text(
+                            '${apartment['specifics']['floor']} floors',
+                            style: const TextStyle(
+                                fontSize: 13, fontWeight: FontWeight.w300),
+                          ),
+                          Text(
+                            '${apartment['specifics']['bathroom']} bathroom',
+                            style: const TextStyle(
+                                fontSize: 13, fontWeight: FontWeight.w300),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                smallHSpace(),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.brown, width: 2),
+                      shape: BoxShape.circle),
+                  child: const CircleAvatar(
+                      backgroundColor: background,
+                      radius: 25,
+                      child: Icon(Icons.person, size: 35, color: primary)),
+                ),
+              ],
+            ),
+          ),
+          divider(),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                            '${apartment['rentPrice']['salePrice'] ?? apartment['rentPrice']['night']} So\'m',
+                            style: const TextStyle(color: blue, fontSize: 23)),
+                        Text(
+                            apartment['rentPrice']['salePrice'] != null
+                                ? 'Sale'
+                                : '1/Per Night',
+                            style: const TextStyle(fontSize: 13)),
+                      ],
+                    ),
+                  ],
+                ),
+                const Text(
+                  'Property Availability',
+                  style: TextStyle(fontSize: 15),
+                ),
+                tiny15Space(),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.calendar_today_outlined,
+                      size: 18,
+                    ),
+                    tinyHSpace(),
+                    const Text(
+                      'Free Cancellation for 48 hours',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+                    ),
+                  ],
+                ),
+                tinySpace(),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.sensor_door_outlined,
+                      size: 18,
+                    ),
+                    tinyHSpace(),
+                    const Text(
+                      'Self-checkin',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+                    ),
+                  ],
+                ),
+                smallSpace(),
+                Row(
+                  children: [
+                    const Expanded(
+                      flex: 2,
+                      child: Text(
+                        'Availability From',
+                        style: TextStyle(
+                            color: blue,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    smallHSpace(),
+                    const Icon(
+                      Icons.calendar_month,
+                      size: 18,
+                    ),
+                    tinyH5Space(),
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        DateFormat.yMMMMd()
+                            .format(DateTime.parse(
+                                '${apartment['rentAvailability']['startDate']}'))
+                            .toString(),
+                        style: const TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ],
+                ),
+                tinySpace(),
+                Row(
+                  children: [
+                    const Expanded(
+                      flex: 2,
+                      child: Text(
+                        'Availability To',
+                        style: TextStyle(
+                            color: blue,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    smallHSpace(),
+                    const Icon(
+                      Icons.calendar_month,
+                      size: 18,
+                    ),
+                    tinyH5Space(),
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        DateFormat.yMMMMd()
+                            .format(DateTime.parse(
+                                '${apartment['rentAvailability']['endDate']}'))
+                            .toString(),
+                        style: const TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          divider(),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Text(
+                  'Description',
+                  style: TextStyle(fontSize: 15),
+                ),
+                tiny15Space(),
                 KText(
-                  widget.apartment['description'] ??
-                      "Iphone 14 pro max Bsf sddsef cajcas dcsdc sd Optio out there fcjabc cahsccbaccdcdcd gdf dgdgdrg dg",
+                  apartment['description'],
                   fontWeight: FontWeight.w500,
                   fontSize: 15.w,
                 ),
               ],
             ),
           ),
-
+          divider(),
+          const Padding(
+            padding: EdgeInsets.all(15.0),
+            child: Text('You will get', style: TextStyle(fontSize: 16)),
+          ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 11.w, vertical: 7.w),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    KText(
-                      "${widget.apartment['rentPrice']['night'] ?? ' 87,000'} so'm",
-                      fontWeight: FontWeight.w700,
-                      fontSize: 22.w,
-                    ),
-                    SizedBox(
-                      height: 8.w,
-                    ),
-                    Row(
+                imageOption('${apartment['specifics']['bedroom']}',
+                    Icons.hotel_outlined),
+                const SizedBox(width: 12),
+                imageOption('${apartment['specifics']['bathroom']}',
+                    Icons.bathtub_outlined),
+                const SizedBox(width: 12),
+                imageOption('${apartment['specifics']['shower']}',
+                    Icons.shower_outlined),
+                const SizedBox(width: 12),
+                imageOption('${apartment['specifics']['toilet']}',
+                    Icons.flight_class_outlined),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 15, 15, 5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (apartment['rules']['pet'].toString() == 'true')
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 19.w, vertical: 8.w),
+                    decoration: shadow().copyWith(color: Colors.redAccent),
+                    child: Row(
                       children: [
-                        KText(
-                          "Last Price",
-                          color: const Color(0xFF93A6BA),
-                          fontWeight: FontWeight.w700,
-                          fontSize: 15.w,
+                        const Icon(
+                          Icons.pets,
+                          color: white,
+                          size: 20,
                         ),
-                        SizedBox(width: 11.w),
-                        KText(
-                          "100  so'm",
-                          color: const Color(0xFF93A6BA),
-                          fontWeight: FontWeight.w700,
-                          fontSize: 15.w,
-                          decoration: TextDecoration.lineThrough,
+                        smallHSpace(),
+                        Expanded(
+                          child: KText(
+                            "Pets are not allowed in this property",
+                            fontSize: 15.w,
+                            fontWeight: FontWeight.w500,
+                            color: white,
+                          ),
                         ),
                       ],
                     ),
+                  ),
+                if (apartment['rules']['pet'].toString() == 'true')
+                  smallSpace(),
+                if (apartment['rules']['smoke'].toString() == 'true')
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 19.w, vertical: 8.w),
+                    decoration: shadow().copyWith(color: Colors.redAccent),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.smoke_free,
+                          color: white,
+                          size: 20,
+                        ),
+                        smallHSpace(),
+                        Expanded(
+                          child: KText(
+                            "Smoking not allowed in this property",
+                            fontSize: 15.w,
+                            fontWeight: FontWeight.w500,
+                            color: white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+          ),
+           Padding(
+            padding: const EdgeInsets.fromLTRB(15, 10, 15, 5),
+            child:
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text('What this place offers', style: TextStyle(fontSize: 16)),
+                    tiny15Space(),
+                    Wrap(
+                      children: List.generate(
+                          apartment['specifics']['amenities'].length,
+                              (index) => Container(
+                            decoration: depressNeumorph(),
+                            padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                            margin: EdgeInsets.only(right: 10),
+                            child: Text(
+                              apartment['specifics']['amenities'][index],
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.w400),
+                            ),
+                          )),
+                    ),
+
                   ],
                 ),
-                Container(
-                  height: 32.w,
-                  padding:
-                  EdgeInsets.symmetric(horizontal: 19.w, vertical: 5.w),
-                  decoration: shadow(),
-                  child: KText(
-                    "-10 %",
-                    fontSize: 18.w,
-                    fontWeight: FontWeight.w700,
-                  ),
-                )
-              ],
-            ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width * 0.6,
-                  padding:
-                  EdgeInsets.symmetric(horizontal: 19.w, vertical: 8.w),
-                  decoration: shadow(),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      KText(
-                        "Colors:  ${widget.apartment['specifics']['color']}",
-                        fontSize: 15.w,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      Icon(
-                        Icons.arrow_drop_down_circle_outlined,
-                        color: kTextBlackColor,
-                        size: 20,
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 32.w,
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width * 0.22,
-                  padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 8.w),
-                  decoration: shadow(),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      KText(
-                        "Qty:    ${widget.apartment['specifics']['quantity']}",
-                        fontSize: 15.w,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      // Icon(
-                      //   Icons.arrow_drop_down,
-                      //   color: kTextBlackColor,
-                      //   size: 20,
-                      // )
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(3.0),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 40,
-                  child: TabBar(
-                    controller: _tabController,
-                    labelColor: kTextBlackColor,
-                    labelStyle:
-                    TextStyle(fontSize: 18.w, fontWeight: FontWeight.w500),
-                    tabs: const [
-                      Tab(
-                        text: "Delivery",
-                      ),
-                      Tab(
-                        text: "Pick Up",
-                      )
-                    ],
-                  ),
-                ),
-                tinySpace(),
-                SizedBox(
-                  height: 147.w,
-                  child: TabBarView(
-                    // swipe navigation handling is not supported
-                    controller: _tabController,
-                    children: [
-                      Container(
-                          child: KText(
-                            "Delivery info will  be here like seller offer to shvbhjsbvj vsdhvsdvvhsdjbvhjsdbvjhsdbvhsdbvjhsbdjvhbsdjvbsdjhvbjhbvjsddhvbshdbhjvbsjhdbvjhsdbvjhsdbvjhsdbvjhsdbvjhsdbvjhsdbvjhs"
-                                "delivry, day took for delivery and so on hsdbvjhbsdvjhshjvsdhjvhs",
-                            fontSize: 13.w,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          height: 147.w,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 9.w, vertical: 5.w),
-                          margin: EdgeInsets.all(4.w),
-                          decoration: depressNeumorph()),
-                      Container(
-                          child: KText(
-                            "Delivery info will  be here like seller offer to shvbhjsbvj vsdhvsdvvhsdjbvhjsdbvjhsdbvhsdbvjhsbdjvhbsdjvbsdjhvbjhbvjsddhvbshdbhjvbsjhdbvjhsdbvjhsdbvjhsdbvjhsdbvjhsdbvjhsdbvjhs"
-                                "delivry, day took for delivery and so on hsdbvjhbsdvjhshjvsdhjvhs",
-                            fontSize: 12.w,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          height: 147.w,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 9.w, vertical: 5.w),
-                          margin: EdgeInsets.all(4.w),
-                          decoration: depressNeumorph()),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Divider(
-            height: 50.w,
-            color: const Color(0xFF1994F5).withOpacity(0.22),
-            thickness: 10.w,
-          ),
+          divider(),
           Buttons(
             child: Center(
               child: KText(
@@ -450,584 +601,37 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
               ],
             ),
           ),
-          // Divider(
-          //   height: 50.w,
-          //   color: const Color(0xFF1994F5).withOpacity(0.22),
-          //   thickness: 10.w,
-          // ),
-          // Padding(
-          //   padding: EdgeInsets.symmetric(horizontal: 14.w),
-          //   child: KText(
-          //     "apartment Details",
-          //     color: kTextBlackColor,
-          //     fontWeight: FontWeight.w900,
-          //     fontSize: 22.w,
-          //   ),
-          // ),
-          // ProductDetailProperty(
-          //   property: "Condition: ${widget.apartment['specifics']['condition']}",
-          // ),
-          // ProductDetailProperty(
-          //   property: "Quantity: ${widget.apartment['specifics']['quantity']}",
-          // ),
-          // ProductDetailProperty(
-          //   property: "Item Number: 5",
-          // ),
-          // ProductDetailProperty(
-          //   property: "Material: ${widget.apartment['specifics']['material']}",
-          // ),
-          // ProductDetailProperty(
-          //   property: "Brand: ${widget.apartment['specifics']['brand']}",
-          // ),
-          // ProductDetailProperty(
-          //   property: "Size: ${widget.apartment['specifics']['size']}",
-          // ),
-          // ProductDetailProperty(
-          //   property: "Features: ${widget.apartment['specifics']['features']}",
-          // ),
-          // ProductDetailProperty(
-          //   property: "Category: ${widget.apartment['specifics']['category']['name']}",
-          // ),
-          // ProductDetailProperty(
-          //   property: "Color: ${widget.apartment['specifics']['color']}",
-          // ),
-          // ProductDetailProperty(
-          //   property: "Network: ${widget.apartment['specifics']['condition']}",
-          // ),
-          // ProductDetailProperty(
-          //   property: "Carrier: ${widget.apartment['specifics']['condition']}",
-          // ),
-          // ProductDetailProperty(
-          //   property: "Storage Capacity: ${widget.apartment['specifics']['storageCapacity']}",
-          // ),
-          // Divider(
-          //   height: 50.w,
-          //   color: const Color(0xFF1994F5).withOpacity(0.22),
-          //   thickness: 7.w,
-          // ),
-          // Padding(
-          //   padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 15.w),
-          //   child: KText(
-          //     "More Info Description",
-          //     fontSize: 15.w,
-          //     color: kTextBlackColor,
-          //     fontWeight: FontWeight.w700,
-          //   ),
-          // ),
-          // Padding(
-          //   padding: const EdgeInsets.all(10),
-          //   child: KText(
-          //     "${widget.apartment['specifics']['condition']} ${widget.apartment['title']}, ${widget.apartment['specifics']['category']['name']}, ${widget.apartment['specifics']['category']['subcategory']}, ${widget.apartment['description']}",
-          //     fontSize: 15.w,
-          //   ),
-          // ),
-          // Padding(
-          //   padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 15.w),
-          //   child: KText(
-          //     "Show More >",
-          //     fontSize: 15.w,
-          //     color: kTextBlackColor,
-          //     fontWeight: FontWeight.w700,
-          //   ),
-          // ),
-          // Divider(
-          //   height: 50.w,
-          //   color: const Color(0xFF1994F5).withOpacity(0.22),
-          //   thickness: 7.w,
-          // ),
-          // Row(
-          //   children: [
-          //     Icon(
-          //       Icons.star,
-          //       color: kTextBlackColor,
-          //     ),
-          //     KText(
-          //       "4.79   16 reviews",
-          //       fontWeight: FontWeight.w700,
-          //       fontSize: 20.w,
-          //     )
-          //   ],
-          // ),
-          // SizedBox(
-          //   height: MediaQuery
-          //       .of(context)
-          //       .size
-          //       .height * 0.30,
-          //   child: ListView.builder(
-          //       scrollDirection: Axis.horizontal,
-          //       itemCount: 30,
-          //       itemBuilder: (context, index) {
-          //         return Container(
-          //           width: MediaQuery
-          //               .of(context)
-          //               .size
-          //               .width * 0.8,
-          //           padding:
-          //           EdgeInsets.symmetric(horizontal: 10.w, vertical: 19.w),
-          //           margin:
-          //           EdgeInsets.symmetric(horizontal: 10.w, vertical: 19.w),
-          //           decoration: BoxDecoration(
-          //             borderRadius: BorderRadius.circular(15.w),
-          //             border: Border.all(color: Colors.blue),
-          //           ),
-          //           child: Column(
-          //             crossAxisAlignment: CrossAxisAlignment.start,
-          //             children: [
-          //               Row(
-          //                 children: [
-          //                   CircleAvatar(
-          //                     radius: 20.w,
-          //                     backgroundColor: Colors.grey.shade600,
-          //                     child: const Icon(
-          //                       Icons.person,
-          //                       color: Colors.white,
-          //                     ),
-          //                   ),
-          //                   SizedBox(
-          //                     width: 5.w,
-          //                   ),
-          //                   Column(
-          //                     crossAxisAlignment: CrossAxisAlignment.start,
-          //                     children: [
-          //                       KText(
-          //                         "Logan. M",
-          //                         fontSize: 17.w,
-          //                         color: kTextBlackColor,
-          //                         fontWeight: FontWeight.w700,
-          //                       ),
-          //                       SizedBox(
-          //                         height: 4.w,
-          //                       ),
-          //                       KText(
-          //                         "5 hours ago",
-          //                         fontSize: 10.w,
-          //                         color: kTextBlackColor.withOpacity(0.6),
-          //                         fontWeight: FontWeight.w700,
-          //                       ),
-          //                     ],
-          //                   )
-          //                 ],
-          //               ),
-          //               SizedBox(
-          //                 height: 20.w,
-          //               ),
-          //               KText(
-          //                 "Great thank you so much !!!",
-          //                 fontSize: 10.w,
-          //                 color: kTextBlackColor.withOpacity(0.6),
-          //                 fontWeight: FontWeight.w700,
-          //               ),
-          //             ],
-          //           ),
-          //         );
-          //       }),
-          // ),
-          // Buttons(
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //     children: [
-          //       Icon(
-          //         CustomIcons.crown_badge,
-          //         color: const Color(0xFF2E476E),
-          //         size: 30.w,
-          //       ),
-          //       KText(
-          //         "Show all 16 Review",
-          //         color: const Color(0xFF2E476E),
-          //         fontWeight: FontWeight.w700,
-          //         fontSize: 18.w,
-          //       ),
-          //       const SizedBox(),
-          //     ],
-          //   ),
-          // ),
-          // Divider(
-          //   height: 50.w,
-          //   color: const Color(0xFF1994F5).withOpacity(0.22),
-          //   thickness: 7.w,
-          // ),
-          // Padding(
-          //   padding: EdgeInsets.all(20.w),
-          //   child: KText(
-          //     "Seller Information",
-          //     fontWeight: FontWeight.w900,
-          //     color: kTextBlackColor,
-          //     fontSize: 19.w,
-          //   ),
-          // ),
-          // Padding(
-          //   padding: EdgeInsets.all(20.w),
-          //   child: Container(
-          //     height: MediaQuery
-          //         .of(context)
-          //         .size
-          //         .width * 0.3,
-          //     child: Column(
-          //       crossAxisAlignment: CrossAxisAlignment.start,
-          //       mainAxisAlignment: MainAxisAlignment.start,
-          //       children: [
-          //         Row(
-          //           crossAxisAlignment: CrossAxisAlignment.start,
-          //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //           children: [
-          //             Row(
-          //               crossAxisAlignment: CrossAxisAlignment.start,
-          //               children: [
-          //                 Container(
-          //                   decoration: BoxDecoration(boxShadow: <BoxShadow>[
-          //                     BoxShadow(
-          //                         color: white.withOpacity(0.2),
-          //                         offset: const Offset(4, 4),
-          //                         blurRadius: 2,
-          //                         spreadRadius: 1),
-          //                     BoxShadow(
-          //                         color: white.withOpacity(0.2),
-          //                         offset: const Offset(-4, -4),
-          //                         blurRadius: 2,
-          //                         spreadRadius: 1),
-          //                   ], color: white, shape: BoxShape.circle),
-          //                   child: Padding(
-          //                     padding: const EdgeInsets.all(8.0),
-          //                     child: Container(
-          //                       decoration: const BoxDecoration(
-          //                           color: grey, shape: BoxShape.circle),
-          //                       child: const Padding(
-          //                         padding: EdgeInsets.all(8.0),
-          //                         child: Icon(
-          //                           Icons.person,
-          //                           color: Colors.white,
-          //                         ),
-          //                       ),
-          //                     ),
-          //                   ),
-          //                 ),
-          //                 SizedBox(
-          //                   width: 8.w,
-          //                 ),
-          //                 Column(
-          //                   crossAxisAlignment: CrossAxisAlignment.start,
-          //                   children: [
-          //                     KText(
-          //                       "Alex Richardson",
-          //                       fontSize: 17.w,
-          //                       color: const Color(0xFFE23F0A),
-          //                       fontWeight: FontWeight.w900,
-          //                     ),
-          //                     SizedBox(
-          //                       height: 15.w,
-          //                     ),
-          //                     KText(
-          //                       "75% Positive Feedback",
-          //                       fontSize: 12.w,
-          //                       color: const Color(0xFF8F9FAE),
-          //                       fontWeight: FontWeight.w500,
-          //                     ),
-          //                     SizedBox(
-          //                       height: 4.w,
-          //                     ),
-          //                     KText(
-          //                       "Since 2022",
-          //                       fontSize: 12.w,
-          //                       color: const Color(0xFF8F9FAE),
-          //                       fontWeight: FontWeight.w500,
-          //                     ),
-          //                   ],
-          //                 )
-          //               ],
-          //             ),
-          //             Column(
-          //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //               children: [
-          //                 Container(
-          //                   decoration: shadow().copyWith(
-          //                       gradient: gradient(Color(0xFFFFFFFF),
-          //                           Color(0xFF8F9FAE).withOpacity(0.1))),
-          //                   child: Padding(
-          //                     padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-          //                     child: Row(
-          //                       children: [
-          //                         Icon(
-          //                           Icons.info_outline,
-          //                           color: kTextBlackColor,
-          //                           size: 20,
-          //                         ),
-          //                         tinyH5Space(),
-          //                         KText(
-          //                           "Report Seller",
-          //                           fontSize: 12.w,
-          //                           color: kTextBlackColor,
-          //                           fontWeight: FontWeight.w700,
-          //                         )
-          //                       ],
-          //                     ),
-          //                   ),
-          //                 ),
-          //                 SizedBox(
-          //                   height: 19.w,
-          //                 ),
-          //                 Container(
-          //                   decoration: shadow().copyWith(
-          //                       gradient: gradient(Color(0xFFFFFFFF),
-          //                           Color(0xFF8F9FAE).withOpacity(0.1))),
-          //                   child: Padding(
-          //                     padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-          //                     child: Row(
-          //                       children: [
-          //                         Container(
-          //                           decoration: BoxDecoration(
-          //                               shape: BoxShape.circle, color: grey),
-          //                           child: Padding(
-          //                             padding: const EdgeInsets.all(3.0),
-          //                             child: Icon(
-          //                               Icons.favorite_outline_sharp,
-          //                               color: white.withOpacity(0.4),
-          //                               size: 16,
-          //                             ),
-          //                           ),
-          //                         ),
-          //                         tinyH5Space(),
-          //                         KText(
-          //                           "Report Seller",
-          //                           fontSize: 12.w,
-          //                           color: kTextBlackColor,
-          //                           fontWeight: FontWeight.w700,
-          //                         )
-          //                       ],
-          //                     ),
-          //                   ),
-          //                 ),
-          //               ],
-          //             )
-          //           ],
-          //         ),
-          //         SizedBox(
-          //           height: 20.w,
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
-          // Row(
-          //   children: [
-          //     Expanded(
-          //       child: ACControl(
-          //         acState: ac,
-          //         onTempChanged: (angle) {
-          //           temperature = ((angle / (math.pi * 2)) * 100).toInt();
-          //           setState(() {});
-          //         },
-          //       ),
-          //     ),
-          //     smallSpace(),
-          //     Expanded(
-          //       child: ACControl(
-          //         acState: ac,
-          //         onTempChanged: (angle) {
-          //           temperature = ((angle / (math.pi * 2)) * 100).toInt();
-          //           setState(() {});
-          //         },
-          //       ),
-          //     ),
-          //   ],
-          // ),
-          // Container(
-          //     width: MediaQuery
-          //         .of(context)
-          //         .size
-          //         .width,
-          //     height: 40.w,
-          //     alignment: Alignment.centerLeft,
-          //     margin: EdgeInsets.symmetric(vertical: 17.w),
-          //     padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.w),
-          //     decoration: BoxDecoration(
-          //         color: const Color(0xFF1F4167),
-          //         gradient: gradient(
-          //             const Color(0xFF1F4167), const Color(0xFF0777FB))),
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //       children: [
-          //         Row(
-          //           children: [
-          //             SizedBox(
-          //               width: 10.w,
-          //             ),
-          //             Text(
-          //               "You Might Also Like",
-          //               style: Theme
-          //                   .of(context)
-          //                   .textTheme
-          //                   .bodyText1!
-          //                   .copyWith(
-          //                   fontSize: 18.w,
-          //                   color: Colors.white,
-          //                   fontWeight: FontWeight.w700),
-          //             ),
-          //           ],
-          //         ),
-          //       ],
-          //     )),
-          // SizedBox(
-          //   height: MediaQuery
-          //       .of(context)
-          //       .size
-          //       .height * 0.45,
-          //   child: ListView.builder(
-          //       scrollDirection: Axis.horizontal,
-          //       itemCount: 30,
-          //       itemBuilder: (context, index) {
-          //         return const ProductWidget();
-          //       }),
-          // ),
-          // SizedBox(
-          //   height: MediaQuery
-          //       .of(context)
-          //       .size
-          //       .height * 0.45,
-          //   child: ListView.builder(
-          //       scrollDirection: Axis.horizontal,
-          //       itemCount: 30,
-          //       itemBuilder: (context, index) {
-          //         return const ProductWidget();
-          //       }),
-          // ),
-          // Container(
-          //     width: MediaQuery
-          //         .of(context)
-          //         .size
-          //         .width,
-          //     height: 40.w,
-          //     alignment: Alignment.centerLeft,
-          //     margin: EdgeInsets.symmetric(vertical: 17.w),
-          //     padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.w),
-          //     decoration: BoxDecoration(
-          //         color: const Color(0xFF1F4167),
-          //         gradient: gradient(
-          //             const Color(0xFF1F4167), const Color(0xFF0777FB))),
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //       children: [
-          //         Row(
-          //           children: [
-          //             SizedBox(
-          //               width: 10.w,
-          //             ),
-          //             Text(
-          //               "Most Viewed Items",
-          //               style: Theme
-          //                   .of(context)
-          //                   .textTheme
-          //                   .bodyText1!
-          //                   .copyWith(
-          //                   fontSize: 18.w,
-          //                   color: Colors.white,
-          //                   fontWeight: FontWeight.w700),
-          //             ),
-          //           ],
-          //         ),
-          //       ],
-          //     )),
-          // SizedBox(
-          //   height: 152.w,
-          //   width: MediaQuery
-          //       .of(context)
-          //       .size
-          //       .width,
-          //   child: ListView.builder(
-          //     scrollDirection: Axis.horizontal,
-          //     itemCount: 7,
-          //     itemBuilder: (context, index) {
-          //       return InkWell(
-          //         onTap: () {},
-          //         child: Container(
-          //           width: 114.w,
-          //           height: 152.w,
-          //           margin: EdgeInsets.all(4.5.w),
-          //           padding: EdgeInsets.all(7.w),
-          //           decoration: BoxDecoration(
-          //               color: Colors.white,
-          //               borderRadius: BorderRadius.circular(13.w)),
-          //           child: Image.asset(
-          //             "assets/images/phone.png",
-          //             fit: BoxFit.fill,
-          //           ),
-          //         ),
-          //       );
-          //     },
-          //   ),
-          // ),
-          // SizedBox(
-          //   height: 152.w,
-          //   width: MediaQuery
-          //       .of(context)
-          //       .size
-          //       .width,
-          //   child: ListView.builder(
-          //     scrollDirection: Axis.horizontal,
-          //     itemCount: 7,
-          //     itemBuilder: (context, index) {
-          //       return InkWell(
-          //         onTap: () {},
-          //         child: Container(
-          //           width: 114.w,
-          //           height: 152.w,
-          //           margin: EdgeInsets.all(4.5.w),
-          //           padding: EdgeInsets.all(7.w),
-          //           decoration: BoxDecoration(
-          //               color: Colors.white,
-          //               borderRadius: BorderRadius.circular(13.w)),
-          //           child: Image.asset(
-          //             "assets/images/phone.png",
-          //             fit: BoxFit.fill,
-          //           ),
-          //         ),
-          //       );
-          //     },
-          //   ),
-          // ),
-          // GridView.builder(
-          //     primary: false,
-          //     shrinkWrap: true,
-          //     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          //       maxCrossAxisExtent: MediaQuery
-          //           .of(context)
-          //           .size
-          //           .width * 0.5,
-          //       childAspectRatio: 1 / 2,
-          //       mainAxisSpacing: 0,
-          //       crossAxisSpacing: 0,
-          //     ),
-          //     itemCount: 10,
-          //     itemBuilder: (context, c) {
-          //       return const ProductWidget();
-          //     }),
-          // SizedBox(
-          //   height: 276.w,
-          //   width: MediaQuery
-          //       .of(context)
-          //       .size
-          //       .width,
-          //   child: PageView(
-          //     children: [
-          //       Image.asset(
-          //         "assets/images/cokeAd.png",
-          //         fit: BoxFit.fitWidth,
-          //       ),
-          //       Image.asset(
-          //         "assets/images/logoFrame.png",
-          //         fit: BoxFit.fill,
-          //       ),
-          //       Image.asset(
-          //         "assets/images/logoFrame.png",
-          //         fit: BoxFit.fill,
-          //       ),
-          //       Image.asset(
-          //         "assets/images/logoFrame.png",
-          //         fit: BoxFit.fill,
-          //       ),
-          //     ],
-          //   ),
-          // ),
         ],
+      ),
+    );
+  }
+
+  Widget imageOption(String title, IconData icon) {
+    return Expanded(
+      child: Container(
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.blueGrey, width: 1),
+            borderRadius: BorderRadius.circular(10)),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              Icon(
+                icon,
+                color: Colors.blueGrey,
+                size: 35,
+              ),
+              tinySpace(),
+              Text(
+                title,
+                style: const TextStyle(
+                    fontWeight: FontWeight.w300,
+                    color: Colors.blueGrey,
+                    fontSize: 13),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -1136,14 +740,8 @@ class ProductWidget extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: MediaQuery
-              .of(context)
-              .size
-              .height * 0.42,
-          width: MediaQuery
-              .of(context)
-              .size
-              .width * 0.452,
+          height: MediaQuery.of(context).size.height * 0.42,
+          width: MediaQuery.of(context).size.width * 0.452,
           margin: EdgeInsets.symmetric(horizontal: 9.w),
           decoration: BoxDecoration(
               color: const Color(0xFFDAE5F2),
@@ -1165,14 +763,8 @@ class ProductWidget extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.25,
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * 0.455,
+                height: MediaQuery.of(context).size.height * 0.25,
+                width: MediaQuery.of(context).size.width * 0.455,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.w),
                   image: const DecorationImage(
@@ -1185,14 +777,8 @@ class ProductWidget extends StatelessWidget {
                 height: 10.w,
               ),
               Container(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.15,
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * 0.455,
+                height: MediaQuery.of(context).size.height * 0.15,
+                width: MediaQuery.of(context).size.width * 0.455,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -1207,14 +793,13 @@ class ProductWidget extends StatelessWidget {
                           children: [
                             Text(
                               "Delivery info will  be here dg likseller offer sajncnask...",
-                              style: Theme
-                                  .of(context)
+                              style: Theme.of(context)
                                   .textTheme
                                   .bodyText1!
                                   .copyWith(
-                                  fontSize: 12.w,
-                                  color: const Color(0xFF334669),
-                                  fontWeight: FontWeight.w700),
+                                      fontSize: 12.w,
+                                      color: const Color(0xFF334669),
+                                      fontWeight: FontWeight.w700),
                             ),
                             Row(
                               children: [
@@ -1242,15 +827,14 @@ class ProductWidget extends StatelessWidget {
                                 ),
                                 Text(
                                   "259 reviews.",
-                                  style: Theme
-                                      .of(context)
+                                  style: Theme.of(context)
                                       .textTheme
                                       .bodyText1!
                                       .copyWith(
-                                      fontSize: 10.w,
-                                      color: const Color(0xFF334669)
-                                          .withOpacity(0.6),
-                                      fontWeight: FontWeight.w500),
+                                          fontSize: 10.w,
+                                          color: const Color(0xFF334669)
+                                              .withOpacity(0.6),
+                                          fontWeight: FontWeight.w500),
                                 ),
                               ],
                             ),
@@ -1262,15 +846,14 @@ class ProductWidget extends StatelessWidget {
                                 ),
                                 Text(
                                   "United State, Florida 3340",
-                                  style: Theme
-                                      .of(context)
+                                  style: Theme.of(context)
                                       .textTheme
                                       .bodyText1!
                                       .copyWith(
-                                      fontSize: 11.w,
-                                      color: const Color(0xFF334669)
-                                          .withOpacity(0.6),
-                                      fontWeight: FontWeight.w400),
+                                          fontSize: 11.w,
+                                          color: const Color(0xFF334669)
+                                              .withOpacity(0.6),
+                                          fontWeight: FontWeight.w400),
                                 ),
                               ],
                             ),
@@ -1282,14 +865,13 @@ class ProductWidget extends StatelessWidget {
                                 ),
                                 Text(
                                   "Free Shipping",
-                                  style: Theme
-                                      .of(context)
+                                  style: Theme.of(context)
                                       .textTheme
                                       .bodyText1!
                                       .copyWith(
-                                      fontSize: 12.w,
-                                      color: const Color(0xFF0F7D46),
-                                      fontWeight: FontWeight.w500),
+                                          fontSize: 12.w,
+                                          color: const Color(0xFF0F7D46),
+                                          fontWeight: FontWeight.w500),
                                 )
                               ],
                             ),
@@ -1299,11 +881,7 @@ class ProductWidget extends StatelessWidget {
                     ),
                     Text(
                       "17,000   so’m",
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .bodyText1!
-                          .copyWith(
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
                           fontSize: 15.w,
                           color: const Color(0xFFCE242B),
                           fontWeight: FontWeight.w800),

@@ -73,6 +73,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    token = _userController.getToken();
+
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(

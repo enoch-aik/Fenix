@@ -1284,7 +1284,6 @@ class _CreateApartmentState extends State<CreateApartment> {
     );
   }
 
-  Divider divider() => Divider(color: blue.withOpacity(0.2), thickness: 3);
 
   getYesColor(title, description) {
     if (description == 'pet' && pet == title) {
@@ -1807,3 +1806,6 @@ Text subText(title) {
         const TextStyle(color: blue, fontWeight: FontWeight.w500, fontSize: 18),
   );
 }
+
+
+Divider divider() => Divider(color: blue.withOpacity(0.2), thickness: 4);

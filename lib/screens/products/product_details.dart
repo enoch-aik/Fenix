@@ -406,29 +406,29 @@ class _ProductDetailsState extends State<ProductDetails>
                     controller: _tabController,
                     children: [
                       Container(
+                          height: 147.w,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 9.w, vertical: 5.w),
+                          margin: EdgeInsets.all(4.w),
+                          decoration: depressNeumorph(),
                           child: KText(
                             "Delivery info will  be here like seller offer to shvbhjsbvj vsdhvsdvvhsdjbvhjsdbvjhsdbvhsdbvjhsbdjvhbsdjvbsdjhvbjhbvjsddhvbshdbhjvbsjhdbvjhsdbvjhsdbvjhsdbvjhsdbvjhsdbvjhsdbvjhs"
                             "delivry, day took for delivery and so on hsdbvjhbsdvjhshjvsdhjvhs",
                             fontSize: 13.w,
                             fontWeight: FontWeight.w500,
-                          ),
+                          )),
+                      Container(
                           height: 147.w,
                           padding: EdgeInsets.symmetric(
                               horizontal: 9.w, vertical: 5.w),
                           margin: EdgeInsets.all(4.w),
-                          decoration: depressNeumorph()),
-                      Container(
+                          decoration: depressNeumorph(),
                           child: KText(
                             "Delivery info will  be here like seller offer to shvbhjsbvj vsdhvsdvvhsdjbvhjsdbvjhsdbvhsdbvjhsbdjvhbsdjvbsdjhvbjhbvjsddhvbshdbhjvbsjhdbvjhsdbvjhsdbvjhsdbvjhsdbvjhsdbvjhsdbvjhs"
                             "delivry, day took for delivery and so on hsdbvjhbsdvjhshjvsdhjvhs",
                             fontSize: 12.w,
                             fontWeight: FontWeight.w500,
-                          ),
-                          height: 147.w,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 9.w, vertical: 5.w),
-                          margin: EdgeInsets.all(4.w),
-                          decoration: depressNeumorph()),
+                          )),
                     ],
                   ),
                 ),

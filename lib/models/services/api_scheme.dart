@@ -9,8 +9,10 @@ import 'package:http/http.dart' as http;
 import '../../screens/auth_screens/sign_in.dart';
 
 class ApiServices {
-  static makePostRequest({apiUrl, data, token}) async {
-    final uri = Uri.parse(apiUrl);
+  static makePostRequest({apiUrl, data, token}) async {      print('Auth - $token');
+
+
+  final uri = Uri.parse(apiUrl);
     final jsonString = json.encode(data);
     var headers;
     if (token == null) {
@@ -29,8 +31,9 @@ class ApiServices {
   }
 
 
-  static makeDeleteRequest({apiUrl, data, token}) async {
-    final uri = Uri.parse(apiUrl);
+  static makeDeleteRequest({apiUrl, data, token}) async {      print('Auth - $token');
+
+  final uri = Uri.parse(apiUrl);
     final jsonString = json.encode(data);
     var headers;
     if (token == null) {
@@ -48,8 +51,9 @@ class ApiServices {
     return await http.delete(uri, body: jsonString, headers: headers);
   }
 
-  static makePatchRequest({apiUrl, data, token}) async {
-    final uri = Uri.parse(apiUrl);
+  static makePatchRequest({apiUrl, data, token}) async {      print('Auth - $token');
+
+  final uri = Uri.parse(apiUrl);
     final jsonString = json.encode(data);
     var headers;
 
@@ -63,8 +67,9 @@ class ApiServices {
     return await http.patch(uri, body: jsonString, headers: headers);
   }
 
-  static makeGetRequest({apiUrl, token}) async {
-    var uri = Uri.parse(apiUrl);
+  static makeGetRequest({apiUrl, token}) async {      print('Auth - $token');
+
+  var uri = Uri.parse(apiUrl);
     var headers;
     if (token == null) {
       headers = {

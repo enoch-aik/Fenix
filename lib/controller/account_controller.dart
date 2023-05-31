@@ -105,7 +105,10 @@ class AccountController extends GetxController {
   setUser(token, {refreshToken, isFetchUser}) {
     var userController = Get.put(UserController());
     userController.setToken(token);
+    print('New token - $token');
     userController.setRefresh(refreshToken);
+    print('New refreshToken - $refreshToken');
+
     userController.setPersistToken(token, refreshToken);
     if (isFetchUser != false) {
       userController.fetchUser(token);
