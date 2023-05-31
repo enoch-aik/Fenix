@@ -43,6 +43,7 @@ class _HomeState extends State<Home> {
   String token = '';
   String storeId = '';
   String tab = '';
+  String searchWord = '';
   final UserController _userController = Get.find();
   final StoreController _storeController = Get.put(StoreController());
   final AccountController _accountController = Get.put(AccountController());
@@ -97,7 +98,7 @@ class _HomeState extends State<Home> {
               ),
               SizedBox(height: 10.w),
               InkWell(
-                onTap: () => Get.to(() => const SearchScreen()),
+                // onTap: () => Get.to(() => const SearchScreen()),
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.050,
                   width: MediaQuery.of(context).size.width,
@@ -106,14 +107,28 @@ class _HomeState extends State<Home> {
                     color: Colors.white,
                   ),
                   child: TextField(
-                    enabled: false,
+                    // enabled: false,
+                    onChanged: (v) {
+                      if (v.length > 4) {
+                        _productController.searchStore(token, tab, v);
+                      }
+                      setState(() => searchWord = v);
+                    },
+                    onSubmitted: (v) =>
+                        _productController.searchStore(token, tab, v),
+
+                    onEditingComplete: () =>
+                        _productController.searchStore(token, tab, searchWord),
+                    onTapOutside: (v) => FocusScope.of(context).unfocus(),
                     decoration: InputDecoration(
                       enabledBorder: InputBorder.none,
                       focusedBorder: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 15,),
-                      label: Text("Search Fenix"),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 15,
+                      ),
+                      label: const Text("Search Fenix"),
                       labelStyle: TextStyle(
-                              fontSize: 15.w, color: Colors.grey.shade500),
+                          fontSize: 15.w, color: Colors.grey.shade500),
                       suffixIcon: const Icon(Icons.search),
                     ),
                   ),
@@ -142,7 +157,6 @@ class _HomeState extends State<Home> {
                                     .toLowerCase());
                           }),
                         ),
-
                         MenuTitle(
                           icon: CustomIconsFenix.house,
                           title: "House",

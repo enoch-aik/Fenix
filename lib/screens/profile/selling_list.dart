@@ -15,6 +15,7 @@ import '../../controller/store_controller.dart';
 import '../../controller/user_controller.dart';
 import '../../helpers/icons/custom_icons_fenix_icons.dart';
 import '../../theme.dart';
+import '../home/widgets/loader.dart';
 import '../onboarding/constants.dart';
 import '../products/product_details.dart';
 import 'create_selling_post/create_product.dart';
@@ -64,7 +65,7 @@ class _SellingListState extends State<SellingList> {
                   alignment: Alignment.centerLeft,
                   child: Row(
                     children: [
-                       backArrow(),
+                      backArrow(),
                       Text(
                         "Your Selling List",
                         style: TextStyle(
@@ -121,7 +122,7 @@ class _SellingListState extends State<SellingList> {
                     MenuTitle(
                         icon: CustomIconsFenix.house,
                         title: "House",
-                        color: tab == "House" ?white : Colors.transparent,
+                        color: tab == "House" ? white : Colors.transparent,
                         onTap: () {
                           setState(() {
                             tab = "House";
@@ -133,7 +134,7 @@ class _SellingListState extends State<SellingList> {
                     MenuTitle(
                         icon: CustomIconsFenix.apartment,
                         title: "Apartment",
-                        color: tab == "Apartment" ?white : Colors.transparent,
+                        color: tab == "Apartment" ? white : Colors.transparent,
                         onTap: () {
                           setState(() {
                             tab = "Apartment";
@@ -154,7 +155,8 @@ class _SellingListState extends State<SellingList> {
                     MenuTitle(
                         icon: CustomIconsFenix.vector__3_,
                         title: "Electronics",
-                        color: tab == "Electronics" ? white : Colors.transparent,
+                        color:
+                            tab == "Electronics" ? white : Colors.transparent,
                         onTap: () {
                           setState(() {
                             tab = "Electronics";
@@ -180,7 +182,7 @@ class _SellingListState extends State<SellingList> {
                     if (tab == 'Electronics')
                       Obx(
                         () => storeController.isFetchingProducts.isTrue
-                            ? const Center(child: CircularProgressIndicator())
+                            ? const Loader()
                             : storeController.productList.isEmpty
                                 ? empty(tab)
                                 : GridView.builder(
@@ -218,7 +220,7 @@ class _SellingListState extends State<SellingList> {
                     if (tab == 'Car')
                       Obx(
                         () => storeController.isFetchingVehicles.isTrue
-                            ? const Center(child: CircularProgressIndicator())
+                            ? const Loader()
                             : storeController.vehicleList.isEmpty
                                 ? empty(tab)
                                 : GridView.builder(
@@ -243,7 +245,7 @@ class _SellingListState extends State<SellingList> {
                                           Get.to(() =>
                                               ProductDetails(product: item));
                                         },
-                                        child:  ProductListWidget(
+                                        child: ProductListWidget(
                                             product: item,
                                             isNetwork: item['media'].isNotEmpty,
                                             image: item['media'].isNotEmpty
@@ -255,7 +257,7 @@ class _SellingListState extends State<SellingList> {
                     if (tab == 'Apartment')
                       Obx(
                         () => storeController.isFetchingApartments.isTrue
-                            ? const Center(child: CircularProgressIndicator())
+                            ? const Loader()
                             : apartment.isEmpty
                                 ? empty(tab)
                                 : GridView.builder(
@@ -275,23 +277,24 @@ class _SellingListState extends State<SellingList> {
                                     itemBuilder: (context, i) {
                                       var item = apartment[i];
                                       return InkWell(
-                                          onTap: () {
-                                            print(item['media'][0]['url']);
-                                            // Get.to(() => ApartmentDetails(
-                                            //     apartment: item));
-                                          },
-                                          child:
-                                              ProductListWidget( product: item,
-                                                  isNetwork: item['media'].isNotEmpty,
-                                                  image: item['media'].isNotEmpty
-                                                      ? item['media'][0]['url']
-                                                      : "assets/images/cars.png"),);
+                                        onTap: () {
+                                          print(item['media'][0]['url']);
+                                          // Get.to(() => ApartmentDetails(
+                                          //     apartment: item));
+                                        },
+                                        child: ProductListWidget(
+                                            product: item,
+                                            isNetwork: item['media'].isNotEmpty,
+                                            image: item['media'].isNotEmpty
+                                                ? item['media'][0]['url']
+                                                : "assets/images/cars.png"),
+                                      );
                                     }),
                       ),
                     if (tab == 'House')
                       Obx(
                         () => storeController.isFetchingApartments.isTrue
-                            ? const Center(child: CircularProgressIndicator())
+                            ? const Loader()
                             : house.isEmpty
                                 ? empty(tab)
                                 : GridView.builder(
@@ -323,7 +326,7 @@ class _SellingListState extends State<SellingList> {
                     if (tab == 'Dacha')
                       Obx(
                         () => storeController.isFetchingApartments.isTrue
-                            ? const Center(child: CircularProgressIndicator())
+                            ? const Loader()
                             : dacha.isEmpty
                                 ? empty(tab)
                                 : GridView.builder(

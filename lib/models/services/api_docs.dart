@@ -13,4 +13,4 @@ const String vehicleUrl ="$baseUrl/vehicles";
 const String wishlistUrl ="$baseUrl/accounts/wishlist";
 const String changePasswordUrl ="$baseUrl/accounts/changePassword";
 const String resentVerificationUrl ="$baseUrl/accounts/verify/resend";
-const String chatUrl ="wss://qaqnuz.herokuapp.com?roomId=clhi8n91m00014ig1ykuwon05";
+const String chatUrl ="wss://qaqnuz.herokuapp.com?roomId=";

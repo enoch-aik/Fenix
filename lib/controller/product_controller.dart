@@ -43,6 +43,55 @@ class ProductController extends GetxController {
     }, token, type);
   }
 
+  searchStore(token, category, searchWord) {
+    if (category == 'car') {
+      searchVehicle(token, searchWord);
+    } else if (category == 'electronics') {
+      searchVehicle(token, searchWord);
+    } else {
+      searchApartments(token, searchWord);
+    }
+  }
+
+  searchApartments(token, searchWord) {
+    isFetchingApartments(true);
+    ProductServices.getApartmentsByTitle((status, response) {
+      isFetchingApartments(false);
+      if (status) {
+        apartmentList.value = response['data'];
+      } else {
+        apartmentList.value = [];
+        print('Error - $response');
+      }
+    }, token, searchWord);
+  }
+
+  searchVehicle(token, searchWord) {
+    isFetchingProducts(true);
+    ProductServices.getVehiclesByTitle((status, response) {
+      isFetchingProducts(false);
+      if (status) {
+        productList.value = response['data'];
+      } else {
+        productList.value = [];
+        print('Error - $response');
+      }
+    }, token, searchWord);
+  }
+
+  searchProduct(token, searchWord) {
+    isFetchingProducts(true);
+    ProductServices.getProductsByTitle((status, response) {
+      isFetchingProducts(false);
+      if (status) {
+        productList.value = response['data'];
+      } else {
+        productList.value = [];
+        print('Error - $response');
+      }
+    }, token, searchWord);
+  }
+
   getProducts(token, category) {
     isFetchingProducts(true);
     ProductServices.getProductsByCategory((status, response) {
@@ -55,7 +104,4 @@ class ProductController extends GetxController {
       }
     }, token, category);
   }
-
-
-
 }

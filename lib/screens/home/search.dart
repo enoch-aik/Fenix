@@ -30,7 +30,8 @@ class _SearchScreenState extends State<SearchScreen> {
           decoration: BoxDecoration(
               border: Border(
                   bottom: BorderSide(
-                      color: tab == title ? primary : lightGrey.withOpacity(0.5),
+                      color:
+                          tab == title ? primary : lightGrey.withOpacity(0.5),
                       width: 3))),
           padding: const EdgeInsets.all(8),
           child: Text(
@@ -43,10 +44,9 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE4F0FA),
+      backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(
-        preferredSize: Size(MediaQuery.of(context).size.width,
-            height() * 0.15),
+        preferredSize: Size(MediaQuery.of(context).size.width, height() * 0.15),
         child: Container(
           decoration: BoxDecoration(
             gradient: gradient(
@@ -68,7 +68,6 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                 ),
               ),
-
               tiny5Space(),
               Row(
                 children: [
@@ -87,22 +86,21 @@ class _SearchScreenState extends State<SearchScreen> {
                       decoration: InputDecoration(
                         enabledBorder: InputBorder.none,
                         focusedBorder: InputBorder.none,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 15),
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 15),
                         labelText: "Search Fenix",
                         floatingLabelBehavior: FloatingLabelBehavior.never,
-                        labelStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            fontSize: 15.w,
-                            color: Colors.grey.shade500
-                        ),
+                        labelStyle: Theme.of(context)
+                            .textTheme
+                            .bodyText1!
+                            .copyWith(
+                                fontSize: 15.w, color: Colors.grey.shade500),
                         suffixIcon: const Icon(Icons.search),
                       ),
                     ),
                   ),
                 ],
               ),
-
-
-
             ],
           ),
         ),
@@ -122,7 +120,8 @@ class _SearchScreenState extends State<SearchScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         InkWell(
-                            onTap: () => setState(() => enableFilter = !enableFilter),
+                            onTap: () =>
+                                setState(() => enableFilter = !enableFilter),
                             child: Image.asset(
                               "assets/images/icons/more.png",
                               height: 28,
@@ -140,7 +139,7 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
           if (enableFilter)
             Padding(
-              padding: const EdgeInsets.fromLTRB(15,80,15,0),
+              padding: const EdgeInsets.fromLTRB(15, 80, 15, 0),
               child: Container(
                 height: height() * 0.3,
                 width: width(),

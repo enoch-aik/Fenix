@@ -158,27 +158,28 @@ class MenuTitle extends StatelessWidget {
   void Function()? onTap;
   IconData icon;
   String title;
-  Color? color;
+  Color color;
 
   MenuTitle({
-    Key? key, required this.title, required this.icon,this.color,this.onTap
+    Key? key, required this.title, required this.icon,this.color=Colors.transparent,this.onTap
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: Padding(
-        padding:  EdgeInsets.only(right: 24.w),
+      child: Container(
+        decoration: BoxDecoration(border: Border(bottom: BorderSide(color: color,width: 2))),
+        margin: const EdgeInsets.only(right: 20),
         child: Row(
           children: [
-            Icon(icon,size: 24.w, color: color??black),
+            Icon(icon,size: 24.w, color: white),
             SizedBox(width: 5.w,),
             Text(title,
-            style: Theme.of(context).textTheme.bodyText2!.copyWith(
+            style:TextStyle(
               fontSize: 19.w,
               fontWeight: FontWeight.w600
-                ,color: color??black
+                ,color: white
             ),),
           ],
         ),
