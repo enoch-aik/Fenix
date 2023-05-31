@@ -154,6 +154,7 @@ class ChatState extends State<Chat> {
                           color: white,
                         ),
                       ),
+
                       const Text(
                         'Danny Hopkins',
                         style: TextStyle(color: white),
