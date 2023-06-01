@@ -15,6 +15,7 @@ import '../../helpers/icons/custom_icons_icons.dart';
 import '../../helpers/widgets/slider.dart';
 import '../../neumorph.dart';
 import '../../theme.dart';
+import '../chat.dart';
 import '../home/search.dart';
 import '../onboarding/constants.dart';
 
@@ -229,7 +230,7 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
               smallHSpace(),
                 const Text(
                   '105 reviews',
-                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300),
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300)
                 ),
                 smallHSpace(),
 
@@ -531,18 +532,18 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text('What this place offers', style: TextStyle(fontSize: 16)),
+                    const Text('What this place offers', style: TextStyle(fontSize: 16)),
                     tiny15Space(),
                     Wrap(
                       children: List.generate(
                           apartment['specifics']['amenities'].length,
                               (index) => Container(
                             decoration: depressNeumorph(),
-                            padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                            margin: EdgeInsets.only(right: 10),
+                            padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                            margin: const EdgeInsets.only(right: 10),
                             child: Text(
                               apartment['specifics']['amenities'][index],
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 14, fontWeight: FontWeight.w400),
                             ),
                           )),
@@ -562,13 +563,16 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
               ),
             ),
           ),
-          Buttons(
-            child: Center(
-              child: KText(
-                "Message Seller",
-                color: const Color(0xFF1994F5),
-                fontWeight: FontWeight.w700,
-                fontSize: 18.w,
+          InkWell(
+            onTap: ()=>Get.to(()=>Chat(userId: apartment['Store']['userId'],)),
+            child: Buttons(
+              child: Center(
+                child: KText(
+                  "Message Seller",
+                  color: const Color(0xFF1994F5),
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18.w,
+                ),
               ),
             ),
           ),

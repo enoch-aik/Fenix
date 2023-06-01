@@ -42,7 +42,8 @@ class _HomeState extends State<Home> {
   String homeTab = 'Dacha';
   String token = '';
   String storeId = '';
-  String tab = '';
+  String tab = 'dacha';
+
   final searchWordController = TextEditingController();
   final UserController _userController = Get.find();
   final StoreController _storeController = Get.put(StoreController());
