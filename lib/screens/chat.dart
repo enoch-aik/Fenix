@@ -38,7 +38,7 @@ class ChatState extends State<Chat> {
   String token = '';
   String userId = '';
 
-  late IO.Socket socket;
+  IO.Socket? socket;
 
   void _sendMessage() {
     String messageText = _messageController.text.trim();
@@ -47,18 +47,18 @@ class ChatState extends State<Chat> {
       var messagePost = {
         'content': messageText,
       };
-      socket.emit('message', messagePost);
+      socket!.emit('message', messagePost);
       print('message');
 
-      socket.on('message', (data) => print('sent --- $data'));
+      socket!.on('message', (data) => print('sent --- $data'));
       chatController.getChats(widget.userId);
     }
   }
 
   void _joinChat() {
-    socket.emit('join-room', []);
+    socket!.emit('join-room', []);
     print('join');
-    socket.on('join-room', (data) => print('==> join $data'));
+    socket!.on('join-room', (data) => print('==> join $data'));
   }
 
   @override
@@ -70,12 +70,13 @@ class ChatState extends State<Chat> {
   boot() async {
     token = userController.getToken();
     userId = userController.getUser()!.userId.toString();
-    chatController.getChats(widget.userId??userId);
+    print('my user $userId');
+    chatController.getChats(widget.userId);
     Timer.periodic(const Duration(seconds: 1), (timer) {
       if (chatController.chatId.isNotEmpty) {
         timer.cancel();
         var roomId = chatController.chatId.obs.string;
-        setState(() {});
+        if (mounted) setState(() {});
         initSocket(roomId);
       }
     });
@@ -93,22 +94,22 @@ class ChatState extends State<Chat> {
                 {"Authorization": "Bearer $token"}) // disable auto-connection
             .build());
 
-    socket.connect();
-    socket.onConnect((data) {
+    socket!.connect();
+    socket!.onConnect((data) {
       print('Success --- $data');
       _joinChat();
     });
 
-    print(socket.opts);
+    print(socket!.opts);
 
-    socket.onError((data) => print('Error --- $data'));
-    socket.onDisconnect((data) => print('Disconnect --- $data'));
+    socket!.onError((data) => print('Error --- $data'));
+    socket!.onDisconnect((data) => print('Disconnect --- $data'));
 
-    socket.on('join-room', (data) {
+    socket!.on('join-room', (data) {
       print(data);
     });
 
-    socket.on('message', (messages) {
+    socket!.on('message', (messages) {
       print('messages ===> $messages');
     });
   }
@@ -116,7 +117,7 @@ class ChatState extends State<Chat> {
   @override
   void dispose() {
     _messageController.dispose();
-    socket.disconnect();
+    socket!.disconnect();
     super.dispose();
   }
 
@@ -154,10 +155,14 @@ class ChatState extends State<Chat> {
                           color: white,
                         ),
                       ),
-
-                      const Text(
-                        'Danny Hopkins',
-                        style: TextStyle(color: white),
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            '${widget.userId}',
+                            softWrap: false,
+                            style: const TextStyle(color: white),
+                          ),
+                        ),
                       ),
                       Image.asset(
                         'assets/images/icons/Ellipse 1.png',
@@ -201,8 +206,9 @@ class ChatState extends State<Chat> {
                                                 DateTime.parse(item['createdAt']
                                                     .toString())),
                                         style: const TextStyle(
-                                          fontSize: 13,
-                                            color: white,fontWeight: FontWeight.w300),
+                                            fontSize: 13,
+                                            color: white,
+                                            fontWeight: FontWeight.w300),
                                       ),
                                     ),
                                   ),
@@ -218,7 +224,6 @@ class ChatState extends State<Chat> {
                                   order: GroupedListOrder.ASC, // optional
                                 ),
                               ),
-
                               Container(
                                 decoration: BoxDecoration(
                                     color: const Color(0xFF1F4167),
@@ -305,7 +310,7 @@ class ChatState extends State<Chat> {
   Container outgoing(message) {
     return Container(
         padding: const EdgeInsets.fromLTRB(25, 10, 25, 10),
-        margin: const EdgeInsets.only(left: 30,bottom: 20),
+        margin: const EdgeInsets.only(left: 30, bottom: 20),
         decoration: BoxDecoration(
             color: lightGrey, borderRadius: BorderRadius.circular(20)),
         child: Text(

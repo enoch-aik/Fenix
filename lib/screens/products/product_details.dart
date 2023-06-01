@@ -456,7 +456,7 @@ var product;
             ),
           ),
           InkWell(
-            onTap: ()=>Get.to(()=>Chat(userId: product['Store']['userId'],)),
+            onTap: ()=>Get.to(()=>Chat(userId: product['vendorId'],)),
             child: Buttons(
               child: Center(
                 child: KText(

@@ -4,8 +4,17 @@ import 'package:get/get.dart';
 
 class ChatController extends GetxController {
   var chats = [].obs;
+  var allChats = [].obs;
   var isLoadingChats = true.obs;
-var chatId = ''.obs;
+  var isLoadingAllChats = true.obs;
+  var chatId = ''.obs;
+
+  @override
+  void onInit() {
+    getAllChats();
+    super.onInit();
+  }
+
   String getToken() {
     UserController userController = Get.find();
     var token = userController.getToken();
@@ -15,15 +24,28 @@ var chatId = ''.obs;
 
   getChats(vendorId) {
     isLoadingChats(true);
-    ChatServices.getUserChats((status, response) {
+    ChatServices.getVendorChats((status, response) {
       isLoadingChats(false);
       if (status) {
         chats.value = response['data']['messages'];
-        chatId.value = response['data']['chatId'];
+        chatId.value = response['data']['id'];
       } else {
         chats.value = [];
         print('Chat Error - $response');
       }
     }, getToken(), vendorId);
+  }
+
+  getAllChats() {
+    isLoadingAllChats(true);
+    ChatServices.getUserChats((status, response) {
+      isLoadingAllChats(false);
+      if (status) {
+        allChats.value = response['data'];
+      } else {
+        allChats.value = [];
+        print('All Chat Error - $response');
+      }
+    }, getToken());
   }
 }

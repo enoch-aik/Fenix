@@ -19,6 +19,7 @@ import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../controller/chat_controller.dart';
 import '../../controller/map_controller.dart';
 import '../../controller/product_controller.dart';
 import '../../helpers/categories.dart';
@@ -48,6 +49,7 @@ class _HomeState extends State<Home> {
   final UserController _userController = Get.find();
   final StoreController _storeController = Get.put(StoreController());
   final AccountController _accountController = Get.put(AccountController());
+  final ChatController _chatController = Get.put(ChatController());
   final ProductController _productController = Get.put(ProductController());
   final MapController _mapController = Get.put(MapController());
 

@@ -564,7 +564,7 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
             ),
           ),
           InkWell(
-            onTap: ()=>Get.to(()=>Chat(userId: apartment['Store']['userId'],)),
+            onTap: ()=>Get.to(()=>Chat(userId: apartment['vendorId'],)),
             child: Buttons(
               child: Center(
                 child: KText(

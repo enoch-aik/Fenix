@@ -16,6 +16,7 @@ import '../chat.dart';
 import 'account/account.dart';
 import 'create_selling_post/selling_post.dart';
 import 'edit_profile.dart';
+import 'message.dart';
 import 'store_lists.dart';
 import 'subscribe.dart';
 
@@ -156,7 +157,7 @@ class _UserProfileState extends State<UserProfile> {
                   return InkWell(
                     onTap: () {
                       if (index == 0) Get.to(() => const Account());
-                      if (index == 1) Get.to(() => const Chat());
+                      if (index == 1) Get.to(() => const Messages());
                       if (index == 2) {
                         (_userController.getUser()!.address == '' ||
                                 _userController.getUser()!.mobileNumber == '')

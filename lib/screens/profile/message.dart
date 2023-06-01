@@ -1,5 +1,7 @@
 import 'package:fenix/const.dart';
+import 'package:fenix/controller/chat_controller.dart';
 import 'package:fenix/helpers/widgets.dart';
+import 'package:fenix/screens/chat.dart';
 import 'package:fenix/screens/profile/chat_screen.dart';
 import 'package:fenix/theme.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +22,7 @@ class _MessagesState extends State<Messages> {
   final TextEditingController _controller = TextEditingController();
   String token = '';
   final UserController _userController = Get.find();
-
+  final ChatController _chatController = Get.find();
 
   @override
   void initState() {
@@ -28,13 +30,11 @@ class _MessagesState extends State<Messages> {
     super.initState();
   }
 
-
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +47,8 @@ class _MessagesState extends State<Messages> {
                   child: Container(
                     decoration: BoxDecoration(
                         color: const Color(0xFF1F4167),
-                        gradient:
-                            gradient(const Color(0xFF1F4167), const Color(0xFF0777FB))),
+                        gradient: gradient(
+                            const Color(0xFF1F4167), const Color(0xFF0777FB))),
                     child: SafeArea(
                         bottom: false,
                         child: Column(
@@ -70,28 +70,38 @@ class _MessagesState extends State<Messages> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             backArrow(),
-
                                             Text(
                                               'Messages',
-                                              style: TextStyle(color: white, fontSize: 23.w),
+                                              style: TextStyle(
+                                                  color: white, fontSize: 23.w),
                                             ),
                                             const SizedBox(width: 5)
                                           ],
                                         ),
                                       ),
-                                      const SizedBox(height: 10),
                                       SizedBox(
-                                        height: 120,
-                                        child: ListView.separated(
-                                          scrollDirection: Axis.horizontal,
-                                          padding: const EdgeInsets.only(left: 15),
-                                          itemCount: 7,
-                                          shrinkWrap: true,
-                                          itemBuilder: (c, i) => userAvatar(i),
-                                          separatorBuilder: (c, i) =>
-                                              smallHSpace(),
-                                        ),
-                                      ),
+                                          height: 90,
+                                          child: Obx(
+                                            () => _chatController
+                                                    .isLoadingAllChats.isTrue
+                                                ? const Center(
+                                                    child:
+                                                        CircularProgressIndicator())
+                                                : ListView.separated(
+                                                    scrollDirection:
+                                                        Axis.horizontal,
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    itemCount: _chatController
+                                                        .allChats.length,
+                                                    shrinkWrap: true,
+                                                    itemBuilder: (c, i) =>
+                                                        userAvatar(_chatController.allChats[i]),
+                                                    separatorBuilder: (c, i) =>
+                                                        smallHSpace(),
+                                                  ),
+                                          )),
                                     ],
                                   ),
                                   tinySpace(),
@@ -102,22 +112,36 @@ class _MessagesState extends State<Messages> {
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 8.w, vertical: 5.w),
                                       decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.vertical(
-                                              top: Radius.circular(50)),
+                                          borderRadius:
+                                              const BorderRadius.vertical(
+                                                  top: Radius.circular(50)),
                                           color: const Color(0xFF1F4167),
-                                          gradient: gradient(const Color(0xFF000000),
+                                          gradient: gradient(
+                                              const Color(0xFF000000),
                                               const Color(0xFF182845))),
                                       child: ListView(
                                         children: [
                                           smallSpace(),
-                                          ListView.separated(
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
-                                            itemCount: 7,
-                                            shrinkWrap: true,
-                                            itemBuilder: (c, i) => chatUser(),
-                                            separatorBuilder: (c, i) => const Divider(
-                                                color: grey, thickness: 0.1),
+                                          Obx(
+                                            () => _chatController
+                                                    .isLoadingAllChats.isTrue
+                                                ? const Center(
+                                                    child:
+                                                        CircularProgressIndicator())
+                                                : ListView.separated(
+                                                    physics:
+                                                        const NeverScrollableScrollPhysics(),
+                                                    itemCount: _chatController
+                                                        .allChats.length,
+                                                    shrinkWrap: true,
+                                                    itemBuilder: (c, i) =>
+                                                        chatUser(_chatController
+                                                            .allChats[i]),
+                                                    separatorBuilder: (c, i) =>
+                                                        const Divider(
+                                                            color: grey,
+                                                            thickness: 0.1),
+                                                  ),
                                           ),
                                         ],
                                       ),
@@ -135,28 +159,28 @@ class _MessagesState extends State<Messages> {
                       child: Container(
                       decoration: BoxDecoration(
                           color: const Color(0xFF1F4167),
-                          gradient:
-                              gradient(const Color(0xFF000000), const Color(0xFF182845))),
-                        child: ListView(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  backArrow(),
-                                ],
-                              ),
+                          gradient: gradient(const Color(0xFF000000),
+                              const Color(0xFF182845))),
+                      child: ListView(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                backArrow(),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
+                      ),
                     ))
                   : Expanded(
                       child: Container(
                       decoration: BoxDecoration(
                           color: const Color(0xFF1F4167),
-                          gradient:
-                              gradient(const Color(0xFF000000), const Color(0xFF182845))),
+                          gradient: gradient(const Color(0xFF000000),
+                              const Color(0xFF182845))),
                       child: ListView(
                         children: [
                           Padding(
@@ -165,7 +189,9 @@ class _MessagesState extends State<Messages> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 backArrow(),
-                                Text('Edit', style: TextStyle(color: white, fontSize:22.w)),
+                                Text('Edit',
+                                    style: TextStyle(
+                                        color: white, fontSize: 22.w)),
                               ],
                             ),
                           ),
@@ -207,7 +233,8 @@ class _MessagesState extends State<Messages> {
           Container(
             decoration: BoxDecoration(
                 color: const Color(0xFF1F4167),
-                gradient: gradient(const Color(0xFF1F4167), const Color(0xFF0777FB))),
+                gradient:
+                    gradient(const Color(0xFF1F4167), const Color(0xFF0777FB))),
             child: Padding(
               padding: const EdgeInsets.fromLTRB(30, 10, 30, 17),
               child: Row(
@@ -278,7 +305,8 @@ class _MessagesState extends State<Messages> {
   Container userDetail(title, desc) {
     return Container(
       decoration: BoxDecoration(
-          color: const Color(0xFF1F4167), borderRadius: BorderRadius.circular(5)),
+          color: const Color(0xFF1F4167),
+          borderRadius: BorderRadius.circular(5)),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 20),
         child: Row(
@@ -301,15 +329,18 @@ class _MessagesState extends State<Messages> {
     );
   }
 
-  Padding chatUser() {
+  Padding chatUser(user) {
+    print(user);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
-        onTap: ()=>Get.to(()=>const ChatScreen()),
+        onTap: () => Get.to(() => Chat(
+              userId: user['id'],
+            )),
         child: Row(
           children: [
-            Stack(
-              children: const [
+            const Stack(
+              children: [
                 CircleAvatar(radius: 30, backgroundColor: grey),
                 Positioned(
                     bottom: 0,
@@ -324,12 +355,16 @@ class _MessagesState extends State<Messages> {
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
-                        'My name',
-                        style: TextStyle(color: white),
+                    children: [
+                      Expanded(
+                        child: Text(
+                          '${user['id']}',
+                          softWrap: false,
+                          style: const TextStyle(color: white),
+                        ),
                       ),
-                      Text(
+                      smallHSpace(),
+                      const Text(
                         '08:45',
                         style: TextStyle(
                             color: Colors.white,
@@ -352,14 +387,14 @@ class _MessagesState extends State<Messages> {
     );
   }
 
-  Column userAvatar(i) {
+  Column userAvatar(user) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Stack(
           children: [
             CircleAvatar(
-              radius: 40,
+              radius: 30,
               backgroundColor: grey,
               child: Image.asset(
                 'assets/images/icons/Ellipse 1.png',
@@ -373,7 +408,8 @@ class _MessagesState extends State<Messages> {
         ),
         tiny5Space(),
         Text(
-          'Barry $i',
+          user['id'].toString().length>10?user['id'].toString().substring(0,10):user['id'].toString(),
+
           style: const TextStyle(color: white, fontSize: 14),
         )
       ],
