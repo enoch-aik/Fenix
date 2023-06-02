@@ -97,7 +97,9 @@ class _MessagesState extends State<Messages> {
                                                         .allChats.length,
                                                     shrinkWrap: true,
                                                     itemBuilder: (c, i) =>
-                                                        userAvatar(_chatController.allChats[i]),
+                                                        userAvatar(
+                                                            _chatController
+                                                                .allChats[i]),
                                                     separatorBuilder: (c, i) =>
                                                         smallHSpace(),
                                                   ),
@@ -335,7 +337,8 @@ class _MessagesState extends State<Messages> {
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: () => Get.to(() => Chat(
-              userId: user['id'],
+              id: user['id'],
+              name: user['username'],
             )),
         child: Row(
           children: [
@@ -358,7 +361,7 @@ class _MessagesState extends State<Messages> {
                     children: [
                       Expanded(
                         child: Text(
-                          '${user['id']}',
+                          '${user['username']}',
                           softWrap: false,
                           style: const TextStyle(color: white),
                         ),
@@ -374,9 +377,9 @@ class _MessagesState extends State<Messages> {
                     ],
                   ),
                   tiny5Space(),
-                  const Text(
-                    'no pracujemy z domu przez 5 ...',
-                    style: TextStyle(color: light, fontSize: 15),
+                  Text(
+                    '${user['lastMessage']}',
+                    style: const TextStyle(color: light, fontSize: 15),
                   ),
                 ],
               ),
@@ -408,8 +411,9 @@ class _MessagesState extends State<Messages> {
         ),
         tiny5Space(),
         Text(
-          user['id'].toString().length>10?user['id'].toString().substring(0,10):user['id'].toString(),
-
+          user['username'].toString().length > 10
+              ? user['username'].toString().substring(0, 10)
+              : user['username'].toString(),
           style: const TextStyle(color: white, fontSize: 14),
         )
       ],

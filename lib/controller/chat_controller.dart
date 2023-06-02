@@ -22,18 +22,32 @@ class ChatController extends GetxController {
   }
 
 
-  getChats(vendorId) {
+  getVendorChats(vendorId) {
     isLoadingChats(true);
     ChatServices.getVendorChats((status, response) {
       isLoadingChats(false);
       if (status) {
         chats.value = response['data']['messages'];
-        chatId.value = response['data']['id'];
+        chatId.value = response['data']['chatId'];
       } else {
         chats.value = [];
         print('Chat Error - $response');
       }
     }, getToken(), vendorId);
+  }
+
+  getChatsById(id) {
+    isLoadingChats(true);
+    ChatServices.getChatsById((status, response) {
+      isLoadingChats(false);
+      if (status) {
+        chats.value = response['data']['messages'];
+        chatId.value = response['data']['chatId'];
+      } else {
+        chats.value = [];
+        print('Chat Error - $response');
+      }
+    }, getToken(), id);
   }
 
   getAllChats() {

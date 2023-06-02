@@ -99,6 +99,8 @@ class ApiServices {
       var body = jsonDecode(response.body);
       print(response.statusCode);
       print(response.body);
+      print('Res  $url ---- $body');
+
       if (ApiServices.isRequestSuccessful(response.statusCode)) {
         print('Success');
         return body;
@@ -134,6 +136,8 @@ class ApiServices {
       var body = jsonDecode(response.body);
       print(response.statusCode);
       print(response.body);
+      print('Res  $url ---- $body');
+
       if (ApiServices.isRequestSuccessful(response.statusCode)) {
         print('Success');
         return body;
@@ -164,6 +168,7 @@ class ApiServices {
       var response = await ApiServices.makePatchRequest(
           apiUrl: url, data: data, token: token);
       var body = jsonDecode(response.body);
+      print('Res  $url ---- $body');
 
       if (ApiServices.isRequestSuccessful(response.statusCode)) {
         return body;

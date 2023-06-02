@@ -24,8 +24,8 @@ class MessagesModel {
 }
 
 class Chat extends StatefulWidget {
-  const Chat({Key? key, this.userId}) : super(key: key);
-  final String? userId;
+  const Chat({Key? key, this.userId, this.id, this.name}) : super(key: key);
+  final String? userId,id,name;
 
   @override
   ChatState createState() => ChatState();
@@ -51,7 +51,7 @@ class ChatState extends State<Chat> {
       print('message');
 
       socket!.on('message', (data) => print('sent --- $data'));
-      chatController.getChats(widget.userId);
+      getChat();
     }
   }
 
@@ -67,16 +67,24 @@ class ChatState extends State<Chat> {
     boot();
   }
 
+  getChat()async{
+    if(widget.userId!=null) {
+      chatController.getVendorChats(widget.userId);
+    }
+    if(widget.id!=null) {
+      chatController.getChatsById(widget.id);
+    }
+  }
+
   boot() async {
     token = userController.getToken();
     userId = userController.getUser()!.userId.toString();
     print('my user $userId');
-    chatController.getChats(widget.userId);
+    getChat();
     Timer.periodic(const Duration(seconds: 1), (timer) {
       if (chatController.chatId.isNotEmpty) {
         timer.cancel();
         var roomId = chatController.chatId.obs.string;
-        if (mounted) setState(() {});
         initSocket(roomId);
       }
     });
@@ -158,7 +166,7 @@ class ChatState extends State<Chat> {
                       Expanded(
                         child: Center(
                           child: Text(
-                            '${widget.userId}',
+                            widget.name?? '${widget.userId!.length>15?widget.userId!.substring(0,15):widget.userId}',
                             softWrap: false,
                             style: const TextStyle(color: white),
                           ),
@@ -259,7 +267,6 @@ class ChatState extends State<Chat> {
                                               suffixIcon: IconButton(
                                                   onPressed: () {
                                                     _sendMessage();
-                                                    // _joinChat();
                                                   },
                                                   icon: const Icon(
                                                       Icons.send_outlined)),
@@ -297,7 +304,7 @@ class ChatState extends State<Chat> {
   Container incoming(message) {
     return Container(
         padding: const EdgeInsets.fromLTRB(25, 10, 25, 10),
-        margin: const EdgeInsets.only(right: 30),
+        margin: const EdgeInsets.only(right: 30,bottom: 20),
         decoration: BoxDecoration(
             color: Colors.grey.withOpacity(0.4),
             borderRadius: BorderRadius.circular(20)),

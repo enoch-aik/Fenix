@@ -15,3 +15,4 @@ const String changePasswordUrl ="$baseUrl/accounts/changePassword";
 const String resentVerificationUrl ="$baseUrl/accounts/verify/resend";
 const String chatUrl ="wss://qaqnuz.herokuapp.com?roomId=";
 const String getAllChatUrl ="$baseUrl/chats";
+const String getVendorChatUrl ="$baseUrl/vendor";
