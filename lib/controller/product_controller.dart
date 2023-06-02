@@ -7,6 +7,8 @@ import '../models/services/store_services.dart';
 
 class ProductController extends GetxController {
   var apartmentList = [].obs;
+  var houseList = [].obs;
+  var dachaList = [].obs;
   var productList = [].obs;
   var vehicleList = [].obs;
   var isFetchingProducts = true.obs;
@@ -17,23 +19,51 @@ class ProductController extends GetxController {
 
   @override
   void onInit() {
-
     boot();
     super.onInit();
   }
 
- String getUserToken(){
+  String getUserToken() {
     UserController userController = Get.find();
-  var  token = userController.getToken();
+    var token = userController.getToken();
     return token;
   }
 
   boot() {
-    getApartments(  Category().property[0]);
-    getProducts(  Category().homeCategories[3]);
+    getApartments();
+    getDacha();
+    getHouse();
+    getProducts();
+    getProducts();
   }
 
-  getApartments( type) {
+  getDacha() {
+    isFetchingApartments(true);
+    ProductServices.getApartmentsByType((status, response) {
+      isFetchingApartments(false);
+      if (status) {
+        dachaList.value = response['data'];
+      } else {
+        dachaList.value = [];
+        print('Error - $response');
+      }
+    }, getUserToken(), Category().homeCategories[0].toString().toLowerCase());
+  }
+
+  getHouse() {
+    isFetchingApartments(true);
+    ProductServices.getApartmentsByType((status, response) {
+      isFetchingApartments(false);
+      if (status) {
+        houseList.value = response['data'];
+      } else {
+        houseList.value = [];
+        print('Error - $response');
+      }
+    }, getUserToken(), Category().homeCategories[1].toString().toLowerCase());
+  }
+
+  getApartments() {
     isFetchingApartments(true);
     ProductServices.getApartmentsByType((status, response) {
       isFetchingApartments(false);
@@ -43,30 +73,34 @@ class ProductController extends GetxController {
         apartmentList.value = [];
         print('Error - $response');
       }
-    },  getUserToken(), type);
+    }, getUserToken(), Category().homeCategories[2].toString().toLowerCase());
   }
 
-  clearSearch( category) {
+  clearSearch(category) {
     if (category == 'car') {
-      getProducts( category);
+      getVehicle();
     } else if (category == 'electronics') {
-      getProducts( category);
+      getProducts();
+    } else if (category == 'dacha') {
+      getDacha();
+    } else if (category == 'house') {
+      getHouse();
     } else {
-      getApartments(  category);
+      getApartments();
     }
   }
 
-  searchStore( category, searchWord) {
+  searchStore(category, searchWord) {
     if (category == 'car') {
-      searchVehicle( searchWord);
+      searchVehicle(searchWord);
     } else if (category == 'electronics') {
-      searchVehicle( searchWord);
+      searchVehicle(searchWord);
     } else {
-      searchApartments( searchWord);
+      searchApartments(searchWord);
     }
   }
 
-  searchApartments( searchWord) {
+  searchApartments(searchWord) {
     isFetchingApartments(true);
     ProductServices.getApartmentsByTitle((status, response) {
       isFetchingApartments(false);
@@ -76,10 +110,10 @@ class ProductController extends GetxController {
         apartmentList.value = [];
         print('Error - $response');
       }
-    },  getUserToken(), searchWord);
+    }, getUserToken(), searchWord);
   }
 
-  searchVehicle( searchWord) {
+  searchVehicle(searchWord) {
     isFetchingProducts(true);
     ProductServices.getVehiclesByTitle((status, response) {
       isFetchingProducts(false);
@@ -89,10 +123,10 @@ class ProductController extends GetxController {
         productList.value = [];
         print('Error - $response');
       }
-    },  getUserToken(), searchWord);
+    }, getUserToken(), searchWord);
   }
 
-  searchProduct( searchWord) {
+  searchProduct(searchWord) {
     isFetchingProducts(true);
     ProductServices.getProductsByTitle((status, response) {
       isFetchingProducts(false);
@@ -102,10 +136,10 @@ class ProductController extends GetxController {
         productList.value = [];
         print('Error - $response');
       }
-    },  getUserToken(), searchWord);
+    }, getUserToken(), searchWord);
   }
 
-  getProducts( category) {
+  getProducts() {
     isFetchingProducts(true);
     ProductServices.getProductsByCategory((status, response) {
       isFetchingProducts(false);
@@ -115,6 +149,19 @@ class ProductController extends GetxController {
         productList.value = [];
         print('Error - $response');
       }
-    },  getUserToken(), category);
+    }, getUserToken(), Category().homeCategories[4]);
+  }
+
+  getVehicle() {
+    isFetchingProducts(true);
+    ProductServices.getProductsByCategory((status, response) {
+      isFetchingProducts(false);
+      if (status) {
+        productList.value = response['data'];
+      } else {
+        productList.value = [];
+        print('Error - $response');
+      }
+    }, getUserToken(), Category().homeCategories[3]);
   }
 }

@@ -37,6 +37,8 @@ class ChatState extends State<Chat> {
   ChatController chatController = Get.put(ChatController());
   String token = '';
   String userId = '';
+  String userName = '';
+  String recipient = '';
 
   IO.Socket? socket;
 
@@ -79,6 +81,7 @@ class ChatState extends State<Chat> {
   boot() async {
     token = userController.getToken();
     userId = userController.getUser()!.userId.toString();
+    userName = userController.getUser()!.username.toString();
     print('my user $userId');
     getChat();
     Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -86,6 +89,8 @@ class ChatState extends State<Chat> {
         timer.cancel();
         var roomId = chatController.chatId.obs.string;
         initSocket(roomId);
+        recipient =chatController.vendorName.obs.string;
+
       }
     });
   }
@@ -166,10 +171,12 @@ class ChatState extends State<Chat> {
                       ),
                       Expanded(
                         child: Center(
-                          child: Text(
-                            widget.name?? '${widget.userId!.length>15?widget.userId!.substring(0,15):widget.userId}',
-                            softWrap: false,
-                            style: const TextStyle(color: white),
+                          child: Obx(
+                            ()=> Text(
+                              chatController.isLoadingChats.isTrue?userId:  widget.name?? recipient,
+                              softWrap: false,
+                              style: const TextStyle(color: white),
+                            ),
                           ),
                         ),
                       ),
@@ -224,9 +231,7 @@ class ChatState extends State<Chat> {
                                   groupSeparatorBuilder:
                                       (String groupByValue) => smallSpace(),
                                   itemBuilder: (context, dynamic message) {
-                                    print(message);
-                                    print(userId);
-                                    return (message['senderId'] == userId)
+                                    return (message['creator'] == userName)
                                         ? outgoing('${message['text']}')
                                         : incoming('${message['text']}');
                                   },
@@ -261,10 +266,15 @@ class ChatState extends State<Chat> {
                                       Expanded(
                                         child: TextFormField(
                                           controller: _messageController,
+                                          onFieldSubmitted: (v){
+                                            _sendMessage();
+
+                                          },
                                           decoration: InputDecoration(
                                               contentPadding:
                                                   EdgeInsets.symmetric(
                                                       horizontal: 15.w),
+
                                               suffixIcon: IconButton(
                                                   onPressed: () {
                                                     _sendMessage();

@@ -71,7 +71,6 @@ class _HomeState extends State<Home> {
     _userController.getWishList(token);
     _mapController.getApartments(token,
         longitude: -88.14801, latitude: 36.74582);
-    _productController.getApartments("dacha");
   }
 
   @override
@@ -146,10 +145,7 @@ class _HomeState extends State<Home> {
                           onTap: () => setState(() {
                             tab = 'dacha';
 
-                            _productController.getApartments(Category()
-                                .homeCategories[0]
-                                .toString()
-                                .toLowerCase());
+                            _productController.getDacha();
                           }),
                         ),
                         MenuTitle(
@@ -158,10 +154,7 @@ class _HomeState extends State<Home> {
                           color: tab == 'house' ? white : Colors.transparent,
                           onTap: () => setState(() {
                             tab = 'house';
-                            _productController.getApartments(Category()
-                                .homeCategories[2]
-                                .toString()
-                                .toLowerCase());
+                            _productController.getHouse();
                           }),
                         ),
                         MenuTitle(
@@ -172,10 +165,7 @@ class _HomeState extends State<Home> {
                           onTap: () => setState(() {
                             tab = 'apartment';
 
-                            _productController.getApartments(Category()
-                                .homeCategories[1]
-                                .toString()
-                                .toLowerCase());
+                            _productController.getApartments();
                           }),
                         ),
                         MenuTitle(
@@ -184,10 +174,7 @@ class _HomeState extends State<Home> {
                           color: tab == 'car' ? white : Colors.transparent,
                           onTap: () => setState(() {
                             tab = 'car';
-                            _productController.getProducts(Category()
-                                .homeCategories[3]
-                                .toString()
-                                .toLowerCase());
+                            _productController.getVehicle();
                           }),
                         ),
                         MenuTitle(
@@ -197,10 +184,7 @@ class _HomeState extends State<Home> {
                               tab == 'electronics' ? white : Colors.transparent,
                           onTap: () => setState(() {
                             tab = 'electronics';
-                            _productController.getProducts(Category()
-                                .homeCategories[4]
-                                .toString()
-                                .toLowerCase());
+                            _productController.getProducts();
                           }),
                         ),
                       ],
@@ -701,7 +685,7 @@ class _HomeState extends State<Home> {
                 ? Obx(
                     () => _productController.isFetchingProducts.isTrue
                         ? const Loader()
-                        : _productController.productList.isEmpty
+                        : _productController.vehicleList.isEmpty
                             ? empty('car')
                             : GridView.builder(
                                 primary: false,
@@ -718,12 +702,12 @@ class _HomeState extends State<Home> {
                                     _productController.productList.length,
                                 itemBuilder: (context, index) {
                                   var item =
-                                      _productController.productList[index];
+                                      _productController.vehicleList[index];
                                   return InkWell(
                                       onTap: () {
                                         Get.to(() => ProductDetails(
                                               product: _productController
-                                                  .productList[index],
+                                                  .vehicleList[index],
                                             ));
                                       },
                                       child: ProductWidget(

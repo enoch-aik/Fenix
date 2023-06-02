@@ -150,12 +150,8 @@ class UserController extends GetxController {
 
       if (status) {
         ProductController productController = Get.find();
-        if ((category.toLowerCase() == 'electronics' ||
-            category.toLowerCase() == 'cars')) {
-          productController.getProducts(category);
-        } else {
-          productController.getApartments(category);
-        }
+        productController.onInit();
+
         CustomSnackBar.successSnackBar('Cool', 'Product added to wishlist');
         getWishList(token);
       } else {
@@ -182,12 +178,8 @@ class UserController extends GetxController {
 
       if (status) {
         ProductController productController = Get.find();
-        if ((category.toLowerCase() == 'electronics' ||
-            category.toLowerCase() == 'cars')) {
-          productController.getProducts(category);
-        } else {
-          productController.getApartments(category);
-        }
+        productController.onInit();
+
         CustomSnackBar.successSnackBar('Cool', 'Product deleted from wishlist');
         getWishList(token);
       } else {
