@@ -108,6 +108,7 @@ class ChatState extends State<Chat> {
       _joinChat();
     });
 
+
     print(socket!.opts);
 
     socket!.onError((data) => print('Error --- $data'));
