@@ -7,6 +7,7 @@ import 'package:fenix/models/services/chat_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -231,9 +232,9 @@ class ChatState extends State<Chat> {
                                   groupSeparatorBuilder:
                                       (String groupByValue) => smallSpace(),
                                   itemBuilder: (context, dynamic message) {
-                                    return (message['creator'] == userName)
-                                        ? outgoing('${message['text']}')
-                                        : incoming('${message['text']}');
+                                    return (message['sender'] == userName)
+                                        ? outgoing('${message['text']}', message['createdAt'])
+                                        : incoming('${message['text']}', message['createdAt']);
                                   },
                                   order: GroupedListOrder.ASC, // optional
                                 ),
@@ -312,29 +313,65 @@ class ChatState extends State<Chat> {
     );
   }
 
-  Container incoming(message) {
-    return Container(
-        padding: const EdgeInsets.fromLTRB(25, 10, 25, 10),
-        margin: const EdgeInsets.only(right: 30,bottom: 20),
-        decoration: BoxDecoration(
-            color: Colors.grey.withOpacity(0.4),
-            borderRadius: BorderRadius.circular(20)),
-        child: Text(
-          message,
-          style: const TextStyle(color: white, fontSize: 14, height: 1.5),
-        ));
+  Widget incoming(message, timeSent) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: UnconstrainedBox(
+        child: Container(
+            padding: EdgeInsets.fromLTRB(20.w, 10, 20.w, 10),
+            margin: EdgeInsets.only(left: 12.w,bottom: 20),
+            constraints: BoxConstraints(
+                maxWidth: Get.width * 0.78
+            ),
+            decoration: BoxDecoration(
+                color: Color(0xFF373E4E),
+                borderRadius: BorderRadius.circular(20)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  message,
+                  style: GoogleFonts.poppins().copyWith(color: white, fontSize: 14, height: 1.5,),
+                ),
+                tiny5Space(),
+                Text(DateFormat("hh:mm a").format(DateTime.parse(timeSent)),
+                  textAlign: TextAlign.end,
+                  style: GoogleFonts.poppins().copyWith(color: white, fontSize: 9.w, fontWeight: FontWeight.w500, height: 1.5,),
+                ),
+              ],
+            )),
+      ),
+    );
   }
 
-  Container outgoing(message) {
-    return Container(
-        padding: const EdgeInsets.fromLTRB(25, 10, 25, 10),
-        margin: const EdgeInsets.only(left: 30, bottom: 20),
-        decoration: BoxDecoration(
-            color: lightGrey, borderRadius: BorderRadius.circular(20)),
-        child: Text(
-          message,
-          textAlign: TextAlign.end,
-          style: const TextStyle(color: white, fontSize: 14, height: 1.5),
-        ));
+  Widget outgoing(message, timeSent) {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: UnconstrainedBox(
+        child: Container(
+            padding: EdgeInsets.fromLTRB(20.w, 10, 20.w, 10),
+            margin: EdgeInsets.only(right: 12.w, bottom: 20),
+            constraints: BoxConstraints(
+              maxWidth: Get.width * 0.78
+            ),
+            decoration: BoxDecoration(
+                color: Color(0xFF7A8194), borderRadius: BorderRadius.circular(20)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  message,
+                  textAlign: TextAlign.end,
+                  style: GoogleFonts.poppins().copyWith(color: white, fontSize: 14, height: 1.5,),
+                ),
+                tiny5Space(),
+                Text(DateFormat("hh:mm a").format(DateTime.parse(timeSent)),
+                  textAlign: TextAlign.end,
+                  style: GoogleFonts.poppins().copyWith(color: white, fontSize: 9.w, fontWeight: FontWeight.w500, height: 1.5,),
+                ),
+              ],
+            )),
+      ),
+    );
   }
 }
