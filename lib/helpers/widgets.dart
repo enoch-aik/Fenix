@@ -261,20 +261,21 @@ class WelcomeCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 81.w, horizontal: 17.w),
+      padding: EdgeInsets.fromLTRB(17.w, 81.w, 17.w, 2),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(title, style: Theme.of(context).textTheme.bodyText2),
-          SizedBox(height: 21.w),
+          SizedBox(height: 20.w),
           Column(
             children: [
               Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.68,
+                    height: MediaQuery.of(context).size.height * 0.72,
                     width: MediaQuery.of(context).size.width,
+                    margin:  EdgeInsets.only(bottom: 10.w),
                     padding:
                         EdgeInsets.symmetric(vertical: 36.w, horizontal: 15.w),
                     decoration: BoxDecoration(
@@ -302,15 +303,15 @@ class WelcomeCards extends StatelessWidget {
                       controller: pageController,
                       children: [
                         Image.asset(
-                          "assets/images/lottieAnimOne.png",
+                          "assets/images/screen 1.png",
                           fit: BoxFit.fill,
                         ),
                         Image.asset(
-                          "assets/images/lottieAnimTwo.png",
+                          "assets/images/screen 2.png",
                           fit: BoxFit.fill,
                         ),
                         Image.asset(
-                          "assets/images/lottieAnimThree.png",
+                          "assets/images/screen 3.png",
                           fit: BoxFit.fill,
                         ),
                       ],
@@ -632,6 +633,7 @@ Widget backArrow(){
           : Icon(Icons.arrow_back,  color: Colors.white, size: 29.w,),
       );
 }
+
 
 
 List lottieSlides = [

@@ -9,6 +9,7 @@ import '../screens/auth_screens/sign_in.dart';
 import '../screens/auth_screens/verification_mail_success.dart';
 import '../screens/onboarding/account_creation_success.dart';
 import '../screens/onboarding/loading.dart';
+import '../screens/views.dart';
 
 class AccountController extends GetxController {
   TextEditingController get firstName => _firstName;

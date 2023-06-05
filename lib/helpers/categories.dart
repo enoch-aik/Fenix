@@ -2,6 +2,17 @@
 
 class Category {
 
+  List images = [
+    "apartment.png",
+    "newCar.png",
+    "electronics.png",
+    "clothing.png",
+    "kids.png",
+    "food png.png",
+    "kids.png",
+    "tools.png",
+  ];
+
   List homeCategories = [
     "Dacha",
     "Apartment",

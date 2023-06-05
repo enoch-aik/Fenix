@@ -25,8 +25,10 @@ class CustomIconsFenix {
   static const IconData apartment = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData house = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData dacha = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData vector__3_ = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData logout = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData minus = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData navigation = IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData plus = IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData group_1409 = IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData profile = IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

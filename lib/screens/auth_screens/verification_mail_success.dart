@@ -34,7 +34,10 @@ class VerificationMailSuccess extends StatelessWidget {
                           children: [
                             SizedBox(
                               height: MediaQuery.of(context).size.height * 0.2,
-                              child: Image.asset("assets/images/logoFrame.png",fit: BoxFit.fill,),
+                              child: Image.asset(
+                                "assets/images/fenixgradientblue.png",
+                                fit: BoxFit.fill,
+                              ),
                             ),
                             kLargeSpacing,
 

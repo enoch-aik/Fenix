@@ -186,16 +186,16 @@ class _MapState extends State<Map> {
                 child: Column(
                   children: [
                     SizedBox(height: 40.w,),
-                    MapIcons(Icon( CustomIconsFenix.apartment, color: white,), black, type: "apartment",
+                    MapIcons(Icon( CustomIconsFenix.apartment, color: white, size: 16.w,), black, type: "apartment",
                         onTap: (){
                       filterApartments("apartment");
 
                         }),
-                    MapIcons(Icon( CustomIconsFenix.house, color: white,), black,type: "house",
+                    MapIcons(Icon( CustomIconsFenix.house, color: white, size: 16.w,), black,type: "house",
                         onTap: (){
                           filterApartments("house");
                         }),
-                    MapIcons(Icon( CustomIconsFenix.dacha, color: white,), black,type: "dacha",
+                    MapIcons(Icon( CustomIconsFenix.dacha, color: white, size: 16.w,), black,type: "dacha",
                     onTap: (){
                       filterApartments("dacha");
                     }),
@@ -210,10 +210,10 @@ class _MapState extends State<Map> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  MapIcons(Icon(CustomIconsFenix.plus, color: white, size: 22.w,), black, onTap: zoomIn,),
-                  MapIcons(Icon(CustomIconsFenix.minus, color: white,size: 22.w,),black, onTap: zoomOut),
+                  MapIcons(Icon(CustomIconsFenix.plus, color: white, size: 16.w,), black, onTap: zoomIn,),
+                  MapIcons(Icon(CustomIconsFenix.minus, color: white,size: 16.w,),black, onTap: zoomOut),
                   SizedBox(height: 30.w,),
-                  MapIcons(Icon(CustomIconsFenix.navigation, color: white,size: 22.w,), black,
+                  MapIcons(Icon(CustomIconsFenix.navigation, color: white,size: 16.w,), black,
                       onTap: (){
                         print(_userController.userCurrentPosition!.value!.longitude);
                         _mapController.googleMapController.animateCamera(
@@ -332,7 +332,7 @@ InkWell MapIcons (icon, color, {type,onTap}){
   return InkWell(
     onTap: onTap,
     child: Container(
-        padding: EdgeInsets.all(10.w),
+        padding: EdgeInsets.all(11.w),
         margin: EdgeInsets.symmetric(vertical: 5.w, horizontal: 12.w),
         decoration: BoxDecoration(
           shape: BoxShape.circle,

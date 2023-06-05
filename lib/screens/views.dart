@@ -84,7 +84,7 @@ class _HomeState extends State<Views> with TickerProviderStateMixin {
           const Color(0xFF1770A2),
           ),),
       child: Padding(
-        padding: EdgeInsets.fromLTRB(30, 00, 30, 23),
+        padding: EdgeInsets.fromLTRB(25, 00, 25, 23),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -169,17 +169,16 @@ class MenuTitle extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        decoration: BoxDecoration(border: Border(bottom: BorderSide(color: color,width: 2))),
         margin: const EdgeInsets.only(right: 20),
         child: Row(
           children: [
-            Icon(icon,size: 24.w, color: white),
-            SizedBox(width: 5.w,),
+            Icon(icon,size: 24.w, color: color),
+            SizedBox(width: 10.w,),
             Text(title,
             style:TextStyle(
               fontSize: 19.w,
-              fontWeight: FontWeight.w600
-                ,color: white
+              fontWeight: FontWeight.w600,
+                color: color
             ),),
           ],
         ),

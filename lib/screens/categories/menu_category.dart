@@ -27,7 +27,7 @@ class _MenuCategoryState extends State<MenuCategory> {
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(
-        preferredSize: Size(MediaQuery.of(context).size.width,  height() * 0.15),
+        preferredSize: Size(MediaQuery.of(context).size.width,  height() * 0.09),
         child: Container(
           decoration: new BoxDecoration(
             gradient:  gradient(
@@ -42,7 +42,7 @@ class _MenuCategoryState extends State<MenuCategory> {
             children: [
               Expanded(
                 child: Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: Image.asset(
                     "assets/images/fenixmall_white.png",
                     color: white,
@@ -50,34 +50,7 @@ class _MenuCategoryState extends State<MenuCategory> {
                 ),
               ),
 
-             tiny5Space(),
-              Container(
-
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.only(bottom: 10.w),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(13.w),
-                  color: Colors.white,
-                ),
-                child: TextField(
-                  style: TextStyle(
-                    fontSize: 16.w,
-                  ),
-                  decoration: InputDecoration(
-                    enabledBorder: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 15),
-                    labelText: "Search Fenix",
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    labelStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        fontSize: 15.w,
-                        color: Colors.grey.shade500
-                    ),
-                    suffixIcon: const Icon(Icons.search),
-                  ),
-                ),
-              ),
-
+             tinySpace(),
 
 
             ],
@@ -106,7 +79,7 @@ class _MenuCategoryState extends State<MenuCategory> {
                       maxCrossAxisExtent: 200,
                       childAspectRatio: 1.3 / 1,
                       crossAxisSpacing: 10,
-                      mainAxisSpacing: 10),
+                      mainAxisSpacing: 50),
                   itemCount: Category().allCategories.length,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -125,20 +98,27 @@ class _MenuCategoryState extends State<MenuCategory> {
                         )
                         );
                       },
-                      child: Container(
-                        padding: EdgeInsets.all(3.w),
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(image: AssetImage("assets/images/categoryCard.png"),fit: BoxFit.fill)
-                        ),
-                        child: Stack(
-                          alignment: Alignment.bottomCenter,
-                          children: [
-                            Positioned(
-                              bottom: 5.w,
-                                child: Image.asset("assets/images/kids.png",fit: BoxFit.scaleDown,),
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(10.w),
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(image: AssetImage("assets/images/categoryCard.png"),fit: BoxFit.contain)
                             ),
-                          ],
-                        ),
+                            child: Stack(
+                              alignment: Alignment.bottomCenter,
+                              children: [
+                                Positioned(
+                                    child: Padding(
+                                      padding: EdgeInsets.all(10.w),
+                                      child: Image.asset("assets/images/${Category().images[index]}",fit: BoxFit.fill,),
+                                    ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Text(Category().allCategories[index]),
+                        ],
                       ),
                     );
                   }),

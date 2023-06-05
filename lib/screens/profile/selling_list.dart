@@ -107,7 +107,7 @@ class _SellingListState extends State<SellingList> {
                     MenuTitle(
                         icon: CustomIconsFenix.dacha,
                         title: "Dacha",
-                        color: tab == "Dacha" ? white : Colors.transparent,
+                        color: tab == "Dacha" ? white : light,
                         onTap: () {
                           setState(() {
                             tab = "Dacha";
@@ -122,7 +122,7 @@ class _SellingListState extends State<SellingList> {
                     MenuTitle(
                         icon: CustomIconsFenix.house,
                         title: "House",
-                        color: tab == "House" ? white : Colors.transparent,
+                        color: tab == "House" ?  white : light,
                         onTap: () {
                           setState(() {
                             tab = "House";
@@ -134,7 +134,7 @@ class _SellingListState extends State<SellingList> {
                     MenuTitle(
                         icon: CustomIconsFenix.apartment,
                         title: "Apartment",
-                        color: tab == "Apartment" ? white : Colors.transparent,
+                        color: tab == "Apartment" ?  white : light,
                         onTap: () {
                           setState(() {
                             tab = "Apartment";
@@ -146,17 +146,16 @@ class _SellingListState extends State<SellingList> {
                     MenuTitle(
                         icon: FontAwesomeIcons.car,
                         title: "Car",
-                        color: tab == "Car" ? white : Colors.transparent,
+                        color: tab == "Car" ?  white : light,
                         onTap: () {
                           setState(() {
                             tab = "Car";
                           });
                         }),
                     MenuTitle(
-                        icon: CustomIconsFenix.vector__3_,
+                        icon: FontAwesomeIcons.television,
                         title: "Electronics",
-                        color:
-                            tab == "Electronics" ? white : Colors.transparent,
+                        color: tab == "Electronics" ?  white : light,
                         onTap: () {
                           setState(() {
                             tab = "Electronics";

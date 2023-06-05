@@ -1,5 +1,6 @@
 import 'package:fenix/const.dart';
 import 'package:fenix/controller/user_controller.dart';
+import 'package:fenix/helpers/widgets.dart';
 import 'package:fenix/helpers/widgets/dialogs.dart';
 import 'package:fenix/screens/profile/product_list_widget.dart';
 import 'package:fenix/screens/views.dart';
@@ -50,19 +51,12 @@ class WishList extends StatelessWidget {
               Expanded(
                 child: Row(
                   children: [
-                    InkWell(
-                        onTap: () {
-                          Get.back();
-                        },
-                        child: const Icon(
-                          Icons.arrow_back_ios,
-                          color: Colors.white,
-                        )),
+                    backArrow(),
                     InkWell(
                       onTap: () => Get.to(() => const SearchScreen()),
                       child: Container(
                         // height: MediaQuery.of(context).size.height * 0.050,
-                        width: MediaQuery.of(context).size.width * 0.85,
+                        width: MediaQuery.of(context).size.width * 0.79,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(13.w),
                           color: Colors.white,

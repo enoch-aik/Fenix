@@ -1,5 +1,6 @@
 import 'package:fenix/controller/store_controller.dart';
 import 'package:fenix/controller/user_controller.dart';
+import 'package:fenix/helpers/icons/custom_icons_fenix_icons.dart';
 import 'package:fenix/helpers/widgets/snack_bar.dart';
 import 'package:fenix/screens/profile/selling_list.dart';
 import 'package:fenix/screens/profile/wish_list.dart';
@@ -63,42 +64,35 @@ class _UserProfileState extends State<UserProfile> {
           ),
           automaticallyImplyLeading: false,
           actions: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.4,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Icon(
-                    Icons.notifications_none,
-                    color: Colors.white,
-                    size: 27.w,
-                  ),
-                  // Icon(
-                  //   Icons.search,
-                  //   color: Colors.white,
-                  //   size: 27.w,
-                  // ),
-                  InkWell(
-                    onTap: () async {
-                      SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      refreshToken = prefs.getString('refreshToken');
-                      CustomDialogs.showNoticeDialog(
-                          message: "Please don't leave 😭",
-                          image: "assets/images/icons/logout.png",
-                          closeText: 'Cancel',
-                          okText: 'Confirm',
-                          onClick: () {
-                            _accountController.signOut(refreshToken);
-                          });
-                    },
-                    child: Icon(
-                      Icons.logout,
-                      color: Colors.white,
-                      size: 27.w,
-                    ),
-                  ),
-                ],
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              child: Icon(
+                Icons.notifications_none,
+                color: Colors.white,
+                size: 27.w,
+              ),
+            ),
+            InkWell(
+              onTap: () async {
+                SharedPreferences prefs =
+                    await SharedPreferences.getInstance();
+                refreshToken = prefs.getString('refreshToken');
+                CustomDialogs.showNoticeDialog(
+                    message: "Please don't leave 😭",
+                    image: "assets/images/icons/logout.png",
+                    closeText: 'Cancel',
+                    okText: 'Confirm',
+                    onClick: () {
+                      _accountController.signOut(refreshToken);
+                    });
+              },
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                child: Icon(
+                  Icons.logout,
+                  color: Colors.white,
+                  size: 27.w,
+                ),
               ),
             ),
           ],
@@ -124,6 +118,7 @@ class _UserProfileState extends State<UserProfile> {
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     "Hello, $name",
@@ -136,11 +131,8 @@ class _UserProfileState extends State<UserProfile> {
                               offset: const Offset(2, 2))
                         ]),
                   ),
-                  Image.asset(
-                    "assets/images/icons/personIcon.png",
-                    height: 60,
-                    width: 60,
-                  ),
+                  Icon(CustomIconsFenix.profile, color: white, size: 43.w,),
+
                 ],
               ),
             ),
@@ -156,7 +148,7 @@ class _UserProfileState extends State<UserProfile> {
                 itemBuilder: (BuildContext ctx, index) {
                   return InkWell(
                     onTap: () {
-                      if (index == 0) Get.to(() => const Account());
+                      if (index == 0) Get.to(() => Account());
                       if (index == 1) Get.to(() => const Messages());
                       if (index == 2) {
                         (_userController.getUser()!.address == '' ||

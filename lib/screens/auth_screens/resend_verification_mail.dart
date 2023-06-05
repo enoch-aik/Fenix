@@ -36,7 +36,10 @@ class ResendVerificationMail extends StatelessWidget {
                           children: [
                             SizedBox(
                               height: MediaQuery.of(context).size.height * 0.07,
-                              child: Image.asset("assets/images/logoFrame.png",fit: BoxFit.fill,),
+                              child:   Image.asset(
+                                "assets/images/fenixgradientblue.png",
+                                fit: BoxFit.fill,
+                              ),
                             ),
                             kSpacing,
 

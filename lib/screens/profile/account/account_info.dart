@@ -43,14 +43,12 @@ class AccountInfo extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: AppBar(
-          title: Expanded(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Image.asset(
-                "assets/images/fenixmall_white.png",
-                color: white,
-                height: height() * 0.075,
-              ),
+          title: Align(
+            alignment: Alignment.centerLeft,
+            child: Image.asset(
+              "assets/images/fenixmall_white.png",
+              color: white,
+              height: height() * 0.075,
             ),
           ),
           automaticallyImplyLeading: false,
@@ -74,13 +72,7 @@ class AccountInfo extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                InkWell(
-                  onTap: () => Get.back(),
-                  child: const Icon(
-                    Icons.arrow_back_ios,
-                    color: white,
-                  ),
-                ),
+               backArrow(),
                 Text(
                   "Your account Information",
                   style: TextStyle(

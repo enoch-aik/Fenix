@@ -1,57 +1,72 @@
 import 'package:fenix/const.dart';
+import 'package:fenix/helpers/widgets.dart';
 import 'package:fenix/neumorph.dart';
 import 'package:fenix/screens/profile/account/contact/contact_us.dart';
 import 'package:fenix/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../controller/account_controller.dart';
+import '../../../helpers/widgets/dialogs.dart';
 import '../../onboarding/constants.dart';
 import '../edit_profile.dart';
 import 'account_info.dart';
 import 'login_and_security.dart';
 
 class Account extends StatelessWidget {
-  const Account({Key? key}) : super(key: key);
+   Account({Key? key}) : super(key: key);
+
+  final AccountController _accountController = Get.find();
+
+
+  var refreshToken;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: AppBar(
-          title: Expanded(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Image.asset(
-                "assets/images/fenixmall_white.png",
-                color: white,
-                height: height() * 0.075,
-              ),
+          title: Align(
+            alignment: Alignment.centerLeft,
+            child: Image.asset(
+              "assets/images/fenixmall_white.png",
+              color: white,
+              height: height() * 0.075,
             ),
           ),
           automaticallyImplyLeading: false,
           actions: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.4,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Icon(
-                    Icons.notifications_none,
-                    color: Colors.white,
-                    size: 27.w,
-                  ),
-                  // Icon(
-                  //   Icons.search,
-                  //   color: Colors.white,
-                  //   size: 27.w,
-                  // ),
-                  Icon(
-                    Icons.logout,
-                    color: Colors.white,
-                    size: 27.w,
-                  ),
-                ],
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              child: Icon(
+                Icons.notifications_none,
+                color: Colors.white,
+                size: 27.w,
+              ),
+            ),
+            InkWell(
+              onTap: () async {
+                SharedPreferences prefs =
+                await SharedPreferences.getInstance();
+                refreshToken = prefs.getString('refreshToken');
+                CustomDialogs.showNoticeDialog(
+                    message: "Please don't leave 😭",
+                    image: "assets/images/icons/logout.png",
+                    closeText: 'Cancel',
+                    okText: 'Confirm',
+                    onClick: () {
+                      _accountController.signOut(refreshToken);
+                    });
+              },
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                child: Icon(
+                  Icons.logout,
+                  color: Colors.white,
+                  size: 27.w,
+                ),
               ),
             ),
           ],
@@ -75,13 +90,8 @@ class Account extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                InkWell(
-                  onTap: () => Get.back(),
-                  child: const Icon(
-                    Icons.arrow_back_ios,
-                    color: white,
-                  ),
-                ),
+               backArrow(),
+
                 Text(
                   "Your Account",
                   style: TextStyle(

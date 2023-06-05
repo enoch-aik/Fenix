@@ -76,9 +76,9 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/fenixLogoNew.png"
-  adaptive_icon_background: "assets/images/fenixLogoNew.png"
-  adaptive_icon_foreground: "assets/images/fenixLogoNew.png"
+  image_path: "assets/images/appstore.png"
+  adaptive_icon_background: "assets/images/appstore.png"
+  adaptive_icon_foreground: "assets/images/appstore.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

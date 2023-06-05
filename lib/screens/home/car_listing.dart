@@ -107,7 +107,7 @@ class _VehicleListState extends State<VehicleList> {
                     MenuTitle(icon: CustomIconsFenix.house, title: "House Rental"),
                     MenuTitle(icon: CustomIconsFenix.apartment, title: "Apartment"),
                     MenuTitle(icon: CustomIconsFenix.car, title: "Car Rental"),
-                    MenuTitle(icon: CustomIconsFenix.vector__3_, title: "Store Rental"),
+                    MenuTitle(icon: CustomIconsFenix.logout, title: "Store Rental"),
                   ],
                 ),
               ),

@@ -26,14 +26,12 @@ class ChangePassword extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: AppBar(
-          title: Expanded(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Image.asset(
-                "assets/images/fenixmall_white.png",
-                color: white,
-                height: height() * 0.075,
-              ),
+          title: Align(
+            alignment: Alignment.centerLeft,
+            child: Image.asset(
+              "assets/images/fenixmall_white.png",
+              color: white,
+              height: height() * 0.075,
             ),
           ),
           automaticallyImplyLeading: false,

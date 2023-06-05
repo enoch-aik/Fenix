@@ -4,6 +4,7 @@ import 'package:fenix/const.dart';
 import 'package:fenix/controller/account_controller.dart';
 import 'package:fenix/helpers/widgets.dart';
 import 'package:fenix/screens/auth_screens/sign_in.dart';
+import 'package:fenix/screens/home/home.dart';
 import 'package:fenix/screens/onboarding/onboarding_one.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
@@ -11,6 +12,7 @@ import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../views.dart';
 import 'onboarding_two.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -36,11 +38,12 @@ class _SplashScreenState extends State<SplashScreen> {
     print(token);
     print(refreshToken);
     Timer(
-        const Duration(seconds: 7),
+        const Duration(milliseconds: 5800),
         () => token == null
             ? Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => const OnboardingOne()))
-            : accountController.refreshToken( refreshToken,fetchUser : true));
+            :  accountController.refreshToken( refreshToken,fetchUser : true)
+    );
   }
 
 
@@ -48,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: const Color(0xFFE4F0FA),
-        body: Image.asset('assets/images/Splash.gif', fit: BoxFit.cover,height: height(),width: width(),)
+        body: Image.asset('assets/images/fenixSplash.gif', fit: BoxFit.cover,height: height(),width: width(),)
         );
   }
 }

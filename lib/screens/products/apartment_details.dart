@@ -8,9 +8,11 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 
 import '../../const.dart';
+import '../../controller/map_controller.dart';
 import '../../helpers/icons/custom_icons_icons.dart';
 import '../../helpers/widgets/slider.dart';
 import '../../neumorph.dart';
@@ -50,7 +52,7 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(
-        preferredSize: Size(MediaQuery.of(context).size.width, height() * 0.18),
+        preferredSize: Size(MediaQuery.of(context).size.width, height() * 0.06),
         child: Container(
           decoration: BoxDecoration(
             gradient: gradient(
@@ -60,75 +62,20 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
           ),
           padding: EdgeInsets.only(top: 55.h, left: 12.w, right: 12.w),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Image.asset(
-                    "assets/images/fenixmall_white.png",
-                    color: white,
-                    height: height() * 0.075,
-                  ),
+
+              InkWell(
+                onTap: () {
+                  Get.back();
+                },
+                child: Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.white,
+                  size: 30.w,
                 ),
               ),
-              const SizedBox(
-                width: 10,
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.white,
-                        size: 30.w,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () => Get.to(() => const SearchScreen()),
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * 0.050,
-                        width: MediaQuery.of(context).size.width * 0.82,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(13.w),
-                          color: Colors.white,
-                        ),
-                        child: TextField(
-                          style: TextStyle(
-                            fontSize: 16.w,
-                          ),
-                          enabled: false,
-                          decoration: InputDecoration(
-                            enabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 15,
-                                vertical:
-                                    MediaQuery.of(context).size.height * 0.015),
-                            hintText: "Search Fenix",
-                            hintStyle: Theme.of(context)
-                                .textTheme
-                                .bodyText1!
-                                .copyWith(
-                                    fontSize: 15.w,
-                                    color: Colors.grey.shade500),
-                            prefixIcon: const Icon(Icons.search),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.010,
-              )
+
             ],
           ),
         ),
@@ -552,6 +499,32 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
                   ],
                 ),
           ),
+
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 10, 15, 5),
+            child: SizedBox(
+              height: height() * 0.5,
+              child: GoogleMap(
+                mapType: MapType.satellite,
+                onMapCreated: _onMapCreated,
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(apartment['latitude'], apartment['longitude']),
+                  zoom: 14.0,
+                ),
+                markers: {
+                  Marker(
+                    markerId: MarkerId("apartmentlocation"),
+                    position: LatLng(apartment['latitude'], apartment['longitude']),
+                  )
+                },
+                myLocationEnabled: true,
+                zoomControlsEnabled: false,
+                zoomGesturesEnabled: true,
+                myLocationButtonEnabled: false,
+              ),
+            ),
+          ),
+
           divider(),
           Buttons(
             child: Center(
@@ -639,6 +612,14 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
       ),
     );
   }
+
+  final MapController _mapController = Get.find();
+
+  void _onMapCreated(GoogleMapController controller) {
+    _mapController.googleMapController = controller;
+    controller.dispose();
+  }
+
 }
 
 class ProductDetailProperty extends StatelessWidget {
@@ -744,8 +725,14 @@ class ProductWidget extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: MediaQuery.of(context).size.height * 0.42,
-          width: MediaQuery.of(context).size.width * 0.452,
+          height: MediaQuery
+              .of(context)
+              .size
+              .height * 0.42,
+          width: MediaQuery
+              .of(context)
+              .size
+              .width * 0.452,
           margin: EdgeInsets.symmetric(horizontal: 9.w),
           decoration: BoxDecoration(
               color: const Color(0xFFDAE5F2),

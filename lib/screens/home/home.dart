@@ -141,7 +141,7 @@ class _HomeState extends State<Home> {
                         MenuTitle(
                           icon: CustomIconsFenix.dacha,
                           title: "Dacha",
-                          color: tab == 'dacha' ? white : Colors.transparent,
+                          color: tab == 'dacha' ? white : light,
                           onTap: () => setState(() {
                             tab = 'dacha';
 
@@ -151,7 +151,7 @@ class _HomeState extends State<Home> {
                         MenuTitle(
                           icon: CustomIconsFenix.house,
                           title: "House",
-                          color: tab == 'house' ? white : Colors.transparent,
+                          color: tab == 'house' ? white : light,
                           onTap: () => setState(() {
                             tab = 'house';
                             _productController.getHouse();
@@ -161,7 +161,7 @@ class _HomeState extends State<Home> {
                           icon: CustomIconsFenix.apartment,
                           title: "Apartment",
                           color:
-                              tab == 'apartment' ? white : Colors.transparent,
+                              tab == 'apartment' ? white : light,
                           onTap: () => setState(() {
                             tab = 'apartment';
 
@@ -171,17 +171,17 @@ class _HomeState extends State<Home> {
                         MenuTitle(
                           icon: FontAwesomeIcons.car,
                           title: "Car",
-                          color: tab == 'car' ? white : Colors.transparent,
+                          color: tab == 'car' ? white : light,
                           onTap: () => setState(() {
                             tab = 'car';
                             _productController.getVehicle();
                           }),
                         ),
                         MenuTitle(
-                          icon: CustomIconsFenix.vector__3_,
+                          icon: FontAwesomeIcons.television,
                           title: "Electronics",
                           color:
-                              tab == 'electronics' ? white : Colors.transparent,
+                              tab == 'electronics' ? white : light,
                           onTap: () => setState(() {
                             tab = 'electronics';
                             _productController.getProducts();
@@ -771,8 +771,8 @@ class _HomeState extends State<Home> {
                                                 MediaQuery.of(context)
                                                         .size
                                                         .width *
-                                                    0.5,
-                                            childAspectRatio: 1 / 2,
+                                                    0.50,
+                                            childAspectRatio: 1 / 2.3,
                                             mainAxisSpacing: 0,
                                             crossAxisSpacing: 0),
                                     itemCount:
@@ -906,9 +906,9 @@ class ProductWidget extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: MediaQuery.of(context).size.height * 0.42,
-          width: MediaQuery.of(context).size.width * 0.452,
-          margin: EdgeInsets.symmetric(horizontal: 9.w),
+          height: MediaQuery.of(context).size.height * 0.48,
+          width: MediaQuery.of(context).size.width * 0.48,
+          margin: EdgeInsets.symmetric(horizontal: 1.w),
           decoration: BoxDecoration(
               color: const Color(0xFFDAE5F2),
               borderRadius: BorderRadius.circular(10.w),
@@ -929,8 +929,8 @@ class ProductWidget extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                height: MediaQuery.of(context).size.height * 0.25,
-                width: MediaQuery.of(context).size.width * 0.455,
+                height: MediaQuery.of(context).size.height * 0.29,
+                width: MediaQuery.of(context).size.width * 0.480,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.w),
                   image: DecorationImage(

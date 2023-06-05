@@ -27,6 +27,7 @@ class ChatController extends GetxController {
     isLoadingChats(true);
     ChatServices.getVendorChats((status, response) {
       isLoadingChats(false);
+
       if (status) {
         chats.value = response['data']['messages'];
         chatId.value = response['data']['chatId'];
@@ -42,7 +43,9 @@ class ChatController extends GetxController {
     isLoadingChats(true);
     ChatServices.getChatsById((status, response) {
       isLoadingChats(false);
+
       if (status) {
+        print( response['data']['roomId']);
         chats.value = response['data']['messages'];
         chatId.value = response['data']['chatId'];
       } else {

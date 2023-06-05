@@ -56,11 +56,12 @@ class SignIn extends StatelessWidget {
                           .bodyText1!
                           .copyWith(fontSize: 21, shadows: [
                         Shadow(
-                            color: Colors.black.withOpacity(0.25),
+                            color: dark.withOpacity(0.25),
                             offset: const Offset(0, 1),
                             blurRadius: 4)
                       ]),
                     ),
+                    kSpacing,
                     kSpacing,
                     TextFieldWidget(
                       hint: "Email & Gmail",
@@ -88,7 +89,6 @@ class SignIn extends StatelessWidget {
 
                         validator: (value) =>
                             PasswordValidator.validate(value!)),),
-                    kSpacing,
                     kSpacing,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,

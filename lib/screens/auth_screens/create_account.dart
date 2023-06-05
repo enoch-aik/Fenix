@@ -29,7 +29,7 @@ class SignUp extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.1,
                   child: Image.asset(
-                    "assets/images/logoFrame.png",
+                    "assets/images/fenixgradientblue.png",
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -66,12 +66,8 @@ class SignUp extends StatelessWidget {
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText1!
-                                .copyWith(fontSize: 21.w, shadows: [
-                              Shadow(
-                                  color: Colors.black.withOpacity(0.25),
-                                  offset: const Offset(0, 1),
-                                  blurRadius: 4)
-                            ]),
+                                .copyWith(fontSize: 21.w,
+                            ),
                           ),
                           kSpacing,
                           kSpacing,
