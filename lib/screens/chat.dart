@@ -25,7 +25,7 @@ class MessagesModel {
 
 class Chat extends StatefulWidget {
   const Chat({Key? key, this.userId, this.id, this.name}) : super(key: key);
-  final String? userId,id,name;
+  final String? userId, id, name;
 
   @override
   ChatState createState() => ChatState();
@@ -69,11 +69,11 @@ class ChatState extends State<Chat> {
     boot();
   }
 
-  getChat()async{
-    if(widget.userId!=null) {
+  getChat() async {
+    if (widget.userId != null) {
       chatController.getVendorChats(widget.userId);
     }
-    if(widget.id!=null) {
+    if (widget.id != null) {
       chatController.getChatsById(widget.id);
     }
   }
@@ -89,8 +89,7 @@ class ChatState extends State<Chat> {
         timer.cancel();
         var roomId = chatController.chatId.obs.string;
         initSocket(roomId);
-        recipient =chatController.vendorName.obs.string;
-
+        recipient = chatController.vendorName.obs.string;
       }
     });
   }
@@ -112,7 +111,6 @@ class ChatState extends State<Chat> {
       print('Success --- $data');
       _joinChat();
     });
-
 
     print(socket!.opts);
 
@@ -172,11 +170,17 @@ class ChatState extends State<Chat> {
                       Expanded(
                         child: Center(
                           child: Obx(
-                            ()=> Text(
-                              chatController.isLoadingChats.isTrue?userId:  widget.name?? recipient,
-                              softWrap: false,
-                              style: const TextStyle(color: white),
-                            ),
+                            () => chatController.isLoadingChats.isTrue
+                                ? Text(
+                                    userId,
+                                    softWrap: false,
+                                    style: const TextStyle(color: white),
+                                  )
+                                : Text(
+                                    widget.name ?? recipient,
+                                    softWrap: false,
+                                    style: const TextStyle(color: white),
+                                  ),
                           ),
                         ),
                       ),
@@ -235,7 +239,7 @@ class ChatState extends State<Chat> {
                                         ? outgoing('${message['text']}')
                                         : incoming('${message['text']}');
                                   },
-                                  order: GroupedListOrder.ASC, // optional
+                                  order: GroupedListOrder.DESC, // optional
                                 ),
                               ),
                               Container(
@@ -266,15 +270,13 @@ class ChatState extends State<Chat> {
                                       Expanded(
                                         child: TextFormField(
                                           controller: _messageController,
-                                          onFieldSubmitted: (v){
+                                          onFieldSubmitted: (v) {
                                             _sendMessage();
-
                                           },
                                           decoration: InputDecoration(
                                               contentPadding:
                                                   EdgeInsets.symmetric(
                                                       horizontal: 15.w),
-
                                               suffixIcon: IconButton(
                                                   onPressed: () {
                                                     _sendMessage();
@@ -315,7 +317,7 @@ class ChatState extends State<Chat> {
   Container incoming(message) {
     return Container(
         padding: const EdgeInsets.fromLTRB(25, 10, 25, 10),
-        margin: const EdgeInsets.only(right: 30,bottom: 20),
+        margin: const EdgeInsets.only(right: 30, bottom: 20),
         decoration: BoxDecoration(
             color: Colors.grey.withOpacity(0.4),
             borderRadius: BorderRadius.circular(20)),

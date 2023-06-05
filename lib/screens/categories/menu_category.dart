@@ -77,7 +77,7 @@ class _MenuCategoryState extends State<MenuCategory> {
               child:   GridView.builder(
                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent: 200,
-                      childAspectRatio: 1.3 / 1,
+                      childAspectRatio: 1 / 1.2,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 50),
                   itemCount: Category().allCategories.length,
@@ -105,16 +105,9 @@ class _MenuCategoryState extends State<MenuCategory> {
                             decoration: const BoxDecoration(
                               image: DecorationImage(image: AssetImage("assets/images/categoryCard.png"),fit: BoxFit.contain)
                             ),
-                            child: Stack(
-                              alignment: Alignment.bottomCenter,
-                              children: [
-                                Positioned(
-                                    child: Padding(
-                                      padding: EdgeInsets.all(10.w),
-                                      child: Image.asset("assets/images/${Category().images[index]}",fit: BoxFit.fill,),
-                                    ),
-                                ),
-                              ],
+                            child: Padding(
+                              padding: EdgeInsets.all(10.w),
+                              child: Image.asset("assets/images/${Category().images[index]}",fit: BoxFit.fill,),
                             ),
                           ),
                           Text(Category().allCategories[index]),
