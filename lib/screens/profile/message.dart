@@ -6,6 +6,7 @@ import 'package:fenix/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import '../../controller/user_controller.dart';
 import '../onboarding/constants.dart';
 
@@ -366,8 +367,7 @@ class _MessagesState extends State<Messages> {
                         ),
                       ),
                       smallHSpace(),
-                      const Text(
-                        '08:45',
+                      Text( user['lastMessageAt'] != null ? DateFormat("hh:mm a").format(DateTime.parse(user['lastMessageAt'])).toString() : "--:--",
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w400,
