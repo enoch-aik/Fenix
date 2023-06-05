@@ -378,6 +378,8 @@ class _MessagesState extends State<Messages> {
                   tiny5Space(),
                   Text(
                     '${user['lastMessage']}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(color: light, fontSize: 15),
                   ),
                 ],
