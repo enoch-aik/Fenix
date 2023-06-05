@@ -231,7 +231,7 @@ class ChatState extends State<Chat> {
                                   groupSeparatorBuilder:
                                       (String groupByValue) => smallSpace(),
                                   itemBuilder: (context, dynamic message) {
-                                    return (message['creator'] == userName)
+                                    return (message['sender'] == userName)
                                         ? outgoing('${message['text']}')
                                         : incoming('${message['text']}');
                                   },
