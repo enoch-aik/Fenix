@@ -7,6 +7,7 @@ import 'package:fenix/models/services/chat_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -237,10 +238,10 @@ class ChatState extends State<Chat> {
                                       (String groupByValue) => smallSpace(),
                                   itemBuilder: (context, dynamic message) {
                                     return (message['sender'] == userName)
-                                        ? outgoing('${message['text']}')
-                                        : incoming('${message['text']}');
+                                        ? outgoing('${message['text']}', message['createdAt'])
+                                        : incoming('${message['text']}', message['createdAt']);
                                   },
-                                  order: GroupedListOrder.DESC, // optional
+                                  order: GroupedListOrder.ASC, // optional
                                 ),
                               ),
                               Container(
