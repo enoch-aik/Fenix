@@ -40,11 +40,12 @@ class ProductController extends GetxController {
   getDacha() {
     isFetchingApartments(true);
     ProductServices.getApartmentsByType((status, response) {
+      apartmentList.clear();
       isFetchingApartments(false);
       if (status) {
-        dachaList.value = response['data'];
+        apartmentList.value = response['data'];
       } else {
-        dachaList.value = [];
+        apartmentList.value = [];
         print('Error - $response');
       }
     }, getUserToken(), Category().homeCategories[0].toString().toLowerCase());
@@ -53,11 +54,12 @@ class ProductController extends GetxController {
   getHouse() {
     isFetchingApartments(true);
     ProductServices.getApartmentsByType((status, response) {
+      apartmentList.clear();
       isFetchingApartments(false);
       if (status) {
-        houseList.value = response['data'];
+        apartmentList.value = response['data'];
       } else {
-        houseList.value = [];
+        apartmentList.value = [];
         print('Error - $response');
       }
     }, getUserToken(), Category().homeCategories[1].toString().toLowerCase());
@@ -66,6 +68,7 @@ class ProductController extends GetxController {
   getApartments() {
     isFetchingApartments(true);
     ProductServices.getApartmentsByType((status, response) {
+      apartmentList.clear();
       isFetchingApartments(false);
       if (status) {
         apartmentList.value = response['data'];

@@ -70,6 +70,7 @@ class ChatState extends State<Chat> {
     boot();
   }
 
+
   getChat() async {
     if (widget.userId != null) {
       chatController.getVendorChats(widget.userId);
@@ -204,7 +205,6 @@ class ChatState extends State<Chat> {
                                 child: GroupedListView<dynamic, String>(
                                   elements: chatController.chats.value,
                                   padding: const EdgeInsets.all(0),
-                                  physics: const NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
                                   groupBy: (item) => DateFormat('yyyy-MM-dd')
                                       .format(DateTime.parse(

@@ -144,7 +144,6 @@ class _HomeState extends State<Home> {
                           color: tab == 'dacha' ? white : light,
                           onTap: () => setState(() {
                             tab = 'dacha';
-
                             _productController.getDacha();
                           }),
                         ),
@@ -164,7 +163,6 @@ class _HomeState extends State<Home> {
                               tab == 'apartment' ? white : light,
                           onTap: () => setState(() {
                             tab = 'apartment';
-
                             _productController.getApartments();
                           }),
                         ),
