@@ -31,7 +31,6 @@ class ChatController extends GetxController {
       if (status) {
         chats.value = response['data']['messages'];
         chatId.value = response['data']['chatId'];
-        vendorName.value = response['data']['recipient'];
       } else {
         chats.value = [];
         print('Chat Error - $response');

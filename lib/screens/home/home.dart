@@ -681,121 +681,128 @@ class _HomeState extends State<Home> {
                       fontWeight: FontWeight.w700),
                 )),
 
-            tab == 'car'
-                ? Obx(
-                    () => _productController.isFetchingProducts.isTrue
-                        ? const Loader()
-                        : _productController.vehicleList.isEmpty
-                            ? empty('car')
-                            : GridView.builder(
-                                primary: false,
-                                shrinkWrap: true,
-                                gridDelegate:
-                                    SliverGridDelegateWithMaxCrossAxisExtent(
-                                        maxCrossAxisExtent:
-                                            MediaQuery.of(context).size.width *
-                                                0.5,
-                                        childAspectRatio: 1 / 2,
-                                        mainAxisSpacing: 0,
-                                        crossAxisSpacing: 0),
-                                itemCount:
-                                    _productController.productList.length,
-                                itemBuilder: (context, index) {
-                                  var item =
-                                      _productController.vehicleList[index];
-                                  return InkWell(
-                                      onTap: () {
-                                        Get.to(() => ProductDetails(
-                                              product: _productController
-                                                  .vehicleList[index],
-                                            ));
-                                      },
-                                      child: ProductWidget(
-                                          title: item['title'],
-                                          category: 'Cars',
-                                          price: item['price']['amount']
-                                              .toString(),
-                                          product: item));
-                                }),
-                  )
-                : tab == 'electronics'
-                    ? Obx(
-                        () => _productController.isFetchingProducts.isTrue
-                            ? const Loader()
-                            : _productController.productList.isEmpty
-                                ? empty('electronics')
-                                : GridView.builder(
-                                    primary: false,
-                                    shrinkWrap: true,
-                                    gridDelegate:
-                                        SliverGridDelegateWithMaxCrossAxisExtent(
-                                            maxCrossAxisExtent:
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.5,
-                                            childAspectRatio: 1 / 2,
-                                            mainAxisSpacing: 0,
-                                            crossAxisSpacing: 0),
-                                    itemCount:
-                                        _productController.productList.length,
-                                    itemBuilder: (context, index) {
-                                      var item =
-                                          _productController.productList[index];
-                                      return InkWell(
-                                          onTap: () {
-                                            Get.to(() => ProductDetails(
-                                                  product: _productController
-                                                      .productList[index],
-                                                ));
-                                          },
-                                          child: ProductWidget(
-                                              title: item['title'],
-                                              price: item['price']['amount']
-                                                  .toString(),
-                                              category: 'Electronics',
-                                              product: item));
-                                    }),
-                      )
-                    : Obx(
-                        () => _productController.isFetchingApartments.isTrue
-                            ? const Loader()
-                            : _productController.apartmentList.isEmpty
-                                ? empty(tab)
-                                : GridView.builder(
-                                    primary: false,
-                                    shrinkWrap: true,
-                                    gridDelegate:
-                                        SliverGridDelegateWithMaxCrossAxisExtent(
-                                            maxCrossAxisExtent:
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.50,
-                                            childAspectRatio: 1 / 2.3,
-                                            mainAxisSpacing: 0,
-                                            crossAxisSpacing: 0),
-                                    itemCount:
-                                        _productController.apartmentList.length,
-                                    itemBuilder: (context, index) {
-                                      var item = _productController
-                                          .apartmentList[index];
-                                      return InkWell(
-                                        onTap: () {
-                                          Get.to(() => ApartmentDetails(
-                                                apartment: _productController
-                                                    .apartmentList[index],
-                                              ));
-                                        },
-                                        child: ProductWidget(
-                                            title: item['title'],
-                                            category: item['apartmentType'],
-                                            price: item['rentPrice']['month']
-                                                .toString(),
-                                            product: item),
-                                      );
-                                    }),
-                      )
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 0.0),
+              child: Column(
+                children: [
+                  tab == 'car'
+                      ? Obx(
+                          () => _productController.isFetchingProducts.isTrue
+                              ? const Loader()
+                              : _productController.vehicleList.isEmpty
+                                  ? empty('car')
+                                  : GridView.builder(
+                                      primary: false,
+                                      shrinkWrap: true,
+                                      gridDelegate:
+                                          SliverGridDelegateWithMaxCrossAxisExtent(
+                                              maxCrossAxisExtent:
+                                                  MediaQuery.of(context).size.width *
+                                                      0.5,
+                                              childAspectRatio: 1 / 2,
+                                              mainAxisSpacing: 0,
+                                              crossAxisSpacing: 0),
+                                      itemCount:
+                                          _productController.productList.length,
+                                      itemBuilder: (context, index) {
+                                        var item =
+                                            _productController.vehicleList[index];
+                                        return InkWell(
+                                            onTap: () {
+                                              Get.to(() => ProductDetails(
+                                                    product: _productController
+                                                        .vehicleList[index],
+                                                  ));
+                                            },
+                                            child: ProductWidget(
+                                                title: item['title'],
+                                                category: 'Cars',
+                                                price: item['price']['amount']
+                                                    .toString(),
+                                                product: item));
+                                      }),
+                        )
+                      : tab == 'electronics'
+                          ? Obx(
+                              () => _productController.isFetchingProducts.isTrue
+                                  ? const Loader()
+                                  : _productController.productList.isEmpty
+                                      ? empty('electronics')
+                                      : GridView.builder(
+                                          primary: false,
+                                          shrinkWrap: true,
+                                          gridDelegate:
+                                              SliverGridDelegateWithMaxCrossAxisExtent(
+                                                  maxCrossAxisExtent:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          0.5,
+                                                  childAspectRatio: 1 / 2,
+                                                  mainAxisSpacing: 0,
+                                                  crossAxisSpacing: 0),
+                                          itemCount:
+                                              _productController.productList.length,
+                                          itemBuilder: (context, index) {
+                                            var item =
+                                                _productController.productList[index];
+                                            return InkWell(
+                                                onTap: () {
+                                                  Get.to(() => ProductDetails(
+                                                        product: _productController
+                                                            .productList[index],
+                                                      ));
+                                                },
+                                                child: ProductWidget(
+                                                    title: item['title'],
+                                                    price: item['price']['amount']
+                                                        .toString(),
+                                                    category: 'Electronics',
+                                                    product: item));
+                                          }),
+                            )
+                          : Obx(
+                              () => _productController.isFetchingApartments.isTrue
+                                  ? const Loader()
+                                  : _productController.apartmentList.isEmpty
+                                      ? empty(tab)
+                                      : GridView.builder(
+                                          primary: false,
+                                          shrinkWrap: true,
+                                          gridDelegate:
+                                              SliverGridDelegateWithMaxCrossAxisExtent(
+                                                  maxCrossAxisExtent:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          0.50,
+                                                  childAspectRatio: 1 / 2.3,
+                                                  mainAxisSpacing: 0,
+                                                  crossAxisSpacing: 0),
+                                          itemCount:
+                                              _productController.apartmentList.length,
+                                          itemBuilder: (context, index) {
+                                            var item = _productController
+                                                .apartmentList[index];
+                                            return InkWell(
+                                              onTap: () {
+                                                Get.to(() => ApartmentDetails(
+                                                      apartment: _productController
+                                                          .apartmentList[index],
+                                                    ));
+                                              },
+                                              child: ProductWidget(
+                                                  title: item['title'],
+                                                  category: item['apartmentType'],
+                                                  price: item['rentPrice']['month']
+                                                      .toString(),
+                                                  product: item),
+                                            );
+                                          }),
+                            ),
+                ],
+              ),
+            )
 
             // Container(
             //   height: 276.w,

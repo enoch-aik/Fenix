@@ -2,7 +2,6 @@ import 'package:fenix/const.dart';
 import 'package:fenix/controller/chat_controller.dart';
 import 'package:fenix/helpers/widgets.dart';
 import 'package:fenix/screens/chat.dart';
-import 'package:fenix/screens/profile/chat_screen.dart';
 import 'package:fenix/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -339,7 +338,7 @@ class _MessagesState extends State<Messages> {
         onTap: () => Get.to(() => Chat(
               id: user['id'],
               name: user['username'],
-            )),
+            ))!.then((value) => _chatController.getAllChats()),
         child: Row(
           children: [
             const Stack(

@@ -7,7 +7,6 @@ import 'package:fenix/models/services/chat_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -26,7 +25,7 @@ class MessagesModel {
 
 class Chat extends StatefulWidget {
   const Chat({Key? key, this.userId, this.id, this.name}) : super(key: key);
-  final String? userId,id,name;
+  final String? userId, id, name;
 
   @override
   ChatState createState() => ChatState();
@@ -70,11 +69,11 @@ class ChatState extends State<Chat> {
     boot();
   }
 
-  getChat()async{
-    if(widget.userId!=null) {
+  getChat() async {
+    if (widget.userId != null) {
       chatController.getVendorChats(widget.userId);
     }
-    if(widget.id!=null) {
+    if (widget.id != null) {
       chatController.getChatsById(widget.id);
     }
   }
@@ -90,8 +89,7 @@ class ChatState extends State<Chat> {
         timer.cancel();
         var roomId = chatController.chatId.obs.string;
         initSocket(roomId);
-        recipient =chatController.vendorName.obs.string;
-
+        recipient = chatController.vendorName.obs.string;
       }
     });
   }
@@ -173,11 +171,17 @@ class ChatState extends State<Chat> {
                       Expanded(
                         child: Center(
                           child: Obx(
-                            ()=> Text(
-                              chatController.isLoadingChats.isTrue?userId:  widget.name?? recipient,
-                              softWrap: false,
-                              style: const TextStyle(color: white),
-                            ),
+                            () => chatController.isLoadingChats.isTrue
+                                ? Text(
+                                    userId,
+                                    softWrap: false,
+                                    style: const TextStyle(color: white),
+                                  )
+                                : Text(
+                                    widget.name ?? recipient,
+                                    softWrap: false,
+                                    style: const TextStyle(color: white),
+                                  ),
                           ),
                         ),
                       ),
@@ -233,10 +237,10 @@ class ChatState extends State<Chat> {
                                       (String groupByValue) => smallSpace(),
                                   itemBuilder: (context, dynamic message) {
                                     return (message['sender'] == userName)
-                                        ? outgoing('${message['text']}', message['createdAt'])
-                                        : incoming('${message['text']}', message['createdAt']);
+                                        ? outgoing('${message['text']}')
+                                        : incoming('${message['text']}');
                                   },
-                                  order: GroupedListOrder.ASC, // optional
+                                  order: GroupedListOrder.DESC, // optional
                                 ),
                               ),
                               Container(
@@ -267,15 +271,13 @@ class ChatState extends State<Chat> {
                                       Expanded(
                                         child: TextFormField(
                                           controller: _messageController,
-                                          onFieldSubmitted: (v){
+                                          onFieldSubmitted: (v) {
                                             _sendMessage();
-
                                           },
                                           decoration: InputDecoration(
                                               contentPadding:
                                                   EdgeInsets.symmetric(
                                                       horizontal: 15.w),
-
                                               suffixIcon: IconButton(
                                                   onPressed: () {
                                                     _sendMessage();
