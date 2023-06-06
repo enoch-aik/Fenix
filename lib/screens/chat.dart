@@ -245,7 +245,8 @@ class ChatState extends State<Chat> {
                                         : incoming('${message['text']}',
                                             message['createdAt']);
                                   },
-                                  order: GroupedListOrder.ASC, // optional
+                                  reverse: true,
+                                  order: GroupedListOrder.DESC, // optional
                                 ),
                               ),
                               Container(

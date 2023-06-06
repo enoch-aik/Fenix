@@ -84,9 +84,22 @@ class _MessagesState extends State<Messages> {
                                           child: Obx(
                                             () => _chatController
                                                     .isLoadingAllChats.isTrue
-                                                ? const Center(
-                                                    child:
-                                                        CircularProgressIndicator())
+                                                ? Row(
+                                                    children: [
+                                                      smallHSpace(),
+                                                      const Center(
+                                                          child:
+                                                              CircularProgressIndicator()),
+                                                      smallHSpace(),
+                                                      const Center(
+                                                          child:
+                                                              CircularProgressIndicator()),
+                                                      smallHSpace(),
+                                                      const Center(
+                                                          child:
+                                                              CircularProgressIndicator()),
+                                                    ],
+                                                  )
                                                 : ListView.separated(
                                                     scrollDirection:
                                                         Axis.horizontal,
@@ -337,9 +350,10 @@ class _MessagesState extends State<Messages> {
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: () => Get.to(() => Chat(
-              id: user['id'],
-              name: user['username'],
-            ))!.then((value) => _chatController.getAllChats()),
+                  id: user['id'],
+                  name: user['username'],
+                ))!
+            .then((value) => _chatController.getAllChats()),
         child: Row(
           children: [
             const Stack(
@@ -367,8 +381,13 @@ class _MessagesState extends State<Messages> {
                         ),
                       ),
                       smallHSpace(),
-                      Text( user['lastMessageAt'] != null ? DateFormat("hh:mm a").format(DateTime.parse(user['lastMessageAt'])).toString() : "--:--",
-                        style: TextStyle(
+                      Text(
+                        user['lastMessageAt'] != null
+                            ? DateFormat("hh:mm a")
+                                .format(DateTime.parse(user['lastMessageAt']))
+                                .toString()
+                            : "--:--",
+                        style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w400,
                             fontSize: 15),
