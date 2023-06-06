@@ -70,7 +70,6 @@ class ChatState extends State<Chat> {
     boot();
   }
 
-
   getChat() async {
     if (widget.userId != null) {
       chatController.getVendorChats(widget.userId);
@@ -97,13 +96,14 @@ class ChatState extends State<Chat> {
   }
 
   Future<void> initSocket(roomId) async {
-    print('Connecting to chat service');
+    print('Connecting to chat service by $roomId');
     String url = ChatServices.getChatUrl(roomId);
     print(url);
     socket = IO.io(
         url,
         IO.OptionBuilder()
-            .setTransports(['websocket']) // for Flutter or Dart VM
+            .setTransports(['websocket'])
+            .disableAutoConnect().enableForceNewConnection() // for Flutter or Dart VM
             .setExtraHeaders(
                 {"Authorization": "Bearer $token"}) // disable auto-connection
             .build());
@@ -113,7 +113,6 @@ class ChatState extends State<Chat> {
       print('Success --- $data');
       _joinChat();
     });
-
 
     print(socket!.opts);
 
@@ -164,7 +163,10 @@ class ChatState extends State<Chat> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       InkWell(
-                        onTap: () => Get.back(),
+                        onTap: () {
+                          socket!.disconnect();
+                          Get.back();
+                        },
                         child: const Icon(
                           Icons.arrow_back,
                           color: white,
@@ -238,10 +240,12 @@ class ChatState extends State<Chat> {
                                       (String groupByValue) => smallSpace(),
                                   itemBuilder: (context, dynamic message) {
                                     return (message['sender'] == userName)
-                                        ? outgoing('${message['text']}', message['createdAt'])
-                                        : incoming('${message['text']}', message['createdAt']);
+                                        ? outgoing('${message['text']}',
+                                            message['createdAt'])
+                                        : incoming('${message['text']}',
+                                            message['createdAt']);
                                   },
-                                  order: GroupedListOrder.DESC, // optional
+                                  order: GroupedListOrder.ASC, // optional
                                 ),
                               ),
                               Container(
@@ -322,10 +326,8 @@ class ChatState extends State<Chat> {
       child: UnconstrainedBox(
         child: Container(
             padding: EdgeInsets.fromLTRB(20.w, 10, 20.w, 10),
-            margin: EdgeInsets.only(left: 12.w,bottom: 20),
-            constraints: BoxConstraints(
-                maxWidth: Get.width * 0.78
-            ),
+            margin: EdgeInsets.only(left: 12.w, bottom: 20),
+            constraints: BoxConstraints(maxWidth: Get.width * 0.78),
             decoration: BoxDecoration(
                 color: Color(0xFF373E4E),
                 borderRadius: BorderRadius.circular(20)),
@@ -334,12 +336,22 @@ class ChatState extends State<Chat> {
               children: [
                 Text(
                   message,
-                  style: GoogleFonts.poppins().copyWith(color: white, fontSize: 14, height: 1.5,),
+                  style: GoogleFonts.poppins().copyWith(
+                    color: white,
+                    fontSize: 14,
+                    height: 1.5,
+                  ),
                 ),
                 tiny5Space(),
-                Text(DateFormat("hh:mm a").format(DateTime.parse(timeSent)),
+                Text(
+                  DateFormat("hh:mm a").format(DateTime.parse(timeSent)),
                   textAlign: TextAlign.end,
-                  style: GoogleFonts.poppins().copyWith(color: white, fontSize: 9.w, fontWeight: FontWeight.w500, height: 1.5,),
+                  style: GoogleFonts.poppins().copyWith(
+                    color: white,
+                    fontSize: 9.w,
+                    fontWeight: FontWeight.w500,
+                    height: 1.5,
+                  ),
                 ),
               ],
             )),
@@ -354,23 +366,32 @@ class ChatState extends State<Chat> {
         child: Container(
             padding: EdgeInsets.fromLTRB(20.w, 10, 20.w, 10),
             margin: EdgeInsets.only(right: 12.w, bottom: 20),
-            constraints: BoxConstraints(
-              maxWidth: Get.width * 0.78
-            ),
+            constraints: BoxConstraints(maxWidth: Get.width * 0.78),
             decoration: BoxDecoration(
-                color: Color(0xFF7A8194), borderRadius: BorderRadius.circular(20)),
+                color: Color(0xFF7A8194),
+                borderRadius: BorderRadius.circular(20)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
                   message,
                   textAlign: TextAlign.end,
-                  style: GoogleFonts.poppins().copyWith(color: white, fontSize: 14, height: 1.5,),
+                  style: GoogleFonts.poppins().copyWith(
+                    color: white,
+                    fontSize: 14,
+                    height: 1.5,
+                  ),
                 ),
                 tiny5Space(),
-                Text(DateFormat("hh:mm a").format(DateTime.parse(timeSent)),
+                Text(
+                  DateFormat("hh:mm a").format(DateTime.parse(timeSent)),
                   textAlign: TextAlign.end,
-                  style: GoogleFonts.poppins().copyWith(color: white, fontSize: 9.w, fontWeight: FontWeight.w500, height: 1.5,),
+                  style: GoogleFonts.poppins().copyWith(
+                    color: white,
+                    fontSize: 9.w,
+                    fontWeight: FontWeight.w500,
+                    height: 1.5,
+                  ),
                 ),
               ],
             )),
