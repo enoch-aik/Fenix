@@ -81,14 +81,24 @@ class ProductController extends GetxController {
 
   clearSearch(category) {
     if (category == 'car') {
+      isFetchingVehicles(true);
+
       getVehicle();
     } else if (category == 'electronics') {
+      isFetchingProducts(true);
+
       getProducts();
     } else if (category == 'dacha') {
+      isFetchingDacha(true);
+
       getDacha();
     } else if (category == 'house') {
+      isFetchingHouse(true);
+
       getHouse();
     } else {
+      isFetchingApartments(true);
+
       getApartments();
     }
   }
@@ -97,7 +107,7 @@ class ProductController extends GetxController {
     if (category == 'car') {
       searchVehicle(searchWord);
     } else if (category == 'electronics') {
-      searchVehicle(searchWord);
+      searchProduct(searchWord);
     } else {
       searchApartments(searchWord);
     }
