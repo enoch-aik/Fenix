@@ -712,6 +712,7 @@ class _HomeState extends State<Home> {
                                                         .vehicleList[index],
                                                   ));
                                             },
+
                                             child: ProductWidget(
                                                 title: item['title'],
                                                 category: 'Cars',
