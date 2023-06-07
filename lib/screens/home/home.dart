@@ -1220,7 +1220,7 @@ Center empty(title) {
     mainAxisAlignment: MainAxisAlignment.center,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-      mediumSpace(),
+    verticalSpace(0.1),
       Image.asset(
         'assets/images/icons/empty-cart.png',
         color: grey,

@@ -153,7 +153,7 @@ class ProductController extends GetxController {
   }
 
   getProducts() {
-    isFetchingProducts(true);
+    // isFetchingProducts(true);
     ProductServices.getProductsByCategory((status, response) {
       isFetchingProducts(false);
       if (status) {
