@@ -807,97 +807,110 @@ class _HomeState extends State<Home> {
                                                       product: item),
                                                 );
                                               }),
-                                ): tab == 'house'
-                              ? Obx(
-                                  () => _productController
-                                          .isFetchingHouse.isTrue
-                                      ? const Loader()
-                                      : _productController.houseList.isEmpty
-                                          ? empty(tab)
-                                          : GridView.builder(
-                                              primary: false,
-                                              shrinkWrap: true,
-                                              gridDelegate:
-                                                  SliverGridDelegateWithMaxCrossAxisExtent(
-                                                      maxCrossAxisExtent:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.50,
-                                                      childAspectRatio: 1 / 2.2,
-                                                      mainAxisSpacing: 0,
-                                                      crossAxisSpacing: 5),
-                                              itemCount: _productController
-                                                  .houseList.length,
-                                              itemBuilder: (context, index) {
-                                                var item = _productController
-                                                    .houseList[index];
-                                                return InkWell(
-                                                  onTap: () {
-                                                    Get.to(
-                                                        () => ApartmentDetails(
+                                )
+                              : tab == 'house'
+                                  ? Obx(
+                                      () => _productController
+                                              .isFetchingHouse.isTrue
+                                          ? const Loader()
+                                          : _productController.houseList.isEmpty
+                                              ? empty(tab)
+                                              : GridView.builder(
+                                                  primary: false,
+                                                  shrinkWrap: true,
+                                                  gridDelegate:
+                                                      SliverGridDelegateWithMaxCrossAxisExtent(
+                                                          maxCrossAxisExtent:
+                                                              MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.50,
+                                                          childAspectRatio:
+                                                              1 / 2.2,
+                                                          mainAxisSpacing: 0,
+                                                          crossAxisSpacing: 5),
+                                                  itemCount: _productController
+                                                      .houseList.length,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    var item =
+                                                        _productController
+                                                            .houseList[index];
+                                                    return InkWell(
+                                                      onTap: () {
+                                                        Get.to(() =>
+                                                            ApartmentDetails(
                                                               apartment:
                                                                   _productController
                                                                           .houseList[
                                                                       index],
                                                             ));
-                                                  },
-                                                  child: ProductWidget(
-                                                      title: item['title'],
-                                                      category:
-                                                          item['apartmentType'],
-                                                      price: item['rentPrice']
-                                                              ['month']
-                                                          .toString(),
-                                                      product: item),
-                                                );
-                                              }),
-                                )
-                              : Obx(
-                                  () => _productController
-                                          .isFetchingApartments.isTrue
-                                      ? const Loader()
-                                      : _productController.apartmentList.isEmpty
-                                          ? empty(tab)
-                                          : GridView.builder(
-                                              primary: false,
-                                              shrinkWrap: true,
-                                              gridDelegate:
-                                                  SliverGridDelegateWithMaxCrossAxisExtent(
-                                                      maxCrossAxisExtent:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.50,
-                                                      childAspectRatio: 1 / 2.2,
-                                                      mainAxisSpacing: 0,
-                                                      crossAxisSpacing: 5),
-                                              itemCount: _productController
-                                                  .apartmentList.length,
-                                              itemBuilder: (context, index) {
-                                                var item = _productController
-                                                    .apartmentList[index];
-                                                return InkWell(
-                                                  onTap: () {
-                                                    Get.to(
-                                                        () => ApartmentDetails(
+                                                      },
+                                                      child: ProductWidget(
+                                                          title: item['title'],
+                                                          category: item[
+                                                              'apartmentType'],
+                                                          price:
+                                                              item['rentPrice']
+                                                                      ['month']
+                                                                  .toString(),
+                                                          product: item),
+                                                    );
+                                                  }),
+                                    )
+                                  : Obx(
+                                      () => _productController
+                                              .isFetchingApartments.isTrue
+                                          ? const Loader()
+                                          : _productController
+                                                  .apartmentList.isEmpty
+                                              ? empty(tab)
+                                              : GridView.builder(
+                                                  primary: false,
+                                                  shrinkWrap: true,
+                                                  gridDelegate:
+                                                      SliverGridDelegateWithMaxCrossAxisExtent(
+                                                          maxCrossAxisExtent:
+                                                              MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.50,
+                                                          childAspectRatio:
+                                                              1 / 2.2,
+                                                          mainAxisSpacing: 0,
+                                                          crossAxisSpacing: 5),
+                                                  itemCount: _productController
+                                                      .apartmentList.length,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    var item =
+                                                        _productController
+                                                                .apartmentList[
+                                                            index];
+                                                    return InkWell(
+                                                      onTap: () {
+                                                        Get.to(() =>
+                                                            ApartmentDetails(
                                                               apartment:
                                                                   _productController
                                                                           .apartmentList[
                                                                       index],
                                                             ));
-                                                  },
-                                                  child: ProductWidget(
-                                                      title: item['title'],
-                                                      category:
-                                                          item['apartmentType'],
-                                                      price: item['rentPrice']
-                                                              ['month']
-                                                          .toString(),
-                                                      product: item),
-                                                );
-                                              }),
-                                ),
+                                                      },
+                                                      child: ProductWidget(
+                                                          title: item['title'],
+                                                          category: item[
+                                                              'apartmentType'],
+                                                          price:
+                                                              item['rentPrice']
+                                                                      ['month']
+                                                                  .toString(),
+                                                          product: item),
+                                                    );
+                                                  }),
+                                    ),
                 ],
               ),
             )
@@ -1220,7 +1233,7 @@ Center empty(title) {
     mainAxisAlignment: MainAxisAlignment.center,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-    verticalSpace(0.1),
+      verticalSpace(0.1),
       Image.asset(
         'assets/images/icons/empty-cart.png',
         color: grey,
