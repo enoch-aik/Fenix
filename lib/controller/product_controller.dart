@@ -38,37 +38,37 @@ class ProductController extends GetxController {
   }
 
   getDacha() {
-    isFetchingApartments(true);
+    // isFetchingApartments(true);
     ProductServices.getApartmentsByType((status, response) {
-      apartmentList.clear();
-      isFetchingApartments(false);
+      // apartmentList.clear();
+      isFetchingDacha(false);
       if (status) {
-        apartmentList.value = response['data'];
+        dachaList.value = response['data'];
       } else {
-        apartmentList.value = [];
+        dachaList.value = [];
         print('Error - $response');
       }
     }, getUserToken(), Category().homeCategories[0].toString().toLowerCase());
   }
 
   getHouse() {
-    isFetchingApartments(true);
+    // isFetchingApartments(true);
     ProductServices.getApartmentsByType((status, response) {
-      apartmentList.clear();
-      isFetchingApartments(false);
+      // apartmentList.clear();
+      isFetchingHouse(false);
       if (status) {
-        apartmentList.value = response['data'];
+        houseList.value = response['data'];
       } else {
-        apartmentList.value = [];
+        houseList.value = [];
         print('Error - $response');
       }
     }, getUserToken(), Category().homeCategories[1].toString().toLowerCase());
   }
 
   getApartments() {
-    isFetchingApartments(true);
+    // isFetchingApartments(true);
     ProductServices.getApartmentsByType((status, response) {
-      apartmentList.clear();
+      // apartmentList.clear();
       isFetchingApartments(false);
       if (status) {
         apartmentList.value = response['data'];
@@ -117,7 +117,7 @@ class ProductController extends GetxController {
   }
 
   searchVehicle(searchWord) {
-    isFetchingProducts(true);
+    // isFetchingProducts(true);
     ProductServices.getVehiclesByTitle((status, response) {
       isFetchingProducts(false);
       if (status) {
@@ -156,7 +156,7 @@ class ProductController extends GetxController {
   }
 
   getVehicle() {
-    isFetchingProducts(true);
+    // isFetchingProducts(true);
     ProductServices.getProductsByCategory((status, response) {
       isFetchingProducts(false);
       if (status) {
