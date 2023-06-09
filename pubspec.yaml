@@ -54,14 +54,9 @@ dependencies:
   location:
   shimmer:
   socket_io_client: ^2.0.2
-#  flutter_google_places_hoc081098: ^1.2.0
-#  google_maps_webservice:
   geocoding: ^2.1.0
-#  google_places_flutter: ^2.0.5
   open_mail_app: ^0.4.5
   google_places_for_flutter: ^1.0.1
-  grouped_list:
-  collection:
   sticky_grouped_list: ^3.1.0
 
 dev_dependencies:
