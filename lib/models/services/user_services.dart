@@ -67,6 +67,18 @@ class UserServices {
     }
   }
 
+  static updateUserLocation(
+      Function callback,data,token) async {
+    var response =
+    await ApiServices.initialisePatchRequest(url: updateLocationUrl, token: token,data: data);
+
+    if (response is String) {
+      callback(false, response);
+    } else {
+      callback(true, response);
+    }
+  }
+
 
 
   static createUser(

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:fenix/controller/account_controller.dart';
 import 'package:fenix/controller/product_controller.dart';
+import 'package:fenix/models/services/location_service.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -51,6 +52,7 @@ class UserController extends GetxController {
   setRefresh(refreshToken) => _refreshToken = refreshToken;
 
   fetchUser(token) {
+    updateLocation(token);
     UserServices.getUser((status, response) {
       print(response);
       if (status) {
@@ -59,7 +61,7 @@ class UserController extends GetxController {
         if (response.toString().contains('profile yet')) {
           CustomSnackBar.failedSnackBar(
               'Welcome!', 'Update your profile to continue');
-          Get.off(() => Views());
+          Get.off(() => const Views());
         } else {
           CustomSnackBar.failedSnackBar('Failed', '$response');
         }
@@ -88,6 +90,20 @@ class UserController extends GetxController {
       "country": country,
       "username": username
     }, token);
+  }
+
+  updateLocation(token) {
+    double lat = 0.0, lon = 0.0;
+    LocationServices.determinePosition().then((value) {
+      lat = value.latitude;
+      lon = value.latitude;
+    });
+    UserServices.updateUserLocation((status, response) {
+      if (status) {
+      } else {
+        CustomSnackBar.failedSnackBar('Failed', '$response');
+      }
+    }, {"latitude": '$lat', "longitude": '$lon'}, token);
   }
 
   createProfile(token,

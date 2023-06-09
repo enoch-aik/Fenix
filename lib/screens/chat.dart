@@ -35,13 +35,14 @@ class Chat extends StatefulWidget {
 class ChatState extends State<Chat> {
   final TextEditingController _messageController = TextEditingController();
   UserController userController = Get.find();
-  ChatController chatController = Get.put(ChatController());
   String token = '';
   String userId = '';
   String userName = '';
   String recipient = '';
-
+  String roomId = '';
+  bool isLoadingChat = true;
   IO.Socket? socket;
+  List chats = [];
 
   void _sendMessage() {
     String messageText = _messageController.text.trim();
@@ -72,27 +73,62 @@ class ChatState extends State<Chat> {
 
   getChat() async {
     if (widget.userId != null) {
-      chatController.getVendorChats(widget.userId);
+      getVendorChats(widget.userId);
     }
     if (widget.id != null) {
-      chatController.getChatsById(widget.id);
+      getChatsById(widget.id);
     }
+
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (roomId.isNotEmpty) {
+        timer.cancel();
+        initSocket(roomId);
+      }
+    });
   }
 
   boot() async {
     token = userController.getToken();
     userId = userController.getUser()!.userId.toString();
     userName = userController.getUser()!.username.toString();
-    print('my user $userId');
+    recipient = widget.name!;
     getChat();
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (chatController.chatId.isNotEmpty) {
-        timer.cancel();
-        var roomId = chatController.chatId.obs.string;
-        initSocket(roomId);
-        recipient = chatController.vendorName.obs.string;
+    setState(() {});
+  }
+
+  getVendorChats(vendorId) {
+    isLoadingChat = true;
+
+    ChatServices.getVendorChats((status, response) {
+      isLoadingChat = false;
+
+      if (status) {
+        chats = response['data']['messages'];
+        roomId = response['data']['chatId'];
+        setState(() {});
+      } else {
+        chats = [];
+        print('Chat Error - $response');
       }
-    });
+    }, token, vendorId);
+  }
+
+  getChatsById(id) {
+    isLoadingChat = true;
+
+    ChatServices.getChatsById((status, response) {
+      isLoadingChat = false;
+
+      if (status) {
+        chats = response['data']['messages'];
+        roomId = response['data']['chatId'];
+        setState(() {});
+      } else {
+        chats = [];
+        print('Chat Error - $response');
+      }
+    }, token, id);
+    setState(() {});
   }
 
   Future<void> initSocket(roomId) async {
@@ -103,7 +139,8 @@ class ChatState extends State<Chat> {
         url,
         IO.OptionBuilder()
             .setTransports(['websocket'])
-            .disableAutoConnect().enableForceNewConnection() // for Flutter or Dart VM
+            .disableAutoConnect()
+            .enableForceNewConnection() // for Flutter or Dart VM
             .setExtraHeaders(
                 {"Authorization": "Bearer $token"}) // disable auto-connection
             .build());
@@ -113,8 +150,6 @@ class ChatState extends State<Chat> {
       print('Success --- $data');
       _joinChat();
     });
-
-    print(socket!.opts);
 
     socket!.onError((data) => print('Error --- $data'));
     socket!.onDisconnect((data) => print('Disconnect --- $data'));
@@ -131,6 +166,7 @@ class ChatState extends State<Chat> {
   @override
   void dispose() {
     _messageController.dispose();
+    socket!.close();
     socket!.disconnect();
     super.dispose();
   }
@@ -165,6 +201,8 @@ class ChatState extends State<Chat> {
                       InkWell(
                         onTap: () {
                           socket!.disconnect();
+                          socket!.close();
+
                           Get.back();
                         },
                         child: const Icon(
@@ -174,19 +212,17 @@ class ChatState extends State<Chat> {
                       ),
                       Expanded(
                         child: Center(
-                          child: Obx(
-                            () => chatController.isLoadingChats.isTrue
-                                ? Text(
-                                    userId,
-                                    softWrap: false,
-                                    style: const TextStyle(color: white),
-                                  )
-                                : Text(
-                                    widget.name ?? recipient,
-                                    softWrap: false,
-                                    style: const TextStyle(color: white),
-                                  ),
-                          ),
+                          child: isLoadingChat
+                              ? Text(
+                                  userId,
+                                  softWrap: false,
+                                  style: const TextStyle(color: white),
+                                )
+                              : Text(
+                                  widget.name ?? recipient,
+                                  softWrap: false,
+                                  style: const TextStyle(color: white),
+                                ),
                         ),
                       ),
                       Image.asset(
@@ -198,120 +234,117 @@ class ChatState extends State<Chat> {
                   ),
                 ),
                 Expanded(
-                  child: Obx(
-                    () => chatController.isLoadingChats.isTrue
-                        ? const Center(child: CircularProgressIndicator())
-                        : Column(
-                            children: [
-                              Expanded(
-                                child: GroupedListView<dynamic, String>(
-                                  elements: chatController.chats.value,
-                                  padding: const EdgeInsets.all(0),
-                                  shrinkWrap: true,
-                                  groupBy: (item) => DateFormat('yyyy-MM-dd')
-                                      .format(DateTime.parse(
-                                          item['createdAt'].toString()))
-                                      .toString(),
-                                  groupHeaderBuilder: (item) => Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(0, 15, 0, 8),
-                                    child: Center(
-                                      child: Text(
-                                        DateFormat('yyyy-MM-dd')
-                                                    .format(DateTime.parse(
-                                                        item['createdAt']
-                                                            .toString()))
-                                                    .toString() ==
-                                                DateFormat('yyyy-MM-dd')
-                                                    .format(DateTime.now())
-                                                    .toString()
-                                            ? 'Today'
-                                            : DateFormat.MMMEd().format(
-                                                DateTime.parse(item['createdAt']
-                                                    .toString())),
-                                        style: const TextStyle(
-                                            fontSize: 13,
-                                            color: white,
-                                            fontWeight: FontWeight.w300),
-                                      ),
+                  child: isLoadingChat
+                      ? const Center(child: CircularProgressIndicator())
+                      : Column(
+                          children: [
+                            Expanded(
+                              child: GroupedListView<dynamic, String>(
+                                elements: chats,
+                                padding: const EdgeInsets.all(0),
+                                shrinkWrap: true,
+                                groupBy: (item) => DateFormat('yyyy-MM-dd')
+                                    .format(DateTime.parse(
+                                        item['createdAt'].toString()))
+                                    .toString(),
+                                groupHeaderBuilder: (item) => Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 15, 0, 8),
+                                  child: Center(
+                                    child: Text(
+                                      DateFormat('yyyy-MM-dd')
+                                                  .format(DateTime.parse(
+                                                      item['createdAt']
+                                                          .toString()))
+                                                  .toString() ==
+                                              DateFormat('yyyy-MM-dd')
+                                                  .format(DateTime.now())
+                                                  .toString()
+                                          ? 'Today'
+                                          : DateFormat.MMMEd().format(
+                                              DateTime.parse(item['createdAt']
+                                                  .toString())),
+                                      style: const TextStyle(
+                                          fontSize: 13,
+                                          color: white,
+                                          fontWeight: FontWeight.w300),
                                     ),
                                   ),
-                                  groupSeparatorBuilder:
-                                      (String groupByValue) => smallSpace(),
-                                  itemBuilder: (context, dynamic message) {
-                                    return (message['sender'] == userName)
-                                        ? outgoing('${message['text']}',
-                                            message['createdAt'])
-                                        : incoming('${message['text']}',
-                                            message['createdAt']);
-                                  },
-                                  reverse: true,
-                                  order: GroupedListOrder.DESC, // optional
+                                ),
+                                groupSeparatorBuilder: (String groupByValue) =>
+                                    smallSpace(),
+                                itemBuilder: (context, dynamic message) {
+                                  return (message['sender'] == userName)
+                                      ? outgoing('${message['text']}',
+                                          message['createdAt'])
+                                      : incoming('${message['text']}',
+                                          message['createdAt']);
+                                },
+                                // reverse: true,
+                                order: GroupedListOrder.ASC, // optional
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: const Color(0xFF1F4167),
+                                  borderRadius: const BorderRadius.vertical(
+                                      top: Radius.circular(15)),
+                                  gradient: gradient(const Color(0xFF1F4167),
+                                      const Color(0xFF000000))),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 10, 20, 17),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                        decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: white),
+                                        child: const Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Icon(Icons.camera_alt_outlined,
+                                              size: 20),
+                                        )),
+                                    tinyHSpace(),
+                                    Expanded(
+                                      child: TextFormField(
+                                        controller: _messageController,
+                                        onFieldSubmitted: (v) {
+                                          _sendMessage();
+                                        },
+                                        decoration: InputDecoration(
+                                            contentPadding:
+                                                EdgeInsets.symmetric(
+                                                    horizontal: 15.w),
+                                            suffixIcon: IconButton(
+                                                onPressed: () {
+                                                  _sendMessage();
+                                                },
+                                                icon: const Icon(
+                                                    Icons.send_outlined)),
+                                            fillColor: white,
+                                            filled: true,
+                                            border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                                borderSide: const BorderSide(
+                                                    color: white))),
+                                      ),
+                                    ),
+                                    tinyH5Space(),
+                                    const Icon(
+                                      Icons.mic_none_outlined,
+                                      color: white,
+                                      size: 35,
+                                    )
+                                  ],
                                 ),
                               ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: const Color(0xFF1F4167),
-                                    borderRadius: const BorderRadius.vertical(
-                                        top: Radius.circular(15)),
-                                    gradient: gradient(const Color(0xFF1F4167),
-                                        const Color(0xFF000000))),
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(20, 10, 20, 17),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                          decoration: const BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: white),
-                                          child: const Padding(
-                                            padding: EdgeInsets.all(8.0),
-                                            child: Icon(
-                                                Icons.camera_alt_outlined,
-                                                size: 20),
-                                          )),
-                                      tinyHSpace(),
-                                      Expanded(
-                                        child: TextFormField(
-                                          controller: _messageController,
-                                          onFieldSubmitted: (v) {
-                                            _sendMessage();
-                                          },
-                                          decoration: InputDecoration(
-                                              contentPadding:
-                                                  EdgeInsets.symmetric(
-                                                      horizontal: 15.w),
-                                              suffixIcon: IconButton(
-                                                  onPressed: () {
-                                                    _sendMessage();
-                                                  },
-                                                  icon: const Icon(
-                                                      Icons.send_outlined)),
-                                              fillColor: white,
-                                              filled: true,
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(30),
-                                                  borderSide: const BorderSide(
-                                                      color: white))),
-                                        ),
-                                      ),
-                                      tinyH5Space(),
-                                      const Icon(
-                                        Icons.mic_none_outlined,
-                                        color: white,
-                                        size: 35,
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                  ),
+                            )
+                          ],
+                        ),
                 ),
               ],
             ),
