@@ -62,6 +62,7 @@ dependencies:
   google_places_for_flutter: ^1.0.1
   grouped_list:
   collection:
+  sticky_grouped_list: ^3.1.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1

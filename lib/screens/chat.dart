@@ -11,6 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:sticky_grouped_list/sticky_grouped_list.dart';
 
 import '../const.dart';
 import '../theme.dart';
@@ -238,119 +239,166 @@ class ChatState extends State<Chat> {
                       : Column(
                           children: [
                             Expanded(
-                                child: ListView.separated(
-                                    itemBuilder: (context, i) {
-                                      bool isSameDate = true;
-                                      final String dateString =
-                                          chats[i]['createdAt'];
-                                      final DateTime date =
-                                          DateTime.parse(dateString);
-                                      final item = chats[i];
-                                      if (i == 0) {
-                                        isSameDate = false;
-                                      } else {
-                                        final String prevDateString =
-                                            chats[i - 1]['createdAt'];
-                                        final DateTime prevDate =
-                                            DateTime.parse(prevDateString);
-                                        isSameDate = date.isSameDate(prevDate);
-                                      }
+                              child:
 
-                                      var message = chats[i];
+                                  // ListView.separated(
+                                  //     itemBuilder: (context, i) {
+                                  //       bool isSameDate = true;
+                                  //       final String dateString =
+                                  //           chats[i]['createdAt'];
+                                  //       final DateTime date =
+                                  //           DateTime.parse(dateString);
+                                  //       var message = chats[i];
+                                  //
+                                  //       if (i == 0) {
+                                  //         isSameDate = false;
+                                  //       } else {
+                                  //         final String prevDateString =
+                                  //             chats[i - 1]['createdAt'];
+                                  //         final DateTime prevDate =
+                                  //             DateTime.parse(prevDateString);
+                                  //         isSameDate = date.isSameDate(prevDate);
+                                  //       }
+                                  //
+                                  //
+                                  //       if (i == 0 || !(isSameDate)) {
+                                  //         return Column(children: [
+                                  //         Padding(
+                                  //             padding:
+                                  //                 const EdgeInsets.fromLTRB(0, 15, 0, 8),
+                                  //             child: Center(
+                                  //               child: Text(
+                                  //                 DateFormat('yyyy-MM-dd')
+                                  //                             .format(DateTime.parse(
+                                  //                     message['createdAt']
+                                  //                                     .toString()))
+                                  //                             .toString() ==
+                                  //                         DateFormat('yyyy-MM-dd')
+                                  //                             .format(DateTime.now())
+                                  //                             .toString()
+                                  //                     ? 'Today'
+                                  //                     : DateFormat.MMMEd().format(
+                                  //                         DateTime.parse(message['createdAt']
+                                  //                             .toString())),
+                                  //                 style: const TextStyle(
+                                  //                     fontSize: 13,
+                                  //                     color: white,
+                                  //                     fontWeight: FontWeight.w300),
+                                  //               ),
+                                  //             ),
+                                  //           ),
+                                  //           (message['sender'] == userName)
+                                  //               ? outgoing('${message['text']}',
+                                  //                   message['createdAt'])
+                                  //               : incoming('${message['text']}',
+                                  //                   message['createdAt'])
+                                  //         ]);
+                                  //       } else {
+                                  //         return (message['sender'] == userName)
+                                  //             ? outgoing('${message['text']}',
+                                  //                 message['createdAt'])
+                                  //             : incoming('${message['text']}',
+                                  //                 message['createdAt']);
+                                  //       }
+                                  //
+                                  //
+                                  //     },
+                                  //     shrinkWrap: true,
+                                  //     reverse: true,
+                                  //     separatorBuilder: (context, i) =>
+                                  //         smallSpace(),
+                                  //     itemCount: chats.length)
 
-                                      if (i == 0 || !(isSameDate)) {
-                                        return Column(children: [
-                                        Padding(
-                                            padding:
-                                                const EdgeInsets.fromLTRB(0, 15, 0, 8),
-                                            child: Center(
-                                              child: Text(
-                                                DateFormat('yyyy-MM-dd')
-                                                            .format(DateTime.parse(
-                                                                item['createdAt']
-                                                                    .toString()))
-                                                            .toString() ==
-                                                        DateFormat('yyyy-MM-dd')
-                                                            .format(DateTime.now())
-                                                            .toString()
-                                                    ? 'Today'
-                                                    : DateFormat.MMMEd().format(
-                                                        DateTime.parse(item['createdAt']
-                                                            .toString())),
-                                                style: const TextStyle(
-                                                    fontSize: 13,
-                                                    color: white,
-                                                    fontWeight: FontWeight.w300),
-                                              ),
+                                  // GroupedListView<dynamic, String>(
+                                  //   elements: chats,
+                                  //   padding: const EdgeInsets.all(0),
+                                  //   shrinkWrap: true,
+                                  //   groupBy: (item) => DateFormat('yyyy-MM-dd')
+                                  //       .format(DateTime.parse(
+                                  //           item['createdAt'].toString()))
+                                  //       .toString(),
+                                  //   groupHeaderBuilder: (item) => Padding(
+                                  //     padding:
+                                  //         const EdgeInsets.fromLTRB(0, 15, 0, 8),
+                                  //     child: Center(
+                                  //       child: Text(
+                                  //         DateFormat('yyyy-MM-dd')
+                                  //                     .format(DateTime.parse(
+                                  //                         item['createdAt']
+                                  //                             .toString()))
+                                  //                     .toString() ==
+                                  //                 DateFormat('yyyy-MM-dd')
+                                  //                     .format(DateTime.now())
+                                  //                     .toString()
+                                  //             ? 'Today'
+                                  //             : DateFormat.MMMEd().format(
+                                  //                 DateTime.parse(item['createdAt']
+                                  //                     .toString())),
+                                  //         style: const TextStyle(
+                                  //             fontSize: 13,
+                                  //             color: white,
+                                  //             fontWeight: FontWeight.w300),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  //   groupSeparatorBuilder: (String groupByValue) =>
+                                  //       smallSpace(),
+                                  //   itemBuilder: (context, dynamic message) {
+                                  //     return (message['sender'] == userName)
+                                  //         ? outgoing('${message['text']}',
+                                  //             message['createdAt'])
+                                  //         : incoming('${message['text']}',
+                                  //             message['createdAt']);
+                                  //   },
+                                  //   // reverse: true,
+                                  //   order: GroupedListOrder.ASC, // optional
+                                  // ),
+
+                                  StickyGroupedListView<dynamic, String>(
+                                elements: chats,
+                                order: StickyGroupedListOrder.ASC,
+                                groupBy: (item) => DateFormat('yyyy-MM-dd')
+                                    .format(DateTime.parse(
+                                        item['createdAt'].toString()))
+                                    .toString(),
+                                floatingHeader: true,
+
+                                    itemComparator: (dynamic element1, dynamic element2) =>
+                                        element1['createdAt'].compareTo(element2['createdAt']),
+                                groupSeparatorBuilder: (dynamic element) =>
+                                    Padding(
+                                          padding:
+                                              const EdgeInsets.fromLTRB(0, 15, 0, 8),
+                                          child: Center(
+                                            child: Text(
+                                              DateFormat('yyyy-MM-dd')
+                                                          .format(DateTime.parse(
+                                                  element['createdAt']
+                                                                  .toString()))
+                                                          .toString() ==
+                                                      DateFormat('yyyy-MM-dd')
+                                                          .format(DateTime.now())
+                                                          .toString()
+                                                  ? 'Today'
+                                                  : DateFormat.MMMEd().format(
+                                                      DateTime.parse(element['createdAt']
+                                                          .toString())),
+                                              style: const TextStyle(
+                                                  fontSize: 13,
+                                                  color: white,
+                                                  fontWeight: FontWeight.w300),
                                             ),
                                           ),
-                                          (message['sender'] == userName)
-                                              ? outgoing('${message['text']}',
-                                                  message['createdAt'])
-                                              : incoming('${message['text']}',
-                                                  message['createdAt'])
-                                        ]);
-                                      } else {
-                                        return (message['sender'] == userName)
-                                            ? outgoing('${message['text']}',
-                                                message['createdAt'])
-                                            : incoming('${message['text']}',
-                                                message['createdAt']);
-                                      }
-
-
-                                    },
-                                    shrinkWrap: true,
-                                    reverse: true,
-                                    separatorBuilder: (context, i) =>
-                                        smallSpace(),
-                                    itemCount: chats.length)
-
-                                // GroupedListView<dynamic, String>(
-                                //   elements: chats,
-                                //   padding: const EdgeInsets.all(0),
-                                //   shrinkWrap: true,
-                                //   groupBy: (item) => DateFormat('yyyy-MM-dd')
-                                //       .format(DateTime.parse(
-                                //           item['createdAt'].toString()))
-                                //       .toString(),
-                                //   groupHeaderBuilder: (item) => Padding(
-                                //     padding:
-                                //         const EdgeInsets.fromLTRB(0, 15, 0, 8),
-                                //     child: Center(
-                                //       child: Text(
-                                //         DateFormat('yyyy-MM-dd')
-                                //                     .format(DateTime.parse(
-                                //                         item['createdAt']
-                                //                             .toString()))
-                                //                     .toString() ==
-                                //                 DateFormat('yyyy-MM-dd')
-                                //                     .format(DateTime.now())
-                                //                     .toString()
-                                //             ? 'Today'
-                                //             : DateFormat.MMMEd().format(
-                                //                 DateTime.parse(item['createdAt']
-                                //                     .toString())),
-                                //         style: const TextStyle(
-                                //             fontSize: 13,
-                                //             color: white,
-                                //             fontWeight: FontWeight.w300),
-                                //       ),
-                                //     ),
-                                //   ),
-                                //   groupSeparatorBuilder: (String groupByValue) =>
-                                //       smallSpace(),
-                                //   itemBuilder: (context, dynamic message) {
-                                //     return (message['sender'] == userName)
-                                //         ? outgoing('${message['text']}',
-                                //             message['createdAt'])
-                                //         : incoming('${message['text']}',
-                                //             message['createdAt']);
-                                //   },
-                                //   // reverse: true,
-                                //   order: GroupedListOrder.ASC, // optional
-                                // ),
-                                ),
+                                        ),
+                                itemBuilder: (context, dynamic message) {
+                                  return (message['sender'] == userName)
+                                      ? outgoing('${message['text']}',
+                                          message['createdAt'])
+                                      : incoming('${message['text']}',
+                                          message['createdAt']);
+                                },
+                              ),
+                            ),
                             Container(
                               decoration: BoxDecoration(
                                   color: const Color(0xFF1F4167),
