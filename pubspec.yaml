@@ -61,6 +61,7 @@ dependencies:
   open_mail_app: ^0.4.5
   google_places_for_flutter: ^1.0.1
   grouped_list:
+  collection:
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1
