@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class BottomHillsWidget extends StatelessWidget {
   const BottomHillsWidget({
@@ -488,6 +489,42 @@ class CustomWidgetsPad extends StatelessWidget {
   }
 }
 
+
+class PaymentTextFieldWidget extends StatelessWidget {
+
+  String label;
+  TextEditingController? textController;
+  String? Function(String?)? validator;
+  TextInputType? keyboardType;
+
+  PaymentTextFieldWidget({
+    Key? key,
+    required this.label,
+    this.keyboardType,
+    this.textController,
+    this.validator}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 10.w),
+      child: TextField(
+        controller: textController,
+        keyboardType: keyboardType,
+        decoration: InputDecoration(
+          labelStyle:  GoogleFonts.aBeeZee(color: dark, fontWeight: FontWeight.w400, fontSize: 15.w),
+          focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: dark.withOpacity(0.5)), borderRadius: BorderRadius.circular(8.w)),
+          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: dark.withOpacity(0.5)), borderRadius: BorderRadius.circular(8.w)),
+          fillColor: Color(0xFFDAE5F2),
+          filled: true,
+          labelText: label,
+        ),
+      ),
+    );
+  }
+}
+
+
 class TextFieldWidget extends StatelessWidget {
   String hint;
   Widget? prefixIcon;
@@ -576,6 +613,9 @@ class TextFieldWidget extends StatelessWidget {
     );
   }
 }
+
+
+
 
 
 class DropDownWidget extends StatelessWidget {

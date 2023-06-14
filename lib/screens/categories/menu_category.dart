@@ -78,8 +78,9 @@ class _MenuCategoryState extends State<MenuCategory> {
                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent: 200,
                       childAspectRatio: 1 / 1.2,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 50),
+                      crossAxisSpacing: 1,
+                      mainAxisSpacing: 5,
+                  ),
                   itemCount: Category().allCategories.length,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),

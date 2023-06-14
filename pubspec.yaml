@@ -63,6 +63,7 @@ dependencies:
   grouped_list:
   collection:
   sticky_grouped_list: ^3.1.0
+  flutter_switch: ^0.3.2
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1

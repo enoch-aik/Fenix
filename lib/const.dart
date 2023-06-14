@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:fenix/screens/onboarding/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 const double BODY_PADDING = 20.0;
@@ -20,6 +21,30 @@ LinearGradient appBarGradient = gradient(
   const Color(0xFF691232),
   const Color(0xFF1770A2),
 );
+
+InputDecoration inputDecoration(hint, context, prefixIcon, suffix){
+  return InputDecoration(
+    enabledBorder: InputBorder.none,
+    disabledBorder: InputBorder.none,
+    focusedBorder: InputBorder.none,
+    errorBorder: InputBorder.none,
+    focusedErrorBorder: InputBorder.none,
+    contentPadding:
+    const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+    hintText: hint,
+    // labelText: hint,
+    hintStyle: Theme.of(context)
+        .textTheme
+        .bodyText1!
+        .copyWith(fontSize: 16.w, color: Colors.grey.shade400),
+    labelStyle: Theme.of(context)
+        .textTheme
+        .bodyText1!
+        .copyWith(fontSize: 16.w, color: Colors.grey.shade400),
+    prefixIcon: prefixIcon,
+    suffix: suffix,
+  );
+}
 
 smallHSpace() => const SizedBox(width: 20);
 tinyHSpace() => const SizedBox(width: 10);

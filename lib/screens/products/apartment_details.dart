@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:fenix/helpers/widgets.dart';
 import 'package:fenix/helpers/widgets/text.dart';
 import 'package:fenix/screens/profile/create_selling_post/create_apartment.dart';
 import 'package:flutter/cupertino.dart';
@@ -372,6 +373,19 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
               ],
             ),
           ),
+          InkWell(
+            onTap: ()=>Get.to(()=>Chat(userId: apartment['vendorId'],)),
+            child: Buttons(
+              child: Center(
+                child: KText(
+                  "Message Seller",
+                  color: const Color(0xFF1994F5),
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18.w,
+                ),
+              ),
+            ),
+          ),
           divider(),
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
@@ -536,19 +550,7 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
               ),
             ),
           ),
-          InkWell(
-            onTap: ()=>Get.to(()=>Chat(userId: apartment['vendorId'],)),
-            child: Buttons(
-              child: Center(
-                child: KText(
-                  "Message Seller",
-                  color: const Color(0xFF1994F5),
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18.w,
-                ),
-              ),
-            ),
-          ),
+
           Buttons(
             child: Center(
               child: KText(
@@ -578,6 +580,177 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
               ],
             ),
           ),
+          divider(),
+
+          Padding(
+            padding: EdgeInsets.all(20.w),
+            child: KText(
+              "Seller Information",
+              fontWeight: FontWeight.w900,
+              color: kTextBlackColor,
+              fontSize: 19.w,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 10,15, 5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(boxShadow: <BoxShadow>[
+                            BoxShadow(
+                                color: white.withOpacity(0.2),
+                                offset: const Offset(4, 4),
+                                blurRadius: 2,
+                                spreadRadius: 1),
+                            BoxShadow(
+                                color: white.withOpacity(0.2),
+                                offset: const Offset(-4, -4),
+                                blurRadius: 2,
+                                spreadRadius: 1),
+                          ], color: white, shape: BoxShape.circle),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                  color: grey, shape: BoxShape.circle),
+                              child: const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Icon(
+                                  Icons.person,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 8.w,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            KText(
+                              "Alex Richardson",
+                              fontSize: 17.w,
+                              color: const Color(0xFFE23F0A),
+                              fontWeight: FontWeight.w900,
+                            ),
+                            SizedBox(
+                              height: 15.w,
+                            ),
+                            KText(
+                              "75% Positive Feedback",
+                              fontSize: 12.w,
+                              color: const Color(0xFF8F9FAE),
+                              fontWeight: FontWeight.w500,
+                            ),
+                            SizedBox(
+                              height: 4.w,
+                            ),
+                            KText(
+                              "Since 2022",
+                              fontSize: 12.w,
+                              color: const Color(0xFF8F9FAE),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Container(
+                          decoration: shadow().copyWith(
+                              gradient: gradient(Color(0xFFFFFFFF),
+                                  Color(0xFF8F9FAE).withOpacity(0.1))),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.info_outline,
+                                  color: kTextBlackColor,
+                                  size: 20,
+                                ),
+                                tinyH5Space(),
+                                KText(
+                                  "Report Seller",
+                                  fontSize: 12.w,
+                                  color: kTextBlackColor,
+                                  fontWeight: FontWeight.w700,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 19.w,
+                        ),
+                        Container(
+                          decoration: shadow().copyWith(
+                              gradient: gradient(Color(0xFFFFFFFF),
+                                  Color(0xFF8F9FAE).withOpacity(0.1))),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                            child: Row(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle, color: grey),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: Icon(
+                                      Icons.favorite_outline_sharp,
+                                      color: white.withOpacity(0.4),
+                                      size: 16,
+                                    ),
+                                  ),
+                                ),
+                                tinyH5Space(),
+                                KText(
+                                  "Save this Seller",
+                                  fontSize: 12.w,
+                                  color: kTextBlackColor,
+                                  fontWeight: FontWeight.w700,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+          kSpacing,
+          Padding(
+            padding: const EdgeInsets.fromLTRB(25, 10, 25, 5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Positive feedback",
+                  style: TextStyle(color: dark, fontSize: 15.w),),
+                Text("Negative feedback",
+                  style: TextStyle(color: dark, fontSize: 15.w),),
+              ],
+            ),
+          ),
+
+          kLargeSpacing,
+
         ],
       ),
     );

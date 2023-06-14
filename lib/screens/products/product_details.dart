@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:fenix/helpers/widgets.dart';
 import 'package:fenix/helpers/widgets/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,7 @@ var product;
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width,
-            height() * 0.17),
+            height() * 0.065),
         child: Container(
           decoration: BoxDecoration(
             gradient: gradient(
@@ -64,65 +65,10 @@ var product;
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Image.asset(
-                    "assets/images/fenixmall_white.png",
-                    color: white,
-                    height: height() * 0.075,
-                  ),
-                ),
-              ),
               const SizedBox(
                 width: 10,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  InkWell(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.white,
-                        size: 30.w,
-                      )),
-                  InkWell(
-                    onTap: () => Get.to(() => SearchScreen()),
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.050,
-                      width: MediaQuery.of(context).size.width * 0.82,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(13.w),
-                        color: Colors.white,
-                      ),
-                      child: TextField(
-                        style: TextStyle(
-                          fontSize: 16.w,
-                        ),
-                        enabled: false,
-                        decoration: InputDecoration(
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 15,
-                              vertical:
-                                  MediaQuery.of(context).size.height * 0.015),
-                          hintText: "Search Fenix",
-                          hintStyle: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(
-                                  fontSize: 15.w, color: Colors.grey.shade500),
-                          prefixIcon: const Icon(Icons.search),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              backArrow(),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.010,
               )
