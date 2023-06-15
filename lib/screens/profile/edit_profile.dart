@@ -156,6 +156,7 @@ class EditProfile extends StatelessWidget {
                           kSpacing,
                           TextFieldWidget(
                               hint: "Phone Number",
+                              keyboardType: TextInputType.number,
                               textController: phoneController),
                           kSpacing,
                           TextFieldWidget(

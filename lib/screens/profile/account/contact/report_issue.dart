@@ -73,20 +73,13 @@ class ReportIssue extends StatelessWidget {
                 padding: const EdgeInsets.all(14),
                 children: [
 
-
-                  accountContainer('Fenix has a bug', Icons.support_agent, onTap: () {
-
-                  }),
+                  accountContainer('Fenix has a bug',  onTap: () {}),
                   tinySpace(),
-                  accountContainer('The app is not working as expected', FontAwesomeIcons.moneyBill, onTap: () {
-
-                  }),
+                  accountContainer('The app is not working as expected', onTap: () {}),
                   tinySpace(),
-                  accountContainer('App is not loading sometimes', Icons.report_gmailerrorred_outlined),
+                  accountContainer('App is not loading sometimes',),
                   tinySpace(),
-                  accountContainer('Other issues', FontAwesomeIcons.moneyBill, onTap: () {
-
-                  }),
+                  accountContainer('Other issues', onTap: () {}),
                   tinySpace(),
 
                 ],
@@ -96,7 +89,7 @@ class ReportIssue extends StatelessWidget {
     );
   }
 
-  InkWell accountContainer(title, icon, {onTap}) {
+  InkWell accountContainer(title, {onTap}) {
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -109,7 +102,7 @@ class ReportIssue extends StatelessWidget {
               Expanded(
                   child: Row(
                     children: [
-                      Icon(icon),
+
                       tinyHSpace(),
                       Text(
                         title,

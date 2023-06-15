@@ -8,8 +8,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import '../../const.dart';
+import '../../helpers/widgets.dart';
 import '../../helpers/widgets/text.dart';
 import '../../helpers/widgets/top_rated_Items.dart';
+import '../../theme.dart';
 import '../onboarding/constants.dart';
 
 class SubCategory extends StatefulWidget {
@@ -30,63 +32,28 @@ class _SubCategoryState extends State<SubCategory> {
     return Scaffold(
       backgroundColor: Color(0xFFE4F0FA),
       appBar: PreferredSize(
-        preferredSize: Size(MediaQuery.of(context).size.width, height() * 0.155),
+        preferredSize: Size(MediaQuery.of(context).size.width,
+            height() * 0.07),
         child: Container(
           decoration: BoxDecoration(
-            gradient:  gradient(
-              const Color(0xFF691232),
-              const Color(0xFF1770A2),
-            ),
+            gradient: appBarGradient,
           ),
           padding: EdgeInsets.only(top: 55.h, left: 12.w, right: 12.w),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: SizedBox(
-                  height: 46.h,
-                  child: Image.asset("assets/images/fenixWhilte.png",fit: BoxFit.fill,),
+              tiny5Space(),
+              Expanded(
+                child: Row(
+                  children: [
+                    backArrow(),
+                  ],
                 ),
               ),
-
-              SizedBox(width: 10,),
-              Row(
-                children: [
-                  InkWell(
-                    onTap: (){
-                      Get.back();
-                    },
-                    child: Icon(Icons.arrow_back_ios, color: Colors.white,),
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.050,
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(13.w),
-                      color: Colors.white,
-                    ),
-                    child: TextField(
-                      style: TextStyle(
-                        fontSize: 16.w,
-                      ),
-                      decoration: InputDecoration(
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: MediaQuery.of(context).size.height * 0.015),
-                        hintText: "Search Fenix",
-                        hintStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            fontSize: 15.w,
-                            color: Colors.grey.shade500
-                        ),
-                        prefixIcon: Icon(Icons.search),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.010,
+              )
             ],
           ),
         ),

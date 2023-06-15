@@ -2,7 +2,10 @@ import 'package:fenix/controller/store_controller.dart';
 import 'package:fenix/controller/user_controller.dart';
 import 'package:fenix/helpers/icons/custom_icons_fenix_icons.dart';
 import 'package:fenix/helpers/widgets/snack_bar.dart';
+import 'package:fenix/screens/profile/promote_post/promote_post.dart';
 import 'package:fenix/screens/profile/selling_list.dart';
+import 'package:fenix/screens/profile/wallets/wallets.dart';
+import 'package:fenix/screens/profile/wallets/add_new_card.dart';
 import 'package:fenix/screens/profile/wish_list.dart';
 import 'package:fenix/theme.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +22,7 @@ import 'create_selling_post/selling_post.dart';
 import 'edit_profile.dart';
 import 'message.dart';
 import 'store_lists.dart';
-import 'subscribe.dart';
+import 'subscribe/subscribe.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({Key? key}) : super(key: key);
@@ -44,6 +47,8 @@ class _UserProfileState extends State<UserProfile> {
     "Your Wishlist",
     "Your Stores",
     "Your Selling",
+    "Wallet",
+    "Promote Post",
     "Language",
   ];
 
@@ -142,7 +147,7 @@ class _UserProfileState extends State<UserProfile> {
                     childAspectRatio: 3 / 1,
                     crossAxisSpacing: 20,
                     mainAxisSpacing: 10),
-                itemCount: 8,
+                itemCount: 10,
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (BuildContext ctx, index) {
@@ -176,6 +181,8 @@ class _UserProfileState extends State<UserProfile> {
                       if (index == 4) Get.to(() => const WishList());
                       if (index == 5) Get.to(() => const StoreList());
                       if (index == 6) Get.to(() => const SellingList());
+                      if (index == 7) Get.to(() =>  Wallet());
+                      if (index == 8) Get.to(() =>  PromotePost());
                     },
                     child: Container(
                       alignment: Alignment.center,

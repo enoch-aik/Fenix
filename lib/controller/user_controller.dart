@@ -52,7 +52,6 @@ class UserController extends GetxController {
   setRefresh(refreshToken) => _refreshToken = refreshToken;
 
   fetchUser(token) {
-    updateLocation(token);
     UserServices.getUser((status, response) {
       print(response);
       if (status) {
@@ -92,18 +91,15 @@ class UserController extends GetxController {
     }, token);
   }
 
-  updateLocation(token) {
-    double lat = 0.0, lon = 0.0;
-    LocationServices.determinePosition().then((value) {
-      lat = value.latitude;
-      lon = value.latitude;
-    });
+  updateLocation(token, lat, lon) {
+
+    print("+++<<<>>${lat},.....$lon");
     UserServices.updateUserLocation((status, response) {
       if (status) {
       } else {
         CustomSnackBar.failedSnackBar('Failed', '$response');
       }
-    }, {"latitude": '$lat', "longitude": '$lon'}, token);
+    }, {"latitude": 37.785834, "longitude": -122.406417}, token);
   }
 
   createProfile(token,
@@ -147,6 +143,7 @@ class UserController extends GetxController {
       print("++++====${position}");
       _currentPosition = position;
       userCurrentPosition = position.obs;
+      updateLocation(_token, userCurrentPosition!.value.latitude,userCurrentPosition!.value.longitude);
       isFetchingUserLocation(false);
     }).catchError((e) {
       print(e);

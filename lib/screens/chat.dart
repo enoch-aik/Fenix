@@ -257,25 +257,24 @@ class ChatState extends State<Chat> {
                                     Padding(
                                           padding:
                                               const EdgeInsets.fromLTRB(0, 15, 0, 8),
-                                          child: Center(
-                                            child: Text(
-                                              DateFormat('yyyy-MM-dd')
-                                                          .format(DateTime.parse(
-                                                  element['createdAt']
-                                                                  .toString()))
-                                                          .toString() ==
-                                                      DateFormat('yyyy-MM-dd')
-                                                          .format(DateTime.now())
-                                                          .toString()
-                                                  ? 'Today'
-                                                  : DateFormat.MMMEd().format(
-                                                      DateTime.parse(element['createdAt']
-                                                          .toString())),
-                                              style: const TextStyle(
-                                                  fontSize: 13,
-                                                  color: white,
-                                                  fontWeight: FontWeight.w300),
-                                            ),
+                                          child: Text(
+                                            DateFormat('yyyy-MM-dd')
+                                                        .format(DateTime.parse(
+                                                element['createdAt']
+                                                                .toString()))
+                                                        .toString() ==
+                                                    DateFormat('yyyy-MM-dd')
+                                                        .format(DateTime.now())
+                                                        .toString()
+                                                ? 'Today'
+                                                : DateFormat.MMMEd().format(
+                                                    DateTime.parse(element['createdAt']
+                                                        .toString())),
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                                fontSize: 13,
+                                                color: white,
+                                                fontWeight: FontWeight.w300),
                                           ),
                                         ),
                                 itemBuilder: (context, dynamic message) {

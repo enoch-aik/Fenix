@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 
+import '../../theme.dart';
+
 Widget kSpacing = SizedBox(height: 16.w,);
 Widget kLargeSpacing = SizedBox(height: 52.w,);
 
@@ -91,6 +93,8 @@ const fullAngleInRadians = math.pi * 2;
 
 double radius = 90;
 double strokeWidth = 40;
+
+Divider divider2() => Divider(color: blue.withOpacity(0.14), thickness: 6, height: 30.w,);
 
 double normalizeAngle(double angle) => normalize(angle, fullAngleInRadians);
 

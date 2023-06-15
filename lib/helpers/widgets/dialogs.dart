@@ -125,6 +125,7 @@ class CustomDialogs {
       okText,
       onClose,
       onClick,
+      buttonColor,
       isMessageWidget = false}) {
     print(image);
     return Get.bottomSheet(
@@ -187,7 +188,7 @@ class CustomDialogs {
                     Expanded(
                       child: DefaultButton(
                         title: okText ?? 'OK',
-                        color: red,
+                        color: buttonColor == null ? red : buttonColor,
                         onPress: onClick ??
                             () {
                               Get.back();
