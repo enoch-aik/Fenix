@@ -253,34 +253,36 @@ class _CreateProductState extends State<CreateProduct> {
               Row(
                 children: [
                   backArrow(),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.050,
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(13.w),
-                      color: Colors.white,
-                    ),
-                    child: TextField(
-                      style: TextStyle(
-                        fontSize: 16.w,
+                  Expanded(
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.050,
+                      width: MediaQuery.of(context).size.width * 0.85,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(13.w),
+                        color: Colors.white,
                       ),
-                      decoration: InputDecoration(
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 15,
-                            vertical:
-                                MediaQuery.of(context).size.height * 0.015),
-                        hintText: "Search Fenix",
-                        hintStyle: Theme.of(context)
-                            .textTheme
-                            .bodyText1!
-                            .copyWith(
-                                fontSize: 15.w, color: Colors.grey.shade500),
-                        prefixIcon: const Icon(Icons.search),
-                        suffixIcon: const Icon(
-                          Icons.qr_code_scanner,
-                          color: primary,
+                      child: TextField(
+                        style: TextStyle(
+                          fontSize: 16.w,
+                        ),
+                        decoration: InputDecoration(
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 15,
+                              vertical:
+                                  MediaQuery.of(context).size.height * 0.015),
+                          hintText: "Search Fenix",
+                          hintStyle: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(
+                                  fontSize: 15.w, color: Colors.grey.shade500),
+                          prefixIcon: const Icon(Icons.search),
+                          suffixIcon: const Icon(
+                            Icons.qr_code_scanner,
+                            color: primary,
+                          ),
                         ),
                       ),
                     ),

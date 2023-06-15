@@ -105,14 +105,13 @@ class StoreServices {
 
     for (var i in images) {
       print(i.path);
-      request.files.add(await http.MultipartFile.fromPath(title, i.path,
-          filename: 'image.png'));
+      request.files.add(await http.MultipartFile.fromPath(title, i.path));
     }
 
     request.headers.addAll(headers);
-
     var response = await request.send();
 
+    print(request.files.first.field);
     print(response.reasonPhrase);
     print(response.statusCode);
     print(response.request?.url);

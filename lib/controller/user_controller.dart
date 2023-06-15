@@ -78,7 +78,6 @@ class UserController extends GetxController {
             'Success', 'Profile updated successfully');
       } else {
         Get.back();
-
         CustomSnackBar.failedSnackBar('Failed', '$response');
       }
     }, {
@@ -101,9 +100,8 @@ class UserController extends GetxController {
       } else {
         print('Errororor   ==> $response');
       }
-    }, profilePixUrl, token: token,title: 'picture', images: [media]);
+    }, profilePixUrl, token: token, title: 'picture', images: [media]);
   }
-
 
   updateLocation(token, lat, lon) {
     print("+++<<<>>${lat},.....$lon");
