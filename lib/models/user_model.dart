@@ -11,6 +11,7 @@ class UserModel {
     required this.address,
     required this.country,
     required this.username,
+    required this.profileImage,
   });
 
   String? id;
@@ -24,6 +25,7 @@ class UserModel {
   String? address;
   String? country;
   String? username;
+  String? profileImage;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         id: json["id"],
@@ -37,5 +39,6 @@ class UserModel {
         address: json["address"] ?? '',
         country: json["country"] ?? '',
         username: json["username"] ?? '',
+    profileImage: json["profileImage"] ?? '',
       );
 }

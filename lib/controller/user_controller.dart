@@ -91,7 +91,7 @@ class UserController extends GetxController {
     }, token);
   }
 
-  uploadMedia({token, media}) async {
+  uploadProfilePic({token, media}) async {
     StoreServices.uploadFile((status, response) {
       print('==> $response');
       if (status) {
@@ -101,7 +101,7 @@ class UserController extends GetxController {
       } else {
         print('Errororor   ==> $response');
       }
-    }, profilePixUrl, token: token,title: 'picture', images: media);
+    }, profilePixUrl, token: token,title: 'picture', images: [media]);
   }
 
 

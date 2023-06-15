@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fenix/const.dart';
 import 'package:fenix/controller/user_controller.dart';
 import 'package:fenix/helpers/validator.dart';
@@ -8,25 +10,51 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../helpers/image_picker.dart';
 import '../../theme.dart';
 
-class EditProfile extends StatelessWidget {
+class EditProfile extends StatefulWidget {
   EditProfile({Key? key}) : super(key: key);
 
+  @override
+  State<EditProfile> createState() => _EditProfileState();
+}
+
+class _EditProfileState extends State<EditProfile> {
   PageController pageController = PageController();
+
   final UserController _userController = Get.find();
+
   final _formKey = GlobalKey<FormState>();
+
   final phoneController = TextEditingController();
+
   final addressController = TextEditingController();
+
   final cityController = TextEditingController();
+
   final countryController = TextEditingController();
+
   final firstNameController = TextEditingController();
+
   final lastNameController = TextEditingController();
+
   final emailController = TextEditingController();
+
   final userNameController = TextEditingController();
+  File? _image;
+  String profileImage = '';
+  String token = '';
+  String gender = '';
 
   @override
-  Widget build(BuildContext context) {
+  initState() {
+    token = _userController.getToken();
+    getUser();
+    super.initState();
+  }
+
+  getUser() {
     var user = _userController.getUser();
     print('user - ${_userController.getUser()}');
     if (user != null) {
@@ -38,7 +66,13 @@ class EditProfile extends StatelessWidget {
       cityController.text = user.city.toString();
       phoneController.text = user.mobileNumber.toString();
       countryController.text = user.country.toString();
+      gender = user.gender.toString();
+      profileImage = user.profileImage.toString();
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: AppBar(
@@ -104,23 +138,52 @@ class EditProfile extends StatelessWidget {
                       child: Column(
                         children: [
                           kSpacing,
-                          Column(
-                            children: [
-                              Icon(Icons.person, size: 40.w,),
-                              tiny5Space(),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text("Choose a photo",
-                                  style: TextStyle(
-                                    fontSize: 13.w,
-                                    color: dark.withOpacity(0.3),
-                                  ),),
-                                  tinyHSpace(),
-                                  Icon(Icons.edit, size: 13.w, color: dark.withOpacity(0.3),)
-                                ],
-                              )
-                            ],
+                          InkWell(
+                            onTap: showImagePickers,
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 65,
+                                  width: 65,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(color: grey),
+                                      image: _image != null
+                                          ? DecorationImage(
+                                              fit: BoxFit.fitWidth,
+                                              image: FileImage(_image!))
+                                          : profileImage != '' &&
+                                                  profileImage != 'null'
+                                              ? DecorationImage(
+                                                  fit: BoxFit.fitWidth,
+                                                  image: NetworkImage(
+                                                      profileImage))
+                                              : const DecorationImage(
+                                                  fit: BoxFit.contain,
+                                                  image: AssetImage(
+                                                      'assets/images/fenixlogobird.png'))),
+                                ),
+                                tiny5Space(),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Choose a photo",
+                                      style: TextStyle(
+                                        fontSize: 13.w,
+                                        color: dark.withOpacity(0.3),
+                                      ),
+                                    ),
+                                    tinyHSpace(),
+                                    Icon(
+                                      Icons.edit,
+                                      size: 13.w,
+                                      color: dark.withOpacity(0.3),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
                           ),
                           kSpacing,
                           TextFieldWidget(
@@ -177,9 +240,9 @@ class EditProfile extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              gender(context, Icons.male, 'Male'),
+                              selectGender(context, Icons.male, 'Male'),
                               smallHSpace(),
-                              gender(context, Icons.female, 'Female'),
+                              selectGender(context, Icons.female, 'Female'),
                             ],
                           ),
                           SizedBox(
@@ -192,10 +255,15 @@ class EditProfile extends StatelessWidget {
                                       _userController.getToken(),
                                       username: userNameController.text,
                                       phoneNumber: phoneController.text,
-                                      gender: _userController.gender.value,
+                                      gender: gender,
                                       address: addressController.text,
                                       country: countryController.text,
                                       city: cityController.text);
+                                  if (_image != null) {
+                                    _userController.uploadProfilePic(
+                                        token: _userController.getToken(),
+                                        media: _image);
+                                  }
                                 } else {
                                   CustomSnackBar.failedSnackBar('Error',
                                       'Ensure that all required fields are filled');
@@ -216,21 +284,145 @@ class EditProfile extends StatelessWidget {
     );
   }
 
-  Widget gender(BuildContext context, icon, title) {
-    print(_userController.gender.value);
+  Future<dynamic> showImagePickers() {
+    return showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        context: context,
+        isDismissible: true,
+        isScrollControlled: true,
+        builder: (context) {
+          return SizedBox(
+            height: height() * 0.32,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 30),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                          color: background,
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: InkWell(
+                                onTap: () async {
+                                  Get.back();
+                                  var selectedImage = await openCamera();
+                                  if (selectedImage != null) {
+                                    setState(() {
+                                      _image = selectedImage;
+                                    });
+                                  }
+                                },
+                                child: const Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: Text('Take Photo from camera',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w400)),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(right: 10),
+                                      child: Icon(
+                                        Icons.camera_alt,
+                                        size: 25,
+                                        color: primary,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const Divider(),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: InkWell(
+                                onTap: () async {
+                                  Get.back();
+
+                                  var selectedImage = await openGallery();
+                                  if (selectedImage != null) {
+                                    setState(() {
+                                      _image = selectedImage;
+                                    });
+                                  }
+                                },
+                                child: const Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Text('Take Photo from gallery',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w400)),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(right: 10),
+                                      child: Icon(
+                                        Icons.collections,
+                                        size: 25,
+                                        color: primary,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: background,
+                            borderRadius: BorderRadius.circular(8)),
+                        child: const Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Center(
+                            child: Text(
+                              'Cancel',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 15),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
+  Widget selectGender(BuildContext context, icon, title) {
 
     return Expanded(
       child: InkWell(
         onTap: () {
-          _userController.gender(title);
+      setState(() {
+        gender = title;
+      });
         },
-        child: Obx(
-          () => Container(
+        child:  Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(17.w),
-              color: (_userController.gender.value == title ||
-                      (_userController.getUser() != null &&
-                          _userController.getUser()!.gender == title))
+              color:
+                gender==title
                   ? const Color(0xFFE4F0FA).withOpacity(0.8)
                   : const Color(0xFFE4F0FA),
               boxShadow: [
@@ -253,10 +445,8 @@ class EditProfile extends StatelessWidget {
                     title,
                     style: Theme.of(context).textTheme.bodyText1!.copyWith(
                           fontSize: 15.w,
-                          color: (_userController.gender.value == title ||
-                                  (_userController.getUser() != null &&
-                                      _userController.getUser()!.gender ==
-                                          title))
+                          color:
+                          gender == title
                               ? Colors.black
                               : Colors.grey.shade400,
                         ),
@@ -266,23 +456,21 @@ class EditProfile extends StatelessWidget {
                     margin: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: (_userController.gender.value == title ||
-                                (_userController.getUser() != null &&
-                                    _userController.getUser()!.gender == title))
+                        color:
+                        gender == title
                             ? light.withOpacity(0.5)
                             : Colors.transparent),
                     child: Icon(
                       icon,
-                      color: (_userController.gender.value == title ||
-                              (_userController.getUser() != null &&
-                                  _userController.getUser()!.gender == title))
+                      color:                         gender == title
+
                           ? kTextBlackColor
                           : Colors.blueGrey,
                     )),
               ],
             ),
           ),
-        ),
+
       ),
     );
   }

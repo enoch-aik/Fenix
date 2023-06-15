@@ -106,7 +106,7 @@ class StoreServices {
     for (var i in images) {
       print(i.path);
       request.files.add(await http.MultipartFile.fromPath(title, i.path,
-          filename: 'myImage.png'));
+          filename: 'image.png'));
     }
 
     request.headers.addAll(headers);
