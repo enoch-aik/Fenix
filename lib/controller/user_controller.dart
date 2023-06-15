@@ -104,6 +104,7 @@ class UserController extends GetxController {
     }, profilePixUrl, token: token,title: 'picture', images: media);
   }
 
+
   updateLocation(token, lat, lon) {
     print("+++<<<>>${lat},.....$lon");
     UserServices.updateUserLocation((status, response) {
