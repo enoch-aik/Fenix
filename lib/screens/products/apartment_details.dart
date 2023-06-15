@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:fenix/helpers/widgets.dart';
 import 'package:fenix/helpers/widgets/text.dart';
+import 'package:timeago/timeago.dart' as timeago;
 import 'package:fenix/screens/profile/create_selling_post/create_apartment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -638,8 +639,7 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            KText(
-                              "Alex Richardson",
+                            KText("${apartment['vendor']['firstName']} ${apartment['vendor']['lastName']}",
                               fontSize: 17.w,
                               color: const Color(0xFFE23F0A),
                               fontWeight: FontWeight.w900,
@@ -656,8 +656,7 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
                             SizedBox(
                               height: 4.w,
                             ),
-                            KText(
-                              "Since 2022",
+                            KText(timeago.format(DateTime.parse(apartment['vendor']['joinedAt'])),
                               fontSize: 12.w,
                               color: const Color(0xFF8F9FAE),
                               fontWeight: FontWeight.w500,

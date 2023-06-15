@@ -34,62 +34,67 @@ class _SellingListState extends State<SellingList> {
   var dacha = [];
   var house = [];
 
+  var storeId;
+  var token;
+
+  final StoreController storeController = Get.find();
+  final UserController userController = Get.find();
+
   @override
-  Widget build(BuildContext context) {
-    final StoreController storeController = Get.find();
-    final UserController userController = Get.find();
-    var storeId = widget.storeId ?? storeController.getDefaultStoreId();
-    var token = userController.getToken();
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    storeId = widget.storeId ?? storeController.getDefaultStoreId();
+    token = userController.getToken();
     storeController.getProducts(token, storeId);
     storeController.getVehicles(token, storeId);
     storeController.getApartments(token, storeId);
 
+    dacha = storeController.apartmentList
+        .where((e) => e['apartmentType'] == 'dacha')
+        .toList();
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Align(
-            alignment: Alignment.centerLeft,
-            child: Image.asset(
-              "assets/images/fenixmall_white.png",
-              color: white,
-              height: height() * 0.075,
-            ),
-          ),
-          bottom: PreferredSize(
+      appBar: PreferredSize(
             preferredSize: Size(
+
               MediaQuery.of(context).size.width,
-              height() * 0.065,
+              height() * 0.07,
             ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.w),
-              child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Row(
-                    children: [
-                      backArrow(),
-                      Text(
-                        "Your Selling List",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 27.w,
-                            fontWeight: FontWeight.w500,
-                            shadows: [
-                              Shadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  offset: const Offset(2, 2))
-                            ]),
-                      ),
-                    ],
-                  )),
+            child: Container(
+              decoration: BoxDecoration(gradient: appBarGradient),
+              padding: EdgeInsets.only(top: 50.h, left: 12.w, right: 12.w),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: Row(
+                        children: [
+                          backArrow(),
+                          Text(
+                            "Your Selling List",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 23.w,
+                                fontWeight: FontWeight.w500,
+                                shadows: [
+                                  Shadow(
+                                      color: Colors.black.withOpacity(0.2),
+                                      offset: const Offset(2, 2))
+                                ]),
+                          ),
+                        ],
+                      )),
+                ],
+              ),
             ),
           ),
-          automaticallyImplyLeading: false,
-          elevation: 0,
-          centerTitle: false,
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-              gradient: appBarGradient,
-            ),
-          )),
       body: Container(
         color: const Color(0xFFE4EFF9),
         child: Column(

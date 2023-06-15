@@ -7,7 +7,7 @@ Map topBanner= {
   "type": "Top Banner",
   "plan": "Diamond",
   "target": "Fast Sale",
-  "icon": Icon(Icons.diamond, color: Colors.yellow,),
+  "icon":  Image.asset('assets/images/icons/diamond.png', scale: 4,),
 
   "price": [
     "50,000",

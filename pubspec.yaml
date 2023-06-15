@@ -59,6 +59,7 @@ dependencies:
   google_places_for_flutter: ^1.0.1
   sticky_grouped_list: ^3.1.0
   flutter_switch: ^0.3.2
+  timeago:
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1

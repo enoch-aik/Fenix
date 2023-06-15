@@ -26,7 +26,7 @@ class PlanWidget extends StatelessWidget {
       children: [
         Container(
           decoration: BoxDecoration(
-            color: light.withOpacity(0.4),
+            color: light.withOpacity(0.3),
             borderRadius: BorderRadius.circular(10.w),
           ),
           padding: EdgeInsets.all(10.w),
@@ -38,13 +38,11 @@ class PlanWidget extends StatelessWidget {
                     fontSize: 18.w,
                     fontWeight: FontWeight.w700
                 ),),
-              tinySpace(),
+             mediumSpace(),
               Row(
                 children: [
-                  Checkbox(
-                      value: true,
-                      shape: CircleBorder(),
-                      onChanged: (v){}),
+                  Image.asset('assets/images/icons/checkBadge.png', scale: 4,),
+                  tinyH5Space(),
                   Text("24/7 Active",
                     style: GoogleFonts.roboto(
                         fontSize: 13.w,
@@ -52,12 +50,11 @@ class PlanWidget extends StatelessWidget {
                     ),),
                 ],
               ),
+              smallSpace(),
               Row(
                 children: [
-                  Checkbox(
-                      value: true,
-                      shape: CircleBorder(),
-                      onChanged: (v){}),
+                  Image.asset('assets/images/icons/checkBadge.png', scale: 4,),
+                  tinyH5Space(),
                   Text(target!,
                     style:  GoogleFonts.roboto(
                         fontSize: 13.w,
@@ -65,12 +62,11 @@ class PlanWidget extends StatelessWidget {
                     ),),
                 ],
               ),
+              smallSpace(),
               Row(
                 children: [
-                  Checkbox(
-                      value: true,
-                      shape: CircleBorder(),
-                      onChanged: (v){}),
+                  Image.asset('assets/images/icons/checkBadge.png', scale: 4,),
+                  tinyH5Space(),
                   Text(plan!,
                     style:  GoogleFonts.roboto(
                         fontSize: 13.w,
@@ -78,6 +74,7 @@ class PlanWidget extends StatelessWidget {
                     ),),
                 ],
               ),
+              tinySpace(),
 
               Text(duration!,
                 style:  GoogleFonts.roboto(

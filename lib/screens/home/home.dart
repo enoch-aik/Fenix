@@ -779,10 +779,10 @@ class _HomeState extends State<Home> {
                                                           MediaQuery.of(context)
                                                                   .size
                                                                   .width *
-                                                              0.50,
+                                                              0.51,
                                                       childAspectRatio: 1 / 2.2,
                                                       mainAxisSpacing: 0,
-                                                      crossAxisSpacing: 5),
+                                                      crossAxisSpacing: 0),
                                               itemCount: _productController
                                                   .dachaList.length,
                                               itemBuilder: (context, index) {
@@ -826,11 +826,11 @@ class _HomeState extends State<Home> {
                                                                           context)
                                                                       .size
                                                                       .width *
-                                                                  0.50,
+                                                                  0.51,
                                                           childAspectRatio:
                                                               1 / 2.2,
                                                           mainAxisSpacing: 0,
-                                                          crossAxisSpacing: 5),
+                                                          crossAxisSpacing: 0),
                                                   itemCount: _productController
                                                       .houseList.length,
                                                   itemBuilder:
@@ -877,11 +877,11 @@ class _HomeState extends State<Home> {
                                                                           context)
                                                                       .size
                                                                       .width *
-                                                                  0.50,
+                                                                  0.51,
                                                           childAspectRatio:
                                                               1 / 2.2,
                                                           mainAxisSpacing: 0,
-                                                          crossAxisSpacing: 5),
+                                                          crossAxisSpacing: 0),
                                                   itemCount: _productController
                                                       .apartmentList.length,
                                                   itemBuilder:
@@ -1026,8 +1026,8 @@ class ProductWidget extends StatelessWidget {
       children: [
         Container(
           height: MediaQuery.of(context).size.height * 0.48,
-          width: MediaQuery.of(context).size.width * 0.48,
-          margin: EdgeInsets.symmetric(horizontal: 1.w),
+          width: MediaQuery.of(context).size.width * 0.50,
+          margin: EdgeInsets.symmetric(horizontal: 0.w),
           decoration: BoxDecoration(
               color: const Color(0xFFDAE5F2),
               borderRadius: BorderRadius.circular(10.w),
@@ -1049,7 +1049,7 @@ class ProductWidget extends StatelessWidget {
             children: [
               Container(
                 height: MediaQuery.of(context).size.height * 0.29,
-                width: MediaQuery.of(context).size.width * 0.480,
+                width: MediaQuery.of(context).size.width * 0.495,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.w),
                   image: DecorationImage(
@@ -1062,7 +1062,7 @@ class ProductWidget extends StatelessWidget {
               SizedBox(height: 10.w),
               Container(
                 height: MediaQuery.of(context).size.height * 0.15,
-                width: MediaQuery.of(context).size.width * 0.455,
+                width: MediaQuery.of(context).size.width * 0.495,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
