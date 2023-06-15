@@ -18,3 +18,4 @@ const String resentVerificationUrl ="$baseUrl/accounts/verify/resend";
 const String chatUrl ="wss://qaqnuz.herokuapp.com?chatId=";
 const String getAllChatUrl ="$baseUrl/chats";
 const String getVendorChatUrl ="$baseUrl/vendor";
+const String feedbackUrl ="$baseUrl/feedbacks";

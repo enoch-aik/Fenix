@@ -29,7 +29,7 @@ class _MenuCategoryState extends State<MenuCategory> {
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width,  height() * 0.09),
         child: Container(
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
             gradient:  gradient(
               const Color(0xFF691232),
               const Color(0xFF1770A2),
@@ -89,13 +89,15 @@ class _MenuCategoryState extends State<MenuCategory> {
                       onTap: (){
                         Get.to(() => SubCategory(
                             category: index == 0 ? Category().propertyCategory
-                            : index == 1  ? Category().clothing
-                            : index == 2  ? Category().healthCare
-                            : index == 3  ? Category().foodMarket
-                            : index == 4  ? Category().kids
-                            : index == 5  ? Category().electronics
-                            : index == 6  ? Category().tools
-                                : Category().carCategories
+                            : index == 3  ? Category().clothing
+                            : index == 5  ? Category().healthCare
+                            : index == 1  ? Category().carCategories
+                            : index == 4  ? Category(). healthCare
+                            : index == 2  ? Category().electronics
+                            : index == 6  ? Category().kids
+                            : index == 7  ? Category().tools
+                                : Category().carCategories,
+                          title:Category().allCategories[index],
                         )
                         );
                       },

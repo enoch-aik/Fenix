@@ -101,6 +101,24 @@ class StoreController extends GetxController {
     }, token, {"name": name, "description": description, "location": location});
   }
 
+  writeFeedback(token, {int? rate, message, userId}) async {
+    Get.to(() => const Loading());
+
+    StoreServices.writeReview((status, response) {
+      print('==> $response');
+      if (status) {
+        Get.back();
+        Get.back();
+        getStores(token);
+        CustomSnackBar.successSnackBar(
+            'Great!', 'Review submitted successfully');
+      } else {
+        Get.back();
+        CustomSnackBar.failedSnackBar('Failed', '$response');
+      }
+    }, token, {"userId": userId, "message": message, "rating": rate});
+  }
+
   createNewProduct(token,
       {storeId,
       color,
@@ -280,7 +298,7 @@ class StoreController extends GetxController {
       },
       "propertyType": propertyType,
       "apartmentType": apartmentType.toString().toLowerCase(),
-      "salePrice":double.parse(salePrice == '' ? "0" : salePrice),
+      "salePrice": double.parse(salePrice == '' ? "0" : salePrice),
       "rentPrice": {
         "night": double.parse(nightAmount == '' ? "0" : nightAmount),
         "week": double.parse(weekAmount == '' ? "0" : weekAmount),
@@ -288,16 +306,16 @@ class StoreController extends GetxController {
       },
       "rentAvailability": {"startDate": startDate, "endDate": endDate},
       "specifics": {
-        "bedroom": double.parse(bedroom=='' ? '1':bedroom),
-        "bathroom": double.parse( bathroom=='' ? '1':bathroom),
-        "shower": double.parse(shower=='' ? '1':shower),
-        "toilet": double.parse(toilet=='' ? '1':toilet),
-        "floor": double.parse(floor ==''? '1':floor),
-        "squareMetre": double.parse(sqMeter=='' ? '0':sqMeter),
+        "bedroom": double.parse(bedroom == '' ? '1' : bedroom),
+        "bathroom": double.parse(bathroom == '' ? '1' : bathroom),
+        "shower": double.parse(shower == '' ? '1' : shower),
+        "toilet": double.parse(toilet == '' ? '1' : toilet),
+        "floor": double.parse(floor == '' ? '1' : floor),
+        "squareMetre": double.parse(sqMeter == '' ? '0' : sqMeter),
         "amenities": amenities,
       },
       "rules": {
-        "occupant": double.parse(occupantsNumber ==''? '1':occupantsNumber),
+        "occupant": double.parse(occupantsNumber == '' ? '1' : occupantsNumber),
         "pet": pet,
         "smoke": smoke
       }
@@ -348,9 +366,7 @@ class StoreController extends GetxController {
       } else {
         print('Errororor   ==> $response');
       }
-    },'$storesUrl/$storeId/$category/$itemId/media',
-        token: token,
-        title: 'media',
-        images: media);
+    }, '$storesUrl/$storeId/$category/$itemId/media',
+        token: token, title: 'media', images: media);
   }
 }
