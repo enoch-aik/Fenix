@@ -4,6 +4,7 @@ const String loginUrl ="$baseUrl/accounts/login";
 const String refreshUrl ="$baseUrl/accounts/refresh";
 const String logoutUrl ="$baseUrl/accounts/logout";
 const String profileUrl ="$baseUrl/accounts/profile";
+const String profilePixUrl ="$baseUrl/accounts/profile/picture";
 const String updateLocationUrl ="$baseUrl/accounts/location";
 const String mapUrl ="$baseUrl/accounts/search";
 const String storesUrl ="$baseUrl/stores";

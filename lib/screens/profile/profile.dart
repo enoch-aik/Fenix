@@ -111,7 +111,7 @@ class _UserProfileState extends State<UserProfile> {
       body: Container(
         color: const Color(0xFFE4EFF9),
         child: ListView(
-          physics: ClampingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
           children: [
             Container(
               height: 50.w,
@@ -149,7 +149,7 @@ class _UserProfileState extends State<UserProfile> {
                     mainAxisSpacing: 10),
                 itemCount: 10,
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (BuildContext ctx, index) {
                   return InkWell(
                     onTap: () {

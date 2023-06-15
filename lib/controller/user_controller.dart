@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:fenix/controller/account_controller.dart';
 import 'package:fenix/controller/product_controller.dart';
-import 'package:fenix/models/services/location_service.dart';
+import 'package:fenix/models/services/api_docs.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helpers/widgets/snack_bar.dart';
-import '../models/services/account_services.dart';
+import '../models/services/store_services.dart';
 import '../models/services/user_services.dart';
 import '../models/user_model.dart';
 import '../screens/onboarding/loading.dart';
@@ -91,8 +91,20 @@ class UserController extends GetxController {
     }, token);
   }
 
-  updateLocation(token, lat, lon) {
+  uploadMedia({token, media}) async {
+    StoreServices.uploadFile((status, response) {
+      print('==> $response');
+      if (status) {
+        Get.back();
+        CustomSnackBar.successSnackBar(
+            'Great!', 'Profile Picture uploaded successfully');
+      } else {
+        print('Errororor   ==> $response');
+      }
+    }, profilePixUrl, token: token,title: 'picture', images: media);
+  }
 
+  updateLocation(token, lat, lon) {
     print("+++<<<>>${lat},.....$lon");
     UserServices.updateUserLocation((status, response) {
       if (status) {
@@ -143,7 +155,8 @@ class UserController extends GetxController {
       print("++++====${position}");
       _currentPosition = position;
       userCurrentPosition = position.obs;
-      updateLocation(_token, userCurrentPosition!.value.latitude,userCurrentPosition!.value.longitude);
+      updateLocation(_token, userCurrentPosition!.value.latitude,
+          userCurrentPosition!.value.longitude);
       isFetchingUserLocation(false);
     }).catchError((e) {
       print(e);

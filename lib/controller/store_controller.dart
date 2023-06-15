@@ -2,6 +2,7 @@ import 'package:fenix/controller/user_controller.dart';
 import 'package:get/get.dart';
 
 import '../helpers/widgets/snack_bar.dart';
+import '../models/services/api_docs.dart';
 import '../models/services/store_services.dart';
 import '../screens/onboarding/loading.dart';
 
@@ -347,11 +348,9 @@ class StoreController extends GetxController {
       } else {
         print('Errororor   ==> $response');
       }
-    },
+    },'$storesUrl/$storeId/$category/$itemId/media',
         token: token,
-        storeId: storeId,
-        productId: itemId,
-        category: category,
+        title: 'media',
         images: media);
   }
 }

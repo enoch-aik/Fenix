@@ -93,21 +93,20 @@ class StoreServices {
     }
   }
 
-  static uploadFile(Function callback,
-      {token, storeId, productId, category, images}) async {
+  static uploadFile(Function callback, url, {token,title, images}) async {
     Map<String, String> headers = {
       "Accept": "application/json",
       "Authorization": "Bearer $token"
     };
 
-    var uri = Uri.parse('$storesUrl/$storeId/$category/$productId/media');
+    var uri = Uri.parse(url);
 
     var request = http.MultipartRequest("POST", uri);
 
-
     for (var i in images) {
       print(i.path);
-      request.files.add(await http.MultipartFile.fromPath('media', i.path, filename: 'myImage.png'));
+      request.files.add(await http.MultipartFile.fromPath(title, i.path,
+          filename: 'myImage.png'));
     }
 
     request.headers.addAll(headers);
