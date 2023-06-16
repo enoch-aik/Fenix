@@ -11,6 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/store_controller.dart';
+import '../../../helpers/categories.dart';
 import '../../../helpers/image_picker.dart';
 import '../../../neumorph.dart';
 import '../../../theme.dart';
@@ -35,6 +36,7 @@ class _CreateProductState extends State<CreateProduct> {
   final _formKey = GlobalKey<FormState>();
 
   final quantityController = TextEditingController();
+  final storeController = TextEditingController();
 
   final priceController = TextEditingController();
 
@@ -73,7 +75,7 @@ class _CreateProductState extends State<CreateProduct> {
   File? _image;
 
   String store = '';
-  List<String> stores = [];
+  List<dynamic> stores = [];
   List<String> storeIds = [];
 
   Future<dynamic> showImagePickers({isPhoto = true}) {
@@ -211,9 +213,9 @@ class _CreateProductState extends State<CreateProduct> {
         });
   }
 
-  List<String>? getStoreListNames() {
+  List<dynamic>? getStoreListNames() {
     for (var i = 0; i < _storeController.storeList.length; i++) {
-      stores.add(_storeController.storeList[i]['name']);
+      stores.add(_storeController.storeList[i]);
     }
     return stores;
   }
@@ -229,8 +231,62 @@ class _CreateProductState extends State<CreateProduct> {
   void initState() {
     super.initState();
     getStoreListNames();
-    getStoreIds();
-    storeId = stores[0];
+    // getStoreIds();
+    storeId = stores[0]['id'];
+    storeController.text = stores[0]['name'];
+  }
+
+  pickList(List list, String title, {onSelect}) {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (context) => Container(
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(15))),
+              height: MediaQuery.of(context).size.height * 0.5,
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+              child: Column(children: [
+                closeButton(),
+                Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                        child: Text('Select $title',
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w700, fontSize: 16)))),
+                Expanded(
+                  child: SingleChildScrollView(
+                      child: Column(
+                          children: List.generate(list.length, (i) {
+                    var item = list[i];
+                    return ListTile(
+                        title: Text(item['name'],
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 16)),
+                        onTap: () => onSelect(item));
+                  }))),
+                ),
+              ]),
+            ));
+  }
+
+  InkWell closeButton() {
+    return InkWell(
+      onTap: () => Get.back(),
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(3.0),
+          child: Container(
+            width: width() * 0.13,
+            height: 2.5,
+            decoration: BoxDecoration(
+                color: lightGrey, borderRadius: BorderRadius.circular(15)),
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -316,22 +372,40 @@ class _CreateProductState extends State<CreateProduct> {
                   smallText(
                       'Please select the store under which the product will be created (product will be created as a person if left as default)'),
                   kSpacing,
-                  DropDownWidget(
-                      list: stores,
-                      store: store,
-                      items: stores.map((String items) {
-                        return DropdownMenuItem(
-                          value: items,
-                          child: Text(items),
-                        );
-                      }).toList(),
-                      onChanged: (val) {
-                        var index = stores.indexOf(val!);
+                  // DropDownWidget(
+                  //     list: stores,
+                  //     store: store,
+                  //     items: stores.map((String items) {
+                  //       return DropdownMenuItem(
+                  //         value: items,
+                  //         child: Text(items),
+                  //       );
+                  //     }).toList(),
+                  //     onChanged: (val) {
+                  //       var index = stores.indexOf(val!);
+                  //       setState(() {
+                  //         store = val;
+                  //       });
+                  //       storeId = storeIds[index];
+                  //     }),
+                  InkWell(
+                    onTap: () {
+                      pickList(stores, 'Store', onSelect: (v) {
+                        Get.back();
                         setState(() {
-                          store = val;
+                          storeController.text = v['name'];
+                          storeId = v['id'];
                         });
-                        storeId = storeIds[index];
-                      }),
+                      });
+                    },
+                    child: TextFieldWidget(
+                      hint: "Store",
+                      enabled: false,
+                      suffix: const Icon(Icons.expand_more),
+                      textController: storeController,
+                      validator: (value) => FieldValidator.validate(value!),
+                    ),
+                  ),
                   kSpacing,
                   title('Photos'),
                   kSpacing,
@@ -382,6 +456,7 @@ class _CreateProductState extends State<CreateProduct> {
                   ),
                   kSpacing,
                   title('Item Specifics'),
+
                   kSpacing,
                   TextFieldWidget(
                     hint: "Condition",
@@ -438,12 +513,39 @@ class _CreateProductState extends State<CreateProduct> {
                   //   textController: categoryController,
                   //   enabled: false,
                   // ),
+
                   kSpacing,
-                  TextFieldWidget(
-                    hint: "Sub-Category",
-                    textController: subcategoryController,
+                  InkWell(
+                    onTap: () {
+                      // pickList(Category().electronics, 'Category');
+                    },
+                    child: TextFieldWidget(
+                      hint: "Category",
+                      textController: categoryController,
+                      enabled: false,
+                      suffix: const Icon(Icons.expand_more),
+                    ),
                   ),
 
+                  kSpacing,
+                  InkWell(
+                    onTap: () {
+                      pickList(Category().electronics, 'Sub-Category',
+                          onSelect: (v) {
+                            Get.back();
+
+                            setState(() {
+                          subcategoryController.text = v['name'];
+                        });
+                      });
+                    },
+                    child: TextFieldWidget(
+                      hint: "Sub-Category",
+                      textController: subcategoryController,
+                      enabled: false,
+                      suffix: const Icon(Icons.expand_more),
+                    ),
+                  ),
                   kSpacing,
                   title('Description'),
                   kSpacing,

@@ -10,7 +10,6 @@ import '../screens/onboarding/loading.dart';
 class StoreController extends GetxController {
   var storeList = [].obs;
   var wishList = [].obs;
-  var productListByCategory = [];
   var productList = [].obs;
   var vehicleList = [].obs;
   var apartmentList = [].obs;
@@ -46,19 +45,41 @@ class StoreController extends GetxController {
 
   setDefaultStoreId(id) => _id = id;
 
-  getProductsByCategory(token, category) {
-    if (productListByCategory.isNotEmpty) {
-      return productListByCategory;
-    }
-
-    ProductServices.getProductsByCategory((status, response) {
-
+  Future<dynamic> getMyProductsByCategory(token, category) async {
+    var data;
+    await ProductServices.getProductsByCategory((status, response) {
       if (status) {
-        return productListByCategory = response['data'];
+        data = response['data'];
       } else {
-        return productListByCategory = [];
+        data = [];
       }
     }, token, category);
+    return data;
+  }
+
+  Future<dynamic> getMyVehicleByCategory(token, category) async {
+    var data;
+    await ProductServices.getVehiclesByCategory((status, response) {
+      if (status) {
+        data = response['data'];
+      } else {
+        data = [];
+      }
+    }, token, category);
+    return data;
+  }
+
+
+  Future<dynamic> getMyApartmentByCategory(token, category) async {
+    var data;
+    await ProductServices.getApartmentsByCategory((status, response) {
+      if (status) {
+        data = response['data'];
+      } else {
+        data = [];
+      }
+    }, token, category);
+    return data;
   }
 
   getProducts(token, storeId) {

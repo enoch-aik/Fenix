@@ -47,11 +47,14 @@ class _StoreListingState extends State<StoreListing> {
   boot() async {
     category = widget.category;
 
-    productList = await storeController.getProductsByCategory(token, category);
+var list = await storeController.getMyProductsByCategory(token, category);
+    print('Products -- $list');
     if (productList != null) {
       setState(() {
+        productList = list;
         isLoadingProducts = false;
       });
+
     }
   }
 
@@ -75,17 +78,19 @@ class _StoreListingState extends State<StoreListing> {
                   child: Row(
                     children: [
                       backArrow(),
-                      Text(
-                        "Your $category List",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 23.w,
-                            fontWeight: FontWeight.w500,
-                            shadows: [
-                              Shadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  offset: const Offset(2, 2))
-                            ]),
+                      Expanded(
+                        child: Text(
+                          "Your $category List",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 23.w,
+                              fontWeight: FontWeight.w500,
+                              shadows: [
+                                Shadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    offset: const Offset(2, 2))
+                              ]),
+                        ),
                       ),
                     ],
                   )),

@@ -548,6 +548,7 @@ class PaymentTextFieldWidget extends StatelessWidget {
 class TextFieldWidget extends StatelessWidget {
   String hint;
   Widget? prefixIcon;
+  Widget? suffixIcon;
   Widget? suffix;
   TextEditingController? textController;
   String? Function(String?)? validator;
@@ -562,6 +563,7 @@ class TextFieldWidget extends StatelessWidget {
       {Key? key,
       required this.hint,
       this.prefixIcon,
+      this.suffixIcon,
       this.suffix,
       this.obscureText = false,
       this.enabled,
@@ -625,6 +627,7 @@ class TextFieldWidget extends StatelessWidget {
               .copyWith(fontSize: 16.w, color: Colors.grey.shade400),
           prefixIcon: prefixIcon,
           suffix: suffix,
+          suffixIcon: suffixIcon,
         ),
       ),
     );
