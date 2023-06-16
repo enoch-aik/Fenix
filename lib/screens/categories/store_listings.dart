@@ -46,15 +46,17 @@ class _StoreListingState extends State<StoreListing> {
 
   boot() async {
     category = widget.category;
+print(category);
+    var list =( category=='Apartment'||category=='House'||category=='Apartment')?
 
-var list = await storeController.getMyProductsByCategory(token, category);
+    await storeController.getMyApartmentByCategory(token, category):
+    await storeController.getMyProductsByCategory(token, category);
     print('Products -- $list');
     if (productList != null) {
       setState(() {
         productList = list;
         isLoadingProducts = false;
       });
-
     }
   }
 
