@@ -29,8 +29,8 @@ class BottomHillsWidget extends StatelessWidget {
     //   ),
     // );
 
-    return Image.asset("assets/images/bottomHills.png",width:width(),fit: BoxFit.fill);
-
+    return Image.asset("assets/images/bottomHills.png",
+        width: width(), fit: BoxFit.fill);
   }
 }
 
@@ -39,7 +39,6 @@ ThemeData theme = ThemeData(
   colorScheme: ThemeData()
       .colorScheme
       .copyWith(primary: primary, background: white, error: blue),
-
   backgroundColor: const Color(0xFFE4F0FA),
   textTheme: const TextTheme(
     bodyText1: TextStyle(
@@ -136,7 +135,6 @@ class ButtonWidget extends StatelessWidget {
   }
 }
 
-
 class DefaultButton extends StatelessWidget {
   final String? title;
   final onPress;
@@ -159,12 +157,10 @@ class DefaultButton extends StatelessWidget {
           child: Text(title.toString(),
               textAlign: TextAlign.center,
               style: const TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 16,
-                  color: white)),
+                  fontWeight: FontWeight.w400, fontSize: 16, color: white)),
         ),
         decoration: BoxDecoration(
-color: color??lightGreen,
+            color: color ?? lightGreen,
             boxShadow: const [
               BoxShadow(
                 spreadRadius: 0.5,
@@ -184,7 +180,6 @@ color: color??lightGreen,
     );
   }
 }
-
 
 class TransparentButton extends StatelessWidget {
   final String? title;
@@ -208,19 +203,15 @@ class TransparentButton extends StatelessWidget {
           child: Text(title.toString(),
               textAlign: TextAlign.center,
               style: const TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 16,
-                  color: primary)),
+                  fontWeight: FontWeight.w400, fontSize: 16, color: primary)),
         ),
         decoration: BoxDecoration(
             border: Border.all(color: primary),
-
             borderRadius: BorderRadius.circular(12)),
       ),
     );
   }
 }
-
 
 class SwipeToggleButton extends StatelessWidget {
   Widget child;
@@ -247,17 +238,21 @@ class SwipeToggleButton extends StatelessWidget {
   }
 }
 
-class WelcomeCards extends StatelessWidget {
-  const WelcomeCards(
-      {Key? key,
-      required this.pageController,
-      required this.title,
-      required this.image})
-      : super(key: key);
+class WelcomeCards extends StatefulWidget {
+  const WelcomeCards({
+    Key? key,
+    required this.title,
+  }) : super(key: key);
 
-  final PageController pageController;
   final String title;
-  final Widget image;
+
+  @override
+  State<WelcomeCards> createState() => _WelcomeCardsState();
+}
+
+class _WelcomeCardsState extends State<WelcomeCards> {
+  int selectedPage = 0;
+  PageController pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -266,7 +261,7 @@ class WelcomeCards extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(title, style: Theme.of(context).textTheme.bodyText2),
+          Text(widget.title, style: Theme.of(context).textTheme.bodyText2),
           SizedBox(height: 20.w),
           Column(
             children: [
@@ -276,7 +271,7 @@ class WelcomeCards extends StatelessWidget {
                   Container(
                     height: MediaQuery.of(context).size.height * 0.72,
                     width: MediaQuery.of(context).size.width,
-                    margin:  EdgeInsets.only(bottom: 10.w),
+                    margin: EdgeInsets.only(bottom: 10.w),
                     padding:
                         EdgeInsets.symmetric(vertical: 36.w, horizontal: 15.w),
                     decoration: BoxDecoration(
@@ -302,18 +297,23 @@ class WelcomeCards extends StatelessWidget {
                     ),
                     child: PageView(
                       controller: pageController,
+                      onPageChanged: (v) {
+                        setState(() {
+                          selectedPage = v;
+                        });
+                      },
                       children: [
                         Image.asset(
                           "assets/images/screen 1.png",
-                          fit: BoxFit.fill,
+                          fit: BoxFit.fitWidth,
                         ),
                         Image.asset(
                           "assets/images/screen 2.png",
-                          fit: BoxFit.fill,
+                          fit: BoxFit.fitWidth,
                         ),
                         Image.asset(
                           "assets/images/screen 3.png",
-                          fit: BoxFit.fill,
+                          fit: BoxFit.fitWidth,
                         ),
                       ],
                     ),
@@ -336,6 +336,21 @@ class WelcomeCards extends StatelessWidget {
                             }
                           },
                           child: backButton,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: List.generate(
+                              3,
+                              (index) => Container(
+                                    height: 13,
+                                    width: 13,
+                                    margin: const EdgeInsets.all(4),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color:
+                                          selectedPage == index ? grey : light,
+                                    ),
+                                  )),
                         ),
                         InkWell(
                           onTap: () {
@@ -409,7 +424,8 @@ class WidgetsPad extends StatelessWidget {
                     color: Colors.grey.withOpacity(0.5),
                     spreadRadius: 0,
                     blurRadius: 1,
-                    offset: const Offset(0.5, 0.1), // changes position of shadow
+                    offset:
+                        const Offset(0.5, 0.1), // changes position of shadow
                   ),
                   const BoxShadow(
                     color: Colors.white,
@@ -470,7 +486,8 @@ class CustomWidgetsPad extends StatelessWidget {
                     color: Colors.grey.withOpacity(0.5),
                     spreadRadius: 0,
                     blurRadius: 1,
-                    offset: const Offset(0.5, 0.1), // changes position of shadow
+                    offset:
+                        const Offset(0.5, 0.1), // changes position of shadow
                   ),
                   const BoxShadow(
                     color: Colors.white,
@@ -489,20 +506,19 @@ class CustomWidgetsPad extends StatelessWidget {
   }
 }
 
-
 class PaymentTextFieldWidget extends StatelessWidget {
-
   String label;
   TextEditingController? textController;
   String? Function(String?)? validator;
   TextInputType? keyboardType;
 
-  PaymentTextFieldWidget({
-    Key? key,
-    required this.label,
-    this.keyboardType,
-    this.textController,
-    this.validator}) : super(key: key);
+  PaymentTextFieldWidget(
+      {Key? key,
+      required this.label,
+      this.keyboardType,
+      this.textController,
+      this.validator})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -512,10 +528,15 @@ class PaymentTextFieldWidget extends StatelessWidget {
         controller: textController,
         keyboardType: keyboardType,
         decoration: InputDecoration(
-          labelStyle:  GoogleFonts.aBeeZee(color: dark, fontWeight: FontWeight.w400, fontSize: 15.w),
-          focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: dark.withOpacity(0.5)), borderRadius: BorderRadius.circular(8.w)),
-          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: dark.withOpacity(0.5)), borderRadius: BorderRadius.circular(8.w)),
-          fillColor: Color(0xFFDAE5F2),
+          labelStyle: GoogleFonts.aBeeZee(
+              color: dark, fontWeight: FontWeight.w400, fontSize: 15.w),
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: dark.withOpacity(0.5)),
+              borderRadius: BorderRadius.circular(8.w)),
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: dark.withOpacity(0.5)),
+              borderRadius: BorderRadius.circular(8.w)),
+          fillColor: const Color(0xFFDAE5F2),
           filled: true,
           labelText: label,
         ),
@@ -523,7 +544,6 @@ class PaymentTextFieldWidget extends StatelessWidget {
     );
   }
 }
-
 
 class TextFieldWidget extends StatelessWidget {
   String hint;
@@ -543,9 +563,9 @@ class TextFieldWidget extends StatelessWidget {
       required this.hint,
       this.prefixIcon,
       this.suffix,
-      this.obscureText=false,
+      this.obscureText = false,
       this.enabled,
-      this.maxLine=1,
+      this.maxLine = 1,
       this.textController,
       this.keyboardType,
       this.inputFormatters,
@@ -573,17 +593,14 @@ class TextFieldWidget extends StatelessWidget {
         ],
       ),
       child: TextFormField(
-        style: Theme.of(context)
-            .textTheme
-            .bodyText1!
-            .copyWith(
-          fontSize: 18.w,
-        ),
+        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+              fontSize: 18.w,
+            ),
         onTap: onTap,
         maxLines: maxLine,
         enabled: enabled,
         keyboardType: keyboardType,
-        inputFormatters:inputFormatters,
+        inputFormatters: inputFormatters,
         validator: validator,
         controller: textController,
         obscureText: obscureText,
@@ -614,25 +631,20 @@ class TextFieldWidget extends StatelessWidget {
   }
 }
 
-
-
-
-
 class DropDownWidget extends StatelessWidget {
-
   String store;
   List<String>? list;
   List<DropdownMenuItem<String>>? items;
   Function(String?)? onChanged;
 
-
-   DropDownWidget({ this.list, this.items, this.onChanged, this.store = "", Key? key}) : super(key: key);
+  DropDownWidget(
+      {this.list, this.items, this.onChanged, this.store = "", Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6),
         color: const Color(0xFFE4F0FA).withOpacity(0.9),
@@ -649,39 +661,41 @@ class DropDownWidget extends StatelessWidget {
         ],
       ),
       child: DropdownButton(
-        value: store.isEmpty ?  list![0] : store,
-        underline: Container(),
-        menuMaxHeight: MediaQuery.of(context).size.height * 0.4,
-        icon: const Icon(Icons.keyboard_arrow_down),
-        isExpanded: true,
-        itemHeight: 50,
-        items: items,
-        onChanged: onChanged
-      ),
+          value: store.isEmpty ? list![0] : store,
+          underline: Container(),
+          menuMaxHeight: MediaQuery.of(context).size.height * 0.4,
+          icon: const Icon(Icons.keyboard_arrow_down),
+          isExpanded: true,
+          itemHeight: 50,
+          items: items,
+          onChanged: onChanged),
     );
   }
 }
 
-
-Widget backArrow(){
+Widget backArrow() {
   return IconButton(
-      onPressed: (){
-        Get.back();
-      },
-      icon: (Platform.isIOS)
-          ? Icon(Icons.arrow_back_ios, color: Colors.white, size: 29.w,)
-          : Icon(Icons.arrow_back,  color: Colors.white, size: 29.w,),
-      );
+    onPressed: () {
+      Get.back();
+    },
+    icon: (Platform.isIOS)
+        ? Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+            size: 29.w,
+          )
+        : Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+            size: 29.w,
+          ),
+  );
 }
-
-
 
 List lottieSlides = [
   Image.asset("assets/images/lottieAnimOne.png"),
   Image.asset("assets/images/lottieAnimOne.png"),
   Image.asset("assets/images/lottieAnimOne.png"),
 ];
-
-
 
 // margin: EdgeInsets.symmetric(vertical: 17.w, horizontal: 24.w),

@@ -3,12 +3,14 @@ import 'package:get/get.dart';
 
 import '../helpers/widgets/snack_bar.dart';
 import '../models/services/api_docs.dart';
+import '../models/services/product_services.dart';
 import '../models/services/store_services.dart';
 import '../screens/onboarding/loading.dart';
 
 class StoreController extends GetxController {
   var storeList = [].obs;
   var wishList = [].obs;
+  var productListByCategory = [];
   var productList = [].obs;
   var vehicleList = [].obs;
   var apartmentList = [].obs;
@@ -43,6 +45,21 @@ class StoreController extends GetxController {
   String getDefaultStoreId() => _id;
 
   setDefaultStoreId(id) => _id = id;
+
+  getProductsByCategory(token, category) {
+    if (productListByCategory.isNotEmpty) {
+      return productListByCategory;
+    }
+
+    ProductServices.getProductsByCategory((status, response) {
+
+      if (status) {
+        return productListByCategory = response['data'];
+      } else {
+        return productListByCategory = [];
+      }
+    }, token, category);
+  }
 
   getProducts(token, storeId) {
     isFetchingProducts(true);

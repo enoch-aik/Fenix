@@ -17,6 +17,17 @@ class ProductServices {
     }
   }
 
+  static getApartmentsByCategory(Function callback, token, category) async {
+    var response = await ApiServices.initialiseGetRequest(
+        url: '$apartmentUrl?category=$category', token: token);
+    print(response);
+    if (response is String) {
+      callback(false, response);
+    } else {
+      callback(true, response);
+    }
+  }
+
   static getApartmentsByTitle(Function callback, token, title) async {
     var response = await ApiServices.initialiseGetRequest(
         url: '$apartmentUrl?title=$title', token: token);
@@ -54,6 +65,18 @@ class ProductServices {
   static getVehiclesByTitle(Function callback, token, title) async {
     var response = await ApiServices.initialiseGetRequest(
         url: '$vehicleUrl?title=$title', token: token);
+    print(response);
+    if (response is String) {
+      callback(false, response);
+    } else {
+      callback(true, response);
+    }
+  }
+
+
+  static getVehiclesByCategory(Function callback, token, category) async {
+    var response = await ApiServices.initialiseGetRequest(
+        url: '$vehicleUrl?category=$category', token: token);
     print(response);
     if (response is String) {
       callback(false, response);

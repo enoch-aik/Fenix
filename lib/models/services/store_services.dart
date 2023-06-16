@@ -28,6 +28,17 @@ class StoreServices {
     }
   }
 
+  static getProductsByCategory(Function callback, token, storeId) async {
+    var response = await ApiServices.initialiseGetRequest(
+        url: '$storesUrl/$storeId/products', token: token);
+    print(response);
+    if (response is String) {
+      callback(false, response);
+    } else {
+      callback(true, response);
+    }
+  }
+
   static getApartment(Function callback, token, storeId) async {
     var response = await ApiServices.initialiseGetRequest(
         url: '$storesUrl/$storeId/apartments', token: token);

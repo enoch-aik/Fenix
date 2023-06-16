@@ -11,7 +11,6 @@ class OnboardingTwo extends StatelessWidget {
 
  OnboardingTwo({Key? key}) : super(key: key);
 
-  PageController pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +20,7 @@ class OnboardingTwo extends StatelessWidget {
         alignment: Alignment.center,
         children: [
 
-          WelcomeCards(pageController: pageController, title: "Easy Communication and Deals",
-              image: Image.asset("assets/images/lottieAnimOne.png",fit: BoxFit.fill,)),
+          WelcomeCards( title: "Easy Communication and Deals"),
 
 
 
