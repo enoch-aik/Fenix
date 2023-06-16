@@ -39,7 +39,6 @@ class ProductServices {
     }
   }
 
-
   static getProductsByCategory(Function callback, token, category) async {
     var response = await ApiServices.initialiseGetRequest(
         url: '$productUrl?title=$category', token: token);
