@@ -19,7 +19,7 @@ class ProductServices {
 
   static getApartmentsByCategory(Function callback, token, category) async {
     var response = await ApiServices.initialiseGetRequest(
-        url: '$apartmentUrl?category=$category', token: token);
+        url: '$apartmentUrl?type=$category', token: token);
     print(response);
     if (response is String) {
       callback(false, response);

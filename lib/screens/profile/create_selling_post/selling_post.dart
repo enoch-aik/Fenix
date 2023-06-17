@@ -1,10 +1,12 @@
 import 'package:fenix/const.dart';
 import 'package:fenix/helpers/categories.dart';
+import 'package:fenix/helpers/icons/custom_icons_fenix_icons.dart';
 import 'package:fenix/helpers/widgets.dart';
 import 'package:fenix/screens/profile/create_selling_post/create_apartment.dart';
 import 'package:fenix/screens/profile/create_selling_post/create_product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import '../../../theme.dart';
@@ -100,7 +102,7 @@ class _SellingPostState extends State<SellingPost> {
               child: SellingPostCard(
                 title: "Apartment",
                 subtitle: "Create Rent/Selling Post",
-                icon: 'assets/images/icons/apartment.png',
+                icon: Icon(CustomIconsFenix.apartment, size: 30.w,),
                 backgroundImage: 'assets/images/apartment 1.png',
               ),
             ),
@@ -114,7 +116,7 @@ class _SellingPostState extends State<SellingPost> {
               child: SellingPostCard(
                 title: "House",
                 subtitle: "Create House Rent/Selling Post",
-                icon: 'assets/images/icons/houseRental.png',
+                icon: Icon(CustomIconsFenix.house, size: 30.w,),
                 backgroundImage: 'assets/images/house.png',
               ),
             ),
@@ -129,7 +131,7 @@ class _SellingPostState extends State<SellingPost> {
               child: SellingPostCard(
                 title: "Dacha",
                 subtitle: "Create Dacha Rent/Selling Post",
-                icon: 'assets/images/icons/Dacha.png',
+                icon: Icon(CustomIconsFenix.dacha,  size: 30.w,),
                 backgroundImage: 'assets/images/house.png',
               ),
             ),
@@ -143,7 +145,7 @@ class _SellingPostState extends State<SellingPost> {
               child: SellingPostCard(
                 title: "Car",
                 subtitle: "Sell Cars",
-                icon: 'assets/images/icons/carRental.png',
+                icon: Icon(FontAwesomeIcons.car, size: 25.w,),
                 backgroundImage: 'assets/images/cars.png',
               ),
             ),
@@ -158,8 +160,8 @@ class _SellingPostState extends State<SellingPost> {
               child: SellingPostCard(
                 title: "Electronics",
                 subtitle: "Sell Electronics",
-                icon: 'assets/images/icons/apartment.png',
-                backgroundImage: 'assets/images/electronics.png',
+                icon: Icon(Icons.tv,  size: 27.w,),
+                backgroundImage: 'assets/images/electronicslisting.png',
               ),
             ),
             smallSpace(),
@@ -173,8 +175,8 @@ class _SellingPostState extends State<SellingPost> {
               child: SellingPostCard(
                 title: "Other Products",
                 subtitle: "Sell Other Products",
-                icon: 'assets/images/icons/apartment.png',
-                backgroundImage: 'assets/images/electronics.png',
+                icon: Icon(FontAwesomeIcons.cartShopping,  size: 25.w,),
+                backgroundImage: 'assets/images/clothing.png',
               ),
             ),
 
@@ -189,7 +191,7 @@ class _SellingPostState extends State<SellingPost> {
 class SellingPostCard extends StatelessWidget {
   String? title;
   String? subtitle;
-  String? icon;
+  Widget? icon;
   String? backgroundImage;
 
   SellingPostCard(
@@ -205,7 +207,7 @@ class SellingPostCard extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(22.w),
-              color: Colors.red,
+              color: Colors.white,
               image: DecorationImage(
                   image: AssetImage(backgroundImage!), fit: BoxFit.fill)),
         ),
@@ -226,10 +228,7 @@ class SellingPostCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Image.asset(
-                          icon!,
-                          scale: 0.6,
-                        ),
+                        icon!,
                         smallHSpace(),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
