@@ -152,6 +152,7 @@ class _SellingPostState extends State<SellingPost> {
               onTap: () {
                 Get.to(() => CreateProduct(
                       storeId: widget.storeId,
+                      type: "",
                     ));
               },
               child: SellingPostCard(
@@ -161,6 +162,22 @@ class _SellingPostState extends State<SellingPost> {
                 backgroundImage: 'assets/images/electronics.png',
               ),
             ),
+            smallSpace(),
+            InkWell(
+              onTap: () {
+                Get.to(() => CreateProduct(
+                  storeId: widget.storeId,
+                  type: "Other",
+                ));
+              },
+              child: SellingPostCard(
+                title: "Other Products",
+                subtitle: "Sell Other Products",
+                icon: 'assets/images/icons/apartment.png',
+                backgroundImage: 'assets/images/electronics.png',
+              ),
+            ),
+
             smallSpace(),
           ],
         ),

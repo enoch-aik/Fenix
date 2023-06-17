@@ -63,7 +63,7 @@ class Plans extends StatelessWidget {
                       tinyH5Space(),
                       Text(type!,
                       style: GoogleFonts.roboto(
-                          fontSize: 13.w,
+                          fontSize: 15.w,
                           color: dark,
                           fontWeight: FontWeight.w700
                       ),),

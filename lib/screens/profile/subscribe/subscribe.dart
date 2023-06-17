@@ -67,7 +67,7 @@ class Subscribe extends StatelessWidget {
                   InkWell(
                     onTap: (){
                       Get.to(() => Plans(
-                        type: "Diamond Plan ${topBanner['type']}",
+                        type: "${topBanner['plan']} Plan ${topBanner['type']}",
                         planDetails: topBanner,
                       ));
                     },
@@ -77,7 +77,7 @@ class Subscribe extends StatelessWidget {
                   InkWell(
                       onTap: (){
                         Get.to(() => Plans(
-                          type: "Diamond Plan ${top10['type']}",
+                          type: "${top10['plan']} Plan ${top10['type']}",
                           planDetails: top10,
                         ));
                       },
@@ -87,7 +87,7 @@ class Subscribe extends StatelessWidget {
                   InkWell(
                       onTap: (){
                         Get.to(() => Plans(
-                          type: "Diamond Plan ${bestSelling['type']}",
+                          type: "${bestSelling['plan']} Plan ${bestSelling['type']}",
                           planDetails: bestSelling,
                         ));
                       },
@@ -96,7 +96,7 @@ class Subscribe extends StatelessWidget {
                   InkWell(
                       onTap: (){
                         Get.to(() => Plans(
-                          type: "Diamond Plan ${topDeals['type']}",
+                          type: "${topDeals['plan']} Plan ${topDeals['type']}",
                           planDetails: topDeals,
                         ));
                       },
@@ -105,7 +105,7 @@ class Subscribe extends StatelessWidget {
                   InkWell(
                       onTap: (){
                         Get.to(() => Plans(
-                          type: "Diamond Plan ${
+                          type: "${recommendedDeals['plan']} Plan ${
                               recommendedDeals['type']}",
                           planDetails: recommendedDeals,
                         ));

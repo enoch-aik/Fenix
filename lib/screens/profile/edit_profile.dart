@@ -251,14 +251,15 @@ class _EditProfileState extends State<EditProfile> {
                           InkWell(
                               onTap: () {
                                 if (_formKey.currentState!.validate()) {
-                                  _userController.updateProfile(
-                                      _userController.getToken(),
-                                      username: userNameController.text,
-                                      phoneNumber: phoneController.text,
-                                      gender: gender,
-                                      address: addressController.text,
-                                      country: countryController.text,
-                                      city: cityController.text);
+                                  // _userController.updateProfile(
+                                  //     _userController.getToken(),
+                                  //     username: userNameController.text,
+                                  //     phoneNumber: phoneController.text,
+                                  //     gender: gender,
+                                  //     address: addressController.text,
+                                  //     country: countryController.text,
+                                  //     city: cityController.text);
+
                                   if (_image != null) {
                                     _userController.uploadProfilePic(
                                         token: _userController.getToken(),
