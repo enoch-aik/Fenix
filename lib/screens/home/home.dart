@@ -1030,19 +1030,20 @@ class ProductWidget extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: 0.w),
           decoration: BoxDecoration(
               color: const Color(0xFFDAE5F2),
-              borderRadius: BorderRadius.circular(10.w),
+              borderRadius: BorderRadius.circular(5.w),
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 1,
-                  blurRadius: 2,
-                  offset: const Offset(0, 1), // changes position of shadow
+                  spreadRadius: 0.5,
+                  blurRadius: 1,
+                  offset: const Offset(0, 0.1),
+                  // changes position of shadow
                 ),
                 BoxShadow(
                   color: Colors.white.withOpacity(0.3),
-                  spreadRadius: 2,
-                  blurRadius: 3,
-                  offset: const Offset(-3, -6), // changes position of shadow
+                  spreadRadius: 1,
+                  blurRadius: 1,
+                  offset: const Offset(-1, -1), // changes position of shadow
                 ),
               ]),
           child: Column(

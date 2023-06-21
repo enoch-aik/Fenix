@@ -35,19 +35,30 @@ class Category {
   ];
 
   List propertyCategory = [
-    {"name": "Apartment"},
-    {"name": "House"},
-    {"name": "Dacha"}
+    {"name": "Apartment",
+      "image": "apartmentc.png"
+    },
+    {"name": "House",
+      "image": "house.png"
+    },
+    {"name": "Dacha",
+      "image": "dachac.png"
+    }
   ];
 
   List carCategories = [
-    {"name": "Cars"},
+    {
+      "name": "Cars",
+      "image": "carsale.png"
+    },
     {
       "name": "Car Parts",
+      "image": "carparts.png",
       "products": ["Body Parts", "Engine Parts", "Tire", "Others"]
     },
     {
       "name": "Car Interior",
+      "image": "carinterior.png",
       "products": ["Body Paint", "Car Accessory", "Others"]
     }
   ];

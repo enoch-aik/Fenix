@@ -15,7 +15,7 @@ class SubCategory extends StatefulWidget {
   List? category;
   String? title;
 
-  SubCategory({this.category, this.title, Key? key}) : super(key: key);
+  SubCategory({this.category, this.title,  Key? key}) : super(key: key);
 
   @override
   State<SubCategory> createState() => _SubCategoryState();
@@ -39,13 +39,14 @@ class _SubCategoryState extends State<SubCategory> {
             children: [
               tiny5Space(),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   backArrow(),
-                  Expanded(
-                      child: Text(
+                  Text(
                     widget.title!,
-                    style: const TextStyle(color: white),
-                  )),
+                    style: TextStyle(color: white, fontSize: 23.w,),
+                  ),
+                  smallHSpace(),
                 ],
               ),
               SizedBox(
@@ -72,14 +73,18 @@ class _SubCategoryState extends State<SubCategory> {
               child: Row(
                 children: [
                   Container(
-                    height: 64.w,
-                    width: 87.w,
+                    height: 94.w,
+                    width: 100.w,
                     padding: EdgeInsets.all(3.w),
                     margin: EdgeInsets.symmetric(vertical: 10.w),
                     decoration: const BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage("assets/images/categoryCard.png"),
                             fit: BoxFit.scaleDown)),
+                    child: widget.category![index]['image'] != null ? Padding(
+                      padding: EdgeInsets.all(10.w),
+                      child: Image.asset("assets/images/menu/${widget.category![index]['image']}",fit: BoxFit.fill,),
+                    ) : SizedBox(),
                   ),
                   SizedBox(
                     width: 18.w,
