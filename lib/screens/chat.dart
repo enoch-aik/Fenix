@@ -35,6 +35,7 @@ class Chat extends StatefulWidget {
 class ChatState extends State<Chat> {
   final TextEditingController _messageController = TextEditingController();
   UserController userController = Get.find();
+  GroupedItemScrollController _groupedItemScrollController = GroupedItemScrollController();
   String token = '';
   String userId = '';
   String userName = '';
@@ -97,7 +98,7 @@ class ChatState extends State<Chat> {
   }
 
   getVendorChats(vendorId) {
-    isLoadingChat = true;
+    // isLoadingChat = true;
 
     ChatServices.getVendorChats((status, response) {
       isLoadingChat = false;
@@ -114,7 +115,7 @@ class ChatState extends State<Chat> {
   }
 
   getChatsById(id) {
-    isLoadingChat = true;
+    // isLoadingChat = true;
 
     ChatServices.getChatsById((status, response) {
       isLoadingChat = false;
@@ -240,7 +241,6 @@ class ChatState extends State<Chat> {
                             Expanded(
                               child:
 
-
                                   StickyGroupedListView<dynamic, String>(
                                 elements: chats,
                                 order: StickyGroupedListOrder.ASC,
@@ -249,7 +249,7 @@ class ChatState extends State<Chat> {
                                         item['createdAt'].toString()))
                                     .toString(),
                                 floatingHeader: true,
-
+                                    initialScrollIndex: chats.length,
                                     itemComparator: (dynamic element1, dynamic element2) =>
                                         element1['createdAt'].compareTo(element2['createdAt']),
                                 groupSeparatorBuilder: (dynamic element) =>

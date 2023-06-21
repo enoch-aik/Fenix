@@ -9,6 +9,8 @@ import 'package:get/get.dart';
 import '../../const.dart';
 import '../../controller/store_controller.dart';
 import '../../controller/user_controller.dart';
+import '../../helpers/categories.dart';
+import '../../theme.dart';
 import '../home/widgets/loader.dart';
 import '../products/product_details.dart';
 
@@ -80,22 +82,38 @@ print(category);
               Align(
                   alignment: Alignment.centerLeft,
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       backArrow(),
-                      Expanded(
-                        child: Text(
-                          "Your $category List",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 23.w,
-                              fontWeight: FontWeight.w500,
-                              shadows: [
-                                Shadow(
-                                    color: Colors.black.withOpacity(0.2),
-                                    offset: const Offset(2, 2))
-                              ]),
-                        ),
+                      Text(
+                        "$category",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 21.w,
+                            fontWeight: FontWeight.w600,
+                            ),
                       ),
+                      (category == "Cellphones and Accessories") ? IconButton(
+                          onPressed: (){
+                            pickBrand(Category().electronics[1]['cell phones'], 'Category',
+                                onSelect: (v) {
+                                  Get.back();
+
+                                  setState(() {
+                                    print(v['brand']);
+
+                                   v['brand'] == "Apple" ? pickModel(Category().electronics[1]['cell phones'][0]['model'], 'Brand',
+                                        onSelect: (v) {Get.back();})
+                                       :  v['brand'] == "Samsung" ? pickModel(Category().electronics[1]['cell phones'][1]['model'], 'Brand',
+                                       onSelect: (v) {Get.back();})
+                                       :   pickModel(Category().electronics[1]['cell phones'][2]['model'], 'Brand',
+                                       onSelect: (v) {Get.back();});
+                                  });
+                                });
+                          },
+                          icon: Icon(Icons.filter_list_alt, color: white, size: 28.w,))
+                          : smallHSpace(),
+
                     ],
                   )),
             ],
@@ -362,4 +380,96 @@ print(category);
       ),
     );
   }
+  pickBrand(List list, String title, {onSelect}) {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (context) => Container(
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius:
+              BorderRadius.vertical(top: Radius.circular(15))),
+          height: MediaQuery.of(context).size.height * 0.8,
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+          child: Column(children: [
+            closeButton(),
+            Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                    child: Text('Select $title',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w700, fontSize: 16)))),
+            Expanded(
+              child: SingleChildScrollView(
+                  child: Column(
+                      children: List.generate(list.length, (i) {
+                        var item = list[i];
+                        return ListTile(
+                            title: Text(item['brand'],
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 16)),
+                            onTap: () => onSelect(item));
+                      }))),
+            ),
+          ]),
+        ));
+  }
+
+
+  pickModel(List list, String title, {onSelect}) {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (context) => Container(
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius:
+              BorderRadius.vertical(top: Radius.circular(15))),
+          height: MediaQuery.of(context).size.height * 0.8,
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+          child: Column(children: [
+            closeButton(),
+            Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                    child: Text('Select $title',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w700, fontSize: 16)))),
+            Expanded(
+              child: SingleChildScrollView(
+                  child: Column(
+                      children: List.generate(list.length, (i) {
+                        var item = list[i];
+                        return ListTile(
+                            title: Text(item,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 16)),
+                            onTap: () => onSelect(item));
+                      }))),
+            ),
+          ]),
+        ));
+  }
+
+  InkWell closeButton() {
+    return InkWell(
+      onTap: () => Get.back(),
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(3.0),
+          child: Container(
+            width: width() * 0.13,
+            height: 2.5,
+            decoration: BoxDecoration(
+                color: lightGrey, borderRadius: BorderRadius.circular(15)),
+          ),
+        ),
+      ),
+    );
+  }
+
 }
+
+

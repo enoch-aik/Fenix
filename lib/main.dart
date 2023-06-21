@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
           Get.put(AccountController());
         },
         transitionDuration: const Duration(milliseconds: 350),
-        defaultTransition: Transition.fade,
+        defaultTransition: Transition.rightToLeftWithFade,
         home: const SplashScreen(),
       ),
     );
