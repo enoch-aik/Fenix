@@ -94,7 +94,7 @@ class UserController extends GetxController {
     StoreServices.uploadFile((status, response) {
       print('==> $response');
       if (status) {
-        Get.back();
+        // Get.back();
         CustomSnackBar.successSnackBar(
             'Great!', 'Profile Picture uploaded successfully');
       } else {

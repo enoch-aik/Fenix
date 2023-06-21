@@ -48,7 +48,7 @@ class _CreateCarState extends State<CreateCar> {
 
   final conditionController = TextEditingController();
 
-  final categoryController = TextEditingController();
+  final categoryController = TextEditingController(text: "Cars");
 
   final colorController = TextEditingController();
   final capacityController = TextEditingController();

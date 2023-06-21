@@ -97,7 +97,7 @@ class _MenuCategoryState extends State<MenuCategory> {
                             : index == 6  ? Category().kids
                             : index == 7  ? Category().tools
                                 : Category().carCategories,
-                          title:Category().allCategories[index],
+                          title:Category().allCategories[index]['name'],
                         )
                         );
                       },
@@ -113,7 +113,7 @@ class _MenuCategoryState extends State<MenuCategory> {
                               child: Image.asset("assets/images/${Category().images[index]}",fit: BoxFit.fill,),
                             ),
                           ),
-                          Text(Category().allCategories[index]),
+                          Text(Category().allCategories[index]['name']),
                         ],
                       ),
                     );

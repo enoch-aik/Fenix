@@ -349,6 +349,7 @@ class _WelcomeCardsState extends State<WelcomeCards> {
                                       shape: BoxShape.circle,
                                       color:
                                           selectedPage == index ? grey : light,
+                                      
                                     ),
                                   )),
                         ),

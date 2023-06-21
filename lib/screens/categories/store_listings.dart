@@ -49,10 +49,12 @@ class _StoreListingState extends State<StoreListing> {
 print(category);
     var list =( category=='Apartment'||category=='House'||category=='Apartment')?
 
-    await storeController.getMyApartmentByCategory(token, category):
+    await storeController.getMyApartmentByCategory(token, category)
+    : (category=='Cars'||category=='Car Parts'||category=='Car Interior') ?
+    await storeController.getMyVehicleByCategory(token, category) :
     await storeController.getMyProductsByCategory(token, category);
     print('Products -- $list');
-    if (productList != null) {
+    if (list != null) {
       setState(() {
         productList = list;
         isLoadingProducts = false;
@@ -206,9 +208,9 @@ print(category);
                                           childAspectRatio: 1 / 2.7,
                                           mainAxisSpacing: 0,
                                           crossAxisSpacing: 0),
-                                  itemCount: storeController.productList.length,
+                                  itemCount: productList.length,
                                   itemBuilder: (context, i) {
-                                    var item = storeController.productList[i];
+                                    var item = productList[i];
 
                                     return InkWell(
                                       onTap: () {
@@ -223,7 +225,7 @@ print(category);
                                               : "assets/images/Rectangle 7.png"),
                                     );
                                   }),
-                    if (category == 'Car')
+                    if (category == 'Cars')
                       isLoadingProducts
                           ? const Loader()
                           : productList.isEmpty
@@ -241,9 +243,9 @@ print(category);
                                           childAspectRatio: 1 / 2.7,
                                           mainAxisSpacing: 0,
                                           crossAxisSpacing: 0),
-                                  itemCount: storeController.vehicleList.length,
+                                  itemCount: productList.length,
                                   itemBuilder: (context, i) {
-                                    var item = storeController.vehicleList[i];
+                                    var item = productList[i];
                                     return InkWell(
                                       onTap: () {
                                         Get.to(() =>
@@ -261,7 +263,7 @@ print(category);
                       isLoadingProducts
                           ? const Loader()
                           : productList.isEmpty
-                              ? empty(category)
+                              ?  empty(category)
                               : GridView.builder(
                                   primary: false,
                                   shrinkWrap: true,
@@ -275,9 +277,9 @@ print(category);
                                           childAspectRatio: 1 / 2.7,
                                           mainAxisSpacing: 0,
                                           crossAxisSpacing: 0),
-                                  itemCount: apartment.length,
+                                  itemCount: productList.length,
                                   itemBuilder: (context, i) {
-                                    var item = apartment[i];
+                                    var item = productList[i];
                                     return InkWell(
                                       onTap: () {
                                         print(item['media'][0]['url']);
@@ -310,9 +312,9 @@ print(category);
                                           childAspectRatio: 1 / 2.7,
                                           mainAxisSpacing: 0,
                                           crossAxisSpacing: 0),
-                                  itemCount: house.length,
+                                  itemCount:productList.length,
                                   itemBuilder: (context, i) {
-                                    var item = house[i];
+                                    var item = productList[i];
 
                                     return InkWell(
                                         onTap: () {
@@ -340,9 +342,9 @@ print(category);
                                           childAspectRatio: 1 / 2.7,
                                           mainAxisSpacing: 0,
                                           crossAxisSpacing: 0),
-                                  itemCount: dacha.length,
+                                  itemCount: productList.length,
                                   itemBuilder: (context, i) {
-                                    var item = dacha[i];
+                                    var item = productList[i];
                                     return InkWell(
                                         onTap: () {
                                           Get.to(() => ApartmentDetails(

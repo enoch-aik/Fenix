@@ -19,14 +19,13 @@ class Category {
   ];
 
   List allCategories = [
-    "Property",
-    "Car",
-    "Electronics",
-    "Clothing",
-    "Health Care",
-    "Food Market",
-    "Kids",
-    "Tools",
+    {"name": "Property"},
+    {"name": "Car"},
+    {"name": "Electronics"},
+    {"name": "Clothing"},
+    {"name": "Health Care"},
+    {"name": "Food Market"},
+    {"name": "Kids"},
   ];
 
   List property = [

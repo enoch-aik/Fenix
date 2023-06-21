@@ -19,8 +19,10 @@ import 'create_apartment.dart';
 
 class CreateProduct extends StatefulWidget {
   final String storeId;
+  String type;
 
-  CreateProduct({Key? key, required this.storeId}) : super(key: key);
+  CreateProduct({Key? key, required this.storeId, this.type = "" }) : super(key: key);
+
 
   @override
   State<CreateProduct> createState() => _CreateProductState();
@@ -234,6 +236,7 @@ class _CreateProductState extends State<CreateProduct> {
     // getStoreIds();
     storeId = stores[0]['id'];
     storeController.text = stores[0]['name'];
+    categoryController.text =  widget.type != "Other" ? "Electronics" : "";
   }
 
   pickList(List list, String title, {onSelect}) {
@@ -517,7 +520,14 @@ class _CreateProductState extends State<CreateProduct> {
                   kSpacing,
                   InkWell(
                     onTap: () {
-                      // pickList(Category().electronics, 'Category');
+                      pickList(Category().allCategories, 'Category',
+                          onSelect: (v) {
+                            Get.back();
+
+                            setState(() {
+                              categoryController.text = v['name'];
+                            });
+                          });
                     },
                     child: TextFieldWidget(
                       hint: "Category",
@@ -530,7 +540,19 @@ class _CreateProductState extends State<CreateProduct> {
                   kSpacing,
                   InkWell(
                     onTap: () {
-                      pickList(Category().electronics, 'Sub-Category',
+                      if(categoryController.text.isNotEmpty) {
+                        pickList(
+                            categoryController.text == 'Electronics' ? Category().electronics
+                            : categoryController.text == 'Clothing' ? Category().clothing
+                            : categoryController.text == 'Property' ? Category().propertyCategory
+                            : categoryController.text == 'Car' ? Category().carCategories
+                            : categoryController.text == 'Health Care' ? Category().healthCare
+                            : categoryController.text == 'Food Market' ? Category().foodMarket
+                            : categoryController.text == 'Kids' ? Category().kids
+                            : categoryController.text == 'Tools' ? Category().tools
+                            : [],
+
+                            'Sub-Category',
                           onSelect: (v) {
                             Get.back();
 
@@ -538,6 +560,7 @@ class _CreateProductState extends State<CreateProduct> {
                           subcategoryController.text = v['name'];
                         });
                       });
+                      }
                     },
                     child: TextFieldWidget(
                       hint: "Sub-Category",
