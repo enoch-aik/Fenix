@@ -21,8 +21,8 @@ class CreateProduct extends StatefulWidget {
   final String storeId;
   String type;
 
-  CreateProduct({Key? key, required this.storeId, this.type = "" }) : super(key: key);
-
+  CreateProduct({Key? key, required this.storeId, this.type = ""})
+      : super(key: key);
 
   @override
   State<CreateProduct> createState() => _CreateProductState();
@@ -59,6 +59,7 @@ class _CreateProductState extends State<CreateProduct> {
   final capacityController = TextEditingController();
 
   final brandController = TextEditingController();
+  final modelController = TextEditingController();
 
   final featuresController = TextEditingController();
   final deliveryLocationController = TextEditingController();
@@ -236,7 +237,7 @@ class _CreateProductState extends State<CreateProduct> {
     // getStoreIds();
     storeId = stores[0]['id'];
     storeController.text = stores[0]['name'];
-    categoryController.text =  widget.type != "Other" ? "Electronics" : "";
+    categoryController.text = widget.type != "Other" ? "Electronics" : "";
   }
 
   pickList(List list, String title, {onSelect}) {
@@ -290,6 +291,80 @@ class _CreateProductState extends State<CreateProduct> {
         ),
       ),
     );
+  }
+
+  pickBrand(List list, String title, {onSelect}) {
+    print(list);
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (context) => Container(
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(15))),
+              height: MediaQuery.of(context).size.height * 0.8,
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+              child: Column(children: [
+                closeButton(),
+                Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                        child: Text('Select $title',
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w700, fontSize: 16)))),
+                Expanded(
+                  child: SingleChildScrollView(
+                      child: Column(
+                          children: List.generate(list.length, (i) {
+                    var item = list[i];
+                    return ListTile(
+                        title: Text(item['brand'],
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 16)),
+                        onTap: () => onSelect(item));
+                  }))),
+                ),
+              ]),
+            ));
+  }
+
+  pickModel(List list, String title, {onSelect}) {
+    print(list);
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (context) => Container(
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(15))),
+              height: MediaQuery.of(context).size.height * 0.8,
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+              child: Column(children: [
+                closeButton(),
+                Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                        child: Text('Select $title',
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w700, fontSize: 16)))),
+                Expanded(
+                  child: SingleChildScrollView(
+                      child: Column(
+                          children: List.generate(list[0]['model'].length, (i) {
+                    var item = list[0]['model'][i];
+                    return ListTile(
+                        title: Text(item,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 16)),
+                        onTap: () => onSelect(item));
+                  }))),
+                ),
+              ]),
+            ));
   }
 
   @override
@@ -475,12 +550,7 @@ class _CreateProductState extends State<CreateProduct> {
                     hint: "Material",
                     textController: materialController,
                   ),
-                  kSpacing,
-                  TextFieldWidget(
-                    hint: "Brand",
-                    textController: brandController,
-                    validator: (value) => FieldValidator.validate(value!),
-                  ),
+
                   kSpacing,
                   TextFieldWidget(
                     hint: "Size",
@@ -522,12 +592,15 @@ class _CreateProductState extends State<CreateProduct> {
                     onTap: () {
                       pickList(Category().allCategories, 'Category',
                           onSelect: (v) {
-                            Get.back();
+                        Get.back();
 
-                            setState(() {
-                              categoryController.text = v['name'];
-                            });
-                          });
+                        setState(() {
+                          categoryController.text = v['name'];
+                          subcategoryController.text = '';
+                          modelController.text = '';
+                          brandController.text = '';
+                        });
+                      });
                     },
                     child: TextFieldWidget(
                       hint: "Category",
@@ -540,26 +613,40 @@ class _CreateProductState extends State<CreateProduct> {
                   kSpacing,
                   InkWell(
                     onTap: () {
-                      if(categoryController.text.isNotEmpty) {
+                      if (categoryController.text.isNotEmpty) {
                         pickList(
-                            categoryController.text == 'Electronics' ? Category().electronics
-                            : categoryController.text == 'Clothing' ? Category().clothing
-                            : categoryController.text == 'Property' ? Category().propertyCategory
-                            : categoryController.text == 'Car' ? Category().carCategories
-                            : categoryController.text == 'Health Care' ? Category().healthCare
-                            : categoryController.text == 'Food Market' ? Category().foodMarket
-                            : categoryController.text == 'Kids' ? Category().kids
-                            : categoryController.text == 'Tools' ? Category().tools
-                            : [],
+                            categoryController.text == 'Electronics'
+                                ? Category().electronics
+                                : categoryController.text == 'Clothing'
+                                    ? Category().clothing
+                                    : categoryController.text == 'Property'
+                                        ? Category().propertyCategory
+                                        : categoryController.text == 'Car'
+                                            ? Category().carCategories
+                                            : categoryController.text ==
+                                                    'Health Care'
+                                                ? Category().healthCare
+                                                : categoryController.text ==
+                                                        'Food Market'
+                                                    ? Category().foodMarket
+                                                    : categoryController.text ==
+                                                            'Kids'
+                                                        ? Category().kids
+                                                        : categoryController
+                                                                    .text ==
+                                                                'Tools'
+                                                            ? Category().tools
+                                                            : [],
+                            'Sub-Category', onSelect: (v) {
+                          Get.back();
 
-                            'Sub-Category',
-                          onSelect: (v) {
-                            Get.back();
+                          setState(() {
+                            subcategoryController.text = v['name'];
+                            modelController.text = '';
+                            brandController.text = '';
 
-                            setState(() {
-                          subcategoryController.text = v['name'];
+                          });
                         });
-                      });
                       }
                     },
                     child: TextFieldWidget(
@@ -569,6 +656,51 @@ class _CreateProductState extends State<CreateProduct> {
                       suffix: const Icon(Icons.expand_more),
                     ),
                   ),
+                  kSpacing,
+                  InkWell(
+                    onTap: () {
+                      if (subcategoryController.text.contains('Cellphones')) {
+                        // Category().electronics[1]['cell phones']
+                        pickBrand(Category().electronics[1]['cell phones'],
+                            'Phone Brands', onSelect: (v) {
+                          setState(() {
+                            brandController.text = v['brand'];
+                            modelController.text = '';
+                          });
+                          Get.back();
+                        });
+                      }
+                    },
+                    child: TextFieldWidget(
+                      hint: "Brand",
+                      enabled:
+                          !subcategoryController.text.contains('Cellphones'),
+                      textController: brandController,
+                      validator: (value) => FieldValidator.validate(value!),
+                    ),
+                  ),
+                  if (subcategoryController.text.contains('Cellphones'))
+                    kSpacing,
+                  if (subcategoryController.text.contains('Cellphones'))
+                    InkWell(
+                      onTap: (){
+                        pickModel(
+                            Category().electronics[1]
+                            ['cell phones'].where((e)=>e['brand']==brandController.text).toList(),
+                            'Brand', onSelect: (v) {
+                          Get.back();
+setState(() {
+  modelController.text = v;
+
+});
+                        });
+                      },
+                      child: TextFieldWidget(
+                        hint: "Model",
+                        enabled: false,
+                        textController: modelController,
+                      ),
+                    ),
                   kSpacing,
                   title('Description'),
                   kSpacing,
@@ -678,6 +810,7 @@ class _CreateProductState extends State<CreateProduct> {
                                 coordinate: "12.345678, -98.765432",
                                 features: featuresController.text,
                                 color: colorController.text,
+                                model: modelController.text,
                                 description: descriptionController.text,
                                 media: images);
                           } else {

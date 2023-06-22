@@ -57,6 +57,18 @@ class StoreController extends GetxController {
     return data;
   }
 
+  Future<dynamic> getMyProductsByBrand(token, brand) async {
+    var data;
+    await ProductServices.getProductsByBrand((status, response) {
+      if (status) {
+        data = response['data'];
+      } else {
+        data = [];
+      }
+    }, token, brand);
+    return data;
+  }
+
   Future<dynamic> getMyVehicleByCategory(token, category) async {
     var data;
     await ProductServices.getVehiclesByCategory((status, response) {
@@ -162,7 +174,7 @@ class StoreController extends GetxController {
       color,
       price,
       title,
-      category,
+      category,model,
       plan,
       condition,
       capacity,
@@ -197,6 +209,7 @@ class StoreController extends GetxController {
         CustomSnackBar.failedSnackBar('Failed', '$response');
       }
     }, token, storeId, {
+
       "title": title,
       "description": description,
       "category": category,
@@ -207,6 +220,7 @@ class StoreController extends GetxController {
         "material": material,
         "brand": brand,
         "size": size,
+        "model": model,
         "features": features,
         "category": {'name': category, 'subCategory': subCategory},
         "color": color,

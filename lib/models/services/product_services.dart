@@ -61,6 +61,17 @@ class ProductServices {
     }
   }
 
+  static getProductsByBrand(Function callback, token, brand) async {
+    var response = await ApiServices.initialiseGetRequest(
+        url: '$productUrl?brand=$brand', token: token);
+    print(response);
+    if (response is String) {
+      callback(false, response);
+    } else {
+      callback(true, response);
+    }
+  }
+
   static getVehiclesByTitle(Function callback, token, title) async {
     var response = await ApiServices.initialiseGetRequest(
         url: '$vehicleUrl?title=$title', token: token);

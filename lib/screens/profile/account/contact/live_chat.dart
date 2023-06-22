@@ -32,10 +32,10 @@ class _LiveChatScreenState extends State<LiveChatScreen> {
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   alignment: Alignment.centerLeft,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       borderRadius:
-                      const BorderRadius.vertical(top: Radius.circular(50)),
-                      color: const Color(0xFFD5E8FC),
+                      BorderRadius.vertical(top: Radius.circular(50)),
+                      color: Color(0xFFD5E8FC),
                      ),
                   child: Column(
                     children: [
@@ -72,7 +72,7 @@ class _LiveChatScreenState extends State<LiveChatScreen> {
                                     ),
                                   ],
                                 ),
-                              SizedBox()
+                              const SizedBox()
                               ],
                             ),
                             mediumSpace(),
@@ -87,31 +87,29 @@ class _LiveChatScreenState extends State<LiveChatScreen> {
                                 tinyH5Space(),
                                 Container(
                                   padding: EdgeInsets.all(3.w),
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                       color: Color(0xFF15801F)
                                   ),
                                 )
                               ],
                             ),
-                            Divider()
+                            const Divider()
                           ],
                         ),
                       ),
 
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 8.w, vertical: 5.w),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              smallSpace(),
-                              incoming(),
-                              tinySpace(),
-                              outgoing(),
-                            ],
-                          ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 8.w, vertical: 5.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            smallSpace(),
+                            incoming(),
+                            tinySpace(),
+                            outgoing(),
+                          ],
                         ),
                       ),
                       Container(
@@ -125,7 +123,7 @@ class _LiveChatScreenState extends State<LiveChatScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Padding(
-                                padding: EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.all(8.0),
                                 child: Icon(Icons.attachment_outlined,
                                     color: primary,
                                     size: 22.w),
@@ -145,7 +143,7 @@ class _LiveChatScreenState extends State<LiveChatScreen> {
                                           borderRadius:
                                           BorderRadius.circular(30),
                                           borderSide:
-                                          BorderSide(color: white))),
+                                          const BorderSide(color: white))),
                                 ),
                               ),
                               tinyH5Space(),
@@ -174,9 +172,9 @@ class _LiveChatScreenState extends State<LiveChatScreen> {
         padding: const EdgeInsets.fromLTRB(25, 10, 25, 10),
         margin: const EdgeInsets.only(right: 30),
         decoration: BoxDecoration(
-            color: Color(0xFF5BAE59),
+            color: const Color(0xFF5BAE59),
             borderRadius: BorderRadius.circular(20)),
-        child: Text(
+        child: const Text(
           'I commented on Figma, I want to add some fancy icons. Do you have any icon set?',
           style: TextStyle(color: white, fontSize: 14, height: 1.5),
         ));
@@ -187,9 +185,9 @@ class _LiveChatScreenState extends State<LiveChatScreen> {
         padding: const EdgeInsets.fromLTRB(25, 10, 25, 10),
         margin: const EdgeInsets.only(left: 30),
         decoration: BoxDecoration(
-            color: Color(0xFF4C8EF4),
+            color: const Color(0xFF4C8EF4),
             borderRadius: BorderRadius.circular(20)),
-        child: Text(
+        child: const Text(
           'I commented on Figma, I want to add some fancy icons. Do you have any icon set?',
           textAlign: TextAlign.end,
           style: TextStyle(color: white, fontSize: 14, height: 1.5),

@@ -35,7 +35,8 @@ class Chat extends StatefulWidget {
 class ChatState extends State<Chat> {
   final TextEditingController _messageController = TextEditingController();
   UserController userController = Get.find();
-  GroupedItemScrollController _groupedItemScrollController = GroupedItemScrollController();
+  GroupedItemScrollController _groupedItemScrollController =
+      GroupedItemScrollController();
   String token = '';
   String userId = '';
   String userName = '';
@@ -174,184 +175,168 @@ class ChatState extends State<Chat> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-            color: const Color(0xFF1F4167),
-            gradient:
-                gradient(const Color(0xFF1F4167), const Color(0xFF0777FB))),
-        child: SafeArea(
-          bottom: false,
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            alignment: Alignment.centerLeft,
-            decoration: BoxDecoration(
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(50)),
-                color: const Color(0xFF1F4167),
-                gradient:
-                    gradient(const Color(0xFF000000), const Color(0xFF182845))),
-            child: Column(
-              children: [
-                mediumSpace(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          socket!.disconnect();
-                          socket!.close();
-                          Get.back();
-                        },
-                        child: const Icon(
-                          Icons.arrow_back,
-                          color: white,
-                        ),
-                      ),
-                      Expanded(
-                        child: Center(
-                          child: isLoadingChat
-                              ? Text(
-                                  userId,
-                                  softWrap: false,
-                                  style: const TextStyle(color: white),
-                                )
-                              : Text(
-                                  widget.name ?? recipient,
-                                  softWrap: false,
-                                  style: const TextStyle(color: white),
-                                ),
-                        ),
-                      ),
-                      Image.asset(
-                        'assets/images/icons/Ellipse 1.png',
-                        height: 40,
-                        width: 40,
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: isLoadingChat
-                      ? const Center(child: CircularProgressIndicator())
-                      : Column(
-                          children: [
-                            Expanded(
-                              child:
+    return Scaffold(body: chatBubbles(), bottomNavigationBar: textBox()
 
-                                  StickyGroupedListView<dynamic, String>(
-                                elements: chats,
-                                order: StickyGroupedListOrder.ASC,
-                                groupBy: (item) => DateFormat('yyyy-MM-dd')
-                                    .format(DateTime.parse(
-                                        item['createdAt'].toString()))
-                                    .toString(),
-                                floatingHeader: true,
-                                    initialScrollIndex: chats.length,
-                                    itemComparator: (dynamic element1, dynamic element2) =>
-                                        element1['createdAt'].compareTo(element2['createdAt']),
-                                groupSeparatorBuilder: (dynamic element) =>
-                                    Padding(
-                                          padding:
-                                              const EdgeInsets.fromLTRB(0, 15, 0, 8),
-                                          child: Text(
-                                            DateFormat('yyyy-MM-dd')
-                                                        .format(DateTime.parse(
-                                                element['createdAt']
-                                                                .toString()))
-                                                        .toString() ==
-                                                    DateFormat('yyyy-MM-dd')
-                                                        .format(DateTime.now())
-                                                        .toString()
-                                                ? 'Today'
-                                                : DateFormat.MMMEd().format(
-                                                    DateTime.parse(element['createdAt']
-                                                        .toString())),
-                                            textAlign: TextAlign.center,
-                                            style: const TextStyle(
-                                                fontSize: 13,
-                                                color: white,
-                                                fontWeight: FontWeight.w300),
-                                          ),
-                                        ),
-                                itemBuilder: (context, dynamic message) {
-                                  return (message['sender'] == userName)
-                                      ? outgoing('${message['text']}',
-                                          message['createdAt'])
-                                      : incoming('${message['text']}',
-                                          message['createdAt']);
-                                },
-                              ),
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: const Color(0xFF1F4167),
-                                  borderRadius: const BorderRadius.vertical(
-                                      top: Radius.circular(15)),
-                                  gradient: gradient(const Color(0xFF1F4167),
-                                      const Color(0xFF000000))),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(20, 10, 20, 17),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                        decoration: const BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: white),
-                                        child: const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Icon(Icons.camera_alt_outlined,
-                                              size: 20),
-                                        )),
-                                    tinyHSpace(),
-                                    Expanded(
-                                      child: TextFormField(
-                                        controller: _messageController,
-                                        onFieldSubmitted: (v) {
-                                          _sendMessage();
-                                        },
-                                        decoration: InputDecoration(
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                                    horizontal: 15.w),
-                                            suffixIcon: IconButton(
-                                                onPressed: () {
-                                                  _sendMessage();
-                                                },
-                                                icon: const Icon(
-                                                    Icons.send_outlined)),
-                                            fillColor: white,
-                                            filled: true,
-                                            border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(30),
-                                                borderSide: const BorderSide(
-                                                    color: white))),
-                                      ),
-                                    ),
-                                    tinyH5Space(),
-                                    const Icon(
-                                      Icons.mic_none_outlined,
-                                      color: white,
-                                      size: 35,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                ),
-              ],
+        // Container(
+        //   decoration: BoxDecoration(
+        //       color: const Color(0xFF1F4167),
+        //       gradient:
+        //           gradient(const Color(0xFF1F4167), const Color(0xFF0777FB))),
+        //   child: SafeArea(
+        //     bottom: false,
+        //     child: Container(
+        //       width: MediaQuery.of(context).size.width,
+        //       alignment: Alignment.centerLeft,
+        //       decoration: BoxDecoration(
+        //           borderRadius:
+        //               const BorderRadius.vertical(top: Radius.circular(50)),
+        //           color: const Color(0xFF1F4167),
+        //           gradient:
+        //               gradient(const Color(0xFF000000), const Color(0xFF182845))),
+        //       child: Column(
+        //         children: [
+        //           mediumSpace(),
+        //           Padding(
+        //             padding: const EdgeInsets.symmetric(horizontal: 15.0),
+        //             child: Row(
+        //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //               children: [
+        //                 InkWell(
+        //                   onTap: () {
+        //                     socket!.disconnect();
+        //                     socket!.close();
+        //                     Get.back();
+        //                   },
+        //                   child: const Icon(
+        //                     Icons.arrow_back,
+        //                     color: white,
+        //                   ),
+        //                 ),
+        //                 Expanded(
+        //                   child: Center(
+        //                     child: isLoadingChat
+        //                         ? Text(
+        //                             userId,
+        //                             softWrap: false,
+        //                             style: const TextStyle(color: white),
+        //                           )
+        //                         : Text(
+        //                             widget.name ?? recipient,
+        //                             softWrap: false,
+        //                             style: const TextStyle(color: white),
+        //                           ),
+        //                   ),
+        //                 ),
+        //                 Image.asset(
+        //                   'assets/images/icons/Ellipse 1.png',
+        //                   height: 40,
+        //                   width: 40,
+        //                 ),
+        //               ],
+        //             ),
+        //           ),
+        //           Expanded(
+        //             child: isLoadingChat
+        //                 ? const Center(child: CircularProgressIndicator())
+        //                 : Column(
+        //                     children: [
+        //                       Expanded(child: chatBubbles()),
+        //
+        //                       textBox()
+        //                     ],
+        //                   ),
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //   ),
+        // ),
+        );
+  }
+
+  Container textBox() {
+    return Container(
+      decoration: BoxDecoration(
+          color: const Color(0xFF1F4167),
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
+          gradient: gradient(const Color(0xFF1F4167), const Color(0xFF000000))),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 10, 20, 17),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+                decoration:
+                    const BoxDecoration(shape: BoxShape.circle, color: white),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Icon(Icons.camera_alt_outlined, size: 20),
+                )),
+            tinyHSpace(),
+            Expanded(
+              child: TextFormField(
+                controller: _messageController,
+                onFieldSubmitted: (v) {
+                  _sendMessage();
+                },
+                decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 15.w),
+                    suffixIcon: IconButton(
+                        onPressed: () {
+                          _sendMessage();
+                        },
+                        icon: const Icon(Icons.send_outlined)),
+                    fillColor: white,
+                    filled: true,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide: const BorderSide(color: white))),
+              ),
             ),
-          ),
+            tinyH5Space(),
+            const Icon(
+              Icons.mic_none_outlined,
+              color: white,
+              size: 35,
+            )
+          ],
         ),
       ),
+    );
+  }
+
+  StickyGroupedListView<dynamic, String> chatBubbles() {
+    return StickyGroupedListView<dynamic, String>(
+      elements: chats,
+      // physics: const NeverScrollableScrollPhysics(),
+      order: StickyGroupedListOrder.ASC,
+      groupBy: (item) => DateFormat('yyyy-MM-dd')
+          .format(DateTime.parse(item['createdAt'].toString()))
+          .toString(),
+      floatingHeader: true,
+      initialScrollIndex: chats.length,
+      itemComparator: (dynamic element1, dynamic element2) =>
+          element1['createdAt'].compareTo(element2['createdAt']),
+      groupSeparatorBuilder: (dynamic element) => Padding(
+        padding: const EdgeInsets.fromLTRB(0, 15, 0, 8),
+        child: Text(
+          DateFormat('yyyy-MM-dd')
+                      .format(DateTime.parse(element['createdAt'].toString()))
+                      .toString() ==
+                  DateFormat('yyyy-MM-dd').format(DateTime.now()).toString()
+              ? 'Today'
+              : DateFormat.MMMEd()
+                  .format(DateTime.parse(element['createdAt'].toString())),
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+              fontSize: 13, color: white, fontWeight: FontWeight.w300),
+        ),
+      ),
+      itemBuilder: (context, dynamic message) {
+        return (message['sender'] == userName)
+            ? outgoing('${message['text']}', message['createdAt'])
+            : incoming('${message['text']}', message['createdAt']);
+      },
     );
   }
 
@@ -364,7 +349,7 @@ class ChatState extends State<Chat> {
             margin: EdgeInsets.only(left: 12.w, bottom: 20),
             constraints: BoxConstraints(maxWidth: Get.width * 0.78),
             decoration: BoxDecoration(
-                color: Color(0xFF373E4E),
+                color: const Color(0xFF373E4E),
                 borderRadius: BorderRadius.circular(20)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -403,7 +388,7 @@ class ChatState extends State<Chat> {
             margin: EdgeInsets.only(right: 12.w, bottom: 20),
             constraints: BoxConstraints(maxWidth: Get.width * 0.78),
             decoration: BoxDecoration(
-                color: Color(0xFF7A8194),
+                color: const Color(0xFF7A8194),
                 borderRadius: BorderRadius.circular(20)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,

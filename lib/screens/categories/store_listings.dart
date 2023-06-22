@@ -29,6 +29,7 @@ class _StoreListingState extends State<StoreListing> {
 
   var storeId;
   String category = '';
+  String model = '';
   String token = '';
   var productList;
   var isLoadingProducts = true;
@@ -48,13 +49,16 @@ class _StoreListingState extends State<StoreListing> {
 
   boot() async {
     category = widget.category;
-print(category);
-    var list =( category=='Apartment'||category=='House'||category=='Apartment')?
-
-    await storeController.getMyApartmentByCategory(token, category)
-    : (category=='Cars'||category=='Car Parts'||category=='Car Interior') ?
-    await storeController.getMyVehicleByCategory(token, category) :
-    await storeController.getMyProductsByCategory(token, category);
+    print(category);
+    var list = (category == 'Apartment' ||
+            category == 'House' ||
+            category == 'Apartment')
+        ? await storeController.getMyApartmentByCategory(token, category)
+        : (category == 'Cars' ||
+                category == 'Car Parts' ||
+                category == 'Car Interior')
+            ? await storeController.getMyVehicleByCategory(token, category)
+            : await storeController.getMyProductsByCategory(token, category);
     print('Products -- $list');
     if (list != null) {
       setState(() {
@@ -62,6 +66,22 @@ print(category);
         isLoadingProducts = false;
       });
     }
+  }
+
+  getProductByBrand(brand)async{
+    setState(() {
+      isLoadingProducts = true;
+
+    });
+
+    var list =  await storeController.getMyProductsByBrand(token, brand);
+    if (list != null) {
+      setState(() {
+        productList = list;
+        isLoadingProducts = false;
+      });
+    }
+
   }
 
   @override
@@ -86,34 +106,63 @@ print(category);
                     children: [
                       backArrow(),
                       Text(
-                        "$category",
+                        category,
                         style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 21.w,
-                            fontWeight: FontWeight.w600,
-                            ),
+                          color: Colors.white,
+                          fontSize: 21.w,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                      (category == "Cellphones and Accessories") ? IconButton(
-                          onPressed: (){
-                            pickBrand(Category().electronics[1]['cell phones'], 'Category',
-                                onSelect: (v) {
+                      (category == "Cellphones and Accessories")
+                          ? IconButton(
+                              onPressed: () {
+                                pickBrand(
+                                    Category().electronics[1]['cell phones'],
+                                    'Category', onSelect: (v) {
                                   Get.back();
 
                                   setState(() {
                                     print(v['brand']);
+                                    pickModel(
+                                        Category().electronics[1]
+                                        ['cell phones'].where((e)=>e['brand']==v['brand']).toList(),
+                                        'Brand', onSelect: (v) {
+                                      Get.back();
 
-                                   v['brand'] == "Apple" ? pickModel(Category().electronics[1]['cell phones'][0]['model'], 'Brand',
-                                        onSelect: (v) {Get.back();})
-                                       :  v['brand'] == "Samsung" ? pickModel(Category().electronics[1]['cell phones'][1]['model'], 'Brand',
-                                       onSelect: (v) {Get.back();})
-                                       :   pickModel(Category().electronics[1]['cell phones'][2]['model'], 'Brand',
-                                       onSelect: (v) {Get.back();});
+                                      model = v;
+                                      getProductByBrand(v);
+                                    });
+
+                                    // [0]['model']
+                                    // v['brand'] == "Apple"
+                                    //     ? pickModel(
+                                    //         Category().electronics[1]
+                                    //             ['cell phones'][0]['model'],
+                                    //         'Brand', onSelect: (v) {
+                                    //         Get.back();
+                                    //       })
+                                    //     : v['brand'] == "Samsung"
+                                    //         ? pickModel(
+                                    //             Category().electronics[1]
+                                    //                 ['cell phones'][1]['model'],
+                                    //             'Brand', onSelect: (v) {
+                                    //             Get.back();
+                                    //           })
+                                    //         : pickModel(
+                                    //             Category().electronics[1]
+                                    //                 ['cell phones'][2]['model'],
+                                    //             'Brand', onSelect: (v) {
+                                    //             Get.back();
+                                    //           });
                                   });
                                 });
-                          },
-                          icon: Icon(Icons.filter_list_alt, color: white, size: 28.w,))
+                              },
+                              icon: Icon(
+                                Icons.filter_list_alt,
+                                color: white,
+                                size: 28.w,
+                              ))
                           : smallHSpace(),
-
                     ],
                   )),
             ],
@@ -208,80 +257,13 @@ print(category);
                   physics: const ClampingScrollPhysics(),
                   children: [
                     SizedBox(height: 20.w),
-                    if (category == 'Electronics')
-                      isLoadingProducts
-                          ? const Loader()
-                          : productList.isEmpty
-                              ? empty(category)
-                              : GridView.builder(
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  gridDelegate:
-                                      SliverGridDelegateWithMaxCrossAxisExtent(
-                                          maxCrossAxisExtent:
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.5,
-                                          childAspectRatio: 1 / 2.7,
-                                          mainAxisSpacing: 0,
-                                          crossAxisSpacing: 0),
-                                  itemCount: productList.length,
-                                  itemBuilder: (context, i) {
-                                    var item = productList[i];
 
-                                    return InkWell(
-                                      onTap: () {
-                                        Get.to(() =>
-                                            ProductDetails(product: item));
-                                      },
-                                      child: ProductListWidget(
-                                          product: item,
-                                          isNetwork: item['media'].isNotEmpty,
-                                          image: item['media'].isNotEmpty
-                                              ? item['media'][0]['url']
-                                              : "assets/images/Rectangle 7.png"),
-                                    );
-                                  }),
-                    if (category == 'Cars')
+
+                     (category == 'Apartment'||category == 'House'||category == 'Dacha')?
                       isLoadingProducts
                           ? const Loader()
                           : productList.isEmpty
                               ? empty(category)
-                              : GridView.builder(
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  gridDelegate:
-                                      SliverGridDelegateWithMaxCrossAxisExtent(
-                                          maxCrossAxisExtent:
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.5,
-                                          childAspectRatio: 1 / 2.7,
-                                          mainAxisSpacing: 0,
-                                          crossAxisSpacing: 0),
-                                  itemCount: productList.length,
-                                  itemBuilder: (context, i) {
-                                    var item = productList[i];
-                                    return InkWell(
-                                      onTap: () {
-                                        Get.to(() =>
-                                            ProductDetails(product: item));
-                                      },
-                                      child: ProductListWidget(
-                                          product: item,
-                                          isNetwork: item['media'].isNotEmpty,
-                                          image: item['media'].isNotEmpty
-                                              ? item['media'][0]['url']
-                                              : "assets/images/cars.png"),
-                                    );
-                                  }),
-                    if (category == 'Apartment')
-                      isLoadingProducts
-                          ? const Loader()
-                          : productList.isEmpty
-                              ?  empty(category)
                               : GridView.builder(
                                   primary: false,
                                   shrinkWrap: true,
@@ -311,66 +293,75 @@ print(category);
                                               ? item['media'][0]['url']
                                               : "assets/images/cars.png"),
                                     );
-                                  }),
-                    if (category == 'House')
+                                  }):
+                    category == 'Cars'?
                       isLoadingProducts
                           ? const Loader()
                           : productList.isEmpty
-                              ? empty(category)
-                              : GridView.builder(
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  gridDelegate:
-                                      SliverGridDelegateWithMaxCrossAxisExtent(
-                                          maxCrossAxisExtent:
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.5,
-                                          childAspectRatio: 1 / 2.7,
-                                          mainAxisSpacing: 0,
-                                          crossAxisSpacing: 0),
-                                  itemCount:productList.length,
-                                  itemBuilder: (context, i) {
-                                    var item = productList[i];
+                          ? empty(category)
+                          : GridView.builder(
+                          primary: false,
+                          shrinkWrap: true,
+                          gridDelegate:
+                          SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent:
+                              MediaQuery.of(context)
+                                  .size
+                                  .width *
+                                  0.5,
+                              childAspectRatio: 1 / 2.7,
+                              mainAxisSpacing: 0,
+                              crossAxisSpacing: 0),
+                          itemCount: productList.length,
+                          itemBuilder: (context, i) {
+                            var item = productList[i];
+                            return InkWell(
+                              onTap: () {
+                                Get.to(() =>
+                                    ProductDetails(product: item));
+                              },
+                              child: ProductListWidget(
+                                  product: item,
+                                  isNetwork: item['media'].isNotEmpty,
+                                  image: item['media'].isNotEmpty
+                                      ? item['media'][0]['url']
+                                      : "assets/images/cars.png"),
+                            );
+                          }): isLoadingProducts
+                        ? const Loader()
+                        : productList.isEmpty
+                        ? empty(category)
+                        : GridView.builder(
+                        primary: false,
+                        shrinkWrap: true,
+                        gridDelegate:
+                        SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent:
+                            MediaQuery.of(context)
+                                .size
+                                .width *
+                                0.5,
+                            childAspectRatio: 1 / 2.7,
+                            mainAxisSpacing: 0,
+                            crossAxisSpacing: 0),
+                        itemCount: productList.length,
+                        itemBuilder: (context, i) {
+                          var item = productList[i];
 
-                                    return InkWell(
-                                        onTap: () {
-                                          Get.to(() => ApartmentDetails(
-                                              apartment: item));
-                                        },
-                                        child:
-                                            ProductListWidget(product: item));
-                                  }),
-                    if (category == 'Dacha')
-                      isLoadingProducts
-                          ? const Loader()
-                          : productList.isEmpty
-                              ? empty(category)
-                              : GridView.builder(
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  gridDelegate:
-                                      SliverGridDelegateWithMaxCrossAxisExtent(
-                                          maxCrossAxisExtent:
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.5,
-                                          childAspectRatio: 1 / 2.7,
-                                          mainAxisSpacing: 0,
-                                          crossAxisSpacing: 0),
-                                  itemCount: productList.length,
-                                  itemBuilder: (context, i) {
-                                    var item = productList[i];
-                                    return InkWell(
-                                        onTap: () {
-                                          Get.to(() => ApartmentDetails(
-                                              apartment: item));
-                                        },
-                                        child:
-                                            ProductListWidget(product: item));
-                                  }),
+                          return InkWell(
+                            onTap: () {
+                              Get.to(() =>
+                                  ProductDetails(product: item));
+                            },
+                            child: ProductListWidget(
+                                product: item,
+                                isNetwork: item['media'].isNotEmpty,
+                                image: item['media'].isNotEmpty
+                                    ? item['media'][0]['url']
+                                    : "assets/images/Rectangle 7.png"),
+                          );
+                        }),
+
                   ],
                 ),
               ),
@@ -380,77 +371,79 @@ print(category);
       ),
     );
   }
+
   pickBrand(List list, String title, {onSelect}) {
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
         builder: (context) => Container(
-          decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius:
-              BorderRadius.vertical(top: Radius.circular(15))),
-          height: MediaQuery.of(context).size.height * 0.8,
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-          child: Column(children: [
-            closeButton(),
-            Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                    child: Text('Select $title',
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w700, fontSize: 16)))),
-            Expanded(
-              child: SingleChildScrollView(
-                  child: Column(
-                      children: List.generate(list.length, (i) {
-                        var item = list[i];
-                        return ListTile(
-                            title: Text(item['brand'],
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 16)),
-                            onTap: () => onSelect(item));
-                      }))),
-            ),
-          ]),
-        ));
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(15))),
+              height: MediaQuery.of(context).size.height * 0.8,
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+              child: Column(children: [
+                closeButton(),
+                Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                        child: Text('Select $title',
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w700, fontSize: 16)))),
+                Expanded(
+                  child: SingleChildScrollView(
+                      child: Column(
+                          children: List.generate(list.length, (i) {
+                    var item = list[i];
+                    return ListTile(
+                        title: Text(item['brand'],
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 16)),
+                        onTap: () => onSelect(item));
+                  }))),
+                ),
+              ]),
+            ));
   }
 
-
   pickModel(List list, String title, {onSelect}) {
+    print(list);
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
         builder: (context) => Container(
-          decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius:
-              BorderRadius.vertical(top: Radius.circular(15))),
-          height: MediaQuery.of(context).size.height * 0.8,
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-          child: Column(children: [
-            closeButton(),
-            Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                    child: Text('Select $title',
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w700, fontSize: 16)))),
-            Expanded(
-              child: SingleChildScrollView(
-                  child: Column(
-                      children: List.generate(list.length, (i) {
-                        var item = list[i];
-                        return ListTile(
-                            title: Text(item,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 16)),
-                            onTap: () => onSelect(item));
-                      }))),
-            ),
-          ]),
-        ));
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(15))),
+              height: MediaQuery.of(context).size.height * 0.8,
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+              child: Column(children: [
+                closeButton(),
+                Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                        child: Text('Select $title',
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w700, fontSize: 16)))),
+                Expanded(
+                  child: SingleChildScrollView(
+                      child: Column(
+                          children: List.generate(list[0]['model'].length, (i) {
+                    var item = list[0]['model'][i];
+                    return ListTile(
+                        title: Text(item,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 16)),
+                        trailing: model==item?const Icon(Icons.check):const SizedBox.shrink(),
+                        onTap: () => onSelect(item));
+                  }))),
+                ),
+              ]),
+            ));
   }
 
   InkWell closeButton() {
@@ -469,7 +462,4 @@ print(category);
       ),
     );
   }
-
 }
-
-
