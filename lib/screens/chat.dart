@@ -175,82 +175,84 @@ class ChatState extends State<Chat> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: chatBubbles(), bottomNavigationBar: textBox()
+    return
+      Scaffold(body:
+      // chatBubbles(), bottomNavigationBar: textBox()
 
-        // Container(
-        //   decoration: BoxDecoration(
-        //       color: const Color(0xFF1F4167),
-        //       gradient:
-        //           gradient(const Color(0xFF1F4167), const Color(0xFF0777FB))),
-        //   child: SafeArea(
-        //     bottom: false,
-        //     child: Container(
-        //       width: MediaQuery.of(context).size.width,
-        //       alignment: Alignment.centerLeft,
-        //       decoration: BoxDecoration(
-        //           borderRadius:
-        //               const BorderRadius.vertical(top: Radius.circular(50)),
-        //           color: const Color(0xFF1F4167),
-        //           gradient:
-        //               gradient(const Color(0xFF000000), const Color(0xFF182845))),
-        //       child: Column(
-        //         children: [
-        //           mediumSpace(),
-        //           Padding(
-        //             padding: const EdgeInsets.symmetric(horizontal: 15.0),
-        //             child: Row(
-        //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //               children: [
-        //                 InkWell(
-        //                   onTap: () {
-        //                     socket!.disconnect();
-        //                     socket!.close();
-        //                     Get.back();
-        //                   },
-        //                   child: const Icon(
-        //                     Icons.arrow_back,
-        //                     color: white,
-        //                   ),
-        //                 ),
-        //                 Expanded(
-        //                   child: Center(
-        //                     child: isLoadingChat
-        //                         ? Text(
-        //                             userId,
-        //                             softWrap: false,
-        //                             style: const TextStyle(color: white),
-        //                           )
-        //                         : Text(
-        //                             widget.name ?? recipient,
-        //                             softWrap: false,
-        //                             style: const TextStyle(color: white),
-        //                           ),
-        //                   ),
-        //                 ),
-        //                 Image.asset(
-        //                   'assets/images/icons/Ellipse 1.png',
-        //                   height: 40,
-        //                   width: 40,
-        //                 ),
-        //               ],
-        //             ),
-        //           ),
-        //           Expanded(
-        //             child: isLoadingChat
-        //                 ? const Center(child: CircularProgressIndicator())
-        //                 : Column(
-        //                     children: [
-        //                       Expanded(child: chatBubbles()),
-        //
-        //                       textBox()
-        //                     ],
-        //                   ),
-        //           ),
-        //         ],
-        //       ),
-        //     ),
-        //   ),
-        // ),
+        Container(
+          decoration: BoxDecoration(
+              color: const Color(0xFF1F4167),
+              gradient:
+                  gradient(const Color(0xFF1F4167), const Color(0xFF0777FB))),
+          child: SafeArea(
+            bottom: false,
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              alignment: Alignment.centerLeft,
+              decoration: BoxDecoration(
+                  borderRadius:
+                      const BorderRadius.vertical(top: Radius.circular(50)),
+                  color: const Color(0xFF1F4167),
+                  gradient:
+                      gradient(const Color(0xFF000000), const Color(0xFF182845))),
+              child: Column(
+                children: [
+                  mediumSpace(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            socket!.disconnect();
+                            socket!.close();
+                            Get.back();
+                          },
+                          child: const Icon(
+                            Icons.arrow_back,
+                            color: white,
+                          ),
+                        ),
+                        Expanded(
+                          child: Center(
+                            child: isLoadingChat
+                                ? Text(
+                                    userId,
+                                    softWrap: false,
+                                    style: const TextStyle(color: white),
+                                  )
+                                : Text(
+                                    widget.name ?? recipient,
+                                    softWrap: false,
+                                    style: const TextStyle(color: white),
+                                  ),
+                          ),
+                        ),
+                        Image.asset(
+                          'assets/images/icons/Ellipse 1.png',
+                          height: 40,
+                          width: 40,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: isLoadingChat
+                        ? const Center(child: CircularProgressIndicator())
+                        : Column(
+                            children: [
+                              Expanded(child: chatBubbles()),
+
+                              textBox()
+                            ],
+                          ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
         );
   }
 
