@@ -15,6 +15,8 @@ import '../../helpers/validator.dart';
 import '../../neumorph.dart';
 import '../../theme.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class SignIn extends StatelessWidget {
   SignIn({Key? key}) : super(key: key);
 
@@ -24,6 +26,8 @@ class SignIn extends StatelessWidget {
 
   RxBool obscure = false.obs;
   Rx<IconData> obscureIcon = FontAwesomeIcons.eye.obs;
+
+  RxBool rememberMe = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +53,7 @@ class SignIn extends StatelessWidget {
                     ),
                     kSpacing,
                     kSpacing,
-                    Text(
-                      "Sign In Account",
+                    Text(AppLocalizations.of(context)!.signInAccount,
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1!
@@ -64,13 +67,13 @@ class SignIn extends StatelessWidget {
                     kSpacing,
                     kSpacing,
                     TextFieldWidget(
-                      hint: "Email & Gmail",
+                      hint: AppLocalizations.of(context)!.email,
                       textController: _accountController.email,
                       validator: (value) => EmailValidator.validate(value!),
                     ),
                     kSpacing,
                     Obx(() => TextFieldWidget(
-                        hint: "Password",
+                        hint: AppLocalizations.of(context)!.password,
                         textController: _accountController.password,
                         obscureText: obscure.value,
                         suffix: InkWell(
@@ -93,22 +96,28 @@ class SignIn extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Container(
-                            decoration: depressNeumorph(),
-                            child: SizedBox(
-                              height: 25,
-                              width: 25,
-                              child: Theme(
-                                data: ThemeData(
-                                  unselectedWidgetColor:
-                                      Colors.transparent, // Your color
-                                ),
-                                child: Checkbox(
-                                  value: false,
-                                  onChanged: (v) {},
-                                ),
-                              ),
-                            )),
+                       Obx(() => Container(
+                           decoration: depressNeumorph().copyWith(
+                               color: rememberMe.value == true ? dark : Color(0xFFE4F0FA).withOpacity(0.9)
+                           ),
+                           child: SizedBox(
+                             height: 25,
+                             width: 25,
+                             child: Theme(
+                               data: ThemeData(
+                                 unselectedWidgetColor:
+                                 Colors.transparent, // Your color
+                               ),
+                               child: Obx(() => Checkbox(
+                                 value: rememberMe.value,
+                                 activeColor: dark,
+                                 onChanged: (v) {
+                                   print(v);
+                                   rememberMe.value = v!;
+                                 },
+                               ),),
+                             ),
+                           )),),
                         tinyHSpace(),
                         Container(
                           decoration: depressNeumorph().copyWith(
@@ -135,7 +144,7 @@ class SignIn extends StatelessWidget {
                           _accountController.signIn();
                         }
                       },
-                      child: ButtonWidget(title: "Sign In"),
+                      child: ButtonWidget(title: AppLocalizations.of(context)!.signIn),
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.12,
@@ -182,7 +191,7 @@ class SignIn extends StatelessWidget {
                                 ),
                                 tinyH5Space(),
                                 Text(
-                                  "Forgot Password",
+                                  AppLocalizations.of(context)!.forgotPassword,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyText1!
@@ -226,7 +235,7 @@ class SignIn extends StatelessWidget {
                               ],
                             ),
                             child: Text(
-                              "Verify Mail",
+                              AppLocalizations.of(context)!.verify,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1!

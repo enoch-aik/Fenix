@@ -10,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AccountInfo extends StatelessWidget {
   AccountInfo({Key? key}) : super(key: key);
@@ -73,8 +74,7 @@ class AccountInfo extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                backArrow(),
-                Text(
-                  "Your account Information",
+                Text(AppLocalizations.of(context)!.yourAccountInfo,
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.w,
@@ -104,7 +104,21 @@ class AccountInfo extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-                                  Icon(Icons.person, color: Colors.black, size: 40.w,),
+                                  Container(
+                                    height: 65,
+                                    width: 65,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(color: grey),
+                                        image: user!.pictureUrl! != 'null'
+                                            ? DecorationImage(
+                                            fit: BoxFit.fitWidth,
+                                            image: NetworkImage(user.pictureUrl!.toString()),)
+                                            : const DecorationImage(
+                                            fit: BoxFit.contain,
+                                            image: AssetImage(
+                                                'assets/images/fenixlogobird.png'))),
+                                  ),
                                   tinyHSpace(),
                                   Text(firstNameController.text,
                                   style: TextStyle(
@@ -128,7 +142,7 @@ class AccountInfo extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(15.w),
                                     border: Border.all(color: dark.withOpacity(0.5)),
                                   ),
-                                  child: Text("Edit",
+                                  child: Text(AppLocalizations.of(context)!.edit,
                                   style: TextStyle(
                                     fontSize: 14.w
                                   ),),
@@ -138,7 +152,7 @@ class AccountInfo extends StatelessWidget {
                           ),
                           kSpacing,
                           TextFieldWidget(
-                            hint: "First Name",
+                            hint: AppLocalizations.of(context)!.firstName,
                             enabled: false,
                             textController: firstNameController,
                             validator: (value) =>
@@ -146,7 +160,7 @@ class AccountInfo extends StatelessWidget {
                           ),
                           kSpacing,
                           TextFieldWidget(
-                            hint: "Last Name",
+                            hint: AppLocalizations.of(context)!.lastName,
                             enabled: false,
                             textController: lastNameController,
                             validator: (value) =>
@@ -154,7 +168,7 @@ class AccountInfo extends StatelessWidget {
                           ),
                           kSpacing,
                           TextFieldWidget(
-                            hint: "Email",
+                            hint: AppLocalizations.of(context)!.email,
                             enabled: false,
                             textController: emailController,
                             validator: (value) =>

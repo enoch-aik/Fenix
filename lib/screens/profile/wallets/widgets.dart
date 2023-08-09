@@ -6,8 +6,11 @@ import '../../../const.dart';
 import '../../../theme.dart';
 
 class PaymentCardWidget extends StatelessWidget {
-  const PaymentCardWidget({
-    Key? key,
+
+  String? number;
+
+   PaymentCardWidget({
+    Key? key, this.number,
   }) : super(key: key);
 
   @override
@@ -32,7 +35,7 @@ class PaymentCardWidget extends StatelessWidget {
             children: [
               Image.asset("assets/images/icons/chip.png"),
               verticalSpace(0.04),
-              Text("**** **** **** 0777",
+              Text(number!,
                 style: GoogleFonts.aBeeZee(
                     fontSize: 22.w,
                     color: white,
@@ -80,7 +83,7 @@ class PaymentCardWidget extends StatelessWidget {
                             fontWeight: FontWeight.w400
                         ),),
                       tinySpace(),
-                      Text("07/07",
+                      Text("MM/YY",
                         style: GoogleFonts.aBeeZee(
                             fontSize: 11.w,
                             color: white,
@@ -99,3 +102,7 @@ class PaymentCardWidget extends StatelessWidget {
     );
   }
 }
+
+
+
+

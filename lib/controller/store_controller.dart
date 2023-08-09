@@ -1,3 +1,4 @@
+import 'package:fenix/controller/product_controller.dart';
 import 'package:fenix/controller/user_controller.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +19,15 @@ class StoreController extends GetxController {
   var isFetchingVehicles = true.obs;
   var isFetchingWishes = true.obs;
   var isFetchingApartments = true.obs;
+
+  RxBool isReviewLoading = false.obs;
+  RxBool isReviewDone = false.obs;
+
+  final ProductController _productController = Get.put(ProductController());
+
   String _id = '';
+
+  var store;
 
   @override
   void onInit() {
@@ -34,6 +43,9 @@ class StoreController extends GetxController {
       if (status) {
         storeList.value = response['data'];
         setDefaultStoreId(response['data'][0]['id']);
+        getApartments(token, response['data'][0]['id']);
+        getProducts(token, response['data'][0]['id']);
+        getVehicles(token, response['data'][0]['id']);
       } else {
         storeList.value = [];
         print('Error - $response');
@@ -41,9 +53,25 @@ class StoreController extends GetxController {
     }, token);
   }
 
+  getStoreById(token, storeId) {
+    isFetchingStore(true);
+    StoreServices.getUserStoresById((status, response) {
+      isFetchingStore(false);
+      if (status) {
+        store = response['data'];
+      } else {
+
+        print('Error - $response');
+      }
+    }, token, storeId);
+  }
+
   String getDefaultStoreId() => _id;
 
-  setDefaultStoreId(id) => _id = id;
+  setDefaultStoreId(id) {
+    print("yyyyy $id");
+    return _id = id;
+  }
 
   Future<dynamic> getMyProductsByCategory(token, category) async {
     var data;
@@ -134,6 +162,8 @@ class StoreController extends GetxController {
     }, token, storeId);
   }
 
+
+
   createNewStore(token, {name, description, location}) async {
     Get.to(() => const Loading());
 
@@ -152,18 +182,17 @@ class StoreController extends GetxController {
   }
 
   writeFeedback(token, {int? rate, message, userId}) async {
-    Get.to(() => const Loading());
-
+    isReviewLoading.value = true;
     StoreServices.writeReview((status, response) {
       print('==> $response');
       if (status) {
-        Get.back();
-        Get.back();
-        getStores(token);
+       isReviewLoading.value = false;
+       isReviewDone.value = true;
         CustomSnackBar.successSnackBar(
             'Great!', 'Review submitted successfully');
+       _productController.getVendorDetails(userId);
       } else {
-        Get.back();
+        isReviewLoading.value = false;
         CustomSnackBar.failedSnackBar('Failed', '$response');
       }
     }, token, {"userId": userId, "message": message, "rating": rate});

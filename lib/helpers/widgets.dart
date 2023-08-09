@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BottomHillsWidget extends StatelessWidget {
   const BottomHillsWidget({
@@ -96,7 +97,7 @@ class ButtonWidget extends StatelessWidget {
             child: Text(
               title,
               style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                  color: const Color(0xFF31456A).withOpacity(0.8),
+                  color:(color != Color(0xFFE3EDF7)) ? Colors.white : Color(0xFF31456A).withOpacity(0.8),
                   fontSize: 15.w),
             ),
           ),
@@ -303,17 +304,26 @@ class _WelcomeCardsState extends State<WelcomeCards> {
                         });
                       },
                       children: [
-                        Image.asset(
-                          "assets/images/screen 1.png",
-                          fit: BoxFit.fitWidth,
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 50),
+                          child: Image.asset(
+                            "assets/images/screen-1.png",
+                            fit: BoxFit.fitWidth,
+                          ),
                         ),
-                        Image.asset(
-                          "assets/images/screen 2.png",
-                          fit: BoxFit.fitWidth,
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 50),
+                          child: Image.asset(
+                            "assets/images/Screen3.2.png",
+                            fit: BoxFit.fill,
+                          ),
                         ),
-                        Image.asset(
-                          "assets/images/screen 3.png",
-                          fit: BoxFit.fitWidth,
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 50),
+                          child: Image.asset(
+                            "assets/images/screen-3.png",
+                            fit: BoxFit.fitWidth,
+                          ),
                         ),
                       ],
                     ),
@@ -512,12 +522,14 @@ class PaymentTextFieldWidget extends StatelessWidget {
   TextEditingController? textController;
   String? Function(String?)? validator;
   TextInputType? keyboardType;
+  Function(String)? onChanged;
 
   PaymentTextFieldWidget(
       {Key? key,
       required this.label,
       this.keyboardType,
       this.textController,
+        this.onChanged,
       this.validator})
       : super(key: key);
 
@@ -528,6 +540,8 @@ class PaymentTextFieldWidget extends StatelessWidget {
       child: TextField(
         controller: textController,
         keyboardType: keyboardType,
+        autofocus: true,
+        onChanged: onChanged,
         decoration: InputDecoration(
           labelStyle: GoogleFonts.aBeeZee(
               color: dark, fontWeight: FontWeight.w400, fontSize: 15.w),
@@ -545,6 +559,7 @@ class PaymentTextFieldWidget extends StatelessWidget {
     );
   }
 }
+
 
 class TextFieldWidget extends StatelessWidget {
   String hint;

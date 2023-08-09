@@ -41,7 +41,7 @@ class ProductServices {
 
   static getProductsByCategory(Function callback, token, category) async {
     var response = await ApiServices.initialiseGetRequest(
-        url: '$productUrl?title=$category', token: token);
+        url: '$productUrl?category=$category', token: token);
     print(response);
     if (response is String) {
       callback(false, response);
@@ -49,6 +49,7 @@ class ProductServices {
       callback(true, response);
     }
   }
+
 
   static getProductsByTitle(Function callback, token, title) async {
     var response = await ApiServices.initialiseGetRequest(
@@ -95,6 +96,29 @@ class ProductServices {
     }
   }
 
+  static getVendorById(Function callback, token, vendorId) async {
+    var response = await ApiServices.initialiseGetRequest(
+        url: '$getVendorChatUrl/$vendorId', token: token);
+    print(response);
+    if (response is String) {
+      callback(false, response);
+    } else {
+      callback(true, response);
+    }
+  }
+
+
+  static reportVendor(
+      Function callback, token,data) async {
+    var response =
+    await ApiServices.initialisePostRequest(url: reportUrl, data:data, token: token);
+    print(response);
+    if (response is String) {
+      callback(false, response);
+    } else {
+      callback(true, response);
+    }
+  }
 
 
 

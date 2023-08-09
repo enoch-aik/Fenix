@@ -1,4 +1,6 @@
 import 'package:fenix/controller/user_controller.dart';
+import 'package:fenix/screens/home/search.dart';
+import 'package:fenix/screens/products/vendor_details.dart';
 import 'package:get/get.dart';
 import '../helpers/categories.dart';
 import '../helpers/widgets/snack_bar.dart';
@@ -11,11 +13,22 @@ class ProductController extends GetxController {
   var dachaList = [].obs;
   var productList = [].obs;
   var vehicleList = [].obs;
+  var searchList = [].obs;
   var isFetchingProducts = true.obs;
   var isFetchingVehicles = true.obs;
   var isFetchingApartments = true.obs;
   var isFetchingDacha = true.obs;
   var isFetchingHouse = true.obs;
+  var isSendingReport = false.obs;
+  var isReportSent = false.obs;
+  var vendor;
+  RxList feedbacks = [].obs;
+
+  RxBool isSearchEnabled = false.obs;
+
+  String tab = '';
+
+  RxBool isSearching = false.obs;
 
   @override
   void onInit() {
@@ -62,7 +75,7 @@ class ProductController extends GetxController {
         houseList.value = [];
         print('Error - $response');
       }
-    }, getUserToken(), Category().homeCategories[1].toString().toLowerCase());
+    }, getUserToken(), Category().homeCategories[2].toString().toLowerCase());
   }
 
   getApartments() {
@@ -76,7 +89,7 @@ class ProductController extends GetxController {
         apartmentList.value = [];
         print('Error - $response');
       }
-    }, getUserToken(), Category().homeCategories[2].toString().toLowerCase());
+    }, getUserToken(), Category().homeCategories[1].toString().toLowerCase());
   }
 
   clearSearch(category) {
@@ -103,22 +116,51 @@ class ProductController extends GetxController {
     }
   }
 
-  searchStore(category, searchWord) {
-    if (category == 'car') {
-      searchVehicle(searchWord);
-    } else if (category == 'electronics') {
-      searchProduct(searchWord);
-    } else {
-      searchApartments(searchWord);
-    }
+  searchStore( searchWord) {
+    isSearching.value = true;
+    Get.to(() => SearchScreen(apartmentResult: apartmentList.value,carResult: vehicleList.value, productResult: productList.value, searchText: searchWord,));
+    searchVehicle(searchWord);
+    searchProduct(searchWord);
+    searchApartments(searchWord);
+
+    // Future.delayed(Duration(seconds: 2), () {
+    //   if(apartmentList.isEmpty && vehicleList.isEmpty && productList.isEmpty){
+    //     Get.to(() => SearchScreen(apartmentResult: apartmentList.value,carResult: vehicleList.value, productResult: productList.value,));
+    //   }
+    // });
+
+
+    // if (category == 'car') {
+    //   searchVehicle(searchWord);
+
+    // } else if (category == 'electronics') {
+    //   searchProduct(searchWord);
+    // } else if (category == 'product') {
+    //   searchProduct(searchWord);
+    // } else {
+    //   searchApartments(searchWord);
+    // }
   }
 
   searchApartments(searchWord) {
     isFetchingApartments(true);
+    Get.to(() => SearchScreen(apartmentResult: apartmentList.value,carResult: vehicleList.value, productResult: productList.value, searchText: searchWord,));
     ProductServices.getApartmentsByTitle((status, response) {
-      isFetchingApartments(false);
       if (status) {
         apartmentList.value = response['data'];
+        if(apartmentList.isNotEmpty){
+          searchList.add(response['data']);
+            }
+        isSearching.value = false;
+        if(apartmentList.isNotEmpty) {
+          tab = 'Apartments';
+        }
+        if(vehicleList.isNotEmpty){
+          tab = 'Cars';
+        }
+        if(productList.isNotEmpty){
+          tab = 'Products';
+        }
       } else {
         apartmentList.value = [];
         print('Error - $response');
@@ -128,10 +170,26 @@ class ProductController extends GetxController {
 
   searchVehicle(searchWord) {
     // isFetchingProducts(true);
+    isFetchingVehicles(true);
+    Get.to(() => SearchScreen(apartmentResult: apartmentList.value,carResult: vehicleList.value, productResult: productList.value, searchText: searchWord,));
+
+
     ProductServices.getVehiclesByTitle((status, response) {
-      isFetchingProducts(false);
       if (status) {
-        productList.value = response['data'];
+        vehicleList.value = response['data'];
+        if(vehicleList.isNotEmpty){
+          searchList.add(response['data']);
+        }
+        isSearching.value = false;
+        if(apartmentList.isNotEmpty) {
+          tab = 'Apartments';
+        }
+        if(vehicleList.isNotEmpty){
+          tab = 'Cars';
+        }
+        if(productList.isNotEmpty){
+          tab = 'Products';
+        }
       } else {
         productList.value = [];
         print('Error - $response');
@@ -141,10 +199,25 @@ class ProductController extends GetxController {
 
   searchProduct(searchWord) {
     isFetchingProducts(true);
+    Get.to(() => SearchScreen(apartmentResult: apartmentList.value,carResult: vehicleList.value, productResult: productList.value, searchText: searchWord,));
+
     ProductServices.getProductsByTitle((status, response) {
-      isFetchingProducts(false);
       if (status) {
         productList.value = response['data'];
+        if(productList.isNotEmpty){
+          searchList.add(response['data']);
+          // Get.to(() => SearchScreen(apartmentResult: apartmentList.value,carResult: vehicleList.value, productResult: productList.value,));
+        }
+        isSearching.value = false;
+        if(apartmentList.isNotEmpty) {
+          tab = 'Apartments';
+        }
+        if(vehicleList.isNotEmpty){
+          tab = 'Cars';
+        }
+        if(productList.isNotEmpty){
+          tab = 'Products';
+        }
       } else {
         productList.value = [];
         print('Error - $response');
@@ -153,7 +226,6 @@ class ProductController extends GetxController {
   }
 
   getProducts() {
-    // isFetchingProducts(true);
     ProductServices.getProductsByCategory((status, response) {
       isFetchingProducts(false);
       if (status) {
@@ -165,10 +237,10 @@ class ProductController extends GetxController {
     }, getUserToken(), Category().homeCategories[4]);
   }
 
+
   getVehicle() {
-    // isFetchingProducts(true);
-    ProductServices.getProductsByCategory((status, response) {
-      isFetchingProducts(false);
+    ProductServices.getVehiclesByCategory((status, response) {
+      isFetchingVehicles(false);
       if (status) {
         productList.value = response['data'];
       } else {
@@ -177,4 +249,40 @@ class ProductController extends GetxController {
       }
     }, getUserToken(), Category().homeCategories[3]);
   }
+
+
+  getVendorDetails(vendorId) {
+    ProductServices.getVendorById((status, response) {
+      if (status) {
+        vendor = response['data'];
+        feedbacks.value = vendor['feedbacks'];
+      } else {
+
+        print('Error - $response');
+      }
+    }, getUserToken(), vendorId);
+  }
+
+  reportSeller(
+      {vendorId, subject, description}) {
+    isSendingReport.value = true;
+    ProductServices.reportVendor((status, response) {
+      print(response);
+      if (status) {
+        CustomSnackBar.successSnackBar(
+            'Success', 'Report sent');
+        isSendingReport.value = false;
+        isReportSent.value = true;
+      } else {
+        // Get.back();
+        isSendingReport.value = false;
+        CustomSnackBar.failedSnackBar('Failed', '$response');
+      }
+    }, getUserToken(), {
+      "userId": "clh8zszwm0000uz0uebr5vt16",
+      "subject": "report user",
+      "description": "hiiiiii"
+    }, );
+  }
+
 }

@@ -20,31 +20,31 @@ class ProductListWidget extends StatelessWidget {
           children: [
             Container(
               height: MediaQuery.of(context).size.height * 0.42,
-              width: MediaQuery.of(context).size.width * 0.452,
-              margin: EdgeInsets.symmetric(horizontal: 9.w),
+              width: MediaQuery.of(context).size.width * 0.5,
+              margin: EdgeInsets.symmetric(horizontal: 0.5),
               decoration: BoxDecoration(
                   color: const Color(0xFFDAE5F2),
                   borderRadius: BorderRadius.circular(10.w),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 1,
-                      blurRadius: 2,
-                      offset: const Offset(0, 1), // changes position of shadow
+                      spreadRadius: 0.1,
+                      blurRadius: 1,
+                      offset: const Offset(0, 1),
+                      // changes position of shadow
                     ),
                     BoxShadow(
-                      color: Colors.white.withOpacity(0.3),
-                      spreadRadius: 2,
-                      blurRadius: 3,
-                      offset:
-                          const Offset(-3, -6), // changes position of shadow
+                      color:  Colors.white.withOpacity(0.5),
+                      spreadRadius: 1,
+                      blurRadius: 1,
+                      offset: const Offset(-1, 0), // changes position of shadow
                     ),
                   ]),
               child: Column(
                 children: [
                   Container(
                     height: MediaQuery.of(context).size.height * 0.25,
-                    width: MediaQuery.of(context).size.width * 0.455,
+                    width: MediaQuery.of(context).size.width * 0.555,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.w),
                       image: isNetwork == true
@@ -61,7 +61,7 @@ class ProductListWidget extends StatelessWidget {
                   ),
                   Container(
                     height: MediaQuery.of(context).size.height * 0.15,
-                    width: MediaQuery.of(context).size.width * 0.455,
+                    width: MediaQuery.of(context).size.width * 0.555,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,

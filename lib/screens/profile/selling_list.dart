@@ -19,6 +19,7 @@ import '../home/widgets/loader.dart';
 import '../onboarding/constants.dart';
 import '../products/product_details.dart';
 import 'create_selling_post/create_product.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SellingList extends StatefulWidget {
   const SellingList({Key? key, this.storeId}) : super(key: key);
@@ -77,8 +78,7 @@ class _SellingListState extends State<SellingList> {
                       child: Row(
                         children: [
                           backArrow(),
-                          Text(
-                            "Your Selling List",
+                          Text(AppLocalizations.of(context)!.yourSelling,
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 23.w,
@@ -111,7 +111,7 @@ class _SellingListState extends State<SellingList> {
                   children: [
                     MenuTitle(
                         icon: CustomIconsFenix.dacha,
-                        title: "Dacha",
+                        title: AppLocalizations.of(context)!.dacha,
                         color: tab == "Dacha" ? white : light,
                         onTap: () {
                           setState(() {
@@ -126,7 +126,7 @@ class _SellingListState extends State<SellingList> {
                         }),
                     MenuTitle(
                         icon: CustomIconsFenix.house,
-                        title: "House",
+                        title: AppLocalizations.of(context)!.house,
                         color: tab == "House" ?  white : light,
                         onTap: () {
                           setState(() {
@@ -138,7 +138,7 @@ class _SellingListState extends State<SellingList> {
                         }),
                     MenuTitle(
                         icon: CustomIconsFenix.apartment,
-                        title: "Apartment",
+                        title: AppLocalizations.of(context)!.apartment,
                         color: tab == "Apartment" ?  white : light,
                         onTap: () {
                           setState(() {
@@ -150,7 +150,7 @@ class _SellingListState extends State<SellingList> {
                         }),
                     MenuTitle(
                         icon: FontAwesomeIcons.car,
-                        title: "Car",
+                        title: AppLocalizations.of(context)!.car,
                         color: tab == "Car" ?  white : light,
                         onTap: () {
                           setState(() {
@@ -159,7 +159,7 @@ class _SellingListState extends State<SellingList> {
                         }),
                     MenuTitle(
                         icon: FontAwesomeIcons.television,
-                        title: "Electronics",
+                        title: AppLocalizations.of(context)!.electronics,
                         color: tab == "Electronics" ?  white : light,
                         onTap: () {
                           setState(() {

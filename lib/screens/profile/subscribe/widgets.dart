@@ -9,7 +9,6 @@ import '../../../theme.dart';
 
 class PlanWidget extends StatelessWidget {
 
-  Widget? icon;
   String? title;
   String? plan;
   String? duration;
@@ -17,7 +16,7 @@ class PlanWidget extends StatelessWidget {
   String? price;
 
   PlanWidget({
-    Key? key,this.price, this.duration, this.plan, this.target, this.title, this.icon
+    Key? key,this.price, this.duration, this.plan, this.target, this.title,
   }) : super(key: key);
 
   @override
@@ -76,7 +75,7 @@ class PlanWidget extends StatelessWidget {
               ),
               tinySpace(),
 
-              Text(duration!,
+              Text("$duration days",
                 style:  GoogleFonts.roboto(
                     fontSize: 13.w,
                     color: blue,

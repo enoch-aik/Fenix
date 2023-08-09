@@ -80,18 +80,23 @@ class Category {
   List clothing = [
     {
       'name': "T-Shirt",
+      "image": "T-Shirt.png",
     },
     {
       'name': "Shirt",
+      "image": "T-Shirt.png",
     },
     {
       'name': "Trousers",
+      "image": "pants-men.png",
     },
     {
       'name': "Jacket",
+      "image": "jacket.png",
     },
     {
       'name': "Pants",
+      "image": "pants-men.png",
     },
     {
       'name': "Skirts",
@@ -100,22 +105,22 @@ class Category {
       'name': "Dresses",
     },
     {
-      'name': "Pants",
-    },
-    {
       'name': "Face Care",
     },
     {
       'name': "Shoes",
+      "image": "shoess.png",
     },
     {
       'name': "Tracksuit",
+      "image": "joggers.png",
     },
     {
       'name': "Body Care",
     },
     {
       'name': "Accessories",
+      "image": "cap.png",
     },
     {
       'name': "Others",
@@ -339,6 +344,7 @@ class Category {
   List electronics = [
     {
       "name": "Laptop",
+      "image": "laptop.png",
       "products": [
         "Apple",
         "Asus",
@@ -358,6 +364,7 @@ class Category {
     },
     {
       "name": "Cellphones and Accessories",
+      "image": "cell&accessories.png",
       "cell phones": [
         {
           'brand': "Apple",
@@ -532,6 +539,7 @@ class Category {
     },
     {
       "name": "TVs",
+      "image": "TVs.png",
       "products": [
         "Apple Box",
         "Samsung",
@@ -544,6 +552,7 @@ class Category {
     },
     {
       "name": "Home Electronics",
+      "image": "Home-electronics.png",
       "products": [
         "Refrigerator",
         "Freezer",
@@ -569,6 +578,7 @@ class Category {
     },
     {
       "name": "Smart Watch",
+      "image": "SmartWatch.png",
       "products": [
         "Apple",
         "Samsung",
@@ -580,9 +590,11 @@ class Category {
     },
     {
       "name": "Audio, Music & Mic",
+      "image": "Audio-Mic.png",
     },
     {
       "name": "Tablet",
+      "image": "Tablet.png",
       "products": [
         "Apple"
             "Samsung",
@@ -596,6 +608,7 @@ class Category {
     },
     {
       "name": "Camera & Photo",
+      "image": "Camera.png",
       "products": [
         "Canon",
         "Go Pro",
@@ -608,6 +621,7 @@ class Category {
     },
     {
       "name": "PC & Gaming",
+      "image": "PC-&-Gaming.png",
       "products": [
         "Asus",
         "Alienware",

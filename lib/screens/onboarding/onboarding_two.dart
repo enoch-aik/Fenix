@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 import 'auth_board.dart';
 import 'constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnboardingTwo extends StatelessWidget {
 
@@ -20,7 +21,7 @@ class OnboardingTwo extends StatelessWidget {
         alignment: Alignment.center,
         children: [
 
-          WelcomeCards( title: "Easy Communication and Deals"),
+          WelcomeCards( title: AppLocalizations.of(context)!.easyCommunication),
 
 
 

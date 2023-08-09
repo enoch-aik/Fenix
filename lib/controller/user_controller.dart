@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:fenix/controller/account_controller.dart';
 import 'package:fenix/controller/product_controller.dart';
 import 'package:fenix/models/services/api_docs.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,6 +28,8 @@ class UserController extends GetxController {
   var isLoadingLikes = false.obs;
   var selectedId = ''.obs;
   var wishList = [].obs;
+
+  var currentAddress = "".obs;
 
   @override
   void onInit() {
@@ -107,10 +110,12 @@ class UserController extends GetxController {
     print("+++<<<>>${lat},.....$lon");
     UserServices.updateUserLocation((status, response) {
       if (status) {
+        CustomSnackBar.successSnackBar(
+            'Success', 'Location Updated');
       } else {
         CustomSnackBar.failedSnackBar('Failed', '$response');
       }
-    }, {"latitude": 37.785834, "longitude": -122.406417}, token);
+    }, {"latitude": lat, "longitude": lon}, token);
   }
 
   createProfile(token,
@@ -140,7 +145,7 @@ class UserController extends GetxController {
   setUser(response) {
     UserModel user = UserModel.fromJson(response['data']);
     this.user = user;
-    Get.to(() => const Views());
+    Get.offAll(() => const Views());
     Get.put(StoreController());
     getCurrentLocation();
   }
@@ -152,11 +157,22 @@ class UserController extends GetxController {
             forceAndroidLocationManager: true)
         .then((Position position) async {
       print("++++====${position}");
-      _currentPosition = position;
+      _getAddressFromLatLng(position.latitude, position.longitude);
       userCurrentPosition = position.obs;
-      updateLocation(_token, userCurrentPosition!.value.latitude,
-          userCurrentPosition!.value.longitude);
+      updateLocation(_token,position.latitude,
+          position.longitude);
       isFetchingUserLocation(false);
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
+  Future<void> _getAddressFromLatLng(lat, long) async {
+    await placemarkFromCoordinates(
+        lat,  long)
+        .then((List<Placemark> placemarks) {
+      Placemark place = placemarks[0];
+        currentAddress.value = "${place.name}, ${place.locality},${place.administrativeArea} ${place.postalCode}, ${place.isoCountryCode}";
     }).catchError((e) {
       print(e);
     });

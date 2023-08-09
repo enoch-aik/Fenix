@@ -5,6 +5,9 @@ import 'package:fenix/helpers/validator.dart';
 import 'package:fenix/helpers/widgets.dart';
 import 'package:fenix/helpers/widgets/snack_bar.dart';
 import 'package:fenix/screens/onboarding/constants.dart';
+import 'package:fenix/screens/profile/subscribe/plans.dart';
+import 'package:fenix/screens/profile/subscribe/subscribe.dart';
+import 'package:fenix/screens/profile/wallets/add_new_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
@@ -19,6 +22,8 @@ import '../../../controller/store_controller.dart';
 import '../../../helpers/image_picker.dart';
 import '../../../neumorph.dart';
 import '../../../theme.dart';
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class CreateApartment extends StatefulWidget {
@@ -338,7 +343,7 @@ class _CreateApartmentState extends State<CreateApartment> {
                             horizontal: 15,
                             vertical:
                                 MediaQuery.of(context).size.height * 0.015),
-                        hintText: "Search Fenix",
+                        hintText: AppLocalizations.of(context)!.searchFenix,
                         hintStyle: Theme.of(context)
                             .textTheme
                             .bodyText1!
@@ -368,7 +373,7 @@ class _CreateApartmentState extends State<CreateApartment> {
               child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              "Sell& Rent ${widget.apartmentType}",
+              "${AppLocalizations.of(context)!.sellRent} ${widget.apartmentType}",
               style: const TextStyle(fontWeight: FontWeight.w400),
             ),
           )),
@@ -380,10 +385,9 @@ class _CreateApartmentState extends State<CreateApartment> {
                 padding: EdgeInsets.symmetric(horizontal: 17.w),
                 children: [
                   kSpacing,
-                  title('Store'),
-                  smallText(
-                      'Please select the store under which the apartment will be created (product will be created as a person if left as default)'),
-                  kSpacing,
+                  title( AppLocalizations.of(context)!.store),
+                  smallText( AppLocalizations.of(context)!.storeSubText),
+                        kSpacing,
                   DropDownWidget(
                       list: stores,
                       store: store,
@@ -402,8 +406,8 @@ class _CreateApartmentState extends State<CreateApartment> {
                       }),
 
                   kSpacing,
-                  title('Photos'),
-                  smallText('Please select photos or video'),
+                  title( AppLocalizations.of(context)!.photos),
+                  smallText( AppLocalizations.of(context)!.photosSubText),
                   kSpacing,
                   images.isNotEmpty || videos.isNotEmpty
                       ? Wrap(
@@ -445,19 +449,19 @@ class _CreateApartmentState extends State<CreateApartment> {
                   kSpacing,
                   const Divider(color: light, thickness: 3),
                   kSpacing,
-                  title('Title of Property'),
-                  smallText('Please enter the name of the property'),
+                  title( AppLocalizations.of(context)!.titleOfProperty),
+                  smallText( AppLocalizations.of(context)!.titleOfPropertySubText),
                   kSpacing,
                   TextFieldWidget(
-                    hint: "Name of property",
+                    hint:  AppLocalizations.of(context)!.nameOfProduct,
                     textController: nameController,
                     validator: (value) => FieldValidator.validate(value!),
                   ),
                   kSpacing,
-                  title('House Specifics'),
+                  title( AppLocalizations.of(context)!.houseSpecifics),
                   kSpacing,
-                  subText('How many Bedrooms'),
-                  smallText('Please select how many bedroom is your property'),
+                  subText( AppLocalizations.of(context)!.howManyBedrooms),
+                  smallText( AppLocalizations.of(context)!.howManyBedroomsSubText),
                   kSpacing,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -473,8 +477,8 @@ class _CreateApartmentState extends State<CreateApartment> {
                   ),
                   tiny5Space(),
                   divider(),
-                  subText('How many Bathroom'),
-                  smallText('Please select how many bathroom is your property'),
+                  subText( AppLocalizations.of(context)!.howManyBathrooms),
+                  smallText( AppLocalizations.of(context)!.howManyBathroomsSubText),
                   kSpacing,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -491,8 +495,8 @@ class _CreateApartmentState extends State<CreateApartment> {
                   ),
                   tiny5Space(),
                   divider(),
-                  subText('How many Shower'),
-                  smallText('Please select how many shower is your property'),
+                  subText( AppLocalizations.of(context)!.howManyShower),
+                  smallText( AppLocalizations.of(context)!.howManyShowerSubText),
                   kSpacing,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -509,8 +513,8 @@ class _CreateApartmentState extends State<CreateApartment> {
                   ),
                   tiny5Space(),
                   divider(),
-                  subText('How many Toilet'),
-                  smallText('Please select how many toilet is your property'),
+                  subText( AppLocalizations.of(context)!.howManyToilet),
+                  smallText( AppLocalizations.of(context)!.howManyToiletSubText),
                   kSpacing,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -528,7 +532,7 @@ class _CreateApartmentState extends State<CreateApartment> {
                   tiny5Space(),
                   divider(),
                   title_icon(
-                      'How many floors in your house', Icons.stairs_outlined),
+                      AppLocalizations.of(context)!.howManyFloors, Icons.stairs_outlined),
                   tinySpace(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -542,7 +546,7 @@ class _CreateApartmentState extends State<CreateApartment> {
                   ),
                   kSpacing,
                   title_icon(
-                      'How many square footage', Icons.square_foot_sharp),
+                      AppLocalizations.of(context)!.howManySquareFootage, Icons.square_foot_sharp),
                   tinySpace(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -555,7 +559,7 @@ class _CreateApartmentState extends State<CreateApartment> {
                     ],
                   ),
                   kSpacing,
-                  subText('      Or How many square meter'),
+                  subText( AppLocalizations.of(context)!.howManySquareMeters),
                   tinySpace(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -569,70 +573,53 @@ class _CreateApartmentState extends State<CreateApartment> {
                   ),
                   kSpacing,
                   divider(),
-                  subText('Amenities'),
+                  subText( AppLocalizations.of(context)!.amenities),
+                  smallText("Please choose the amenities in your apartament has"),
                   tinySpace(),
                   Wrap(
                     // mainAxisAlignment: MainAxisAlignment.spaceAround,
                     spacing: 5,
                     runSpacing: 8,
                     children: [
-                      amenitiesButton(
-                        Icons.wifi,
-                        'wifi',
-                      ),
-                      amenitiesButton(
-                        Icons.tv,
-                        'tv',
-                      ),
-                      amenitiesButton(
-                        Icons.thermostat,
-                        'heater',
-                      ),
-                      amenitiesButton(
-                        Icons.chair,
-                        'chair',
-                      ),
-                      amenitiesButton(
-                        Icons.print,
-                        'print',
-                      ),
-                      amenitiesButton(
-                        Icons.blender,
-                        'blender',
-                      ),
-                      amenitiesButton(
-                        Icons.sports_soccer,
-                        'sports_soccer',
-                      ),
-                      amenitiesButton(
-                        Icons.smoke_free,
-                        'smoke_free',
-                      ),
-                      amenitiesButton(
-                        Icons.water_drop_sharp,
-                        'water',
-                      ),
-                      amenitiesButton(
-                        Icons.tapas,
-                        'tap',
-                      ),
-                      amenitiesButton(
-                        Icons.accessible_forward,
-                        'accessible',
-                      ),
-                      amenitiesButton(
-                        Icons.settings_phone_outlined,
-                        'phone',
-                      ),
+                      amenitiesButton('wifi',),
+                      amenitiesButton('tv',),
+                      amenitiesButton('basketballNet'),
+                      amenitiesButton('pets',),
+                      amenitiesButton('microwave',),
+                      amenitiesButton('restaurant',),
+                      amenitiesButton('laundary',),
+                      amenitiesButton('chair',),
+                      amenitiesButton('billiards',),
+                      amenitiesButton('blender',),
+                      amenitiesButton('coffeeMaker',),
+                      amenitiesButton('cooker',),
+                      amenitiesButton('kitchen',),
+                      amenitiesButton('sports_soccer',),
+                      amenitiesButton('hairDryer',),
+                      amenitiesButton('hanger',),
+                      amenitiesButton('tap',),
+                      amenitiesButton('lamp',),
+                      amenitiesButton('parking',),
+                      amenitiesButton('playstation',),
+                      amenitiesButton('print',),
+                      amenitiesButton('refrigerator',),
+                      amenitiesButton('smoke_free',),
+                      amenitiesButton('air_conditioning',),
+                      amenitiesButton('sprinker',),
+                      amenitiesButton('heater',),
+                      amenitiesButton('phone',),
+                      amenitiesButton('uber',),
+                      amenitiesButton('washer',),
+                      amenitiesButton('water',),
+                      amenitiesButton('accessible',),
                     ],
                   ),
                   kSpacing,
-                  title('House Rules'),
+                  title( AppLocalizations.of(context)!.houseRules),
                   kSpacing,
                   title_icon(
-                      'Allow People in the property', Icons.groups_rounded),
-                  smallText(
-                      'How many people are you allowed maximum in your property?'),
+                      AppLocalizations.of(context)!.allowPeople, Icons.groups_rounded),
+                  smallText(AppLocalizations.of(context)!.allowPeopleSubText),
                   tinySpace(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -646,46 +633,46 @@ class _CreateApartmentState extends State<CreateApartment> {
                   ),
                   kSpacing,
                   divider(),
-                  title_icon('Are pets allowed', Icons.pets),
+                  title_icon( AppLocalizations.of(context)!.petsAllowed, Icons.pets),
                   tiny5Space(),
                   Row(
                     children: [
-                      yesNoIcon('Yes', 'pet'),
+                      yesNoIcon( AppLocalizations.of(context)!.yes,  AppLocalizations.of(context)!.pet),
                       smallHSpace(),
-                      yesNoIcon('No', 'pet'),
+                      yesNoIcon( AppLocalizations.of(context)!.no,  AppLocalizations.of(context)!.pet),
                       mediumHSpace(),
                     ],
                   ),
                   kSpacing,
                   divider(),
-                  title_icon('Is smoke allowed', Icons.smoking_rooms),
+                  title_icon( AppLocalizations.of(context)!.smokeAllowed, Icons.smoking_rooms),
                   tiny5Space(),
                   Row(
                     children: [
-                      yesNoIcon('Yes', 'smoke'),
+                      yesNoIcon( AppLocalizations.of(context)!.yes,  AppLocalizations.of(context)!.smoke),
                       smallHSpace(),
-                      yesNoIcon('No', 'smoke'),
+                      yesNoIcon( AppLocalizations.of(context)!.no,  AppLocalizations.of(context)!.smoke),
                       mediumHSpace(),
                     ],
                   ),
                   kSpacing,
                   divider(),
-                  title('Description'),
+                  title( AppLocalizations.of(context)!.description),
                   kSpacing,
                   TextFieldWidget(
-                    hint: "Description",
+                    hint:  AppLocalizations.of(context)!.description,
                     maxLine: 5,
                     textController: descriptionController,
                   ),
                   kSpacing,
-                  title('Set House location'),
+                  title( AppLocalizations.of(context)!.setHouseLocation),
                   kSpacing,
-                  subText('Set the property location'),
+                  subText( AppLocalizations.of(context)!.setPropertyLocation),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 10.2),
                     child: SearchGooglePlacesWidget(
                       placeType: PlaceType.address, // PlaceType.cities, PlaceType.geocode, PlaceType.region etc
-                      placeholder: "Search location",
+                      placeholder:  AppLocalizations.of(context)!.searchLocation,
                       apiKey: _mapController.googleApikey,
                       onSearch: (Place place) {},
                       onSelected: (Place place) async {
@@ -703,7 +690,7 @@ class _CreateApartmentState extends State<CreateApartment> {
                     ),
                   ),
                   kSpacing,
-                  title('Choose one of the options'),
+                  title( AppLocalizations.of(context)!.chooseOptions),
                   kSpacing,
                   Row(
                     children: [
@@ -717,7 +704,7 @@ class _CreateApartmentState extends State<CreateApartment> {
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                      title('Available for Rent'),
+                      title( AppLocalizations.of(context)!.availableForRent),
                       tinySpace(),
                       subText(
                         'Available start date',
@@ -938,9 +925,9 @@ class _CreateApartmentState extends State<CreateApartment> {
                                     const Icon(Icons.access_time_outlined,
                                         size: 18),
                                     tinyHSpace(),
-                                    const Expanded(
+                                    Expanded(
                                       child: Text(
-                                        'Time',
+                                        AppLocalizations.of(context)!.time,
                                         style: TextStyle(fontSize: 16),
                                       ),
                                     ),
@@ -980,7 +967,7 @@ class _CreateApartmentState extends State<CreateApartment> {
                       kSpacing,
                           divider(),
                           kSpacing,
-                          title('Price'),
+                          title( AppLocalizations.of(context)!.price),
                           kSpacing,
                           Row(
                             children: [
@@ -988,12 +975,12 @@ class _CreateApartmentState extends State<CreateApartment> {
                                 child: TextFieldWidget(
                                     keyboardType: const TextInputType.numberWithOptions(
                                         decimal: true),
-                                    hint: "Price",
+                                    hint:  AppLocalizations.of(context)!.price,
                                     textController: nightController),
                               ),
                               smallHSpace(),
-                              const Text(
-                                'Per night',
+                               Text(
+                                AppLocalizations.of(context)!.perNight,
                                 style: TextStyle(fontSize: 13, color: blue),
                               ),
                               tinyH5Space(),
@@ -1008,12 +995,12 @@ class _CreateApartmentState extends State<CreateApartment> {
                                 child: TextFieldWidget(
                                     keyboardType: const TextInputType.numberWithOptions(
                                         decimal: true),
-                                    hint: "Price",
+                                    hint:  AppLocalizations.of(context)!.price,
                                     textController: weekController),
                               ),
                               smallHSpace(),
-                              const Text(
-                                'Per week',
+                               Text(
+                                 AppLocalizations.of(context)!.perWeek,
                                 style: TextStyle(fontSize: 13, color: blue),
                               ),
                               tinyH5Space(),
@@ -1028,12 +1015,12 @@ class _CreateApartmentState extends State<CreateApartment> {
                                 child: TextFieldWidget(
                                     keyboardType: const TextInputType.numberWithOptions(
                                         decimal: true),
-                                    hint: "Price",
+                                    hint:  AppLocalizations.of(context)!.price,
                                     textController: monthController),
                               ),
                               smallHSpace(),
-                              const Text(
-                                'Per month',
+                             Text(
+                                AppLocalizations.of(context)!.perMonth,
                                 style: TextStyle(fontSize: 13, color: blue),
                               ),
                               tinyH5Space(),
@@ -1056,7 +1043,7 @@ class _CreateApartmentState extends State<CreateApartment> {
                             child: TextFieldWidget(
                                 keyboardType: const TextInputType.numberWithOptions(
                                     decimal: true),
-                                hint: "Price",
+                                hint: AppLocalizations.of(context)!.price,
                                 textController: priceController),
                           ),
                           smallHSpace(),
@@ -1235,6 +1222,14 @@ class _CreateApartmentState extends State<CreateApartment> {
                   Center(
                     child: InkWell(
                         onTap: () {
+                          Get.to(() => Subscribe());
+                        },
+                        child: ButtonWidget(title: AppLocalizations.of(context)!.choosePlans,color: Colors.purple,)),
+                  ),
+                  verticalSpace(0.02),
+                  Center(
+                    child: InkWell(
+                        onTap: () {
                           print('square -- > $square');
                           if (_formKey.currentState!.validate()) {
                             images.addAll(videos);
@@ -1272,7 +1267,7 @@ class _CreateApartmentState extends State<CreateApartment> {
                                 'Ensure that all required fields are filled');
                           }
                         },
-                        child: ButtonWidget(title: "Next")),
+                        child: ButtonWidget(title: AppLocalizations.of(context)!.createFreePost)),
                   ),
                   verticalSpace(0.04),
                 ],
@@ -1444,7 +1439,7 @@ class _CreateApartmentState extends State<CreateApartment> {
     );
   }
 
-  InkWell amenitiesButton(icon, title) {
+  InkWell amenitiesButton(title) {
     return InkWell(
       onTap: () {
         setState(() {
@@ -1458,8 +1453,8 @@ class _CreateApartmentState extends State<CreateApartment> {
       child: Container(
         decoration: depressNeumorph()
             .copyWith(color: amenities.contains(title) ? blue : null),
-        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
-        child: Icon(icon, color: amenities.contains(title) ? white : black),
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 21.w),
+        child: Image.asset('assets/images/apartmentIcons/$title.png', scale: height()/38, color: amenities.contains(title) ? white : dark.withOpacity(0.7)),
       ),
     );
   }

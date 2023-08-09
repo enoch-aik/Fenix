@@ -3,18 +3,33 @@ import 'package:fenix/models/services/chat_services.dart';
 import 'package:get/get.dart';
 
 class ChatController extends GetxController {
-  var chats = [].obs;
+  // var chats = [].obs;
   var allChats = [].obs;
   var isLoadingChats = true.obs;
   var isLoadingAllChats = true.obs;
   var chatId = ''.obs;
   var vendorName = ''.obs;
 
-  @override
+  RxList chats = [].obs;
+
+
+
+
+  List getchatList = [];
+  List get chatList => getchatList;
+  set chatList(List value) {
+    getchatList = value;
+  }
+
+@override
   void onInit() {
     getAllChats();
     super.onInit();
   }
+
+
+
+
 
   String getToken() {
     UserController userController = Get.find();

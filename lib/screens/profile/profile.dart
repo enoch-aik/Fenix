@@ -17,12 +17,15 @@ import '../../const.dart';
 import '../../controller/account_controller.dart';
 import '../../helpers/widgets/dialogs.dart';
 import '../chat.dart';
+import '../home/widgets/loader.dart';
 import 'account/account.dart';
 import 'create_selling_post/selling_post.dart';
 import 'edit_profile.dart';
 import 'message.dart';
 import 'store_lists.dart';
 import 'subscribe/subscribe.dart';
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({Key? key}) : super(key: key);
@@ -36,17 +39,19 @@ class _UserProfileState extends State<UserProfile> {
   final StoreController _storeController = Get.find();
   final AccountController _accountController = Get.find();
 
+
   var name = '';
   var refreshToken;
 
   List title = [
-    "Your Account",
-    "Your Message",
+    // AppLocalizations.of(context)!.hello,
+    "Account",
+    "Message",
     "Create Selling Post",
     "Subscribe",
-    "Your Wishlist",
-    "Your Stores",
-    "Your Selling",
+    "Wishlist",
+    "Stores",
+    "Selling",
     "Wallet",
     "Promote Post",
     "Language",
@@ -60,6 +65,18 @@ class _UserProfileState extends State<UserProfile> {
 
   @override
   Widget build(BuildContext context) {
+    List title = [
+    AppLocalizations.of(context)!.yourAccount,
+    AppLocalizations.of(context)!.yourMessage,
+    AppLocalizations.of(context)!.createSellingPost,
+    AppLocalizations.of(context)!.subscribe,
+    AppLocalizations.of(context)!.yourWishlist,
+    AppLocalizations.of(context)!.yourStores,
+    AppLocalizations.of(context)!.yourSelling,
+    AppLocalizations.of(context)!.wallet,
+    AppLocalizations.of(context)!.promotePost,
+    AppLocalizations.of(context)!.language,
+    ];
     return Scaffold(
       appBar: AppBar(
           title: Image.asset(
@@ -69,24 +86,24 @@ class _UserProfileState extends State<UserProfile> {
           ),
           automaticallyImplyLeading: false,
           actions: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.w),
-              child: Icon(
-                Icons.notifications_none,
-                color: Colors.white,
-                size: 27.w,
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: 10.w),
+            //   child: Icon(
+            //     Icons.notifications_none,
+            //     color: Colors.white,
+            //     size: 27.w,
+            //   ),
+            // ),
             InkWell(
               onTap: () async {
                 SharedPreferences prefs =
                     await SharedPreferences.getInstance();
                 refreshToken = prefs.getString('refreshToken');
                 CustomDialogs.showNoticeDialog(
-                    message: "Please don't leave 😭",
+                    message: "${AppLocalizations.of(context)!.pleaseDontLeave} 😭",
                     image: "assets/images/icons/logout.png",
-                    closeText: 'Cancel',
-                    okText: 'Confirm',
+                    closeText: AppLocalizations.of(context)!.cancel,
+                    okText: AppLocalizations.of(context)!.confirm,
                     onClick: () {
                       _accountController.signOut(refreshToken);
                     });
@@ -126,7 +143,7 @@ class _UserProfileState extends State<UserProfile> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "Hello, $name",
+                    "${AppLocalizations.of(context)!.hello} $name",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 28.w,
@@ -177,7 +194,7 @@ class _UserProfileState extends State<UserProfile> {
                                 ));
                       }
 
-                      if (index == 3) Get.to(() => const Subscribe());
+                      if (index == 3) Get.to(() => Subscribe());
                       if (index == 4) Get.to(() => const WishList());
                       if (index == 5) Get.to(() => const StoreList());
                       if (index == 6) Get.to(() => const SellingList());
@@ -242,15 +259,14 @@ class _UserProfileState extends State<UserProfile> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "Recently Viewed Items",
+                    Text(AppLocalizations.of(context)!.regularSellingItems,
                       style: TextStyle(
                           color: dark,
                           fontSize: 19.w,
                           fontWeight: FontWeight.w700),
                     ),
                     Text(
-                      "See all",
+                        AppLocalizations.of(context)!.seeAll,
                       style: TextStyle(
                         color: dark,
                         fontSize: 18.w,
@@ -333,14 +349,14 @@ class _UserProfileState extends State<UserProfile> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Your Post List",
+                    AppLocalizations.of(context)!.yourPostList,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 17.w,
                           fontWeight: FontWeight.w700),
                     ),
                     Text(
-                      "See all",
+                      AppLocalizations.of(context)!.seeAll,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 13.w,

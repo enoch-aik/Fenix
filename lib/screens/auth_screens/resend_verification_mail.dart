@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 
 import '../../controller/account_controller.dart';
 import '../onboarding/constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ResendVerificationMail extends StatelessWidget {
 
@@ -43,21 +44,17 @@ class ResendVerificationMail extends StatelessWidget {
                             ),
                             kSpacing,
 
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Resend Verification Mail",
-                                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                                      fontSize: 21,
-                                      shadows: [
-                                        Shadow(color: Colors.black.withOpacity(0.25), offset: Offset(0,1), blurRadius: 4)
-                                      ]
-                                  ),),
-                              ],
-                            ),
+                            Text(AppLocalizations.of(context)!.resendVerificationMail,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                  fontSize: 21,
+                                  shadows: [
+                                    Shadow(color: Colors.black.withOpacity(0.25), offset: Offset(0,1), blurRadius: 4)
+                                  ]
+                              ),),
                             kSpacing, kSpacing, kSpacing,
 
-                            TextFieldWidget(hint: "Enter Your Email",
+                            TextFieldWidget(hint: AppLocalizations.of(context)!.enterMail,
                             textController: _accountController.email,),
 
                           ],
@@ -70,7 +67,7 @@ class ResendVerificationMail extends StatelessWidget {
                               _accountController.resendVerificationEmail(_accountController.email.text);
                             }
                           },
-                          child: ButtonWidget(title: "Send"),
+                          child: ButtonWidget(title: AppLocalizations.of(context)!.send),
                         ),
 
                       ],

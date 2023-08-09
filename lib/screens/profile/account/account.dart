@@ -15,6 +15,8 @@ import '../edit_profile.dart';
 import 'account_info.dart';
 import 'login_and_security.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class Account extends StatelessWidget {
    Account({Key? key}) : super(key: key);
 
@@ -52,10 +54,10 @@ class Account extends StatelessWidget {
                 await SharedPreferences.getInstance();
                 refreshToken = prefs.getString('refreshToken');
                 CustomDialogs.showNoticeDialog(
-                    message: "Please don't leave 😭",
+                    message: "${AppLocalizations.of(context)!.pleaseDontLeave} 😭",
                     image: "assets/images/icons/logout.png",
-                    closeText: 'Cancel',
-                    okText: 'Confirm',
+                    closeText: AppLocalizations.of(context)!.cancel,
+                    okText: AppLocalizations.of(context)!.confirm,
                     onClick: () {
                       _accountController.signOut(refreshToken);
                     });
@@ -93,7 +95,7 @@ class Account extends StatelessWidget {
                backArrow(),
 
                 Text(
-                  "Your Account",
+                  AppLocalizations.of(context)!.yourAccount,
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.w,
@@ -112,25 +114,25 @@ class Account extends StatelessWidget {
             children: [
               const Text('Account Settings'),
               smallSpace(),
-              accountContainer('Your Account Information', onTap: () {
+              accountContainer(AppLocalizations.of(context)!.yourAccountInfo, onTap: () {
                 Get.to(() => AccountInfo());
               }),
               tinySpace(),
-              accountContainer('Login & Security', onTap: () {
+              accountContainer(AppLocalizations.of(context)!.loginSecurity, onTap: () {
                 Get.to(() => LoginAndSecurity());
               }),
               tinySpace(),
-              accountContainer('Contact Us', onTap: (){
+              accountContainer(AppLocalizations.of(context)!.contactUs, onTap: (){
                 Get.to(() => ContactUs());
               }),
               mediumSpace(),
               const Text('Payment Settings'),
               smallSpace(),
-              accountContainer('Your Payments'),
+              accountContainer(AppLocalizations.of(context)!.yourPayments),
               tinySpace(),
-              accountContainer('Your Gift Card'),
+              accountContainer(AppLocalizations.of(context)!.yourGiftCard),
               tinySpace(),
-              accountContainer('Fenix Card'),
+              accountContainer(AppLocalizations.of(context)!.fenixCard),
             ],
           ))
         ],

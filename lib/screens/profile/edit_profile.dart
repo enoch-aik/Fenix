@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 
 import '../../helpers/image_picker.dart';
 import '../../theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditProfile extends StatefulWidget {
   EditProfile({Key? key}) : super(key: key);
@@ -67,7 +68,7 @@ class _EditProfileState extends State<EditProfile> {
       phoneController.text = user.mobileNumber.toString();
       countryController.text = user.country.toString();
       gender = user.gender.toString();
-      profileImage = user.profileImage.toString();
+      profileImage = user.pictureUrl.toString();
     }
   }
 
@@ -113,7 +114,7 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                 ),
                 Text(
-                  "Edit",
+                  AppLocalizations.of(context)!.edit,
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.w,
@@ -127,10 +128,10 @@ class _EditProfileState extends State<EditProfile> {
             ),
           ),
           Expanded(
-            child: ListView(
-              padding: EdgeInsets.symmetric(horizontal: 17.w),
-              children: [
-                Column(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 17.w),
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Form(
@@ -168,7 +169,7 @@ class _EditProfileState extends State<EditProfile> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "Choose a photo",
+                                      AppLocalizations.of(context)!.chooseAPhoto,
                                       style: TextStyle(
                                         fontSize: 13.w,
                                         color: dark.withOpacity(0.3),
@@ -187,7 +188,7 @@ class _EditProfileState extends State<EditProfile> {
                           ),
                           kSpacing,
                           TextFieldWidget(
-                            hint: "First Name",
+                            hint: AppLocalizations.of(context)!.firstName,
                             enabled: false,
                             textController: firstNameController,
                             validator: (value) =>
@@ -195,7 +196,7 @@ class _EditProfileState extends State<EditProfile> {
                           ),
                           kSpacing,
                           TextFieldWidget(
-                            hint: "Last Name",
+                            hint: AppLocalizations.of(context)!.lastName,
                             enabled: false,
                             textController: lastNameController,
                             validator: (value) =>
@@ -203,7 +204,7 @@ class _EditProfileState extends State<EditProfile> {
                           ),
                           kSpacing,
                           TextFieldWidget(
-                            hint: "Email",
+                            hint: AppLocalizations.of(context)!.email,
                             enabled: false,
                             textController: emailController,
                             validator: (value) =>
@@ -219,7 +220,7 @@ class _EditProfileState extends State<EditProfile> {
                           kSpacing,
                           TextFieldWidget(
                               hint: "Phone Number",
-                              keyboardType: TextInputType.number,
+                              keyboardType: TextInputType.numberWithOptions(signed: true),
                               textController: phoneController),
                           kSpacing,
                           TextFieldWidget(
@@ -251,14 +252,14 @@ class _EditProfileState extends State<EditProfile> {
                           InkWell(
                               onTap: () {
                                 if (_formKey.currentState!.validate()) {
-                                  // _userController.updateProfile(
-                                  //     _userController.getToken(),
-                                  //     username: userNameController.text,
-                                  //     phoneNumber: phoneController.text,
-                                  //     gender: gender,
-                                  //     address: addressController.text,
-                                  //     country: countryController.text,
-                                  //     city: cityController.text);
+                                  _userController.updateProfile(
+                                      _userController.getToken(),
+                                      username: userNameController.text,
+                                      phoneNumber: phoneController.text,
+                                      gender: gender,
+                                      address: addressController.text,
+                                      country: countryController.text,
+                                      city: cityController.text);
 
                                   if (_image != null) {
                                     _userController.uploadProfilePic(
@@ -277,7 +278,7 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
           ),
         ],

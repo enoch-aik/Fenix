@@ -44,6 +44,11 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
 
   bool useBackgroundImage = false;
 
+  File? _image;
+  String profileImage = '';
+
+  bool accept = false;
+
   InputBorder? border = OutlineInputBorder();
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -80,7 +85,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                       : await openVideoCamera();
                                   if (selectedImage != null) {
                                     setState(() {
-
+                                      _image = selectedImage;
                                     });
                                   }
                                 },
@@ -119,7 +124,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                                       : await openVideoGallery();
                                   if (selectedImage != null) {
                                     setState(() {
-
+                                      _image = selectedImage;
                                     });
                                   }
                                 },
@@ -211,8 +216,8 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                             : Icon(Icons.arrow_back,  color: dark, size: 29.w,),
                       ),
 
-                      Text("Choose a Banner",
-                        style: GoogleFonts.roboto(color: dark),),
+                      Text("Choose a ${(widget.plan == "Top Banner") ? "banner" : "product"}",
+                        style: GoogleFonts.roboto(color: dark, fontSize: 18.w),),
 
                       mediumHSpace(),
 
@@ -351,7 +356,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
 
                     mediumSpace(),
 
-                    Text("Please choose the post you want to promote",
+                    Text("Please choose the ${(widget.plan == "Top Banner") ? " banner image" : "product"} you want to promote",
                       style: GoogleFonts.roboto(color: dark, fontSize: 17.w),),
 
                     smallSpace(),
@@ -363,6 +368,13 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                       decoration: BoxDecoration(
                           color: const Color(0xFFE3EDF7),
                           borderRadius: BorderRadius.circular(16),
+                          image: _image != null
+                              ? DecorationImage(
+                              fit: BoxFit.fitWidth,
+                              image: FileImage(_image!))
+                              : const DecorationImage(
+                              fit: BoxFit.contain,
+                              image: AssetImage('')),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey.withOpacity(0.2),
@@ -379,7 +391,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                           ]
                     ),
                       child: Center(
-                        child: Text("Choose Post",
+                        child: _image != null ? Text("") : Text("Choose ${(widget.plan == "Top Banner") ? "Image" : "Post"}",
                           style: GoogleFonts.roboto(color: light, fontSize: 15.w, fontWeight: FontWeight.w400),),
                       ),
                     ),
@@ -395,7 +407,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                             color: blue.withOpacity(0.15),
                             borderRadius: BorderRadius.circular(10.w),
                           ),
-                          child: Text("Upload Post or Image",
+                          child: Text("${(widget.plan == "Top Banner") ? "Upload Image" : "Choose Post"}",
                             style: GoogleFonts.aBeeZee(
                                 fontSize: 16.w,
                                 color: blue,
@@ -419,11 +431,15 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                             borderRadius: BorderRadius.circular(4.w),
                           ),
                           child: Checkbox(
-                            value: true,
+                            value: accept,
                             checkColor: blue,
                             side: BorderSide.none,
                             activeColor: Colors.transparent,
-                            onChanged: (v) {},
+                            onChanged: (v) {
+                              setState(() {
+                                accept = v!;
+                              });
+                            },
                           ),
                         ),
                         tinyHSpace(),
@@ -438,13 +454,13 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                 ),
                     kSpacing,
 
-                    Text("Note: please make sure the photo must be very quality and proper size. if you promote sexual or some group that against to low your account wil be ban forever",
+                    (widget.plan == "Top Banner") ? Text("Note: please make sure the photo must be high quality and proper size. if you promote any sexual content or some groups that is against the law, your account wil be ban forever",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.aBeeZee(
                           fontSize: 16.w,
                           color: red,
                           fontWeight: FontWeight.w400
-                      ),),
+                      ),) : Text(""),
 
                     kSpacing,
                     kSpacing,
@@ -461,6 +477,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                             price: widget.price,
                             target: widget.target,
                             duration: widget.duration,
+                            image: _image,
                           ));
                         },
                         child: Container(

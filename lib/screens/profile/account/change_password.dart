@@ -80,13 +80,13 @@ class ChangePassword extends StatelessWidget {
           Expanded(
               child: Form(
             key: _formKey,
-            child: ListView(
-              padding: const EdgeInsets.all(14),
-              children: [
-                verticalSpace(0.05),
-                Column(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(14),
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    verticalSpace(0.05),
                     TextFieldWidget(
                       hint: "Old Password",
                       textController: oldPassController,
@@ -128,8 +128,8 @@ class ChangePassword extends StatelessWidget {
                       },
                     )
                   ],
-                )
-              ],
+                ),
+              ),
             ),
           ))
         ],

@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
     print(token);
     print(refreshToken);
     Timer(
-        const Duration(milliseconds: 5800),
+        const Duration(milliseconds: 4600),
         () => token == null
             ? Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => const OnboardingOne()))
@@ -51,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: const Color(0xFFE4F0FA),
-        body: Image.asset('assets/images/fenixSplash.gif', fit: BoxFit.cover,height: height(),width: width(),)
+        body: Image.asset('assets/images/fenixSplash2.gif', fit: BoxFit.cover,height: height(),width: width(),)
         );
   }
 }

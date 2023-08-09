@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:get/get.dart';
 
 import 'constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ResetPassword extends StatelessWidget {
 
@@ -37,26 +38,22 @@ class ResetPassword extends StatelessWidget {
                             ),
                             kSpacing,
 
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.lock, color: Color(0xFF2A3750),),
-                                Text("Reset Password",
-                                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                                      fontSize: 21,
-                                      shadows: [
-                                        Shadow(color: Colors.black.withOpacity(0.25), offset: Offset(0,1), blurRadius: 4)
-                                      ]
-                                  ),),
-                              ],
-                            ),
+                            Icon(Icons.lock, color: Color(0xFF2A3750),),
+                            Text(AppLocalizations.of(context)!.resetPassword,
+                              style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                  fontSize: 21,
+                                  shadows: [
+                                    Shadow(color: Colors.black.withOpacity(0.25), offset: Offset(0,1), blurRadius: 4)
+                                  ]
+                              ),),
+
                             kSpacing, kSpacing, kSpacing,
-                            TextFieldWidget(hint: "Enter Your Email",),
+                            TextFieldWidget(hint: AppLocalizations.of(context)!.enterMail,),
 
                             kSpacing,
-                            TextFieldWidget(hint: "First Name",),
+                            TextFieldWidget(hint: AppLocalizations.of(context)!.firstName,),
                             kSpacing,
-                            TextFieldWidget(hint: "Last Name",),
+                            TextFieldWidget(hint: AppLocalizations.of(context)!.lastName,),
                             kSpacing, kSpacing,
                           ],
                         ),
@@ -68,9 +65,8 @@ class ResetPassword extends StatelessWidget {
                           onTap:(){
                             Get.to(() => ResetPasswordNext());
                           },
-                          child: ButtonWidget(title: "Next"),
+                          child: ButtonWidget(title: AppLocalizations.of(context)!.next),
                         ),
-
                       ],
                     ),
                   )),

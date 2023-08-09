@@ -53,7 +53,7 @@ class _DealsDetailsState extends State<DealsDetails> {
                     },
                       child: const Icon(Icons.arrow_back_ios,  color: Colors.white,)),
                   InkWell(
-                    onTap: ()=>Get.to(()=>const SearchScreen()),
+                    // onTap: ()=>Get.to(()=>const SearchScreen()),
                     child: Container(
                       height: MediaQuery.of(context).size.height * 0.050,
                       width: MediaQuery.of(context).size.width * 0.85,

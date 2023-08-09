@@ -13,9 +13,11 @@ import '../../onboarding/constants.dart';
 
 class Plans extends StatelessWidget {
   String? type;
-  Map? planDetails;
+  String? planType;
+  String? planTarget;
+  List? planDetails;
 
-  Plans({Key? key, this.type, this.planDetails}) : super(key: key);
+  Plans({Key? key, this.type, this.planDetails, this.planType, this.planTarget}) : super(key: key);
 
 
   @override
@@ -59,9 +61,9 @@ class Plans extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      planDetails!["icon"],
+                      // planDetails!["icon"],
                       tinyH5Space(),
-                      Text(type!,
+                      Text(type!.toUpperCase(),
                       style: GoogleFonts.roboto(
                           fontSize: 15.w,
                           color: dark,
@@ -90,12 +92,11 @@ class Plans extends StatelessWidget {
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (BuildContext ctx, index) {
                         return PlanWidget(
-                          icon: planDetails!["icon"],
-                          title: planDetails!['type'],
-                          plan: planDetails!['plan'],
-                          target: planDetails!['target'],
-                          price: planDetails!['price'][index],
-                          duration: planDetails!['duration'][index],
+                          title: planType!,
+                          plan: planDetails![index]['type'],
+                          target: planTarget!,
+                          price: planDetails![index]['price'].toString(),
+                          duration: planDetails![index]['validity'].toString(),
                         );
                       }),
                 ],

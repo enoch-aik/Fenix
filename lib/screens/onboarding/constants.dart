@@ -19,10 +19,11 @@ const Color darkText = Color(0xff7F8489);
 const Color lightText = Color(0xffFDFDFD);
 const Color kBlueColor = Color(0xff0081C9);
 
-Widget backButton = Image.asset("assets/images/backButton.png");
+Widget backButton = Image.asset("assets/images/backButton.png", scale: 5.h,);
 Widget backButtonTwo = Image.asset("assets/images/backButton2.png");
 Widget backButtonThree = Image.asset("assets/images/backButton3.png");
-Widget forwardButton = Image.asset("assets/images/forwardButton.png");
+Widget forwardButton = Image.asset("assets/images/forwardButton.png", scale: 5.h,);
+
 
 
 LinearGradient gradient(a,b) {

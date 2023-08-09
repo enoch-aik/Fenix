@@ -10,6 +10,8 @@ import 'package:intl/intl.dart';
 import '../../controller/user_controller.dart';
 import '../onboarding/constants.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class Messages extends StatefulWidget {
   const Messages({Key? key}) : super(key: key);
 
@@ -204,21 +206,29 @@ class _MessagesState extends State<Messages> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 backArrow(),
-                                Text('Edit',
-                                    style: TextStyle(
-                                        color: white, fontSize: 22.w)),
+                                // Text('Edit',
+                                //     style: TextStyle(
+                                //         color: white, fontSize: 22.w)),
                               ],
                             ),
                           ),
-                          Image.asset(
-                            'assets/images/icons/Ellipse 1.png',
-                            height: 128,
-                            width: 128,
+                          Container(
+                            height: 128.w,
+                            width: 128.w,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: _userController.user!.pictureUrl != null
+                                    ? DecorationImage(
+                                  fit: BoxFit.scaleDown,
+                                  image: NetworkImage(_userController.user!.pictureUrl!),)
+                                    : const DecorationImage(
+                                    fit: BoxFit.scaleDown,
+                                    image: AssetImage(
+                                        'assets/images/icons/Ellipse 1.png'))),
                           ),
                           smallSpace(),
-                          const Center(
-                              child: Text(
-                            'Khasan Akmalov',
+                           Center(
+                              child: Text("${_userController.user!.firstName!} ${_userController.user!.lastName!}",
                             style: TextStyle(color: Colors.white),
                           )),
                           verticalSpace(0.08),
@@ -235,13 +245,13 @@ class _MessagesState extends State<Messages> {
                                 )),
                               )),
                           mediumSpace(),
-                          userDetail('First Name:', 'Barry'),
+                          userDetail('First Name:', "${_userController.user!.firstName!}"),
                           smallSpace(),
-                          userDetail('Last Name:', 'Manchez'),
+                          userDetail('Last Name:', "${_userController.user!.lastName!}"),
                           smallSpace(),
-                          userDetail('Phone Number:', '+(988) 97 7712002'),
+                          userDetail('Phone Number:', "${_userController.user!.mobileNumber!}"),
                           smallSpace(),
-                          userDetail('Email:', 'barrymachez@gmail.com'),
+                          userDetail('Email:', "${_userController.user!.email!}"),
                         ],
                       ),
                     )),

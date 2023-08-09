@@ -7,6 +7,7 @@ import 'package:fenix/screens/onboarding/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignUp extends StatelessWidget {
   SignUp({Key? key}) : super(key: key);
@@ -62,8 +63,7 @@ class SignUp extends StatelessWidget {
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
-                            Text(
-                              "Create New Account",
+                            Text(AppLocalizations.of(context)!.createNewAccount,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1!
@@ -73,21 +73,21 @@ class SignUp extends StatelessWidget {
                             kSpacing,
                             kSpacing,
                             TextFieldWidget(
-                              hint: "First Name",
+                              hint: AppLocalizations.of(context)!.firstName,
                               textController: _accountController.firstName,
                               validator: (value) =>
                                   UsernameValidator.validate(value!),
                             ),
                             kSpacing,
                             TextFieldWidget(
-                              hint: "Last Name",
+                              hint: AppLocalizations.of(context)!.lastName,
                               textController: _accountController.lastName,
                               validator: (value) =>
                                   UsernameValidator.validate(value!),
                             ),
                             kSpacing,
                             TextFieldWidget(
-                              hint: "Email",
+                              hint: AppLocalizations.of(context)!.email,
                               textController: _accountController.email,
                               validator: (value) =>
                                   EmailValidator.validate(value!),
@@ -118,14 +118,14 @@ class SignUp extends StatelessWidget {
                             // ),
                             kSpacing,
                             TextFieldWidget(
-                              hint: "Password",
+                              hint: AppLocalizations.of(context)!.password,
                               textController: _accountController.password,
                               validator: (value) =>
                                   PasswordValidator.validate(value!),
                             ),
                             kSpacing,
                             TextFieldWidget(
-                                hint: "Re-enter Password",
+                                hint: AppLocalizations.of(context)!.reEnterPassword,
                                 validator: (value) {
                                   if (value != _accountController.password.text) {
                                     return "Password does not match";
@@ -250,7 +250,7 @@ class SignUp extends StatelessWidget {
                                   }
                                   // Get.to(() => Agreement());
                                 },
-                                child: ButtonWidget(title: "Next")),
+                                child: ButtonWidget(title: AppLocalizations.of(context)!.next)),
                             verticalSpace(0.04),
                             InkWell(
                               onTap: () {

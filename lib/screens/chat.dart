@@ -35,8 +35,10 @@ class Chat extends StatefulWidget {
 class ChatState extends State<Chat> {
   final TextEditingController _messageController = TextEditingController();
   UserController userController = Get.find();
-  GroupedItemScrollController _groupedItemScrollController =
+  final GroupedItemScrollController _groupedItemScrollController =
       GroupedItemScrollController();
+  final ChatController _chatController = Get.find();
+
   String token = '';
   String userId = '';
   String userName = '';
@@ -44,7 +46,6 @@ class ChatState extends State<Chat> {
   String roomId = '';
   bool isLoadingChat = true;
   IO.Socket? socket;
-  List chats = [];
 
   void _sendMessage() {
     String messageText = _messageController.text.trim();
@@ -56,7 +57,15 @@ class ChatState extends State<Chat> {
       socket!.emit('message', messagePost);
       print('message');
 
-      socket!.on('message', (data) => print('sent --- $data'));
+
+      socket!.on('message', (data) {
+        print('sent --- $data');
+        print(_chatController.chats);
+        _chatController.getchatList.insert(0, data);
+        _chatController.update();
+        _groupedItemScrollController.scrollTo(index: _chatController.getchatList.length , duration: Duration(microseconds: 1));
+
+      });
       getChat();
     }
   }
@@ -65,6 +74,23 @@ class ChatState extends State<Chat> {
     socket!.emit('join-room', []);
     print('join');
     socket!.on('join-room', (data) => print('==> join $data'));
+  }
+
+   void updateMessageList(msg) {
+
+    print("HERE WE GOOOOOOOOOOOOOOOOOOOO");
+
+    _chatController.getchatList.insert(0, msg);
+    // _chatController.isUpdateMessage = true;
+
+    _chatController.update();
+    // print(_chatController.getchatList[_chatController.getchatList.length -1]);
+     _groupedItemScrollController.scrollTo(index: _chatController.getchatList.length , duration: Duration(microseconds: 1));
+
+     // Future.delayed(const Duration(milliseconds: 2), () {
+    //   _chatController.isUpdateMessage = false;
+    // });
+
   }
 
   @override
@@ -85,6 +111,7 @@ class ChatState extends State<Chat> {
       if (roomId.isNotEmpty) {
         timer.cancel();
         initSocket(roomId);
+        _groupedItemScrollController.scrollTo(index: _chatController.chats.length , duration: Duration(microseconds: 1));
       }
     });
   }
@@ -100,16 +127,17 @@ class ChatState extends State<Chat> {
 
   getVendorChats(vendorId) {
     // isLoadingChat = true;
-
     ChatServices.getVendorChats((status, response) {
       isLoadingChat = false;
 
       if (status) {
-        chats = response['data']['messages'];
+        _chatController.chats.value = response['data']['messages'];
         roomId = response['data']['chatId'];
         setState(() {});
+        _chatController.getchatList = _chatController.chats;
+        // _groupedItemScrollController.scrollTo(index: _chatController.chats.length , duration: Duration(microseconds: 1));
       } else {
-        chats = [];
+        _chatController.chats.value = [];
         print('Chat Error - $response');
       }
     }, token, vendorId);
@@ -122,11 +150,13 @@ class ChatState extends State<Chat> {
       isLoadingChat = false;
 
       if (status) {
-        chats = response['data']['messages'];
+        _chatController.chats.value = response['data']['messages'];
         roomId = response['data']['chatId'];
         setState(() {});
+        _chatController.getchatList = _chatController.chats;
+        // _groupedItemScrollController.scrollTo(index: _chatController.chats.length , duration: Duration(microseconds: 1));
       } else {
-        chats = [];
+        _chatController.chats.value = [];
         print('Chat Error - $response');
       }
     }, token, id);
@@ -179,80 +209,91 @@ class ChatState extends State<Chat> {
       Scaffold(body:
       // chatBubbles(), bottomNavigationBar: textBox()
 
-        Container(
-          decoration: BoxDecoration(
-              color: const Color(0xFF1F4167),
-              gradient:
-                  gradient(const Color(0xFF1F4167), const Color(0xFF0777FB))),
-          child: SafeArea(
-            bottom: false,
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              alignment: Alignment.centerLeft,
+      GetBuilder(
+          builder: (ChatController controller){
+            return  Container(
               decoration: BoxDecoration(
-                  borderRadius:
-                      const BorderRadius.vertical(top: Radius.circular(50)),
                   color: const Color(0xFF1F4167),
                   gradient:
+                  gradient(const Color(0xFF1F4167), const Color(0xFF0777FB))),
+              child: SafeArea(
+                bottom: false,
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  alignment: Alignment.centerLeft,
+                  decoration: BoxDecoration(
+                      borderRadius:
+                      const BorderRadius.vertical(top: Radius.circular(50)),
+                      color: const Color(0xFF1F4167),
+                      gradient:
                       gradient(const Color(0xFF000000), const Color(0xFF182845))),
-              child: Column(
-                children: [
-                  mediumSpace(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            socket!.disconnect();
-                            socket!.close();
-                            Get.back();
-                          },
-                          child: const Icon(
-                            Icons.arrow_back,
-                            color: white,
-                          ),
+                  child: Column(
+                    children: [
+                      mediumSpace(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                socket!.disconnect();
+                                socket!.close();
+                                Get.back();
+                              },
+                              child: const Icon(
+                                Icons.arrow_back,
+                                color: white,
+                              ),
+                            ),
+                            Expanded(
+                              child: Center(
+                                child: isLoadingChat
+                                    ? Text(
+                                  userId,
+                                  softWrap: false,
+                                  style: const TextStyle(color: white),
+                                )
+                                    : Text(
+                                  widget.name ?? recipient,
+                                  softWrap: false,
+                                  style: const TextStyle(color: white),
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: (){
+                                print(_chatController.chats.value[_chatController.chats.length -1]);
+                                print(_chatController.getchatList[_chatController.getchatList.length -1]);
+                              },
+                              child: Image.asset(
+                                'assets/images/icons/Ellipse 1.png',
+                                height: 40,
+                                width: 40,
+                              ),
+                            ),
+                          ],
                         ),
-                        Expanded(
-                          child: Center(
-                            child: isLoadingChat
-                                ? Text(
-                                    userId,
-                                    softWrap: false,
-                                    style: const TextStyle(color: white),
-                                  )
-                                : Text(
-                                    widget.name ?? recipient,
-                                    softWrap: false,
-                                    style: const TextStyle(color: white),
-                                  ),
-                          ),
-                        ),
-                        Image.asset(
-                          'assets/images/icons/Ellipse 1.png',
-                          height: 40,
-                          width: 40,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: isLoadingChat
-                        ? const Center(child: CircularProgressIndicator())
-                        : Column(
-                            children: [
-                              Expanded(child: chatBubbles()),
+                      ),
+                      tinySpace(),
+                      Expanded(
+                        child: isLoadingChat
+                            ? const Center(child: CircularProgressIndicator())
+                            : Column(
+                          children: [
+                            Expanded(child: chatBubbles()),
 
-                              textBox()
-                            ],
-                          ),
+                            textBox()
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
-        ),
+            );
+          }
+      ),
         );
   }
 
@@ -267,20 +308,24 @@ class ChatState extends State<Chat> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-                decoration:
-                    const BoxDecoration(shape: BoxShape.circle, color: white),
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Icon(Icons.camera_alt_outlined, size: 20),
-                )),
-            tinyHSpace(),
+            // Container(
+            //     decoration:
+            //         const BoxDecoration(shape: BoxShape.circle, color: white),
+            //     child: const Padding(
+            //       padding: EdgeInsets.all(8.0),
+            //       child: Icon(Icons.camera_alt_outlined, size: 20),
+            //     )),
+            // tinyHSpace(),
             Expanded(
               child: TextFormField(
                 controller: _messageController,
                 onFieldSubmitted: (v) {
-                  _sendMessage();
+                  // _sendMessage();
                 },
+                style: GoogleFonts.roboto(
+                    fontSize: 15.w,
+                    fontWeight: FontWeight.w400
+                ),
                 decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 15.w),
                     suffixIcon: IconButton(
@@ -294,13 +339,8 @@ class ChatState extends State<Chat> {
                         borderRadius: BorderRadius.circular(30),
                         borderSide: const BorderSide(color: white))),
               ),
+
             ),
-            tinyH5Space(),
-            const Icon(
-              Icons.mic_none_outlined,
-              color: white,
-              size: 35,
-            )
           ],
         ),
       ),
@@ -309,14 +349,15 @@ class ChatState extends State<Chat> {
 
   StickyGroupedListView<dynamic, String> chatBubbles() {
     return StickyGroupedListView<dynamic, String>(
-      elements: chats,
-      // physics: const NeverScrollableScrollPhysics(),
+      elements: _chatController.getchatList,
+      physics: const ClampingScrollPhysics(),
       order: StickyGroupedListOrder.ASC,
       groupBy: (item) => DateFormat('yyyy-MM-dd')
           .format(DateTime.parse(item['createdAt'].toString()))
           .toString(),
       floatingHeader: true,
-      initialScrollIndex: chats.length,
+      itemScrollController: _groupedItemScrollController,
+      initialScrollIndex: _chatController.getchatList.length,
       itemComparator: (dynamic element1, dynamic element2) =>
           element1['createdAt'].compareTo(element2['createdAt']),
       groupSeparatorBuilder: (dynamic element) => Padding(
@@ -335,7 +376,7 @@ class ChatState extends State<Chat> {
         ),
       ),
       itemBuilder: (context, dynamic message) {
-        return (message['sender'] == userName)
+        return (message['sender'] == userName || message['senderId'] == userId)
             ? outgoing('${message['text']}', message['createdAt'])
             : incoming('${message['text']}', message['createdAt']);
       },

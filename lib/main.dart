@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'controller/account_controller.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
 
@@ -21,6 +22,8 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       builder: (context, child) => GetMaterialApp(
         debugShowCheckedModeBanner: false,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         title: 'Fenix',
         theme: theme,
         onInit: () {

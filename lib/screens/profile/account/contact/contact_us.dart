@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 
 import '../../../onboarding/constants.dart';
 import '../../edit_profile.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ContactUs extends StatelessWidget {
   const ContactUs({Key? key}) : super(key: key);
 
@@ -56,7 +56,7 @@ class ContactUs extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Contact Us",
+                  AppLocalizations.of(context)!.contactUs,
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.w,
@@ -75,16 +75,16 @@ class ContactUs extends StatelessWidget {
                 padding: const EdgeInsets.all(14),
                 children: [
 
-                  accountContainer('Live Chat Support', Icons.support_agent, onTap: () {
+                  accountContainer(AppLocalizations.of(context)!.liveChatSupport, Icons.support_agent, onTap: () {
                     Get.to(() => LiveChatScreen());
                   }),
 
                   tinySpace(),
-                  accountContainer('Business and Deals', FontAwesomeIcons.moneyBill, onTap: () {
+                  accountContainer(AppLocalizations.of(context)!.businessDeals, FontAwesomeIcons.moneyBill, onTap: () {
 
                   }),
                   tinySpace(),
-                  accountContainer('Report Issue', Icons.report_gmailerrorred_outlined,onTap: () {
+                  accountContainer(AppLocalizations.of(context)!.reportIssue, Icons.report_gmailerrorred_outlined,onTap: () {
                     Get.to(() => ReportIssue());
                   }),
 

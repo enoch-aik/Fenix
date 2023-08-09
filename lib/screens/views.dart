@@ -12,7 +12,9 @@ import 'package:fenix/screens/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
+import '../controller/product_controller.dart';
 import '../theme.dart';
 import 'data_Screen/chart_Screen.dart';
 
@@ -28,6 +30,8 @@ class _HomeState extends State<Views> with TickerProviderStateMixin {
   final UserController userController = Get.put(UserController());
   TabController? _tabController;
 
+  final ProductController _productController = Get.put(ProductController());
+
   @override
   void initState() {
     // TODO: implement initState
@@ -42,6 +46,9 @@ class _HomeState extends State<Views> with TickerProviderStateMixin {
 
   void _onItemTapped(int index) {
     setState(() {
+      if(index == 1 &&  _productController.isSearchEnabled.value == true ){
+        _productController.isSearchEnabled.value = false;
+      }
       _tabController!.index = _selectedIndex = index;
     });
   }
@@ -175,8 +182,8 @@ class MenuTitle extends StatelessWidget {
             Icon(icon,size: 24.w, color: color),
             SizedBox(width: 10.w,),
             Text(title,
-            style:TextStyle(
-              fontSize: 19.w,
+            style: GoogleFonts.roboto(
+              fontSize: 18.w,
               fontWeight: FontWeight.w600,
                 color: color
             ),),

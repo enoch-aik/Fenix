@@ -1,3 +1,4 @@
+import 'package:fenix/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
@@ -21,6 +22,25 @@ class Loader extends StatelessWidget {
               crossAxisSpacing: 0),
           itemCount: 6,
           itemBuilder: (context, index) => const BannerPlaceholder(),
+        ));
+  }
+}
+
+class LineLoader extends StatelessWidget {
+  const LineLoader({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+        baseColor: Colors.yellow.withOpacity(0.8),
+        highlightColor: Colors.red.withOpacity(0.7),
+        enabled: true,
+        child: Container(
+          height: 5.w,
+          width: width(),
+          decoration:  const BoxDecoration(
+            color: Colors.yellow,
+          ),
         ));
   }
 }

@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:fenix/controller/payment_controller.dart';
+import 'package:fenix/controller/user_controller.dart';
 import 'package:fenix/helpers/widgets.dart';
 import 'package:fenix/screens/onboarding/constants.dart';
 import 'package:fenix/screens/profile/wallets/widgets.dart';
@@ -21,24 +23,28 @@ class AddCard extends StatefulWidget {
 }
 
 class _AddCardState extends State<AddCard> {
-  String cardNumber = '';
 
-  String expiryDate = '';
 
-  String cardHolderName = '';
+  final cardNumberController = TextEditingController();
+  final expiryMonthController = TextEditingController();
+  final expiryYearController = TextEditingController();
 
-  String cvvCode = '';
-
-  bool isCvvFocused = false;
-
-  bool useGlassMorphism = false;
-
-  bool useBackgroundImage = false;
+  var id = '';
 
   InputBorder? border = OutlineInputBorder();
 
+  final PaymentController _paymentController = Get.find();
+  final UserController _userController =  Get.find();
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    id = _userController.user!.id.toString();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +119,7 @@ class _AddCardState extends State<AddCard> {
                 child: Column(
                   children: [
 
-                    PaymentCardWidget(),
+                    PaymentCardWidget(number: "dd",),
 
                     mediumSpace(),
 
@@ -122,16 +128,17 @@ class _AddCardState extends State<AddCard> {
 
                     smallSpace(),
 
-                    PaymentTextFieldWidget(
-                      label: "First Name",
-                      keyboardType: TextInputType.text,
-                    ),
-                    PaymentTextFieldWidget(
-                      label: "Last Name",
-                      keyboardType: TextInputType.text,
-                    ),
+                    // PaymentTextFieldWidget(
+                    //   label: "First Name",
+                    //   keyboardType: TextInputType.text,
+                    // ),
+                    // PaymentTextFieldWidget(
+                    //   label: "Last Name",
+                    //   keyboardType: TextInputType.text,
+                    // ),
                     PaymentTextFieldWidget(
                       label: "Card Number",
+                      textController: cardNumberController,
                       keyboardType: TextInputType.number,
                     ),
                     Row(
@@ -140,7 +147,13 @@ class _AddCardState extends State<AddCard> {
                           width: width() * 0.2,
                           child: PaymentTextFieldWidget(
                             label: "07",
+                            textController: expiryMonthController,
                             keyboardType: TextInputType.number,
+                            onChanged: (value){
+                              if(value.length == 2){
+                                FocusScope.of(context).nextFocus();
+                              }
+                            },
                           ),
                         ),
                         mediumHSpace(),
@@ -150,6 +163,7 @@ class _AddCardState extends State<AddCard> {
                             width: width() * 0.2,
                             child: PaymentTextFieldWidget(
                               label: "23",
+                              textController: expiryYearController,
                               keyboardType: TextInputType.number,
                             ),
                           ),
@@ -157,126 +171,135 @@ class _AddCardState extends State<AddCard> {
                       ],
                     ),
                     kSpacing,
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: SizedBox(
-                        width: width() * 0.2,
-                        child: PaymentTextFieldWidget(
-                          label: "CVV",
-                          keyboardType: TextInputType.number,
+                    // Align(
+                    //   alignment: Alignment.centerLeft,
+                    //   child: SizedBox(
+                    //     width: width() * 0.2,
+                    //     child: PaymentTextFieldWidget(
+                    //       label: "CVV",
+                    //       keyboardType: TextInputType.number,
+                    //     ),
+                    //   ),
+                    // ),
+
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Text("Save card to wallet",
+                    //       style: GoogleFonts.aBeeZee(
+                    //           fontSize: 20.w,
+                    //           color: dark,
+                    //           fontWeight: FontWeight.w400
+                    //       ),),
+                    //     FlutterSwitch(
+                    //       activeToggleColor: blue,
+                    //       activeColor: light,
+                    //       inactiveToggleColor: black,
+                    //       inactiveColor: light,
+                    //       valueFontSize: 25.0,
+                    //       toggleSize: 30.0,
+                    //       value: true,
+                    //       borderRadius: 30.0,
+                    //       padding: 3,
+                    //       showOnOff: false,
+                    //       onToggle: (val) {
+                    //         setState(() {
+                    //           val;
+                    //         });
+                    //       },
+                    //     ),
+                    //
+                    //   ],
+                    // ),
+                    // kSpacing,
+                    // kSpacing,
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Text("Visa Card",
+                    //       style: GoogleFonts.aBeeZee(
+                    //           fontSize: 20.w,
+                    //           color: dark,
+                    //           fontWeight: FontWeight.w400
+                    //       ),),
+                    //     FlutterSwitch(
+                    //       activeToggleColor: blue,
+                    //       activeColor: light,
+                    //       inactiveToggleColor: black,
+                    //       inactiveColor: light,
+                    //       valueFontSize: 25.0,
+                    //       toggleSize: 30.0,
+                    //       value: true,
+                    //       borderRadius: 30.0,
+                    //       padding: 3,
+                    //       showOnOff: false,
+                    //       onToggle: (val) {
+                    //         setState(() {
+                    //           val;
+                    //         });
+                    //       },
+                    //     ),
+                    //
+                    //   ],
+                    // ),
+                    //
+                    // kSpacing,
+                    // kSpacing,
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Text("Master Card",
+                    //       style: GoogleFonts.aBeeZee(
+                    //           fontSize: 20.w,
+                    //           color: dark,
+                    //           fontWeight: FontWeight.w400
+                    //       ),),
+                    //     FlutterSwitch(
+                    //       activeToggleColor: blue,
+                    //       activeColor: light,
+                    //       inactiveToggleColor: black,
+                    //       inactiveColor: light,
+                    //       valueFontSize: 25.0,
+                    //       toggleSize: 30.0,
+                    //       value: false,
+                    //       borderRadius: 30.0,
+                    //       padding: 3,
+                    //       showOnOff: false,
+                    //       onToggle: (val) {
+                    //         setState(() {
+                    //           val;
+                    //         });
+                    //       },
+                    //     ),
+                    //
+                    //   ],
+                    // ),
+
+                    InkWell(
+                      onTap: (){
+                        _paymentController.createUserCard(
+                            cardNumber: cardNumberController.text,
+                          expiryDate: expiryMonthController.text + expiryYearController.text,
+                          token: _userController.getToken(),
+                        );
+                      },
+                      child: Container(
+                        width: width() * 0.6,
+                        decoration: BoxDecoration(
+                            color: white,
+                            borderRadius: BorderRadius.circular(30.w),
+                            border: Border.all(color: black)
                         ),
-                      ),
-                    ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Save card to wallet",
-                          style: GoogleFonts.aBeeZee(
-                              fontSize: 20.w,
-                              color: dark,
-                              fontWeight: FontWeight.w400
-                          ),),
-                        FlutterSwitch(
-                          activeToggleColor: blue,
-                          activeColor: light,
-                          inactiveToggleColor: black,
-                          inactiveColor: light,
-                          valueFontSize: 25.0,
-                          toggleSize: 30.0,
-                          value: true,
-                          borderRadius: 30.0,
-                          padding: 3,
-                          showOnOff: false,
-                          onToggle: (val) {
-                            setState(() {
-                              val;
-                            });
-                          },
+                        padding: EdgeInsets.symmetric(vertical: 10.w),
+                        margin: EdgeInsets.symmetric(vertical: 50.w),
+                        child: Center(
+                          child: Text("Next",
+                            style: GoogleFonts.aBeeZee(
+                                fontSize: 18.w,
+                                color: black,
+                                fontWeight: FontWeight.w600
+                            ),),
                         ),
-
-                      ],
-                    ),
-                    kSpacing,
-                    kSpacing,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Visa Card",
-                          style: GoogleFonts.aBeeZee(
-                              fontSize: 20.w,
-                              color: dark,
-                              fontWeight: FontWeight.w400
-                          ),),
-                        FlutterSwitch(
-                          activeToggleColor: blue,
-                          activeColor: light,
-                          inactiveToggleColor: black,
-                          inactiveColor: light,
-                          valueFontSize: 25.0,
-                          toggleSize: 30.0,
-                          value: true,
-                          borderRadius: 30.0,
-                          padding: 3,
-                          showOnOff: false,
-                          onToggle: (val) {
-                            setState(() {
-                              val;
-                            });
-                          },
-                        ),
-
-                      ],
-                    ),
-
-                    kSpacing,
-                    kSpacing,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Master Card",
-                          style: GoogleFonts.aBeeZee(
-                              fontSize: 20.w,
-                              color: dark,
-                              fontWeight: FontWeight.w400
-                          ),),
-                        FlutterSwitch(
-                          activeToggleColor: blue,
-                          activeColor: light,
-                          inactiveToggleColor: black,
-                          inactiveColor: light,
-                          valueFontSize: 25.0,
-                          toggleSize: 30.0,
-                          value: false,
-                          borderRadius: 30.0,
-                          padding: 3,
-                          showOnOff: false,
-                          onToggle: (val) {
-                            setState(() {
-                              val;
-                            });
-                          },
-                        ),
-
-                      ],
-                    ),
-
-                    Container(
-                      width: width() * 0.6,
-                      decoration: BoxDecoration(
-                          color: white,
-                          borderRadius: BorderRadius.circular(30.w),
-                          border: Border.all(color: black)
-                      ),
-                      padding: EdgeInsets.symmetric(vertical: 10.w),
-                      margin: EdgeInsets.symmetric(vertical: 50.w),
-                      child: Center(
-                        child: Text("Next",
-                          style: GoogleFonts.aBeeZee(
-                              fontSize: 18.w,
-                              color: black,
-                              fontWeight: FontWeight.w600
-                          ),),
                       ),
                     )
                   ],

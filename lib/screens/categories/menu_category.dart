@@ -106,13 +106,14 @@ class _MenuCategoryState extends State<MenuCategory> {
                           Container(
                             padding: EdgeInsets.all(10.w),
                             decoration: const BoxDecoration(
-                              image: DecorationImage(image: AssetImage("assets/images/categoryCard.png"),fit: BoxFit.contain)
+                                image: DecorationImage(image: AssetImage("assets/images/menu/categorybackground.png"),fit: BoxFit.contain)
                             ),
                             child: Padding(
                               padding: EdgeInsets.all(10.w),
                               child: Image.asset("assets/images/${Category().images[index]}",fit: BoxFit.fill,),
                             ),
                           ),
+
                           Text(Category().allCategories[index]['name']),
                         ],
                       ),

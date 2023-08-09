@@ -14,6 +14,7 @@ import 'create_selling_post/create_store.dart';
 import 'create_selling_post/selling_post.dart';
 import 'edit_profile.dart';
 import 'product_list.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class StoreList extends StatelessWidget {
   const StoreList({Key? key}) : super(key: key);
@@ -90,8 +91,7 @@ class StoreList extends StatelessWidget {
                   onTap: () => Get.back(),
                   child: const Icon(Icons.arrow_back_ios, color: white),
                 ),
-                Text(
-                  "Stores",
+                Text(AppLocalizations.of(context)!.store,
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 24.w,

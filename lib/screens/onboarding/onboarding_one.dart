@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 import '../../const.dart';
 import 'onboarding_two.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnboardingOne extends StatelessWidget {
   const OnboardingOne({Key? key}) : super(key: key);
@@ -55,8 +56,8 @@ class OnboardingOne extends StatelessWidget {
                               ),
                             ],
                         ),
-                          child: const Center(
-                            child: Text("Start Fenix",
+                          child: Center(
+                            child: Text(AppLocalizations.of(context)!.startFenix,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white

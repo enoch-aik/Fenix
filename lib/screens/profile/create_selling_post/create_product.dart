@@ -17,6 +17,8 @@ import '../../../neumorph.dart';
 import '../../../theme.dart';
 import 'create_apartment.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class CreateProduct extends StatefulWidget {
   final String storeId;
   String type;
@@ -257,7 +259,7 @@ class _CreateProductState extends State<CreateProduct> {
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
-                        child: Text('Select $title',
+                        child: Text('$title',
                             style: const TextStyle(
                                 fontWeight: FontWeight.w700, fontSize: 16)))),
                 Expanded(
@@ -406,7 +408,7 @@ class _CreateProductState extends State<CreateProduct> {
                               horizontal: 15,
                               vertical:
                                   MediaQuery.of(context).size.height * 0.015),
-                          hintText: "Search Fenix",
+                          hintText: AppLocalizations.of(context)!.searchFenix,
                           hintStyle: Theme.of(context)
                               .textTheme
                               .bodyText1!
@@ -432,10 +434,10 @@ class _CreateProductState extends State<CreateProduct> {
       ),
       body: Column(
         children: [
-          const Center(
+           Center(
               child: Padding(
             padding: EdgeInsets.all(8.0),
-            child: Text('Create Selling Post',
+            child: Text(AppLocalizations.of(context)!.createSellingPost,
                 style: TextStyle(fontWeight: FontWeight.w400)),
           )),
           const Divider(thickness: 4, color: textColor),
@@ -446,9 +448,8 @@ class _CreateProductState extends State<CreateProduct> {
                 padding: EdgeInsets.symmetric(horizontal: 17.w),
                 children: [
                   kSpacing,
-                  title('Store'),
-                  smallText(
-                      'Please select the store under which the product will be created (product will be created as a person if left as default)'),
+                  title(AppLocalizations.of(context)!.store),
+                  smallText(AppLocalizations.of(context)!.storeSubText),
                   kSpacing,
                   // DropDownWidget(
                   //     list: stores,
@@ -477,7 +478,7 @@ class _CreateProductState extends State<CreateProduct> {
                       });
                     },
                     child: TextFieldWidget(
-                      hint: "Store",
+                      hint: AppLocalizations.of(context)!.store,
                       enabled: false,
                       suffix: const Icon(Icons.expand_more),
                       textController: storeController,
@@ -485,7 +486,7 @@ class _CreateProductState extends State<CreateProduct> {
                     ),
                   ),
                   kSpacing,
-                  title('Photos'),
+                  title(AppLocalizations.of(context)!.photos),
                   kSpacing,
                   images.isNotEmpty || videos.isNotEmpty
                       ? Wrap(
@@ -525,41 +526,41 @@ class _CreateProductState extends State<CreateProduct> {
                           ],
                         ),
                   kSpacing,
-                  title('Title of Product'),
+                  title(AppLocalizations.of(context)!.titleOfProduct),
                   kSpacing,
                   TextFieldWidget(
-                    hint: "Name of product",
+                    hint: AppLocalizations.of(context)!.nameOfProduct,
                     textController: nameController,
                     validator: (value) => FieldValidator.validate(value!),
                   ),
                   kSpacing,
-                  title('Item Specifics'),
+                  title(AppLocalizations.of(context)!.itemSpecifics),
 
                   kSpacing,
                   TextFieldWidget(
-                    hint: "Condition",
+                    hint: AppLocalizations.of(context)!.condition,
                     textController: conditionController,
                   ),
                   kSpacing,
                   TextFieldWidget(
-                    hint: "Quantity",
+                    hint: AppLocalizations.of(context)!.quantity,
                     textController: quantityController,
                   ),
                   kSpacing,
                   TextFieldWidget(
-                    hint: "Material",
+                    hint: AppLocalizations.of(context)!.material,
                     textController: materialController,
                   ),
 
                   kSpacing,
                   TextFieldWidget(
-                    hint: "Size",
+                    hint: AppLocalizations.of(context)!.size,
                     textController: sizeController,
                   ),
 
                   kSpacing,
                   TextFieldWidget(
-                    hint: "Feature",
+                    hint: AppLocalizations.of(context)!.feature,
                     textController: featuresController,
                   ),
                   // kSpacing,
@@ -570,12 +571,12 @@ class _CreateProductState extends State<CreateProduct> {
                   // ),
                   kSpacing,
                   TextFieldWidget(
-                    hint: "Color",
+                    hint: AppLocalizations.of(context)!.color,
                     textController: colorController,
                   ),
                   kSpacing,
                   TextFieldWidget(
-                    hint: "Storage Capacity",
+                    hint: AppLocalizations.of(context)!.storageCapacity,
                     textController: capacityController,
                   ),
                   // kSpacing,
@@ -650,7 +651,7 @@ class _CreateProductState extends State<CreateProduct> {
                       }
                     },
                     child: TextFieldWidget(
-                      hint: "Sub-Category",
+                      hint: AppLocalizations.of(context)!.subCategory,
                       textController: subcategoryController,
                       enabled: false,
                       suffix: const Icon(Icons.expand_more),
@@ -672,7 +673,7 @@ class _CreateProductState extends State<CreateProduct> {
                       }
                     },
                     child: TextFieldWidget(
-                      hint: "Brand",
+                      hint: AppLocalizations.of(context)!.brand,
                       enabled:
                           !subcategoryController.text.contains('Cellphones'),
                       textController: brandController,
@@ -689,28 +690,27 @@ class _CreateProductState extends State<CreateProduct> {
                             ['cell phones'].where((e)=>e['brand']==brandController.text).toList(),
                             'Brand', onSelect: (v) {
                           Get.back();
-setState(() {
-  modelController.text = v;
-
-});
+                          setState(() {
+                            modelController.text = v;
+                          });
                         });
                       },
                       child: TextFieldWidget(
-                        hint: "Model",
+                        hint: AppLocalizations.of(context)!.model,
                         enabled: false,
                         textController: modelController,
                       ),
                     ),
                   kSpacing,
-                  title('Description'),
+                  title(AppLocalizations.of(context)!.description),
                   kSpacing,
                   TextFieldWidget(
-                    hint: "Description",
+                    hint: AppLocalizations.of(context)!.description,
                     maxLine: 5,
                     textController: descriptionController,
                   ),
                   kSpacing,
-                  title('Price'),
+                  title(AppLocalizations.of(context)!.price),
                   kSpacing,
                   Row(
                     children: [
@@ -718,7 +718,7 @@ setState(() {
                         child: TextFieldWidget(
                             keyboardType: const TextInputType.numberWithOptions(
                                 decimal: true),
-                            hint: "Price",
+                            hint: AppLocalizations.of(context)!.price,
                             textController: priceController),
                       ),
                       smallHSpace(),
@@ -731,7 +731,7 @@ setState(() {
                     ],
                   ),
                   kSpacing,
-                  title('Discount Option'),
+                  title(AppLocalizations.of(context)!.discount),
                   kSpacing,
 
                   Row(
@@ -744,24 +744,24 @@ setState(() {
                       smallHSpace(),
                       Expanded(
                         child: TextFieldWidget(
-                            hint: "Discount",
+                            hint: AppLocalizations.of(context)!.discount,
                             textController: discountController),
                       ),
                     ],
                   ),
                   kSpacing,
-                  title('Shipping'),
+                  title(AppLocalizations.of(context)!.shipping),
                   kSpacing,
-                  check('Yes, I can Deliver the item', 'Yes'),
+                  check('${AppLocalizations.of(context)!.canDeliver}', 'Yes'),
                   tinySpace(),
-                  check('No, I can\'t Deliver the item', 'No'),
+                  check('${AppLocalizations.of(context)!.canNotDeliver}', 'No'),
                   kSpacing,
 
                   Row(
                     children: [
                       Expanded(
                         child: TextFieldWidget(
-                            hint: "Delivery Price",
+                            hint: AppLocalizations.of(context)!.deliveryPrice,
                             textController: deliveryPriceController),
                       ),
                       smallHSpace(),
@@ -776,12 +776,12 @@ setState(() {
                   kSpacing,
 
                   TextFieldWidget(
-                      hint: "Delivery Details",
+                      hint: AppLocalizations.of(context)!.deliveryDetails,
                       textController: deliveryController),
                   kSpacing,
 
                   TextFieldWidget(
-                      hint: "Delivery Location",
+                      hint: AppLocalizations.of(context)!.deliveryLocation,
                       textController: deliveryLocationController),
 
                   verticalSpace(0.02),
@@ -818,7 +818,7 @@ setState(() {
                                 'Ensure that all required fields are filled');
                           }
                         },
-                        child: ButtonWidget(title: "Next")),
+                        child: ButtonWidget(title: AppLocalizations.of(context)!.next)),
                   ),
                   verticalSpace(0.04),
                 ],

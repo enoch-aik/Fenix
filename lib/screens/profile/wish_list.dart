@@ -15,6 +15,7 @@ import '../../controller/store_controller.dart';
 import '../home/home.dart';
 import '../home/search.dart';
 import '../onboarding/constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WishList extends StatelessWidget {
   const WishList({Key? key}) : super(key: key);
@@ -53,7 +54,7 @@ class WishList extends StatelessWidget {
                   children: [
                     backArrow(),
                     InkWell(
-                      onTap: () => Get.to(() => const SearchScreen()),
+                      // onTap: () => Get.to(() => const SearchScreen()),
                       child: Container(
                         // height: MediaQuery.of(context).size.height * 0.050,
                         width: MediaQuery.of(context).size.width * 0.79,
@@ -73,7 +74,7 @@ class WishList extends StatelessWidget {
                                 horizontal: 15,
                                 vertical:
                                     MediaQuery.of(context).size.height * 0.015),
-                            hintText: "Search Fenix",
+                            hintText: AppLocalizations.of(context)!.searchFenix,
                             hintStyle: Theme.of(context)
                                 .textTheme
                                 .bodyText1!

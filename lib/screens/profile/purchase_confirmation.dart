@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:fenix/helpers/widgets.dart';
 import 'package:fenix/screens/onboarding/constants.dart';
+import 'package:fenix/screens/profile/wallets/add_new_card.dart';
 import 'package:fenix/screens/profile/wallets/widgets.dart';
 import 'package:fenix/theme.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +22,9 @@ class PurchaseConfirmation extends StatefulWidget {
   String? duration;
   String? target;
   String? price;
+  var image;
 
-  PurchaseConfirmation({Key? key, this.price, this.duration, this.plan, this.target, }) : super(key: key);
+  PurchaseConfirmation({Key? key, this.price, this.duration, this.plan, this.target, this.image }) : super(key: key);
 
   @override
   State<PurchaseConfirmation> createState() => _PurchaseConfirmationState();
@@ -401,6 +403,13 @@ class _PurchaseConfirmationState extends State<PurchaseConfirmation> {
                           decoration: BoxDecoration(
                             color: light.withOpacity(0.35),
                             borderRadius: BorderRadius.circular(10.w),
+                            image: widget.image != null
+                                ? DecorationImage(
+                                fit: BoxFit.fitWidth,
+                                image: FileImage(widget.image!))
+                                : const DecorationImage(
+                                fit: BoxFit.contain,
+                                image: AssetImage('')),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -520,22 +529,27 @@ class _PurchaseConfirmationState extends State<PurchaseConfirmation> {
 
                     Align(
                       alignment: Alignment.center,
-                      child: Container(
-                        width: width() * 0.6,
-                        decoration: BoxDecoration(
-                            color: white,
-                            borderRadius: BorderRadius.circular(30.w),
-                            border: Border.all(color: black)
-                        ),
-                        padding: EdgeInsets.symmetric(vertical: 10.w),
-                        margin: EdgeInsets.symmetric(vertical: 10.w),
-                        child: Center(
-                          child: Text("Next",
-                            style: GoogleFonts.aBeeZee(
-                                fontSize: 16.w,
-                                color: black,
-                                fontWeight: FontWeight.w600
-                            ),),
+                      child: InkWell(
+                        onTap: (){
+                          Get.to(() => AddCard());
+                        },
+                        child: Container(
+                          width: width() * 0.6,
+                          decoration: BoxDecoration(
+                              color: white,
+                              borderRadius: BorderRadius.circular(30.w),
+                              border: Border.all(color: black)
+                          ),
+                          padding: EdgeInsets.symmetric(vertical: 10.w),
+                          margin: EdgeInsets.symmetric(vertical: 10.w),
+                          child: Center(
+                            child: Text("Next",
+                              style: GoogleFonts.aBeeZee(
+                                  fontSize: 16.w,
+                                  color: black,
+                                  fontWeight: FontWeight.w600
+                              ),),
+                          ),
                         ),
                       ),
                     ),

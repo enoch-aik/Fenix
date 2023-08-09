@@ -16,6 +16,8 @@ import '../../../neumorph.dart';
 import '../../../theme.dart';
 import 'create_apartment.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class CreateCar extends StatefulWidget {
   final String storeId;
 
@@ -251,7 +253,7 @@ class _CreateCarState extends State<CreateCar> {
                               horizontal: 15,
                               vertical:
                                   MediaQuery.of(context).size.height * 0.015),
-                          hintText: "Search Fenix",
+                          hintText: AppLocalizations.of(context)!.searchFenix,
                           hintStyle: Theme.of(context)
                               .textTheme
                               .bodyText1!
@@ -277,10 +279,10 @@ class _CreateCarState extends State<CreateCar> {
       ),
       body: Column(
         children: [
-          const Center(
+           Center(
               child: Padding(
             padding: EdgeInsets.all(8.0),
-            child: Text('Create Car Listing'),
+            child: Text(AppLocalizations.of(context)!.createCarListing),
           )),
           const Divider(thickness: 4, color: textColor),
           Expanded(
@@ -290,7 +292,7 @@ class _CreateCarState extends State<CreateCar> {
                 padding: EdgeInsets.symmetric(horizontal: 17.w),
                 children: [
                   kSpacing,
-                  title('Photos'),
+                  title(AppLocalizations.of(context)!.photos),
                   kSpacing,
                   images.isNotEmpty || videos.isNotEmpty
                       ? Wrap(
@@ -330,61 +332,61 @@ class _CreateCarState extends State<CreateCar> {
                           ],
                         ),
                   kSpacing,
-                  title('Title'),
+                  title(AppLocalizations.of(context)!.title),
                   kSpacing,
                   TextFieldWidget(
-                    hint: "Name of product",
+                    hint: AppLocalizations.of(context)!.nameOfProduct,
                     textController: nameController,
                     validator: (value) => FieldValidator.validate(value!),
                   ),
                   kSpacing,
-                  title('Item Specifics'),
+                  title(AppLocalizations.of(context)!.itemSpecifics),
                   kSpacing,
-                  textTitle('Car Brand:'),
+                  textTitle('${AppLocalizations.of(context)!.carBrand}:'),
                   TextFieldWidget(
-                    hint: " Brand",
+                    hint: AppLocalizations.of(context)!.brand,
                     textController: brandController,
                   ),
                   kSpacing,
-                  textTitle('Car Model:'),
+                  textTitle('${AppLocalizations.of(context)!.carModel}:'),
                   TextFieldWidget(
-                    hint: " Model",
+                    hint: AppLocalizations.of(context)!.model,
                     textController: modelController,
                   ),
                   kSpacing,
-                  textTitle('Car Year:'),
+                  textTitle('${AppLocalizations.of(context)!.carYear}:'),
                   TextFieldWidget(
-                    hint: " Year",
+                    hint: AppLocalizations.of(context)!.year,
                     textController: yearController,
                   ),
                   kSpacing,
-                  textTitle(' Color:'),
+                  textTitle('${AppLocalizations.of(context)!.color}:'),
                   TextFieldWidget(
-                    hint: " Color",
+                    hint: AppLocalizations.of(context)!.color,
                     textController: colorController,
                     validator: (value) => FieldValidator.validate(value!),
                   ),
                   kSpacing,
-                  textTitle('Car Mileage:'),
+                  textTitle('${AppLocalizations.of(context)!.carMileage}:'),
                   TextFieldWidget(
-                    hint: "Mileage",
+                    hint: AppLocalizations.of(context)!.mileage,
                     textController: mileageController,
                   ),
                   kSpacing,
-                  textTitle('How many keys do you have? (optional)'),
+                  textTitle(AppLocalizations.of(context)!.howManyKeys),
                   TextFieldWidget(
-                    hint: "Keys",
+                    hint: AppLocalizations.of(context)!.keys,
                     textController: keyController,
                   ),
                   kSpacing,
-                  textTitle('How many seats do?'),
+                  textTitle(AppLocalizations.of(context)!.howManySeats),
                   TextFieldWidget(
-                    hint: "Seats",
+                    hint: AppLocalizations.of(context)!.seats,
                     textController: seatController,
                   ),
 
                   kSpacing,
-                  textTitle('Car has any accident'),
+                  textTitle(AppLocalizations.of(context)!.anyAccident),
 
                   Row(
                     children: [
@@ -393,7 +395,7 @@ class _CreateCarState extends State<CreateCar> {
                           children: [
                             Expanded(
                               child: TextFieldWidget(
-                                hint: "Yes",
+                                hint: AppLocalizations.of(context)!.yes,
                                 enabled: false,
                                 textController:
                                     TextEditingController(text: 'Yes'),
@@ -417,7 +419,7 @@ class _CreateCarState extends State<CreateCar> {
                           children: [
                             Expanded(
                               child: TextFieldWidget(
-                                hint: "No",
+                                hint: AppLocalizations.of(context)!.no,
                                 enabled: false,
                                 textController:
                                     TextEditingController(text: 'No'),
@@ -439,7 +441,7 @@ class _CreateCarState extends State<CreateCar> {
                   ),
                   kSpacing,
                   kSpacing,
-                  textTitle('Are you the first owner?'),
+                  textTitle(AppLocalizations.of(context)!.firstOwner),
 
                   Row(
                     children: [
@@ -448,7 +450,7 @@ class _CreateCarState extends State<CreateCar> {
                           children: [
                             Expanded(
                               child: TextFieldWidget(
-                                hint: "Yes",
+                                hint: AppLocalizations.of(context)!.yes,
                                 enabled: false,
                                 textController:
                                     TextEditingController(text: 'Yes'),
@@ -472,7 +474,7 @@ class _CreateCarState extends State<CreateCar> {
                           children: [
                             Expanded(
                               child: TextFieldWidget(
-                                hint: "No",
+                                hint: AppLocalizations.of(context)!.no,
                                 enabled: false,
                                 textController:
                                     TextEditingController(text: 'No'),
@@ -502,15 +504,15 @@ class _CreateCarState extends State<CreateCar> {
                   //   suffixIcon: const Icon(Icons.expand_more),
                   // ),
                   kSpacing,
-                  title('Description'),
+                  title(AppLocalizations.of(context)!.description),
                   kSpacing,
                   TextFieldWidget(
-                    hint: "Description",
+                    hint: AppLocalizations.of(context)!.description,
                     maxLine: 6,
                     textController: descriptionController,
                   ),
                   kSpacing,
-                  title('Price'),
+                  title(AppLocalizations.of(context)!.price),
                   kSpacing,
                   Row(
                     children: [
@@ -519,7 +521,7 @@ class _CreateCarState extends State<CreateCar> {
                         child: TextFieldWidget(
                             keyboardType: const TextInputType.numberWithOptions(
                                 decimal: true),
-                            hint: "Price",
+                            hint: AppLocalizations.of(context)!.price,
                             textController: priceController),
                       ),
                       mediumHSpace(),
@@ -590,13 +592,13 @@ class _CreateCarState extends State<CreateCar> {
                   //   ],
                   // ),
                   kSpacing,
-                  title('Shipping'),
+                  title(AppLocalizations.of(context)!.shipping),
                   kSpacing,
-                  check('Yes, I can Deliver the item', 'Yes'),
+                  check(AppLocalizations.of(context)!.canDeliver, AppLocalizations.of(context)!.yes),
                   tinySpace(),
-                  check('No, I can\'t Deliver the item', 'No'),
+                  check(AppLocalizations.of(context)!.canNotDeliver, AppLocalizations.of(context)!.no),
                   kSpacing,
-                  textTitle('Delivery Price'),
+                  textTitle(AppLocalizations.of(context)!.deliveryPrice),
 
                   Row(
                     children: [
@@ -605,7 +607,7 @@ class _CreateCarState extends State<CreateCar> {
                         child: TextFieldWidget(
                             keyboardType: const TextInputType.numberWithOptions(
                                 decimal: true),
-                            hint: "Delivery Price",
+                            hint: AppLocalizations.of(context)!.deliveryPrice,
                             textController: deliveryPriceController),
                       ),
                       mediumHSpace(),
@@ -657,18 +659,18 @@ class _CreateCarState extends State<CreateCar> {
                     ],
                   ),
 
-                  kSpacing, textTitle('Delivery Details'),
+                  kSpacing, textTitle(AppLocalizations.of(context)!.deliveryDetails),
 
                   TextFieldWidget(
-                      hint: "Delivery Details",
+                      hint: AppLocalizations.of(context)!.deliveryDetails,
                       textController: detailController),
-                  kSpacing, textTitle('Delivery Location'),
+                  kSpacing, textTitle(AppLocalizations.of(context)!.deliveryLocation),
                   TextFieldWidget(
-                      hint: "Delivery Location",
+                      hint: AppLocalizations.of(context)!.deliveryLocation,
                       textController: deliveryLocationController),
 
                   kSpacing,
-                  textTitle('Amenities'),
+                  textTitle(AppLocalizations.of(context)!.amenities),
                   tinySpace(),
                   Wrap(
                     // mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -676,25 +678,25 @@ class _CreateCarState extends State<CreateCar> {
                     runSpacing: 8,
                     children: [
                       amenitiesButton(
-                        'CD/MP3/MP4'
+                          AppLocalizations.of(context)!.cdMp3
                       ),
                       amenitiesButton(
-                        'Bluetooth',
+                        AppLocalizations.of(context)!.bluetooth,
                       ),
                       amenitiesButton(
-                        'USB Flash',
+                        AppLocalizations.of(context)!.usbFlash,
                       ),
                       amenitiesButton(
-                        'USB C',
+                        AppLocalizations.of(context)!.usbC,
                       ),
                       amenitiesButton(
-                        'Heater',
+                        AppLocalizations.of(context)!.heater,
                       ),
                       amenitiesButton(
-                        'Seat Heater',
+                        AppLocalizations.of(context)!.seatHeater,
                       ),
                       amenitiesButton(
-                        'Auto TMS',
+                        AppLocalizations.of(context)!.autoTms,
                       ),
 
                     ],
@@ -733,7 +735,7 @@ class _CreateCarState extends State<CreateCar> {
                                 'Ensure that all required fields are filled');
                           }
                         },
-                        child: ButtonWidget(title: "Next")),
+                        child: ButtonWidget(title: AppLocalizations.of(context)!.next)),
                   ),
                   verticalSpace(0.04),
                 ],

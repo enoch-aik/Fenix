@@ -38,6 +38,7 @@ class _MapState extends State<Map> {
   BitmapDescriptor? customIcon;
 
 
+
   getMarkers(){
     for(var i = 0; i < _mapController.apartmentList.length; i++){
       var item = _mapController.apartmentList[i];
@@ -50,7 +51,7 @@ class _MapState extends State<Map> {
                  _mapController.apartmentListClicked.clear();
                  _mapController.apartmentListClicked.add(item);
                  print(_mapController.apartmentListClicked);
-                 color = Colors.blue;
+                 color = Colors.red;
                });
               }),
               child: _customMarkerWidget(item['rentPrice']['month'].toString(), color )),
@@ -212,10 +213,12 @@ class _MapState extends State<Map> {
                 children: [
                   MapIcons(Icon(CustomIconsFenix.plus, color: white, size: 16.w,), black, onTap: zoomIn,),
                   MapIcons(Icon(CustomIconsFenix.minus, color: white,size: 16.w,),black, onTap: zoomOut),
-                  SizedBox(height: 30.w,),
-                  MapIcons(Icon(CustomIconsFenix.navigation, color: white,size: 16.w,), black,
+                  SizedBox(height: 65.w,),
+                  
+                  MapIcons(Icon(CustomIconsFenix.navigation, color: white,size: 16.w,), black,type: "navigation",
                       onTap: (){
                         print(_userController.userCurrentPosition!.value!.longitude);
+                        print(_userController.userCurrentPosition!.value!.latitude);
                         _mapController.googleMapController.animateCamera(
                           CameraUpdate.newCameraPosition(
                             CameraPosition(
@@ -261,14 +264,14 @@ class _MapState extends State<Map> {
                             ),
                           );
                         }) : Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10.w),
+                      padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 6.w),
                           child: Container(
                       alignment: Alignment.bottomCenter,
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.2,
                       decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(13.w),
-                            // border: Border.all(color: Color(0xFF1994F5), width: 3),
+                            border: Border.all(color: Color(0xFF1994F5), width: 3),
                             image: DecorationImage(image: AssetImage("assets/images/house.png",),fit: BoxFit.fitWidth)
                       ),
                       child: Container(
@@ -309,6 +312,7 @@ InkWell _customMarkerWidget(String text, Color color,{onTap}) {
       padding:  EdgeInsets.all(3.w),
       decoration: BoxDecoration(
           color: color,
+
           borderRadius: BorderRadius.circular(20.w),),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 3.w),
@@ -319,7 +323,7 @@ InkWell _customMarkerWidget(String text, Color color,{onTap}) {
             child: Text(text,
                 style: TextStyle(
                 fontSize: 11.w,
-                color: black,
+                color: blue,
                   fontWeight: FontWeight.bold
             ),
             )),
@@ -328,7 +332,7 @@ InkWell _customMarkerWidget(String text, Color color,{onTap}) {
   );
 }
 
-InkWell MapIcons (icon, color, {type,onTap}){
+InkWell MapIcons (icon, color, {type, onTap}){
   return InkWell(
     onTap: onTap,
     child: Container(
@@ -337,6 +341,14 @@ InkWell MapIcons (icon, color, {type,onTap}){
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: color,
+          boxShadow: (type == "navigation") ? [
+            BoxShadow(
+              color: dark.withOpacity(0.8),
+              blurRadius: 3.0,
+              spreadRadius: 0.5,
+              offset: Offset(1.0, 3.0), // shadow direction: bottom right
+            )
+          ] : [],
         ),
         child: icon
     ),

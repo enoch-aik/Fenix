@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
+import '../../const.dart';
+import '../../controller/user_controller.dart';
+import '../../neumorph.dart';
 import '../../screens/onboarding/constants.dart';
+import '../../theme.dart';
+import '../distance_calculator.dart';
 
 class RatedItemsWidget extends StatelessWidget {
    RatedItemsWidget({Key? key, this.actionText, this.apartment})
@@ -9,9 +15,13 @@ class RatedItemsWidget extends StatelessWidget {
   final String? actionText;
   var apartment;
 
+   List amenities = [];
+
+   final UserController _userController = Get.find();
+
   @override
   Widget build(BuildContext context) {
-    return apartment==null?const Text('Empty'):Container(
+    return apartment == null? const Text('Empty'):Container(
       height: 279.h,
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.only(left: 15.w, right: 15.w, bottom: 130.w),
@@ -40,7 +50,7 @@ class RatedItemsWidget extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.all(2.w),
                   child: Text(
-                    "⭐ 4.1 (1,648)",
+                    "⭐ ${(double.parse(apartment['vendor']['positiveRating'])/100) * 5} (18)",
                     style: Theme.of(context).textTheme.bodyText1!.copyWith(
                         color: Colors.white,
                         fontSize: 12.w,
@@ -51,13 +61,12 @@ class RatedItemsWidget extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: -130,
-            left: 0.5,
+            bottom: -120,
+            left: -0.5,
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                  height: 169.h,
-                  width: MediaQuery.of(context).size.width * 0.92,
+                  width: MediaQuery.of(context).size.width * 0.925,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(13.w),
                       color: Colors.transparent,
@@ -87,7 +96,7 @@ class RatedItemsWidget extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Text(
-                                "${apartment['title'] ??"Chicago,IL Des Planes 60018"}",
+                                "${apartment['title'] ?? "Chicago,IL Des Planes 60018"}",
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText1!
@@ -108,10 +117,10 @@ class RatedItemsWidget extends StatelessWidget {
                             ],
                           )),
                       Container(
-                          height: 96.h,
+
                           width: MediaQuery.of(context).size.width * 0.92,
                           padding: EdgeInsets.only(
-                              top: 12.w, left: 10.w, right: 10.w),
+                              top: 12.w, left: 10.w, right: 10.w, bottom: 12.w),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(
                                 bottomLeft: Radius.circular(13.w),
@@ -187,7 +196,12 @@ class RatedItemsWidget extends StatelessWidget {
                                         height: 7.w,
                                       ),
                                       Text(
-                                        "257km",
+                                        "${distanceInKm(
+                                          _userController.userCurrentPosition!.value.latitude,
+                                          _userController.userCurrentPosition!.value.longitude,
+                                          apartment['location']['latitude'],
+                                          apartment['location']['longitude'],
+                                        ).toString()}km",
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyText1!
@@ -247,31 +261,14 @@ class RatedItemsWidget extends StatelessWidget {
                                   SizedBox(
                                     width:
                                         MediaQuery.of(context).size.width * 0.5,
-                                    child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: List.generate(
-                                            apartment['specifics']['amenities']
-                                                .length,
-                                            (index) => Text(
-                                                  apartment['specifics']
-                                                      ['amenities'][index],
-                                                  style: const TextStyle(
-                                                      fontSize: 10,
-                                                      fontWeight:
-                                                          FontWeight.w300),
-                                                ))
-                                        // [
-                                        //   Image.asset("assets/images/icons/bathtub-outline.png"),
-                                        //   Image.asset("assets/images/icons/pool.png"),
-                                        //   Image.asset("assets/images/icons/television.png"),
-                                        //   Image.asset("assets/images/icons/billiards.png"),
-                                        //   Image.asset("assets/images/icons/car-3-plus.png"),
-                                        //   Image.asset("assets/images/icons/thermometer-plus.png"),
-                                        //   Image.asset("assets/images/icons/snowflake-thermometer.png"),
-                                        //   Image.asset("assets/images/icons/shower-head.png")
-                                        // ],
-                                        ),
+                                    child:  Wrap(
+                                      children: List.generate(
+                                          apartment['specifics']['amenities'].length,
+                                              (index) => Padding(
+                                            padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                            child: amenitiesButton(apartment['specifics']['amenities'][index]),
+                                          )),
+                                    ),
                                   ),
                                   Container(
                                     height: 28.w,
@@ -307,4 +304,9 @@ class RatedItemsWidget extends StatelessWidget {
       ),
     );
   }
+
+   Widget amenitiesButton(title) {
+     return Image.asset('assets/images/apartmentIcons/$title.png', scale: height()/28, color: amenities.contains(title) ? white : dark.withOpacity(0.7));
+   }
+
 }

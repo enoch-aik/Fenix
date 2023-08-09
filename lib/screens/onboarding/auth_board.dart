@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import '../auth_screens/create_account.dart';
 import '../auth_screens/sign_in.dart';
 import 'constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AuthBoard extends StatelessWidget {
   AuthBoard({Key? key}) : super(key: key);
@@ -71,18 +72,21 @@ class AuthBoard extends StatelessWidget {
                                               color: Colors.grey.shade200,
                                               blurRadius: 2)
                                         ]),
-                                        children: const [
+                                        children:  [
                                           TextSpan(
-                                            text: "Welcome to ",
+                                            text: AppLocalizations.of(context)!.welcomeToFenix2,
                                           ),
-                                          TextSpan(
-                                              text: "Fenix",
-                                              style: TextStyle(
-                                                  color: Colors.redAccent)),
-                                          TextSpan(
-                                            text:
-                                                "\nThe Unique and\nMulti-Functional Online Store\nin Uzbekistan.",
-                                          ),
+                                          // TextSpan(
+                                          //   text: "Welcome to ",
+                                          // ),
+                                          // TextSpan(
+                                          //     text: "Fenix",
+                                          //     style: TextStyle(
+                                          //         color: Colors.redAccent)),
+                                          // TextSpan(
+                                          //   text:
+                                          //       "\nThe Unique and\nMulti-Functional Online Store\nin Uzbekistan.",
+                                          // ),
                                         ])))),
                         Positioned(
                           top: 0,
@@ -107,7 +111,7 @@ class AuthBoard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         InkWell(
-                          child: ButtonWidget(title: "Sign In"),
+                          child: ButtonWidget(title: AppLocalizations.of(context)!.signIn),
                           onTap: () {
                             Get.to(() => SignIn());
                           },
@@ -116,13 +120,13 @@ class AuthBoard extends StatelessWidget {
                           onTap: () {
                             Get.to(() => SignUp());
                           },
-                          child: ButtonWidget(title: "Create Account"),
+                          child: ButtonWidget(title: AppLocalizations.of(context)!.createAccount),
                         ),
                         InkWell(
                           onTap: () {
                             Get.to(() => ResendVerificationMail());
                           },
-                          child: ButtonWidget(title: "Verify Account"),
+                          child: ButtonWidget(title: AppLocalizations.of(context)!.verifyAccount),
                         ),
                       ],
                     ),

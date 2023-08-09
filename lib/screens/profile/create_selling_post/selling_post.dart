@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 import '../../../theme.dart';
 import '../../onboarding/constants.dart';
 import 'create_car.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SellingPost extends StatefulWidget {
   SellingPost(
@@ -65,7 +66,7 @@ class _SellingPostState extends State<SellingPost> {
                             horizontal: 15,
                             vertical:
                                 MediaQuery.of(context).size.height * 0.015),
-                        hintText: "Search Fenix",
+                        hintText: AppLocalizations.of(context)!.searchFenix,
                         hintStyle: Theme.of(context)
                             .textTheme
                             .bodyText1!
@@ -100,7 +101,7 @@ class _SellingPostState extends State<SellingPost> {
                     apartmentType: Category().property[1]));
               },
               child: SellingPostCard(
-                title: "Apartment",
+                title: AppLocalizations.of(context)!.apartment,
                 subtitle: "Create Rent/Selling Post",
                 icon: Icon(CustomIconsFenix.apartment, size: 30.w,),
                 backgroundImage: 'assets/images/apartment 1.png',
@@ -114,7 +115,7 @@ class _SellingPostState extends State<SellingPost> {
                     apartmentType: Category().property[2]));
               },
               child: SellingPostCard(
-                title: "House",
+                title: AppLocalizations.of(context)!.house,
                 subtitle: "Create House Rent/Selling Post",
                 icon: Icon(CustomIconsFenix.house, size: 30.w,),
                 backgroundImage: 'assets/images/house.png',
@@ -129,7 +130,7 @@ class _SellingPostState extends State<SellingPost> {
                     ));
               },
               child: SellingPostCard(
-                title: "Dacha",
+                title: AppLocalizations.of(context)!.dacha,
                 subtitle: "Create Dacha Rent/Selling Post",
                 icon: Icon(CustomIconsFenix.dacha,  size: 30.w,),
                 backgroundImage: 'assets/images/house.png',
@@ -143,7 +144,7 @@ class _SellingPostState extends State<SellingPost> {
                     ));
               },
               child: SellingPostCard(
-                title: "Car",
+                title: AppLocalizations.of(context)!.car,
                 subtitle: "Sell Cars",
                 icon: Icon(FontAwesomeIcons.car, size: 25.w,),
                 backgroundImage: 'assets/images/cars.png',
@@ -158,7 +159,7 @@ class _SellingPostState extends State<SellingPost> {
                     ));
               },
               child: SellingPostCard(
-                title: "Electronics",
+                title: AppLocalizations.of(context)!.electronics,
                 subtitle: "Sell Electronics",
                 icon: Icon(Icons.tv,  size: 27.w,),
                 backgroundImage: 'assets/images/electronicslisting.png',
@@ -173,7 +174,7 @@ class _SellingPostState extends State<SellingPost> {
                 ));
               },
               child: SellingPostCard(
-                title: "Other Products",
+                title: AppLocalizations.of(context)!.others,
                 subtitle: "Sell Other Products",
                 icon: Icon(FontAwesomeIcons.cartShopping,  size: 25.w,),
                 backgroundImage: 'assets/images/clothing.png',

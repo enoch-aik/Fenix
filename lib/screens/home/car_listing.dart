@@ -65,7 +65,7 @@ class _VehicleListState extends State<VehicleList> {
               ),
               const SizedBox(width: 10),
               InkWell(
-                onTap: () => Get.to(() => const SearchScreen()),
+                // onTap: () => Get.to(() => const SearchScreen()),
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.050,
                   width: MediaQuery.of(context).size.width,

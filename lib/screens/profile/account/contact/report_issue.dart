@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 
 import '../../../onboarding/constants.dart';
 import '../../edit_profile.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ReportIssue extends StatelessWidget {
   const ReportIssue({Key? key}) : super(key: key);
 
@@ -54,7 +54,7 @@ class ReportIssue extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Report Issue",
+                  AppLocalizations.of(context)!.reportIssue,
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.w,

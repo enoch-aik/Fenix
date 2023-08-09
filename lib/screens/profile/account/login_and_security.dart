@@ -11,7 +11,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import '../../../controller/user_controller.dart';
 import '../../onboarding/constants.dart';
 import 'change_password.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class LoginAndSecurity extends StatelessWidget {
   LoginAndSecurity({Key? key}) : super(key: key);
 
@@ -68,7 +68,7 @@ class LoginAndSecurity extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Login & Security",
+                  AppLocalizations.of(context)!.loginSecurity,
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.w,
@@ -122,7 +122,7 @@ class LoginAndSecurity extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Reset Password",
+                            AppLocalizations.of(context)!.resetPassword,
                             style: TextStyle(
                               fontSize: 15.w,
                               fontWeight: FontWeight.w500,
@@ -145,8 +145,8 @@ class LoginAndSecurity extends StatelessWidget {
                         CustomDialogs.showNoticeDialog(
                             message:
                                 " By deleting your account you are also permanently all history and transaction records.\nAre you sure you want to continue?",
-                            closeText: 'Cancel',
-                            okText: 'Yes, Delete',
+                            closeText: AppLocalizations.of(context)!.cancel,
+                            okText: AppLocalizations.of(context)!.deleteAccount,
                             onClick: () {
                               Get.back();
                             });
@@ -222,7 +222,7 @@ class LoginAndSecurity extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Delete Account",
+                            AppLocalizations.of(context)!.deleteAccount,
                             style: TextStyle(
                                 fontSize: 15.w,
                                 fontWeight: FontWeight.w500,
