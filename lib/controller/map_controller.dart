@@ -18,12 +18,19 @@ class MapController extends GetxController {
 
   var isSearchingApartments = true.obs;
   var apartmentList = [].obs;
-  var apartmentListClicked = [].obs;
+  RxList apartmentListClicked = [].obs;
   var apartmentFilterList = [].obs;
+
+  Marker? selectedMarker;
 
   String googleApikey = "AIzaSyDAEYCfRxJfUNR_ng1PSOJojIZ_P7SXEXE";
 
   late GoogleMapController googleMapController;
+
+  selectMarker(Marker marker){
+    selectedMarker = marker;
+    update();
+  }
 
   getApartments(token, {longitude, latitude}) {
     isSearchingApartments(true);

@@ -30,6 +30,7 @@ class Plans extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             gradient: appBarGradient,
+
           ),
           padding: EdgeInsets.only(top: 55.h, left: 12.w, right: 12.w),
           child: Column(
@@ -87,7 +88,7 @@ class Plans extends StatelessWidget {
                           childAspectRatio: 1 / 1.83,
                           crossAxisSpacing: 30,
                           mainAxisSpacing: 10),
-                      itemCount: 4,
+                      itemCount: planDetails!.length,
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (BuildContext ctx, index) {

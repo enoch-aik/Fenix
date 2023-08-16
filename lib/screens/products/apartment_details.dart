@@ -62,6 +62,7 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
     super.initState();
     _tabController = TabController(initialIndex: 0, length: 2, vsync: this);
     setState(() => apartment = widget.apartment);
+    if(apartment['vendor'] != null)
     _productController.getVendorDetails(apartment['vendor']['id']);
     _getAddressFromLatLng();
   }
@@ -140,6 +141,7 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
                     ),
                     itemCount: 3,
                   )),
+              if(apartment['vendor'] != null)
               Positioned(
                   right: 20,
                   top: 20,
@@ -266,6 +268,7 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      if(apartment['vendor'] != null)
                        Text(
                         "Entire home hosted by\n${apartment['vendor']['firstName']} ${apartment['vendor']['lastName']}",
                         style: TextStyle(fontSize: 15),
@@ -300,6 +303,7 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
                   ),
                 ),
                 smallHSpace(),
+                if(apartment['vendor'] != null)
                 Container(
                   padding: EdgeInsets.all(1),
                   decoration: BoxDecoration(
@@ -448,6 +452,7 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
               ],
             ),
           ),
+          if(apartment['vendor'] != null)
           InkWell(
             onTap: ()=>Get.to(()=>Chat(userId: apartment['vendor']['id'], name: "${apartment['vendor']['firstName']} ${apartment['vendor']['lastName']}",)),
             child: Buttons(
@@ -659,220 +664,226 @@ class _ApartmentDetailsState extends State<ApartmentDetails>
           // ),
           // divider(),
 
-          Padding(
-            padding: EdgeInsets.all(20.w),
-            child: KText(
-              "Seller Information",
-              fontWeight: FontWeight.w900,
-              color: kTextBlackColor,
-              fontSize: 19.w,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(15, 10,15, 5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
+          if(apartment['vendor'] != null)
+            Column(
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                      onTap: (){
-                        Get.to(() => VendorDetails(
-                          vendor: _productController.vendor,
-                          rating: apartment['vendor']['positiveRating'],
-                          storeId: apartment['storeId'],
-                          vendorId: apartment['vendor']['id'],
-                        ));
-                      },
-                      child: Row(
+                Padding(
+                padding: EdgeInsets.all(20.w),
+                child: KText(
+                  "Seller Information",
+                  fontWeight: FontWeight.w900,
+                  color: kTextBlackColor,
+                  fontSize: 19.w,
+                ),
+          ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 10,15, 5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            decoration: BoxDecoration(boxShadow: <BoxShadow>[
-                              BoxShadow(
-                                  color: white.withOpacity(0.2),
-                                  offset: const Offset(4, 4),
-                                  blurRadius: 2,
-                                  spreadRadius: 1),
-                              BoxShadow(
-                                  color: white.withOpacity(0.2),
-                                  offset: const Offset(-4, -4),
-                                  blurRadius: 2,
-                                  spreadRadius: 1),
-                            ], color: white, shape: BoxShape.circle),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                    color: white, shape: BoxShape.circle),
-                                child:  Container(
-                                  height: 55.w,
-                                  width: 55.w,
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: apartment['vendor']['picture'].isNotEmpty
-                                          ? DecorationImage(
-                                        fit: BoxFit.fitWidth,
-                                        image: NetworkImage(apartment['vendor']['picture']),)
-                                          : const DecorationImage(
-                                          fit: BoxFit.contain,
-                                          image: AssetImage(
-                                              'assets/images/icons/person.png'))),
+                          InkWell(
+                            onTap: (){
+                              Get.to(() => VendorDetails(
+                                vendor: _productController.vendor,
+                                rating: apartment['vendor']['positiveRating'],
+                                storeId: apartment['storeId'],
+                                vendorId: apartment['vendor']['id'],
+                              ));
+                            },
+
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(boxShadow: <BoxShadow>[
+                                    BoxShadow(
+                                        color: white.withOpacity(0.2),
+                                        offset: const Offset(4, 4),
+                                        blurRadius: 2,
+                                        spreadRadius: 1),
+                                    BoxShadow(
+                                        color: white.withOpacity(0.2),
+                                        offset: const Offset(-4, -4),
+                                        blurRadius: 2,
+                                        spreadRadius: 1),
+                                  ], color: white, shape: BoxShape.circle),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      decoration: const BoxDecoration(
+                                          color: white, shape: BoxShape.circle),
+                                      child:  Container(
+                                        height: 55.w,
+                                        width: 55.w,
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: apartment['vendor']['picture'].isNotEmpty
+                                                ? DecorationImage(
+                                              fit: BoxFit.fitWidth,
+                                              image: NetworkImage(apartment['vendor']['picture']),)
+                                                : const DecorationImage(
+                                                fit: BoxFit.contain,
+                                                image: AssetImage(
+                                                    'assets/images/icons/person.png'))),
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                SizedBox(
+                                  width: 8.w,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    KText("${apartment['vendor']['firstName']} ${apartment['vendor']['lastName']}",
+                                      fontSize: 17.w,
+                                      color: const Color(0xFFE23F0A),
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                    SizedBox(
+                                      height: 15.w,
+                                    ),
+                                    KText(
+                                      "${double.parse(apartment['vendor']['positiveRating']).toStringAsFixed(1)}% Positive Feedback",
+                                      fontSize: 12.w,
+                                      color: const Color(0xFF8F9FAE),
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    SizedBox(
+                                      height: 4.w,
+                                    ),
+                                    KText(timeago.format(DateTime.parse(apartment['vendor']['joinedAt'])),
+                                      fontSize: 12.w,
+                                      color: const Color(0xFF8F9FAE),
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
                           ),
-                          SizedBox(
-                            width: 8.w,
-                          ),
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              KText("${apartment['vendor']['firstName']} ${apartment['vendor']['lastName']}",
-                                fontSize: 17.w,
-                                color: const Color(0xFFE23F0A),
-                                fontWeight: FontWeight.w900,
+                              InkWell(
+                                onTap: (){
+                                  _productController.isReportSent.value = false;
+                                  Get.to(() => ReportSeller(
+                                    vendorId: apartment['vendor']['id'],
+                                  ));
+                                },
+                                child: Container(
+                                  decoration: shadow().copyWith(
+                                      gradient: gradient(Color(0xFFFFFFFF),
+                                          Color(0xFF8F9FAE).withOpacity(0.1))),
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.info_outline,
+                                          color: kTextBlackColor,
+                                          size: 20,
+                                        ),
+                                        tinyH5Space(),
+                                        KText(
+                                          "Report Seller",
+                                          fontSize: 12.w,
+                                          color: kTextBlackColor,
+                                          fontWeight: FontWeight.w700,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
-                              SizedBox(
-                                height: 15.w,
-                              ),
-                              KText(
-                                "${double.parse(apartment['vendor']['positiveRating']).toStringAsFixed(1)}% Positive Feedback",
-                                fontSize: 12.w,
-                                color: const Color(0xFF8F9FAE),
-                                fontWeight: FontWeight.w500,
-                              ),
-                              SizedBox(
-                                height: 4.w,
-                              ),
-                              KText(timeago.format(DateTime.parse(apartment['vendor']['joinedAt'])),
-                                fontSize: 12.w,
-                                color: const Color(0xFF8F9FAE),
-                                fontWeight: FontWeight.w500,
-                              ),
+
                             ],
                           )
                         ],
                       ),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        InkWell(
-                          onTap: (){
-
-                           _productController.isReportSent.value = false;
-                            Get.to(() => ReportSeller(
-                              vendorId: apartment['vendor']['id'],
-                            ));
-                          },
-                          child: Container(
-                            decoration: shadow().copyWith(
-                                gradient: gradient(Color(0xFFFFFFFF),
-                                    Color(0xFF8F9FAE).withOpacity(0.1))),
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.info_outline,
-                                    color: kTextBlackColor,
-                                    size: 20,
-                                  ),
-                                  tinyH5Space(),
-                                  KText(
-                                    "Report Seller",
-                                    fontSize: 12.w,
-                                    color: kTextBlackColor,
-                                    fontWeight: FontWeight.w700,
-                                  )
-                                ],
+                    ],
+                  ),
+                ),
+                kSpacing,
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(25, 10, 25, 5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        children: [
+                          Text("Positive feedback",
+                            style: TextStyle(color: darkgreen, fontSize: 15.w),),
+                          tinySpace(),
+                          if(apartment['vendor']['positiveRating'] != "NaN")
+                            Text("${double.parse(apartment['vendor']['positiveRating']).toStringAsFixed(1)}",
+                              style: TextStyle(color: darkgreen, fontSize: 15.w),),
+                          tinySpace(),
+                          if(apartment['vendor']['positiveRating'] != "NaN")
+                            Container(
+                              height: 10,
+                              width: width() * 0.35,
+                              alignment: Alignment.centerLeft,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: darkgreen, width: 1),
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                            ),
-                          ),
-                        ),
+                              child: Container(
+                                height: 10,
+                                width: width() * 0.35 * (double.parse((apartment['vendor']['positiveRating']))/100),
+                                decoration: BoxDecoration(
+                                  color: darkgreen,
+                                  border: Border.all(color: darkgreen, width: 1),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                            )
 
-                      ],
-                    )
-                  ],
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text("Negative feedback",
+                            style: TextStyle(color: red, fontSize: 15.w),),
+                          tinySpace(),
+                          if(apartment['vendor']['negativeRating'] != "NaN")
+                            Text("${double.parse(apartment['vendor']['negativeRating']).toStringAsFixed(1)}",
+                              style: TextStyle(color: red, fontSize: 15.w),),
+                          tinySpace(),
+                          if(apartment['vendor']['positiveRating'] != "NaN")
+                            Container(
+                              height: 10,
+                              width: width() * 0.35,
+                              alignment: Alignment.centerLeft,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: red, width: 1),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Container(
+                                height: 10,
+                                width: width() * 0.35 * (double.parse((apartment['vendor']['negativeRating']))/100),
+                                decoration: BoxDecoration(
+                                  color: red,
+                                  border: Border.all(color: red, width: 1),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                            )
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
+
               ],
             ),
-          ),
-          kSpacing,
-          Padding(
-            padding: const EdgeInsets.fromLTRB(25, 10, 25, 5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    Text("Positive feedback",
-                      style: TextStyle(color: darkgreen, fontSize: 15.w),),
-                    tinySpace(),
-                    if(apartment['vendor']['positiveRating'] != "NaN")
-                    Text("${double.parse(apartment['vendor']['positiveRating']).toStringAsFixed(1)}",
-                      style: TextStyle(color: darkgreen, fontSize: 15.w),),
-                    tinySpace(),
-                    if(apartment['vendor']['positiveRating'] != "NaN")
-                    Container(
-                      height: 10,
-                      width: width() * 0.35,
-                      alignment: Alignment.centerLeft,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: darkgreen, width: 1),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Container(
-                        height: 10,
-                        width: width() * 0.35 * (double.parse((apartment['vendor']['positiveRating']))/100),
-                        decoration: BoxDecoration(
-                          color: darkgreen,
-                          border: Border.all(color: darkgreen, width: 1),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    )
-
-                  ],
-                ),
-                Column(
-                  children: [
-                    Text("Negative feedback",
-                      style: TextStyle(color: red, fontSize: 15.w),),
-                    tinySpace(),
-                    if(apartment['vendor']['negativeRating'] != "NaN")
-                    Text("${double.parse(apartment['vendor']['negativeRating']).toStringAsFixed(1)}",
-                      style: TextStyle(color: red, fontSize: 15.w),),
-                    tinySpace(),
-                    if(apartment['vendor']['positiveRating'] != "NaN")
-                    Container(
-                      height: 10,
-                      width: width() * 0.35,
-                      alignment: Alignment.centerLeft,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: red, width: 1),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Container(
-                        height: 10,
-                        width: width() * 0.35 * (double.parse((apartment['vendor']['negativeRating']))/100),
-                        decoration: BoxDecoration(
-                          color: red,
-                          border: Border.all(color: red, width: 1),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
 
           kLargeSpacing,
 

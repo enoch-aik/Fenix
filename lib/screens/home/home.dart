@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:fenix/const.dart';
 import 'package:fenix/controller/account_controller.dart';
@@ -76,6 +77,8 @@ class _HomeState extends State<Home> {
   final MapController _mapController = Get.put(MapController());
   final PaymentController _paymentController = Get.put(PaymentController());
 
+  final ScrollController homeScrollController = ScrollController();
+
   Position? _currentPosition;
   final focus = FocusNode();
   List suggestions = [];
@@ -86,7 +89,7 @@ class _HomeState extends State<Home> {
     boot();
     super.initState();
     _timer = Timer.periodic(Duration(seconds: 2), (Timer timer) {
-      if (_currentPage < 3) {
+      if (_currentPage < 4) {
         _currentPage++;
       } else {
         _currentPage = 0;
@@ -170,6 +173,40 @@ class _HomeState extends State<Home> {
         ));
   }
 
+  saveRecentlyViewed(itemType, itemId) async{
+    final prefs = await SharedPreferences.getInstance();
+
+    Map<String, dynamic> viewedItem = {
+      "type": itemType,
+      "id": itemId,
+    };
+
+    String encodedMap = json.encode(viewedItem);
+    print(encodedMap);
+
+    prefs.setString('timeData', encodedMap);
+
+    // Set<String> recentlyViewed =
+    //     pref.getStringList("recentlyViewedItems")?.toSet() ?? {};
+    //
+    // allSearches = {searchText, ...allSearches};
+    // prefs.setStringList("recentlyViewedItems", allSearches.toList());
+  }
+
+  List slides = [
+    'Apartment',
+    'Apple',
+    'Car',
+    'Dacha',
+    'Electronics',
+    'HeadPhones',
+    'HealthCare',
+    'House',
+    'Mac',
+    'Samsung',
+    'SmartWatches',
+  ];
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -193,34 +230,28 @@ class _HomeState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Image.asset(
-                    "assets/images/fenixmall_white.png",
-                    color: white,
-                    height: height() * 0.070,
+                child: InkWell(
+                  onTap: (){
+                    homeScrollController.animateTo(0, duration: Duration(seconds: 1), curve: Curves.easeOut);
+                  },
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Image.asset(
+                      "assets/images/fenixmall_white.png",
+                      color: white,
+                      height: height() * 0.070,
+                    ),
                   ),
                 ),
               ),
               SizedBox(height: 10.w),
+
+              //Home Page Search Bar
               TextField(
-                onChanged: (v) {
-                  setState(() {});
-                },
                 controller: searchWordController,
                 onTap: (){
                   _productController.isSearchEnabled.value = true;
-                  // Get.to(() => SearchAndHistory());
                 },
-                onSubmitted: (v) {
-                  _productController.searchStore(v);
-                },
-                // onEditingComplete: () => _productController.searchStore(
-                //     tab, searchWordController.text),
-                onTapOutside: (v) {
-                  FocusScope.of(context).unfocus();
-                },
-
                 decoration: InputDecoration(
                   enabledBorder: buildOutlineInputBorder(),
                   focusedBorder: buildOutlineInputBorder(),
@@ -249,107 +280,8 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               ),
-              // SearchField(
-              //   onSearchTextChanged: (query) {
-              //     if(searchWordController.text.isEmpty){
-              //       FocusScope.of(context).unfocus();
-              //     }
-              //
-              //     final filter = suggestions
-              //         .where((element) =>
-              //         element.toLowerCase().contains(query.toLowerCase()))
-              //         .toList();
-              //     return filter
-              //         .map((e) => SearchFieldListItem<String>(e,
-              //         child: Padding(
-              //           padding: const EdgeInsets.symmetric(vertical: 4.0),
-              //           child: Row(
-              //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //             children: [
-              //               Text(e,
-              //                   style: GoogleFonts.lato(
-              //                       fontSize: 14.w,
-              //                       fontWeight: FontWeight.w500,
-              //                       color: dark
-              //                   )),
-              //               Icon(Icons.history, color: grey,)
-              //             ],
-              //           ),
-              //         )))
-              //         .toList();
-              //   },
-              //   maxSuggestionsInViewPort: 8,
-              //   searchInputDecoration: InputDecoration(
-              //     enabledBorder: buildOutlineInputBorder(),
-              //     focusedBorder: buildOutlineInputBorder(),
-              //     filled: true,
-              //     fillColor: Colors.white,
-              //     contentPadding: const EdgeInsets.symmetric(horizontal: 15),
-              //     hintText: AppLocalizations.of(context)!.searchFenix,
-              //     hintStyle:
-              //     TextStyle(fontSize: 15.w, color: Colors.grey.shade500),
-              //
-              //     suffixIcon: searchWordController.text.isEmpty
-              //         ? const Icon(Icons.search)
-              //         : (searchWordController.text.isNotEmpty && _productController.isSearching.value == true)
-              //         ? Padding(
-              //       padding: EdgeInsets.all(10.w),
-              //       child: const CircularProgressIndicator.adaptive(),
-              //     )
-              //         : IconButton(
-              //       onPressed: () {
-              //         searchWordController.text = '';
-              //         FocusScope.of(context).unfocus();
-              //         setState(() {});
-              //         _productController.clearSearch(tab);
-              //       },
-              //       icon: const Icon(Icons.close),
-              //     ),
-              //   ),
-              //   key: const Key('searchfield'),
-              //
-              //   itemHeight: 50,
-              //   scrollbarAlwaysVisible: false,
-              //   suggestionsDecoration: SuggestionDecoration(
-              //       padding: const EdgeInsets.all(4),
-              //       borderRadius: BorderRadius.all(Radius.circular(10))),
-              //   suggestions: suggestions
-              //       .map((e) => SearchFieldListItem<String>(e,
-              //       child: Padding(
-              //         padding: const EdgeInsets.symmetric(vertical: 4.0),
-              //         child: Row(
-              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //           children: [
-              //             Text(e,
-              //                 style: GoogleFonts.lato(
-              //                     fontSize: 14.w,
-              //                     fontWeight: FontWeight.w500,
-              //                     color: dark
-              //                 )),
-              //             Icon(Icons.history, color: grey,)
-              //           ],
-              //         ),
-              //       )))
-              //       .toList(),
-              //   focusNode: focus,
-              //   controller: searchWordController,
-              //   onSubmit: (v){
-              //     setState(() {
-              //       saveSearch(v);
-              //     });
-              //     _productController.searchStore(v);
-              //     _getRecentSearches();
-              //   },
-              //
-              //   suggestionState: Suggestion.expand,
-              //   onSuggestionTap: (SearchFieldListItem<String> x) {
-              //     focus.unfocus();
-              //       _getRecentSearches();
-              //     searchWordController.text = x.searchKey;
-              //     _productController.searchStore(x.searchKey);
-              //   },
-              // ),
 
+              //HomePage Menu
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 2),
@@ -422,6 +354,7 @@ class _HomeState extends State<Home> {
         },
         child: ListView(
           physics: const ClampingScrollPhysics(),
+          controller: homeScrollController,
           children: [
 
             Container(
@@ -453,31 +386,46 @@ class _HomeState extends State<Home> {
                 )),
 
             SizedBox(
-              height: height() * 0.3,
+              height: height() * 0.35,
               width: MediaQuery.of(context).size.width,
               child: PageView(
                controller: _pageController,
                 physics:  const NeverScrollableScrollPhysics(),
                 children: [
-                  Image.asset(
-                    "assets/images/banner/Banner1.png",
-                    fit: BoxFit.fill,
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Image.asset(
+                      "assets/images/banner/Banner1.png",
+                      fit: BoxFit.fitWidth,
+                    ),
                   ),
-                  Image.asset(
-                    "assets/images/banner/Banner2.png",
-                    fit: BoxFit.fill,
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Image.asset(
+                      "assets/images/banner/Banner2.png",
+                      fit: BoxFit.fitWidth,
+                    ),
                   ),
-                  Image.asset(
-                    "assets/images/banner/Banner3.png",
-                    fit: BoxFit.fill,
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Image.asset(
+                      "assets/images/banner/Banner3.png",
+                      fit: BoxFit.fitWidth,
+                    ),
                   ),
-                  Image.asset(
-                    "assets/images/banner/Banner4.png",
-                    fit: BoxFit.fill,
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Image.asset(
+                      "assets/images/banner/Banner4.png",
+                      fit: BoxFit.fitWidth,
+                    ),
                   ),
-                  Image.asset(
-                    "assets/images/banner/Banner5.png",
-                    fit: BoxFit.fill,
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Image.asset(
+                      "assets/images/banner/Banner5.png",
+                      fit: BoxFit.fitWidth,
+                    ),
                   ),
                 ],
               ),
@@ -489,7 +437,7 @@ class _HomeState extends State<Home> {
                 width: MediaQuery.of(context).size.width,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 7,
+                  itemCount: slides.length,
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
@@ -499,14 +447,21 @@ class _HomeState extends State<Home> {
                         width: 114.w,
                         height: 152.w,
                         margin: EdgeInsets.all(4.5.w),
-                        padding: EdgeInsets.all(7.w),
+
                         decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.circular(13.w)),
-                        child: Image.asset(
-                          "assets/images/phone.png",
-                          fit: BoxFit.fill,
+                            borderRadius: BorderRadius.circular(13.w),
+                          image: DecorationImage(
+                            image: AssetImage(
+                              "assets/images/slides/${slides[index]}.png"
+                            ),
+                            fit: BoxFit.fill
+                          )
                         ),
+                        // child: Image.asset(
+                        //   "assets/images/slides/${slides[index]}.png",
+                        //   fit: BoxFit.fill,
+                        // ),
                       ),
                     );
                   },
@@ -552,13 +507,28 @@ class _HomeState extends State<Home> {
                       ),
                     ],
                   )),
-              ListView.builder(
+        Obx(
+              () => _productController
+              .isFetchingApartments.isTrue
+              ? const Loader()
+              : _productController
+              .apartmentList.isEmpty
+              ? empty(tab)
+              : ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 2,
+                  itemCount: 4,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return RatedItemsWidget(apartment: _productController.apartmentList[index],);
-                  }),
+                    return InkWell(
+                      onTap: (){
+                          Get.to(() => ApartmentDetails(
+                            apartment: _productController.apartmentList[index],
+                          ));
+                      },
+                        child: RatedItemsWidget(apartment: _productController.apartmentList[index],),
+                    );
+                  }),),
+
               Container(
                   width: MediaQuery.of(context).size.width,
                   height: 40.w,
@@ -634,7 +604,7 @@ class _HomeState extends State<Home> {
                       ),
                       InkWell(
                         onTap: () {
-                          Get.to(() => DealsDetails(title: "Best Selling Items"));
+                          Get.to(() => DealsDetails(title: "Best Selling Items", item: _productController.apartmentList));
                         },
                         child: Container(
                           height: 24.w,
@@ -669,31 +639,53 @@ class _HomeState extends State<Home> {
                       )
                     ],
                   )),
-              Row(
+        Obx(
+              () => _productController
+              .isFetchingApartments.isTrue
+              ? const Loader()
+              : _productController
+              .apartmentList.isEmpty
+              ? empty(tab)
+              : Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ProductWidget(
-                      title: _productController.apartmentList[1]['title'],
-                      category: _productController.apartmentList[1][
-                      'apartmentType'],
-                      price:
-                      _productController.apartmentList[1]['rentPrice']
-                      ['month']
-                          .toString(),
-                      product: _productController.apartmentList[1]
+                  InkWell(
+                    onTap: (){
+                      Get.to(() => ApartmentDetails(
+                        apartment: _productController.apartmentList[1],
+                      ));
+                    },
+                    child: ProductWidget(
+                        title: _productController.apartmentList[1]['title'],
+                        category: _productController.apartmentList[1][
+                        'apartmentType'],
+                        price:
+                        _productController.apartmentList[1]['rentPrice']
+                        ['month']
+                            .toString(),
+                        product: _productController.apartmentList[1]
+                    ),
                   ),
-                  ProductWidget(
-                      title: _productController.apartmentList[2]['title'],
-                      category: _productController.apartmentList[2][
-                      'apartmentType'],
-                      price:
-                      _productController.apartmentList[2]['rentPrice']
-                      ['month']
-                          .toString(),
-                      product: _productController.apartmentList[2]
+                  InkWell(
+                    onTap: (){
+                      Get.to(() => ApartmentDetails(
+                        apartment: _productController.apartmentList[2],
+                      ));
+                    },
+                    child: ProductWidget(
+                        title: _productController.apartmentList[2]['title'],
+                        category: _productController.apartmentList[2][
+                        'apartmentType'],
+                        price:
+                        _productController.apartmentList[2]['rentPrice']
+                        ['month']
+                            .toString(),
+                        product: _productController.apartmentList[2]
+                    ),
                   ),
                 ],
-              ),
+              ),),
+
               Container(
                   width: MediaQuery.of(context).size.width,
                   height: 57.w,
@@ -730,6 +722,7 @@ class _HomeState extends State<Home> {
                         onTap: () {
                           Get.to(() => DealsDetails(
                             title: "Top Deals",
+                              item: _productController.apartmentList
                           ));
                         },
                         child: Container(
@@ -765,31 +758,52 @@ class _HomeState extends State<Home> {
                       )
                     ],
                   )),
-              Row(
+        Obx(
+              () => _productController
+              .isFetchingApartments.isTrue
+              ? const Loader()
+              : _productController
+              .apartmentList.isEmpty
+              ? empty(tab)
+              : Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ProductWidget(
-                      title: _productController.apartmentList[1]['title'],
-                      category: _productController.apartmentList[1][
-                      'apartmentType'],
-                      price:
-                      _productController.apartmentList[1]['rentPrice']
-                      ['month']
-                          .toString(),
-                      product: _productController.apartmentList[1]
+                  InkWell(
+                    onTap: (){
+                      Get.to(() => ApartmentDetails(
+                        apartment: _productController.apartmentList[1],
+                      ));
+                    },
+                    child: ProductWidget(
+                        title: _productController.apartmentList[1]['title'],
+                        category: _productController.apartmentList[1][
+                        'apartmentType'],
+                        price:
+                        _productController.apartmentList[1]['rentPrice']
+                        ['month']
+                            .toString(),
+                        product: _productController.apartmentList[1]
+                    ),
                   ),
-                  ProductWidget(
-                      title: _productController.apartmentList[2]['title'],
-                      category: _productController.apartmentList[2][
-                      'apartmentType'],
-                      price:
-                      _productController.apartmentList[2]['rentPrice']
-                      ['month']
-                          .toString(),
-                      product: _productController.apartmentList[2]
+                  InkWell(
+                    onTap: (){
+                      Get.to(() => ApartmentDetails(
+                        apartment: _productController.apartmentList[2],
+                      ));
+                    },
+                    child: ProductWidget(
+                        title: _productController.apartmentList[2]['title'],
+                        category: _productController.apartmentList[2][
+                        'apartmentType'],
+                        price:
+                        _productController.apartmentList[2]['rentPrice']
+                        ['month']
+                            .toString(),
+                        product: _productController.apartmentList[2]
+                    ),
                   ),
                 ],
-              ),
+              ),),
               Container(
                   width: MediaQuery.of(context).size.width,
                   height: 57.w,
@@ -826,6 +840,7 @@ class _HomeState extends State<Home> {
                         onTap: () {
                           Get.to(() => DealsDetails(
                             title: "Recommended Deals",
+                              item: _productController.apartmentList
                           ));
                         },
                         child: Container(
@@ -861,31 +876,52 @@ class _HomeState extends State<Home> {
                       )
                     ],
                   )),
-              Row(
+        Obx(
+              () => _productController
+              .isFetchingApartments.isTrue
+              ? const Loader()
+              : _productController
+              .apartmentList.isEmpty
+              ? empty(tab)
+              :  Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ProductWidget(
-                      title: _productController.apartmentList[1]['title'],
-                      category: _productController.apartmentList[1][
-                      'apartmentType'],
-                      price:
-                      _productController.apartmentList[1]['rentPrice']
-                      ['month']
-                          .toString(),
-                      product: _productController.apartmentList[1]
+                  InkWell(
+                    onTap: (){
+                      Get.to(() => ApartmentDetails(
+                        apartment: _productController.apartmentList[1],
+                      ));
+                    },
+                    child: ProductWidget(
+                        title: _productController.apartmentList[1]['title'],
+                        category: _productController.apartmentList[1][
+                        'apartmentType'],
+                        price:
+                        _productController.apartmentList[1]['rentPrice']
+                        ['month']
+                            .toString(),
+                        product: _productController.apartmentList[1]
+                    ),
                   ),
-                  ProductWidget(
-                      title: _productController.apartmentList[2]['title'],
-                      category: _productController.apartmentList[2][
-                      'apartmentType'],
-                      price:
-                      _productController.apartmentList[2]['rentPrice']
-                      ['month']
-                          .toString(),
-                      product: _productController.apartmentList[2]
+                  InkWell(
+                    onTap: (){
+                      Get.to(() => ApartmentDetails(
+                        apartment: _productController.apartmentList[2],
+                      ));
+                    },
+                    child: ProductWidget(
+                        title: _productController.apartmentList[2]['title'],
+                        category: _productController.apartmentList[2][
+                        'apartmentType'],
+                        price:
+                        _productController.apartmentList[2]['rentPrice']
+                        ['month']
+                            .toString(),
+                        product: _productController.apartmentList[2]
+                    ),
                   ),
                 ],
-              ),
+              ),),
 
             // Column(children: [
             //   Container(
@@ -1365,6 +1401,43 @@ class _HomeState extends State<Home> {
                       fontWeight: FontWeight.w700),
                 )),
 
+            SizedBox(
+              height: 152.w,
+              width: MediaQuery.of(context).size.width,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: slides.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+                      // Get.to(() => const ProductDetails());
+                    },
+                    child: Container(
+                      width: 114.w,
+                      height: 152.w,
+                      margin: EdgeInsets.all(4.5.w),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(13.w),
+                          image: DecorationImage(
+                              image: AssetImage(
+                                  "assets/images/slides/${slides[index]}.png"
+                              ),
+                              fit: BoxFit.fitWidth
+                          )
+                      ),
+                      // child: Image.asset(
+                      //   "assets/images/slides/${slides[index]}.png",
+                      //   fit: BoxFit.fill,
+                      // ),
+                    ),
+                  );
+                },
+              ),
+            ),
+
+            kSpacing,
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 0.0),
               child: Column(
@@ -1827,8 +1900,8 @@ class ProductWidget extends StatelessWidget {
                                             "${distanceInKm(
                                               _userController.userCurrentPosition!.value.latitude,
                                               _userController.userCurrentPosition!.value.longitude,
-                                              product['location']['latitude'],
-                                              product['location']['longitude'],
+                                              product['location']['latitude'].runtimeType == double ? product['location']['latitude'] : double.parse(product['location']['latitude']),
+                                              product['location']['longitude'].runtimeType == double ? product['location']['longitude'] : double.parse(product['location']['longitude']),
                                             ).toString()}km",
                                             style: TextStyle(
                                                 fontSize: 11.w,

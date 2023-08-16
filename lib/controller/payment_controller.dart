@@ -93,8 +93,8 @@ class PaymentController extends GetxController{
 
 
   pay(
-      {amount, productId, planId, couponCode, token}) {
-    print(productId);
+      {amount, itemId, planId, couponCode, banner, token}) {
+    print(itemId);
     PaymentServices.initialisePayment((status, response) {
       print(response);
      processing.value = true;
@@ -108,11 +108,22 @@ class PaymentController extends GetxController{
 
         CustomSnackBar.failedSnackBar('Failed', '$response');
       }
-    }, {
-      "amount": amount,
-      "productId": productId,
+    }, (couponCode == null && banner == null) ? {
+      "itemId": itemId,
       "planId": planId,
-      "couponCode": "Z0E6taLEbp",
+    } : (couponCode != null && banner == null) ? {
+      "itemId": itemId,
+      "planId": planId,
+      "couponCode": couponCode,
+    } :  (couponCode == null && banner != null) ? {
+      "itemId": itemId,
+      "planId": planId,
+      "banner": banner,
+    }: {
+      "itemId": itemId,
+      "planId": planId,
+      "couponCode": couponCode,
+      "banner": banner,
     }, token);
   }
 

@@ -27,6 +27,25 @@ class PhoneNumberValidator {
   }
 }
 
+class PhoneNumberValidator2 {
+  static String? validate(String value) {
+    print(value);
+    if (value.isEmpty) {
+      return emptyTextField;
+    }
+    if (value.length < 10) {
+      return PHONE_NUMBER_LENGTH_ERROR;
+    }
+
+    final regPhoneExp = RegExp(phoneNumberRegex2);
+
+    if (!regPhoneExp.hasMatch(value)) {
+      return phoneNumberFormatError;
+    }
+    return null;
+  }
+}
+
 class PasswordValidator {
   static String? validate(String value) {
     if (value.isEmpty) {

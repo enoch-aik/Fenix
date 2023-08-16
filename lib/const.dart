@@ -78,6 +78,7 @@ const String emailRegex = '[a-zA-Z0-9\+\.\_\%\-\+]{1,256}' +
 const String PHONE_NUMBER_LENGTH_ERROR = 'Phone number must be 11 digits';
 
 const String phoneNumberRegex = r'0[789][01]\d{8}';
+const String phoneNumberRegex2 = r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$';
 const String upperCaseRegex = r'^(?=.*?[A-Z])(?=.*?[a-z]).{8,}$';
 const String lowerCaseRegex = r'^(?=.*?[a-z]).{8,}$';
 const String symbolRegex = r'^(?=.*?[!@#\$&*~]).{8,}$';
@@ -87,6 +88,8 @@ const String passwordUppercaseErr = 'Password must have at least one Upper case'
 const String passwordSymbolErr = 'Password must have a least one special character';
 
 const String phoneNumberLengthError = 'Phone number must be 11 digits';
+
+const String phoneNumberFormatError = 'Phone number must have the format +1234567890';
 
 const String invalidPhoneNumberField =
     "Number provided isn\'t valid.Try another phone number";

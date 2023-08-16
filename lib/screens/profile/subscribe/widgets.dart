@@ -25,8 +25,22 @@ class PlanWidget extends StatelessWidget {
       children: [
         Container(
           decoration: BoxDecoration(
-            color: light.withOpacity(0.3),
+            color: white,
             borderRadius: BorderRadius.circular(10.w),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.2),
+                spreadRadius: 4,
+                blurRadius: 5,
+                offset: const Offset(2, 2), // changes position of shadow
+              ),
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.2),
+                spreadRadius: 4,
+                blurRadius: 5,
+                offset: Offset(-2, -2), // changes position of shadow
+              ),
+            ]
           ),
           padding: EdgeInsets.all(10.w),
           child: Column(
@@ -105,7 +119,7 @@ class PlanWidget extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.symmetric(vertical: 4.w, horizontal: 15.w),
             decoration: BoxDecoration(
-                color: Colors.deepPurpleAccent,
+                color: blue,
                 borderRadius: BorderRadius.circular(7.w)
             ),
             child: Text("Buy Now",

@@ -102,7 +102,7 @@ class _HomeState extends State<Views> with TickerProviderStateMixin {
                 child: Icon(
                   Icons.map_outlined,
                   color:
-                  _selectedIndex == 0 ? white : white.withOpacity(0.44),
+                  _selectedIndex == 0 ? white : white.withOpacity(0.24),
                   size: 35.w,
                 ),
               ),
@@ -114,7 +114,7 @@ class _HomeState extends State<Views> with TickerProviderStateMixin {
                 child:  Icon(
                   Icons.home_outlined,
                   color:
-                  _selectedIndex == 1 ? white : white.withOpacity(0.44),
+                  _selectedIndex == 1 ? white : white.withOpacity(0.24),
                   size: 35.w,
                 ),
               ),
@@ -125,7 +125,7 @@ class _HomeState extends State<Views> with TickerProviderStateMixin {
                 padding: const EdgeInsets.all(5.0),
                 child: Icon(
                   Icons.account_circle_outlined,
-                  color:  _selectedIndex == 2 ? white : white.withOpacity(0.44),
+                  color:  _selectedIndex == 2 ? white : white.withOpacity(0.24),
                   size: 35.w,
                 ),
               ),
@@ -136,7 +136,7 @@ class _HomeState extends State<Views> with TickerProviderStateMixin {
                 padding: const EdgeInsets.all(5.0),
                 child: Icon(
                   CustomIcons.hammer,
-                  color:  _selectedIndex == 3 ? white : white.withOpacity(0.44),
+                  color:  _selectedIndex == 3 ? white : white.withOpacity(0.24),
                   size: 30.w,
                 ),
               ),
@@ -148,7 +148,7 @@ class _HomeState extends State<Views> with TickerProviderStateMixin {
                 padding: const EdgeInsets.all(5.0),
                 child: Icon(
                   Icons.menu_outlined,
-                  color:  _selectedIndex == 4 ? white : white.withOpacity(0.44),
+                  color:  _selectedIndex == 4 ? white : white.withOpacity(0.24),
                   size: 35.w,
                 ),
               ),

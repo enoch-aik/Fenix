@@ -108,21 +108,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               tabSwitch("Apartments"),
                             if(_productController.productList.isNotEmpty)
                               tabSwitch("Products")
-                            // tabSwitch('Recent'),
-                            // tabSwitch('Saved'),
-                            // Expanded(
-                            //     child: Row(
-                            //   mainAxisAlignment: MainAxisAlignment.end,
-                            //   children: [
-                            //     InkWell(
-                            //         onTap: () =>
-                            //             setState(() => enableFilter = !enableFilter),
-                            //         child: Image.asset(
-                            //           "assets/images/icons/more.png",
-                            //           height: 28,
-                            //         )),
-                            //   ],
-                            // ))
+
                           ],
                         ),
                       ),

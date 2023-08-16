@@ -26,17 +26,20 @@ class ChangePassword extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: AppBar(
-          title: Align(
-            alignment: Alignment.centerLeft,
-            child: Image.asset(
-              "assets/images/fenixmall_white.png",
-              color: white,
-              height: height() * 0.075,
-            ),
+          title: Text("Reset Password",
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 20.w,
+                shadows: [
+                  Shadow(
+                      color: Colors.black.withOpacity(0.2),
+                      offset: const Offset(2, 2))
+                ]),
           ),
+          leading:  backArrow(),
           automaticallyImplyLeading: false,
           elevation: 0,
-          centerTitle: false,
+          centerTitle: true,
           flexibleSpace: Container(
             decoration: BoxDecoration(
               gradient: appBarGradient,
@@ -44,39 +47,6 @@ class ChangePassword extends StatelessWidget {
           )),
       body: Column(
         children: [
-          Container(
-            height: 50.w,
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
-            margin: EdgeInsets.only(bottom: 20.w),
-            decoration: BoxDecoration(
-              gradient: appBarGradient,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                InkWell(
-                  onTap: () => Get.back(),
-                  child: const Icon(
-                    Icons.arrow_back_ios,
-                    color: white,
-                  ),
-                ),
-                Text(
-                  "Reset Password",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.w,
-                      shadows: [
-                        Shadow(
-                            color: Colors.black.withOpacity(0.2),
-                            offset: const Offset(2, 2))
-                      ]),
-                ),
-                const SizedBox(),
-              ],
-            ),
-          ),
           Expanded(
               child: Form(
             key: _formKey,

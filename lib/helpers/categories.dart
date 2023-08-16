@@ -1,10 +1,10 @@
 class Category {
   List images = [
-    "apartment.png",
+    "property.png",
     "newCar.png",
     "electronics.png",
     "clothing.png",
-    "kids.png",
+    "Vitamins.png",
     "food png.png",
     "kids.png",
     "tools.png",
@@ -219,15 +219,19 @@ class Category {
     //   "sub_category": [
     {
       "name": "Vitamins & Supplements",
+      "image": "Vitamins.png",
     },
     {
       "name": "Body Care",
+      "image": "Body-Care.png",
     },
     {
       "name": "Kids Vitamins",
+      "image": "Kids-Vitamins.png",
     },
     {
       "name": "Face Care",
+      "image": "Face-Care.png",
       "products": [
         "Face Mask",
         "Face Therapy",
@@ -238,6 +242,7 @@ class Category {
     },
     {
       "name": "Hair Care",
+      "image": "Hair-Care.png",
       "products": [
         "Shampoo and conditioner",
         "Hair Spray",
@@ -291,6 +296,7 @@ class Category {
   List kids = [
     {
       "name": "Boy",
+      "image": "Boy.png",
       "products": [
         "Shoes",
         "T-Shirt",
@@ -301,6 +307,7 @@ class Category {
     },
     {
       "name": "Girl",
+      "image": "Girl-Kid.png",
       "products": [
         "T-Shirt",
         "Dresses",
@@ -312,6 +319,7 @@ class Category {
     },
     {
       "name": "Baby",
+      "image": "Baby.png",
       "products": [
         "Baby Formula",
         "Baby Care",

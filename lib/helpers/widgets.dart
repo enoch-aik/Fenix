@@ -118,7 +118,7 @@ class ButtonWidget extends StatelessWidget {
                     offset: const Offset(2, 1), // changes position of shadow
                   ),
                   BoxShadow(
-                    color: Colors.white.withOpacity(0.5),
+                    color: Colors.white.withOpacity(0.0),
                     spreadRadius: 1,
                     blurRadius: 3,
                     offset: const Offset(-3, 1), // changes position of shadow

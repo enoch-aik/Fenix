@@ -20,5 +20,5 @@ double degreesToRadians(degrees) {
   var a = sin(dLat/2) * sin(dLat/2) +
       sin(dLon/2) * sin(dLon/2) * cos(lat1) * cos(lat2);
   var c = 2 * atan2(sqrt(a), sqrt(1-a));
-  return (earthRadiusKm * c).toPrecision(1);
+  return (lat1 != null && lat2 != null && lon1 != null && lon2 != null) ? (earthRadiusKm * c).toPrecision(1) : 0.0;
 }

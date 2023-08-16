@@ -15,6 +15,7 @@ import '../../../helpers/categories.dart';
 import '../../../helpers/image_picker.dart';
 import '../../../neumorph.dart';
 import '../../../theme.dart';
+import '../subscribe/subscribe.dart';
 import 'create_apartment.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -784,6 +785,14 @@ class _CreateProductState extends State<CreateProduct> {
                       hint: AppLocalizations.of(context)!.deliveryLocation,
                       textController: deliveryLocationController),
 
+                  verticalSpace(0.02),
+                  Center(
+                    child: InkWell(
+                        onTap: () {
+                          Get.to(() => Subscribe());
+                        },
+                        child: ButtonWidget(title: AppLocalizations.of(context)!.choosePlans,color: Colors.blue,)),
+                  ),
                   verticalSpace(0.02),
                   Center(
                     child: InkWell(

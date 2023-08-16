@@ -12,11 +12,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_places_for_flutter/google_places_for_flutter.dart';
 // import 'package:google_maps_webservice/places.dart';
 import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import '../../../controller/map_controller.dart';
 import '../../../controller/store_controller.dart';
 import '../../../helpers/image_picker.dart';
@@ -51,6 +54,22 @@ class _CreateApartmentState extends State<CreateApartment> {
   final priceController = TextEditingController();
   final weekController = TextEditingController();
   final monthController = TextEditingController();
+  final startAvailabilityController = TextEditingController();
+  final startTimeAvailabilityController = TextEditingController();
+  final endAvailabilityController = TextEditingController();
+  final endTimeAvailabilityController = TextEditingController();
+
+  final floorsCustomController = TextEditingController();
+  final footageCustomController = TextEditingController();
+  final squareCustomController = TextEditingController();
+  final occupantCustomController = TextEditingController();
+
+  final startTimeController = TextEditingController(text: "00:00");
+  final endTimeController = TextEditingController(text: "00:00");
+
+  DateRangePickerController startDateRangePickerController = DateRangePickerController();
+  DateRangePickerController endDateRangePickerController = DateRangePickerController();
+
 
   double longitude = 0.0;
   double latitude = 0.0;
@@ -70,6 +89,7 @@ class _CreateApartmentState extends State<CreateApartment> {
   String start = '';
   String startTime = '';
   String startDay = '';
+  String startMonth = '';
   String endDate = '';
   String endTime = '';
   String endDay = '';
@@ -86,6 +106,35 @@ class _CreateApartmentState extends State<CreateApartment> {
   String store = '';
   List<String> stores = [];
   List<String> storeIds = [];
+
+  RxBool nightSwitch = false.obs;
+  RxBool weekSwitch = false.obs;
+  RxBool monthSwitch = false.obs;
+
+  Rx<Widget> customTextField =  Container().obs;
+  Rx<Widget> customTextField1 =  Container().obs;
+  Rx<Widget> customTextField2 =  Container().obs;
+  Rx<Widget> customTextField3 =  Container().obs;
+
+  RxBool floorsClicked = false.obs;
+  RxBool squareClicked = false.obs;
+  RxBool footageClicked = false.obs;
+  RxBool occupantClicked = false.obs;
+
+  String timeOfDay = "";
+
+  double loginAlign = -1;
+  double signInAlign = 1;
+  Color selectedColor = Colors.white;
+  Color normalColor = black;
+
+  double xAlign = 0;
+
+  Color loginColor = Colors.white;
+  Color signInColor = black;
+
+  RxString startTimeOfDayString = "".obs;
+  RxString endTimeOfDayString = "".obs;
 
   getLocation(){
     // _handlePressButton();
@@ -466,13 +515,13 @@ class _CreateApartmentState extends State<CreateApartment> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      imageOption('Bedroom 1', Icons.hotel_outlined, 'bedroom'),
+                      imageOption('Bedroom 1', Icons.hotel_outlined, '', 'bedroom'),
                       tinyHSpace(),
-                      imageOption('Bedroom 2', Icons.hotel_outlined, 'bedroom'),
+                      imageOption('Bedroom 2', Icons.hotel_outlined, '', 'bedroom'),
                       tinyHSpace(),
-                      imageOption('Bedroom 3', Icons.hotel_outlined, 'bedroom'),
+                      imageOption('Bedroom 3', Icons.hotel_outlined, '', 'bedroom'),
                       tinyHSpace(),
-                      imageOption('Bedroom 4', Icons.hotel_outlined, 'bedroom'),
+                      imageOption('Bedroom 4', Icons.hotel_outlined, '', 'bedroom'),
                     ],
                   ),
                   tiny5Space(),
@@ -483,13 +532,13 @@ class _CreateApartmentState extends State<CreateApartment> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      imageOption('1', Icons.bathtub_outlined, 'bathroom'),
+                      imageOption('1', Icons.bathtub_outlined, '', 'bathroom'),
                       tinyHSpace(),
-                      imageOption('2', Icons.bathtub_outlined, "bathroom"),
+                      imageOption('2', Icons.bathtub_outlined, '', "bathroom"),
                       tinyHSpace(),
-                      imageOption('3', Icons.bathtub_outlined, "bathroom"),
+                      imageOption('3', Icons.bathtub_outlined, '', "bathroom"),
                       tinyHSpace(),
-                      imageOption('4', Icons.bathtub_outlined, "bathroom",
+                      imageOption('4', Icons.bathtub_outlined, '', "bathroom",
                           isNone: true),
                     ],
                   ),
@@ -501,13 +550,13 @@ class _CreateApartmentState extends State<CreateApartment> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      imageOption('1', Icons.shower_outlined, 'shower'),
+                      imageOption('1', Icons.shower_outlined, 'shower.png', 'shower'),
                       tinyHSpace(),
-                      imageOption('2', Icons.shower_outlined, 'shower'),
+                      imageOption('2', Icons.shower_outlined, 'shower.png', 'shower'),
                       tinyHSpace(),
-                      imageOption('3', Icons.shower_outlined, 'shower'),
+                      imageOption('3', Icons.shower_outlined, 'shower.png', 'shower'),
                       tinyHSpace(),
-                      imageOption('4', Icons.shower_outlined, 'shower',
+                      imageOption('4', Icons.shower_outlined, 'shower.png', 'shower',
                           isNone: true),
                     ],
                   ),
@@ -519,58 +568,76 @@ class _CreateApartmentState extends State<CreateApartment> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      imageOption('1', Icons.flight_class_outlined, 'toilet'),
+                      imageOption('1', FontAwesomeIcons.toilet, 'toilet.png', 'toilet'),
                       tinyHSpace(),
-                      imageOption('2', Icons.flight_class_outlined, 'toilet'),
+                      imageOption('2', Icons.flight_class_outlined, 'toilet.png', 'toilet'),
                       tinyHSpace(),
-                      imageOption('3', Icons.flight_class_outlined, 'toilet'),
+                      imageOption('3', Icons.flight_class_outlined, 'toilet.png', 'toilet'),
                       tinyHSpace(),
-                      imageOption('4', Icons.flight_class_outlined, 'toilet',
+                      imageOption('4', Icons.flight_class_outlined, 'toilet.png', 'toilet',
                           isNone: true),
                     ],
                   ),
                   tiny5Space(),
                   divider(),
                   title_icon(
-                      AppLocalizations.of(context)!.howManyFloors, Icons.stairs_outlined),
+                      AppLocalizations.of(context)!.howManyFloors, Icons.stairs_outlined, 'stairs.png'),
                   tinySpace(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  Wrap(
+                    spacing: 12.w,
                     children: [
                       numberButton('1', 'floors'),
                       numberButton('2', 'floors'),
                       numberButton('3', 'floors'),
-                      numberButton('4', 'floors'),
-                      numberButton('5', 'floors'),
+                      numberButton('Custom', 'customFloors'),
+                      // numberButton('4', 'floors'),
+                      // numberButton('5', 'floors'),
                     ],
                   ),
+                  customTextField.value,
                   kSpacing,
                   title_icon(
-                      AppLocalizations.of(context)!.howManySquareFootage, Icons.square_foot_sharp),
+                      AppLocalizations.of(context)!.howManySquareFootage, Icons.square_foot_sharp, 'squareRoot.png'),
                   tinySpace(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  Wrap(
+                    spacing: 12.w,
+                    runSpacing: 17.w,
                     children: [
-                      numberButton('1', 'footage'),
                       numberButton('2', 'footage'),
                       numberButton('3', 'footage'),
                       numberButton('4', 'footage'),
                       numberButton('5', 'footage'),
+                      numberButton('6', 'footage'),
+                      numberButton('7', 'footage'),
+                      numberButton('8', 'footage'),
+                      numberButton('9', 'footage'),
+                      numberButton('Custom', 'customFootage'),
                     ],
                   ),
+                  customTextField1.value,
                   kSpacing,
                   subText( AppLocalizations.of(context)!.howManySquareMeters),
                   tinySpace(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  Wrap(
+                    spacing: 12.w,
+                    runSpacing: 17.w,
                     children: [
-                      numberButton('1', 'square'),
-                      numberButton('2', 'square'),
-                      numberButton('3', 'square'),
-                      numberButton('4', 'square'),
-                      numberButton('5', 'square'),
+                      numberButton('20 Square ', 'square'),
+                      numberButton('30 Square ', 'square'),
+                      numberButton('40 Square ', 'square'),
+                      numberButton('50 Square ', 'square'),
+                      numberButton('60 Square ', 'square'),
+                      numberButton('70 Square ', 'square'),
+                      numberButton('80 Square ', 'square'),
+                      numberButton('90 Square ', 'square'),
+                      numberButton('100 Square ', 'square'),
+                      numberButton('110 Square ', 'square'),
+                      numberButton('120 Square ', 'square'),
+                      numberButton('130 Square ', 'square'),
+                      numberButton('Custom', 'customSquare'),
                     ],
                   ),
+                  customTextField2.value,
                   kSpacing,
                   divider(),
                   subText( AppLocalizations.of(context)!.amenities),
@@ -618,7 +685,7 @@ class _CreateApartmentState extends State<CreateApartment> {
                   title( AppLocalizations.of(context)!.houseRules),
                   kSpacing,
                   title_icon(
-                      AppLocalizations.of(context)!.allowPeople, Icons.groups_rounded),
+                      AppLocalizations.of(context)!.allowPeople, Icons.groups_rounded, ''),
                   smallText(AppLocalizations.of(context)!.allowPeopleSubText),
                   tinySpace(),
                   Row(
@@ -628,12 +695,13 @@ class _CreateApartmentState extends State<CreateApartment> {
                       numberButton('2', 'occupant'),
                       numberButton('3', 'occupant'),
                       numberButton('4', 'occupant'),
-                      numberButton('5', 'occupant'),
+                      numberButton('Custom', 'customOccupant'),
                     ],
                   ),
+                  customTextField3.value,
                   kSpacing,
                   divider(),
-                  title_icon( AppLocalizations.of(context)!.petsAllowed, Icons.pets),
+                  title_icon( AppLocalizations.of(context)!.petsAllowed, Icons.pets, ''),
                   tiny5Space(),
                   Row(
                     children: [
@@ -645,7 +713,7 @@ class _CreateApartmentState extends State<CreateApartment> {
                   ),
                   kSpacing,
                   divider(),
-                  title_icon( AppLocalizations.of(context)!.smokeAllowed, Icons.smoking_rooms),
+                  title_icon( AppLocalizations.of(context)!.smokeAllowed, Icons.smoking_rooms, ''),
                   tiny5Space(),
                   Row(
                     children: [
@@ -668,6 +736,7 @@ class _CreateApartmentState extends State<CreateApartment> {
                   title( AppLocalizations.of(context)!.setHouseLocation),
                   kSpacing,
                   subText( AppLocalizations.of(context)!.setPropertyLocation),
+                  smallText("You can write the address of the property on the search section "),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 10.2),
                     child: SearchGooglePlacesWidget(
@@ -710,76 +779,61 @@ class _CreateApartmentState extends State<CreateApartment> {
                         'Available start date',
                       ),
                       smallText(
-                          'Please choose the date of availability for the rent'),
+                          'Please choose the date the availability starts for the rent'),
                       kSpacing,
-                      InkWell(
-                        onTap: () => selectDate().then((selectedDate) {
-                          var picked = DateFormat.yMMMMd().format(selectedDate);
-                          start = DateFormat('yyyy-MM-dd')
-                              .format(selectedDate)
-                              .toString();
-                          print(start);
-                          var time = DateFormat.jm().format(selectedDate);
-                          var day = DateFormat.EEEE().format(selectedDate);
-                          startDate = picked.toString();
-                          startTime = time.toString();
-                          startDay = day.toString();
-                          setState(() {});
-                        }),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                decoration: buttonneumorp().copyWith(
-                                    borderRadius: BorderRadius.circular(15)),
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(12, 10, 5, 10),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Icon(Icons.calendar_month,
-                                          size: 18),
-                                      tinyHSpace(),
-                                      const Expanded(
-                                        child: Text(
-                                          'Start',
-                                          style: TextStyle(fontSize: 16),
-                                        ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              decoration: buttonneumorp().copyWith(
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(12, 10, 5, 10),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(Icons.calendar_month,
+                                        size: 18, color: dark,),
+                                    tinyHSpace(),
+                                     Expanded(
+                                      child: Text(
+                                        'Start',
+                                        style: GoogleFonts.roboto(fontSize: 16, color: dark),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                            smallHSpace(),
-                            Expanded(
-                              flex: 2,
-                              child: Container(
-                                decoration: buttonneumorp().copyWith(
-                                    borderRadius: BorderRadius.circular(15)),
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(15, 10, 5, 10),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Icon(Icons.calendar_month,
-                                          size: 18),
-                                      tinyHSpace(),
-                                      Expanded(
-                                        child: Text(
-                                          startDate,
-                                          style: const TextStyle(fontSize: 16),
-                                        ),
+                          ),
+                          smallHSpace(),
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              decoration: buttonneumorp().copyWith(
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(15, 10, 5, 10),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(Icons.calendar_month,
+                                        size: 18, color: dark,),
+                                    tinyHSpace(),
+                                    Expanded(
+                                      child: Text(
+                                        startDate,
+                                        style: GoogleFonts.roboto(fontSize: 16, color: dark),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                       tinySpace(),
                       Row(
@@ -795,12 +849,12 @@ class _CreateApartmentState extends State<CreateApartment> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     const Icon(Icons.access_time_outlined,
-                                        size: 18),
+                                        size: 18, color: dark,),
                                     tinyHSpace(),
-                                    const Expanded(
+                                     Expanded(
                                       child: Text(
                                         'Time',
-                                        style: TextStyle(fontSize: 16),
+                                        style: GoogleFonts.roboto(fontSize: 16, color: dark),
                                       ),
                                     ),
                                   ],
@@ -821,12 +875,12 @@ class _CreateApartmentState extends State<CreateApartment> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     const Icon(Icons.access_time_outlined,
-                                        size: 18),
+                                        size: 18, color: dark,),
                                     tinyHSpace(),
                                     Expanded(
                                       child: Text(
                                         '$startDay: $startTime',
-                                        style: const TextStyle(fontSize: 16),
+                                        style: GoogleFonts.roboto(fontSize: 16, color: dark),
                                       ),
                                     ),
                                   ],
@@ -837,77 +891,166 @@ class _CreateApartmentState extends State<CreateApartment> {
                         ],
                       ),
                       kSpacing,
+                          Container(
+                            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 7),
+                            decoration: BoxDecoration(
+                                color: white,
+                                borderRadius: BorderRadius.circular(10)
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SfDateRangePicker(
+                                  view: DateRangePickerView.month,
+                                  showNavigationArrow: true,
+                                  backgroundColor: white,
+                                  initialSelectedDate: DateTime.now(),
+                                  initialDisplayDate: DateTime.now(),
+                                  selectionColor: red,
+                                  controller: startDateRangePickerController,
+                                  onSelectionChanged: (d){
+                                    print(startDateRangePickerController.selectedDate);
+                                    var picked = DateFormat.yMMMMd().format(startDateRangePickerController.selectedDate!);
+                                    start = DateFormat('yyyy-MM-dd')
+                                        .format(startDateRangePickerController.selectedDate!)
+                                        .toString();
+                                    var day = DateFormat.EEEE().format(startDateRangePickerController.selectedDate!);
+                                    startDay = day.toString();
+                                    setState(() {
+                                      startDate = picked.toString();
+                                    });
+                                    startAvailabilityController.text = "$startDate $startDay";
+                                  },
+
+                                  headerStyle: DateRangePickerHeaderStyle(
+                                      textStyle: GoogleFonts.roboto(
+                                          fontWeight: FontWeight.w600,
+                                          color: blue,
+                                          fontSize: 17.w
+                                      )
+                                  ),
+                                  monthCellStyle: DateRangePickerMonthCellStyle(
+                                    textStyle: GoogleFonts.roboto(
+                                      fontWeight: FontWeight.w400,
+                                      color: blue,
+                                      fontSize: 17.w
+                                    ),
+                                  ),
+                                  monthViewSettings: DateRangePickerMonthViewSettings(firstDayOfWeek: 1),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("Time",
+                                      style: GoogleFonts.roboto(
+                                          fontWeight: FontWeight.w500,
+                                          color: black,
+                                          fontSize: 17.w
+                                      ),),
+
+                                      InkWell(
+                                        onTap: () async {
+                                          TimeOfDay? pickedTime =  await showTimePicker(
+                                            initialTime: TimeOfDay.now(),
+                                            context: context,
+                                          );
+
+                                          if(pickedTime != null ){
+                                            DateTime parsedTime = DateFormat.jm().parse(pickedTime.format(context).toString());
+                                            String formattedTime = DateFormat("h:mm").format(parsedTime);
+                                            String formattedTimeOfDay = DateFormat("a").format(parsedTime);
+                                            setState(() {
+                                              startTimeController.text = formattedTime;
+                                              startTime = "$formattedTime $formattedTimeOfDay";
+
+                                              startTimeAvailabilityController.text = formattedTime;
+                                            });
+                                            startTimeOfDayString.value = formattedTimeOfDay;
+                                          }else{
+                                            print("Time is not selected");
+                                          }
+                                        },
+
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(vertical: 7, horizontal: 12.w),
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey.withOpacity(0.25),
+                                            borderRadius: BorderRadius.circular(10.w)
+                                          ),
+                                          child: Text(startTimeController.text,
+                                          style: GoogleFonts.roboto(
+                                              fontWeight: FontWeight.w400,
+                                              color: black,
+                                              fontSize: 20.w
+                                          ),),),
+                                      ),
+
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                      kSpacing,
                       subText('Available end date'),
                       smallText(
-                          'Please choose the date of availability for the rent'),
+                          'Please choose the date the availability ends for the rent'),
                       kSpacing,
-                      InkWell(
-                        onTap: () => selectDate().then((selectedDate) {
-                          var picked = DateFormat.yMMMMd().format(selectedDate);
-                          end = DateFormat('yyyy-MM-dd')
-                              .format(selectedDate)
-                              .toString();
-                          var time = DateFormat.jm().format(selectedDate);
-                          var day = DateFormat.EEEE().format(selectedDate);
-                          endDate = picked.toString();
-                          endTime = time.toString();
-                          endDay = day.toString();
-                          setState(() {});
-                        }),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                decoration: buttonneumorp().copyWith(
-                                    borderRadius: BorderRadius.circular(15)),
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(12, 10, 5, 10),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Icon(Icons.calendar_month,
-                                          size: 18),
-                                      tinyHSpace(),
-                                      const Expanded(
-                                        child: Text(
-                                          'End Date',
-                                          style: TextStyle(fontSize: 16),
-                                        ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              decoration: buttonneumorp().copyWith(
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(12, 10, 5, 10),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(Icons.calendar_month,
+                                        size: 18, color: dark,),
+                                    tinyHSpace(),
+                                     Expanded(
+                                      child: Text(
+                                        'End Date',
+                                        style: GoogleFonts.roboto(fontSize: 16, color: dark),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                            smallHSpace(),
-                            Expanded(
-                              flex: 2,
-                              child: Container(
-                                decoration: buttonneumorp().copyWith(
-                                    borderRadius: BorderRadius.circular(15)),
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(15, 10, 5, 10),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Icon(Icons.calendar_month,
-                                          size: 18),
-                                      tinyHSpace(),
-                                      Expanded(
-                                        child: Text(
-                                          endDate,
-                                          style: const TextStyle(fontSize: 16),
-                                        ),
+                          ),
+                          smallHSpace(),
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              decoration: buttonneumorp().copyWith(
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(15, 10, 5, 10),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(Icons.calendar_month,
+                                        size: 18, color: dark),
+                                    tinyHSpace(),
+                                    Expanded(
+                                      child: Text(
+                                        endDate,
+                                        style: GoogleFonts.roboto(fontSize: 16, color: dark),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                       tinySpace(),
                       Row(
@@ -923,12 +1066,12 @@ class _CreateApartmentState extends State<CreateApartment> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     const Icon(Icons.access_time_outlined,
-                                        size: 18),
+                                        size: 18, color: dark,),
                                     tinyHSpace(),
                                     Expanded(
                                       child: Text(
                                         AppLocalizations.of(context)!.time,
-                                        style: TextStyle(fontSize: 16),
+                                        style: GoogleFonts.roboto(fontSize: 16, color: dark),
                                       ),
                                     ),
                                   ],
@@ -949,12 +1092,12 @@ class _CreateApartmentState extends State<CreateApartment> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     const Icon(Icons.access_time_outlined,
-                                        size: 18),
+                                        size: 18, color: dark,),
                                     tinyHSpace(),
                                     Expanded(
                                       child: Text(
                                         '$endDay: $endTime',
-                                        style: const TextStyle(fontSize: 16),
+                                        style: GoogleFonts.roboto(fontSize: 16, color: dark),
                                       ),
                                     ),
                                   ],
@@ -964,18 +1107,218 @@ class _CreateApartmentState extends State<CreateApartment> {
                           ),
                         ],
                       ),
-                      kSpacing,
-                          divider(),
+
                           kSpacing,
-                          title( AppLocalizations.of(context)!.price),
+                          Container(
+                            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 7),
+                            decoration: BoxDecoration(
+                                color: white,
+                                borderRadius: BorderRadius.circular(10)
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SfDateRangePicker(
+                                  view: DateRangePickerView.month,
+                                  showNavigationArrow: true,
+                                  backgroundColor: white,
+                                  initialSelectedDate: DateTime.now(),
+                                  initialDisplayDate: DateTime.now(),
+                                  selectionColor: red,
+                                  controller: endDateRangePickerController,
+                                  onSelectionChanged: (d){
+                                    print(endDateRangePickerController.selectedDate);
+                                    var picked = DateFormat.yMMMMd().format(endDateRangePickerController.selectedDate!);
+                                    start = DateFormat('yyyy-MM-dd')
+                                        .format(endDateRangePickerController.selectedDate!)
+                                        .toString();
+                                    var day = DateFormat.EEEE().format(endDateRangePickerController.selectedDate!);
+                                    endDay = day.toString();
+                                    setState(() {
+                                      endDate = picked.toString();
+                                    });
+
+                                    endAvailabilityController.text = "$endDate $endDay";
+
+
+                                  },
+
+                                  headerStyle: DateRangePickerHeaderStyle(
+                                      textStyle: GoogleFonts.roboto(
+                                          fontWeight: FontWeight.w600,
+                                          color: blue,
+                                          fontSize: 17.w
+                                      )
+                                  ),
+                                  monthCellStyle: DateRangePickerMonthCellStyle(
+                                    textStyle: GoogleFonts.roboto(
+                                        fontWeight: FontWeight.w400,
+                                        color: blue,
+                                        fontSize: 17.w
+                                    ),
+                                  ),
+                                  monthViewSettings: DateRangePickerMonthViewSettings(firstDayOfWeek: 1),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("Time",
+                                        style: GoogleFonts.roboto(
+                                            fontWeight: FontWeight.w500,
+                                            color: black,
+                                            fontSize: 17.w
+                                        ),),
+
+                                      InkWell(
+                                        onTap: () async {
+                                          TimeOfDay? pickedTime =  await showTimePicker(
+                                            initialTime: TimeOfDay.now(),
+                                            context: context,
+                                          );
+
+                                          if(pickedTime != null ){
+                                            DateTime parsedTime = DateFormat.jm().parse(pickedTime.format(context).toString());
+                                            String formattedTime = DateFormat("h:mm").format(parsedTime);
+                                            String formattedTimeOfDay = DateFormat("a").format(parsedTime);
+                                            setState(() {
+                                              endTimeController.text = formattedTime;
+                                              endTime = "$formattedTime $formattedTimeOfDay";
+                                              print(formattedTimeOfDay);
+                                              endTimeAvailabilityController.text = formattedTime;
+                                              //set the value of text field.
+                                            });
+                                            endTimeOfDayString.value = formattedTimeOfDay;
+                                          }else{
+                                            print("Time is not selected");
+                                          }
+                                        },
+
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(vertical: 7, horizontal: 12.w),
+                                          decoration: BoxDecoration(
+                                              color: Colors.grey.withOpacity(0.25),
+                                              borderRadius: BorderRadius.circular(10.w)
+                                          ),
+                                          child: Text(endTimeController.text,
+                                            style: GoogleFonts.roboto(
+                                                fontWeight: FontWeight.w400,
+                                                color: black,
+                                                fontSize: 20.w
+                                            ),),),
+                                      ),
+
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          kSpacing,
                           kSpacing,
                           Row(
                             children: [
+                              Container(
+                                padding: EdgeInsets.all(7.w),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(color: blue, width: 1)
+                                ),
+                                child: Icon(Icons.calendar_month, color: blue,),
+                              ),
+                              smallHSpace(),
+                              subText('Final Result of Availability'),
+                            ],
+                          ),
+                          kSpacing,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              subText('Start Date'),
+                             tinySpace(),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: width() * 0.59,
+                                    child: TextFieldWidget(
+                                        hint: startAvailabilityController.text,
+                                        enabled: false,
+                                    ),
+                                  ),
+                                  tinyHSpace(),
+                                  SizedBox(
+
+                                    width: width() * 0.19,
+                                    child: TextFieldWidget(
+                                        hint: startTimeAvailabilityController.text,
+                                        enabled: false,
+                                    ),
+                                  ),
+                                  tinyHSpace(),
+                                  Obx(() => startTimeOfDayString.value == "AM" ?
+                                  Icon(Icons.sunny, color: grey,)   : Icon(FontAwesomeIcons.moon, color: grey,)) ,
+                                ],
+                              ),
+                              smallHSpace(),
+                              kSpacing,
+                              subText('End Date'),
+                              tinySpace(),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: width() * 0.59,
+                                    child: TextFieldWidget(
+                                        hint: endAvailabilityController.text,
+                                        enabled: false,
+                                    ),
+                                  ),
+                                  tinyHSpace(),
+                                  SizedBox(
+                                    width: width() * 0.19,
+                                    child: TextFieldWidget(
+                                      hint: endTimeAvailabilityController.text,
+                                      enabled: false,
+                                    ),
+                                  ),
+                                  tinyHSpace(),
+                                  Obx(() => endTimeOfDayString.value == "AM" ?
+                                  Icon(Icons.sunny, color: grey,)   : Icon(FontAwesomeIcons.moon, color: grey,)) ,
+                                ],
+                              ),
+                              smallHSpace(),
+                            ],
+                          ),
+
+                      kSpacing,
+                          divider(),
+                          kSpacing,
+                          title("Rent Price"),
+                          kSpacing,
+                          subText('Rental Price'),
+                          smallText(
+                              'You can  choose only one  option to make it visable on your post '),
+                          kSpacing,
+                          Row(
+                            children: [
+                              CupertinoSwitch(value: nightSwitch.value, onChanged: (v) {
+                                setState(() {
+                                  nightSwitch.value = v;
+                                  if(nightSwitch.value == true){
+                                    monthSwitch.value = false;
+                                    monthController.clear();
+                                    weekSwitch.value = false;
+                                    weekController.clear();
+                                  }
+                                });
+                              }),
                               Expanded(
                                 child: TextFieldWidget(
                                     keyboardType: const TextInputType.numberWithOptions(
                                         decimal: true),
                                     hint:  AppLocalizations.of(context)!.price,
+                                    enabled: nightSwitch.value,
                                     textController: nightController),
                               ),
                               smallHSpace(),
@@ -990,12 +1333,23 @@ class _CreateApartmentState extends State<CreateApartment> {
                           kSpacing,
                           Row(
                             children: [
-                              CupertinoSwitch(value: true, onChanged: (v) {}),
+                              CupertinoSwitch(value: weekSwitch.value, onChanged: (v) {
+                                setState(() {
+                                  weekSwitch.value = v;
+                                  if(weekSwitch.value == true){
+                                    monthSwitch.value = false;
+                                    monthController.clear();
+                                    nightSwitch.value = false;
+                                    nightController.clear();
+                                  }
+                                });
+                              }),
                               Expanded(
                                 child: TextFieldWidget(
                                     keyboardType: const TextInputType.numberWithOptions(
                                         decimal: true),
                                     hint:  AppLocalizations.of(context)!.price,
+                                    enabled: weekSwitch.value,
                                     textController: weekController),
                               ),
                               smallHSpace(),
@@ -1010,12 +1364,23 @@ class _CreateApartmentState extends State<CreateApartment> {
                           kSpacing,
                           Row(
                             children: [
-                              CupertinoSwitch(value: true, onChanged: (v) {}),
+                              CupertinoSwitch(value: monthSwitch.value, onChanged: (v) {
+                                setState(() {
+                                  monthSwitch.value = v;
+                                  if(monthSwitch.value == true){
+                                    nightSwitch.value = false;
+                                    nightController.clear();
+                                    weekSwitch.value = false;
+                                    weekController.clear();
+                                  }
+                                });
+                              }),
                               Expanded(
                                 child: TextFieldWidget(
                                     keyboardType: const TextInputType.numberWithOptions(
                                         decimal: true),
                                     hint:  AppLocalizations.of(context)!.price,
+                                    enabled: monthSwitch.value,
                                     textController: monthController),
                               ),
                               smallHSpace(),
@@ -1224,7 +1589,7 @@ class _CreateApartmentState extends State<CreateApartment> {
                         onTap: () {
                           Get.to(() => Subscribe());
                         },
-                        child: ButtonWidget(title: AppLocalizations.of(context)!.choosePlans,color: Colors.purple,)),
+                        child: ButtonWidget(title: AppLocalizations.of(context)!.choosePlans,color: Colors.blue,)),
                   ),
                   verticalSpace(0.02),
                   Center(
@@ -1256,10 +1621,10 @@ class _CreateApartmentState extends State<CreateApartment> {
                               bedroom: bed,
                               shower: shower,
                               bathroom: bathroom,
-                              sqMeter: square,
+                              sqMeter: squareCustomController,
                               toilet: toilet,
-                              occupantsNumber: occupant,
-                              floor: floor,
+                              occupantsNumber: occupantCustomController,
+                              floor: floorsCustomController,
                               media: images,
                             );
                           } else {
@@ -1280,11 +1645,16 @@ class _CreateApartmentState extends State<CreateApartment> {
   }
 
 
+
   getYesColor(title, description) {
-    if (description == 'pet' && pet == title) {
+    if (description == 'pet' && pet == title && title == "No") {
       return red;
-    } else if (description == 'smoke' && smoke == title) {
+    } else if (description == 'pet' && pet == title && title == "Yes") {
+      return blue;
+    } else if (description == 'smoke' && smoke == title && title == "No") {
       return red;
+    } else if (description == 'smoke' && smoke == title && title == "Yes") {
+      return blue;
     } else if (description == 'offer' && offer == title) {
       return red;
     } else if (description == 'checkin' && checkin == title) {
@@ -1386,7 +1756,7 @@ class _CreateApartmentState extends State<CreateApartment> {
     } else if (description == 'occupant' && occupant == title) {
       return white;
     } else {
-      return black;
+      return iconGrey;
     }
   }
 
@@ -1404,18 +1774,72 @@ class _CreateApartmentState extends State<CreateApartment> {
     }
   }
 
+  // const TextInputType.numberWithOptions(
+  // decimal: true, ),
+
+  Widget getCustomTextField(controller, hint, keyboardType){
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 5.w),
+      child: TextFieldWidget(
+            keyboardType: keyboardType,
+            hint: hint,
+            textController: controller,
+        ),
+    );
+  }
+
   InkWell numberButton(title, description) {
     return InkWell(
       onTap: () {
         setState(() {
           if (description == 'floors') {
-            floor = title;
+            floorsCustomController.text = title;
           } else if (description == 'footage') {
-            footage = title;
+            footageCustomController.text = title;
           } else if (description == 'square') {
-            square = title;
+            squareCustomController.text = title;
           } else if (description == 'occupant') {
-            occupant = title;
+            occupantCustomController.text = title;
+          } else if (description == 'customFloors') {
+            if(floorsClicked.value == false){
+              floorsClicked.value = true;
+              customTextField.value = getCustomTextField(
+                  floorsCustomController, "How many floors", TextInputType.number);
+            } else{
+              floorsClicked.value = false;
+              floorsCustomController.clear();
+              customTextField.value = Container();
+            }
+          } else if (description == 'customFootage') {
+            if(footageClicked.value == false){
+              footageClicked.value = true;
+              customTextField1.value = getCustomTextField(
+                  footageCustomController, "How many square Footage", TextInputType.number);
+            } else{
+              footageClicked.value = false;
+              footageCustomController.clear();
+              customTextField1.value = Container();
+            }
+          } else if (description == 'customSquare') {
+            if(squareClicked.value == false){
+              squareClicked.value = true;
+              customTextField2.value = getCustomTextField(
+                  squareCustomController, "How many square meters", TextInputType.text);
+            } else {
+              squareClicked.value = false;
+              squareCustomController.clear();
+              customTextField2.value = Container();
+            }
+          } else if (description == 'customOccupant') {
+            if(occupantClicked.value == false){
+              occupantClicked.value = true;
+              customTextField3.value = getCustomTextField(
+                  occupantCustomController, "How many occupants", TextInputType.number);
+            } else {
+              occupantClicked.value = false;
+              occupantCustomController.clear();
+              customTextField3.value = Container();
+            }
           } else {
             // floor = '';
             // footage = '';
@@ -1425,15 +1849,17 @@ class _CreateApartmentState extends State<CreateApartment> {
         });
       },
       child: Container(
-        decoration: depressNeumorph()
-            .copyWith(color: getNumberColor(title, description)),
-        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
+        decoration: depressNeumorphDark()
+            .copyWith(color: title == "Custom" ? Color(0xFFE48C24) : getNumberColor(title, description),
+          borderRadius: BorderRadius.circular(7.w)
+        ),
+        padding:  EdgeInsets.symmetric(vertical: 7, horizontal: title == "Custom" ? 10  : (description ==  "square") ? 9 :  25),
         child: Text(
           title,
           style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
-              color: getNumberTextColor(title, description)),
+              color: title == "Custom" ? white : getNumberTextColor(title, description)),
         ),
       ),
     );
@@ -1451,10 +1877,9 @@ class _CreateApartmentState extends State<CreateApartment> {
         });
       },
       child: Container(
-        decoration: depressNeumorph()
-            .copyWith(color: amenities.contains(title) ? blue : null),
+        decoration: depressNeumorph().copyWith(color: amenities.contains(title) ? blue : null),
         padding: EdgeInsets.symmetric(vertical: 5, horizontal: 21.w),
-        child: Image.asset('assets/images/apartmentIcons/$title.png', scale: height()/38, color: amenities.contains(title) ? white : dark.withOpacity(0.7)),
+        child: Image.asset('assets/images/apartmentIcons/$title.png', scale: height()/38, color: amenities.contains(title) ? white : iconGrey),
       ),
     );
   }
@@ -1494,15 +1919,15 @@ class _CreateApartmentState extends State<CreateApartment> {
     );
   }
 
-  Row title_icon(title, icon) {
+  Row title_icon(title, icon, image) {
     return Row(
       children: [
-        Icon(icon),
+        (image.isEmpty) ? Icon(icon) : Image.asset('assets/images/apartmentIcons/$image', scale: height()/30,),
         tinyH5Space(),
         Text(
           title,
-          style: const TextStyle(
-              color: blue, fontWeight: FontWeight.w500, fontSize: 17),
+          style: TextStyle(
+              color: blue, fontWeight: FontWeight.w500, fontSize: 18.w),
         ),
       ],
     );
@@ -1527,9 +1952,9 @@ class _CreateApartmentState extends State<CreateApartment> {
       gradient: linearGradient(),
       boxShadow: [
         BoxShadow(
-          color: Colors.grey.withOpacity(0.3),
-          spreadRadius: 0,
-          blurRadius: 5,
+          color: Colors.grey.withOpacity(0.5),
+          spreadRadius: 2,
+          blurRadius: 4,
           offset: const Offset(1, 0), // changes position of shadow
         ),
         BoxShadow(
@@ -1546,8 +1971,8 @@ class _CreateApartmentState extends State<CreateApartment> {
     return LinearGradient(
         colors: [
           Colors.white,
-          const Color(0xFFDBE6F2).withOpacity(0.2),
-          const Color(0xFF8F9FAE).withOpacity(0.2),
+          const Color(0xFFE4F0FA).withOpacity(0.99),
+          const Color(0xFFE5E6EC).withOpacity(0.99),
         ],
         stops: const [
           0.0,
@@ -1609,11 +2034,25 @@ class _CreateApartmentState extends State<CreateApartment> {
     } else if (description == 'toilet' && toilet == title) {
       return blue;
     } else {
-      return lightGrey;
+      return iconGrey75;
     }
   }
 
-  Widget imageOption(String title, IconData icon, description,
+  getColor2(description, title) {
+    if (description == 'bedroom' && bedroom == title) {
+      return blue;
+    } else if (description == 'bathroom' && bathroom == title) {
+      return blue;
+    } else if (description == 'shower' && shower == title) {
+      return blue;
+    } else if (description == 'toilet' && toilet == title) {
+      return blue;
+    } else {
+      return iconGrey;
+    }
+  }
+
+  Widget imageOption(String title, IconData icon, String image, description,
       {isNone = false, onTap}) {
     return Expanded(
       child: InkWell(
@@ -1638,7 +2077,7 @@ class _CreateApartmentState extends State<CreateApartment> {
         },
         child: Container(
           decoration: BoxDecoration(
-              border: Border.all(color: getColor(description, title)),
+              border: Border.all(color: iconGrey65),
               borderRadius: BorderRadius.circular(10)),
           child: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -1651,26 +2090,26 @@ class _CreateApartmentState extends State<CreateApartment> {
                       Text(
                         'None',
                         style: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            color: getColor(description, title),
+                            fontWeight: FontWeight.w600,
+                            color: iconGrey,
                             fontSize: 15),
                       ),
                       tiny15Space(),
                     ],
                   ),
                 if (!isNone)
-                  Icon(
+                  (image.isEmpty) ? Icon(
                     icon,
                     color: getColor(description, title),
                     size: 35,
-                  ),
+                  ) : Image.asset('assets/images/apartmentIcons/$image',color: (image.isEmpty) ? getColor(description, title) : getColor2(description, title), scale: height()/60,),
                 tinySpace(),
                 if (!isNone)
                   Text(
                     title,
                     style: TextStyle(
-                        fontWeight: FontWeight.w300,
-                        color: getColor(description, title),
+                        fontWeight: FontWeight.w500,
+                        color: iconGrey,
                         fontSize: 13),
                   )
               ],
@@ -1680,6 +2119,7 @@ class _CreateApartmentState extends State<CreateApartment> {
       ),
     );
   }
+
 
   Row title(String title) {
     return Row(
@@ -1782,15 +2222,15 @@ Widget imageSelect({icon, onTap, image}) {
             )
           : Padding(
               padding: const EdgeInsets.all(30.0),
-              child: Icon(icon ?? Icons.photo_camera, color: lightGrey),
-            ),
+              child: Icon(icon ?? Icons.photo_camera, color: iconGrey65),
+      )
     ),
   );
 }
 
 Text smallText(String title) => Text(
       title,
-      style: const TextStyle(
+      style: TextStyle(
           fontWeight: FontWeight.w300, color: grey, fontSize: 13),
     );
 
@@ -1804,3 +2244,109 @@ Text subText(title) {
 
 
 Divider divider() => Divider(color: blue.withOpacity(0.2), thickness: 4);
+
+
+class TimeofDayToggle extends StatefulWidget {
+  const TimeofDayToggle({Key? key}) : super(key: key);
+
+  @override
+  State<TimeofDayToggle> createState() => _TimeofDayToggleState();
+}
+
+class _TimeofDayToggleState extends State<TimeofDayToggle> {
+
+  double loginAlign = -1;
+  double signInAlign = 1;
+  Color selectedColor = Colors.white;
+  Color normalColor = black;
+
+  double xAlign = 1;
+
+  Color loginColor = black;
+  Color signInColor = Colors.white;
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 120,
+      height: 40,
+      decoration: BoxDecoration(
+        color: Colors.grey.withOpacity(0.25),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      child: Stack(
+        children: [
+          AnimatedAlign(
+            alignment: Alignment(xAlign, 0),
+            duration: const Duration(milliseconds: 300),
+            child: Container(
+              width: 120 * 0.5,
+              height: 40,
+              decoration: const BoxDecoration(
+                color: blue,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                xAlign = loginAlign;
+                loginColor = selectedColor;
+
+                signInColor = normalColor;
+              });
+            },
+            child: Align(
+              alignment: const Alignment(-1, 0),
+              child: Container(
+                width: 120 * 0.5,
+                color: Colors.transparent,
+                alignment: Alignment.center,
+                child: Text(
+                  'AM',
+                  style: GoogleFonts.roboto(
+                      fontWeight: FontWeight.w500,
+                      color: loginColor,
+                      fontSize: 16.w
+                  ),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                xAlign = signInAlign;
+                signInColor = selectedColor;
+                loginColor = normalColor;
+              });
+            },
+            child: Align(
+              alignment: const Alignment(1, 0),
+              child: Container(
+                width: 120 * 0.5,
+                color: Colors.transparent,
+                alignment: Alignment.center,
+                child: Text(
+                  'PM',
+                  style: GoogleFonts.roboto(
+                      fontWeight: FontWeight.w500,
+                      color: signInColor,
+                      fontSize: 16.w
+                  ),
+
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

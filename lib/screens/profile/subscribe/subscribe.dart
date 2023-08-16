@@ -63,22 +63,23 @@ class Subscribe extends StatelessWidget {
                     ],
                   ),
                 ),
-               Obx(() => (_paymentController.isGettingPlans.value == true) ?
-               Column(
-                 children: [
-                   LineLoader(),
-                   tinySpace(),
-                   Text("Getting Plans...",
-                     style: GoogleFonts.lato(
-                         fontSize: 11.w,
-                         fontWeight: FontWeight.w400
-                     ),),
-                   tinySpace(),
-                 ],
-               ) : SizedBox()),
               ],
             ),
           ),
+          Obx(() => (_paymentController.isGettingPlans.value == true) ?
+          Column(
+            children: [
+              LineLoader(),
+              tinySpace(),
+              Text("Getting Plans...",
+                style: GoogleFonts.lato(
+                    fontSize: 11.w,
+                    fontWeight: FontWeight.w400
+                ),),
+              tinySpace(),
+            ],
+          ) : SizedBox()),
+          
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(18.0),

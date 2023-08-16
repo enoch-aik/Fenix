@@ -77,14 +77,18 @@ class _EditProfileState extends State<EditProfile> {
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: AppBar(
-          title: Align(
-            alignment: Alignment.centerLeft,
-            child: Image.asset(
-              "assets/images/fenixmall_white.png",
-              color: Colors.white,
-              height: height() * 0.075,
-            ),
+          title: Text(
+            AppLocalizations.of(context)!.edit,
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 20.w,
+                shadows: [
+                  Shadow(
+                      color: Colors.black.withOpacity(0.2),
+                      offset: const Offset(2, 2))
+                ]),
           ),
+          leading:  backArrow(),
           automaticallyImplyLeading: false,
           elevation: 0,
           centerTitle: false,
@@ -95,38 +99,6 @@ class _EditProfileState extends State<EditProfile> {
           )),
       body: Column(
         children: [
-          Container(
-            height: 50.w,
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
-            margin: EdgeInsets.only(bottom: 20.w),
-            decoration: BoxDecoration(
-              gradient: appBarGradient,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                InkWell(
-                  onTap: () => Get.back(),
-                  child: const Icon(
-                    Icons.arrow_back_ios,
-                    color: white,
-                  ),
-                ),
-                Text(
-                  AppLocalizations.of(context)!.edit,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.w,
-                      shadows: [
-                        Shadow(
-                            color: Colors.black.withOpacity(0.2),
-                            offset: const Offset(2, 2))
-                      ]),
-                ),
-              ],
-            ),
-          ),
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
@@ -219,9 +191,11 @@ class _EditProfileState extends State<EditProfile> {
                           ),
                           kSpacing,
                           TextFieldWidget(
-                              hint: "Phone Number",
+                              hint: "Phone Number(+998123456789)",
                               keyboardType: TextInputType.numberWithOptions(signed: true),
-                              textController: phoneController),
+                              textController: phoneController,
+                               validator:  (value) => PhoneNumberValidator2.validate(value!),
+                          ),
                           kSpacing,
                           TextFieldWidget(
                             hint: "Address",

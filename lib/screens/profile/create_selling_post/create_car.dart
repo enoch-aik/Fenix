@@ -9,11 +9,13 @@ import 'package:fenix/screens/onboarding/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../controller/store_controller.dart';
 import '../../../helpers/image_picker.dart';
 import '../../../neumorph.dart';
 import '../../../theme.dart';
+import '../subscribe/subscribe.dart';
 import 'create_apartment.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -670,7 +672,7 @@ class _CreateCarState extends State<CreateCar> {
                       textController: deliveryLocationController),
 
                   kSpacing,
-                  textTitle(AppLocalizations.of(context)!.amenities),
+                  textTitle("Audio System (Optional)"),
                   tinySpace(),
                   Wrap(
                     // mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -678,28 +680,72 @@ class _CreateCarState extends State<CreateCar> {
                     runSpacing: 8,
                     children: [
                       amenitiesButton(
-                          AppLocalizations.of(context)!.cdMp3
+                          AppLocalizations.of(context)!.cdMp3,
+                        ""
                       ),
                       amenitiesButton(
                         AppLocalizations.of(context)!.bluetooth,
+                        "bluetooth.png",
                       ),
                       amenitiesButton(
                         AppLocalizations.of(context)!.usbFlash,
+                        "usbc.png",
                       ),
                       amenitiesButton(
                         AppLocalizations.of(context)!.usbC,
+                        "usbc.png",
                       ),
                       amenitiesButton(
                         AppLocalizations.of(context)!.heater,
+                        "heator.png",
                       ),
                       amenitiesButton(
                         AppLocalizations.of(context)!.seatHeater,
+                        "seatHeater.png",
                       ),
                       amenitiesButton(
                         AppLocalizations.of(context)!.autoTms,
+                        "autoTms.png",
+                      ),
+                      amenitiesButton(
+                        "Leather seat",
+                        "",
+                      ),
+                      amenitiesButton(
+                        "Material Seat",
+                        "",
+                      ),
+                      amenitiesButton(
+                        "Luxury Change",
+                        "",
+                      ),
+                      amenitiesButton(
+                        "AC",
+                        "ac.png",
+                      ),
+                      amenitiesButton(
+                        "Seat Air",
+                        "seatAir.png",
+                      ),
+                      amenitiesButton(
+                        "Monitor",
+                        "monitor.png",
+                      ),
+                      amenitiesButton(
+                        "Turbo",
+                        "turbo.png",
                       ),
 
                     ],
+                  ),
+                  verticalSpace(0.02),
+                  verticalSpace(0.02),
+                  Center(
+                    child: InkWell(
+                        onTap: () {
+                          Get.to(() => Subscribe());
+                        },
+                        child: ButtonWidget(title: AppLocalizations.of(context)!.choosePlans,color: Colors.blue,)),
                   ),
                   verticalSpace(0.02),
                   Center(
@@ -747,7 +793,7 @@ class _CreateCarState extends State<CreateCar> {
     );
   }
 
-  InkWell amenitiesButton( title) {
+  InkWell amenitiesButton( title, image) {
     return InkWell(
       onTap: () {
         setState(() {
@@ -758,26 +804,39 @@ class _CreateCarState extends State<CreateCar> {
           }
         });
       },
-      child: Row(
-        children: [
-          Container(
-            width: width()*0.45,
-              decoration: depressNeumorph(),
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
-              child: Text(title,softWrap: false,overflow: TextOverflow.clip,)
+      child: SizedBox(
+        width: width() * 0.45,
+        child: Row(
+          children: [
+            
+            Container(
+              width: width() * 0.35,
+                decoration: depressNeumorphDark(),
+                padding: EdgeInsets.symmetric(vertical: 7.w, horizontal: 5.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(title,softWrap: false,overflow: TextOverflow.clip,
+                    style: GoogleFonts.roboto(fontSize: 13.w),),
+                   tinyHSpace(),
+                   image.isEmpty ? SizedBox() : Image.asset("assets/images/carIcons/$image", scale: width() * 0.06,)
+                  ],
+                )
 
-              // Icon(icon, color: amenities.contains(title) ? white : black),
-              ),
-          checkBox(amenities.contains(title), onChanged: (v) {
-            setState(() {
-              if (amenities.contains(title)) {
-                amenities.remove(title);
-              } else {
-                amenities.add(title);
-              }
-            });
-          })
-        ],
+                // Icon(icon, color: amenities.contains(title) ? white : black),
+                ),
+            tinyHSpace(),
+            checkBox(amenities.contains(title), onChanged: (v) {
+              setState(() {
+                if (amenities.contains(title)) {
+                  amenities.remove(title);
+                } else {
+                  amenities.add(title);
+                }
+              });
+            })
+          ],
+        ),
       ),
     );
   }

@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
+import '../../../../helpers/widgets.dart';
 import '../../../onboarding/constants.dart';
 import '../../edit_profile.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -19,17 +20,21 @@ class ContactUs extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: AppBar(
-          title: Align(
-            alignment: Alignment.centerLeft,
-            child: Image.asset(
-              "assets/images/fenixmall_white.png",
-              color: white,
-              height: height() * 0.075,
-            ),
+          title: Text(
+            AppLocalizations.of(context)!.contactUs,
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 20.w,
+                shadows: [
+                  Shadow(
+                      color: Colors.black.withOpacity(0.2),
+                      offset: const Offset(2, 2))
+                ]),
           ),
+          leading:  backArrow(),
           automaticallyImplyLeading: false,
           elevation: 0,
-          centerTitle: false,
+          centerTitle: true,
           flexibleSpace: Container(
             decoration: BoxDecoration(
               gradient: appBarGradient,
@@ -37,39 +42,6 @@ class ContactUs extends StatelessWidget {
           )),
       body: Column(
         children: [
-          Container(
-            height: 50.w,
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
-            margin: EdgeInsets.only(bottom: 20.w),
-            decoration: BoxDecoration(
-              gradient: appBarGradient,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                InkWell(
-                  onTap: () => Get.back(),
-                  child: const Icon(
-                    Icons.arrow_back_ios,
-                    color: white,
-                  ),
-                ),
-                Text(
-                  AppLocalizations.of(context)!.contactUs,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.w,
-                      shadows: [
-                        Shadow(
-                            color: Colors.black.withOpacity(0.2),
-                            offset: const Offset(2, 2))
-                      ]),
-                ),
-                tinySpace(),
-              ],
-            ),
-          ),
           Expanded(
               child: ListView(
                 padding: const EdgeInsets.all(14),

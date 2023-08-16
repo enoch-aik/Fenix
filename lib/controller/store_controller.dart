@@ -23,6 +23,8 @@ class StoreController extends GetxController {
   RxBool isReviewLoading = false.obs;
   RxBool isReviewDone = false.obs;
 
+  var vendorApartments;
+
   final ProductController _productController = Get.put(ProductController());
 
   String _id = '';

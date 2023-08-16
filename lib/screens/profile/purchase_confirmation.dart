@@ -197,7 +197,7 @@ class _PurchaseConfirmationState extends State<PurchaseConfirmation> {
                 Container(
                   height: height() * 0.06,
                   decoration: BoxDecoration(
-                    color: light.withOpacity(0.4),
+                    gradient: gradient2(Color(0xFFCAEBD7),Color(0xFF5EF2F2)),
                     borderRadius: BorderRadius.vertical(bottom: Radius.circular(15.w)),
                   ),
                   child: Row(
@@ -371,6 +371,13 @@ class _PurchaseConfirmationState extends State<PurchaseConfirmation> {
                       decoration: BoxDecoration(
                           color: const Color(0xFFE3EDF7),
                           borderRadius: BorderRadius.circular(16),
+                          image: widget.image != null
+                              ? DecorationImage(
+                              fit: BoxFit.fitWidth,
+                              image: FileImage(widget.image!))
+                              : const DecorationImage(
+                              fit: BoxFit.contain,
+                              image: AssetImage('')),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey.withOpacity(0.2),
@@ -386,10 +393,6 @@ class _PurchaseConfirmationState extends State<PurchaseConfirmation> {
                             ),
                           ]
                       ),
-                      child: Center(
-                        child: Text("Choose Post",
-                          style: GoogleFonts.roboto(color: light, fontSize: 15.w, fontWeight: FontWeight.w400),),
-                      ),
                     ),
 
                     InkWell(
@@ -403,13 +406,7 @@ class _PurchaseConfirmationState extends State<PurchaseConfirmation> {
                           decoration: BoxDecoration(
                             color: light.withOpacity(0.35),
                             borderRadius: BorderRadius.circular(10.w),
-                            image: widget.image != null
-                                ? DecorationImage(
-                                fit: BoxFit.fitWidth,
-                                image: FileImage(widget.image!))
-                                : const DecorationImage(
-                                fit: BoxFit.contain,
-                                image: AssetImage('')),
+
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,

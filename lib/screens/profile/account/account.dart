@@ -30,15 +30,20 @@ class Account extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFE4F0FA),
       appBar: AppBar(
-          title: Align(
-            alignment: Alignment.centerLeft,
-            child: Image.asset(
-              "assets/images/fenixmall_white.png",
-              color: white,
-              height: height() * 0.075,
-            ),
-          ),
-          automaticallyImplyLeading: false,
+
+          // automaticallyImplyLeading: true,
+        title: Text(
+          AppLocalizations.of(context)!.yourAccount,
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 20.w,
+              shadows: [
+                Shadow(
+                    color: Colors.black.withOpacity(0.2),
+                    offset: const Offset(2, 2))
+              ]),
+        ),
+          leading:  backArrow(),
           actions: [
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -81,33 +86,6 @@ class Account extends StatelessWidget {
           )),
       body: Column(
         children: [
-          Container(
-            height: 50.w,
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
-            margin: EdgeInsets.only(bottom: 20.w),
-            decoration: BoxDecoration(
-              gradient: appBarGradient,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-               backArrow(),
-
-                Text(
-                  AppLocalizations.of(context)!.yourAccount,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.w,
-                      shadows: [
-                        Shadow(
-                            color: Colors.black.withOpacity(0.2),
-                            offset: const Offset(2, 2))
-                      ]),
-                ),
-              ],
-            ),
-          ),
           Expanded(
               child: ListView(
             padding: const EdgeInsets.all(14),

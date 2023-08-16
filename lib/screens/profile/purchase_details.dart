@@ -201,7 +201,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
                 Container(
                   height: height() * 0.06,
                   decoration: BoxDecoration(
-                    color: light.withOpacity(0.4),
+                      gradient: gradient2(Color(0xFFCAEBD7),Color(0xFF5EF2F2)),
                     borderRadius: BorderRadius.vertical(bottom: Radius.circular(15.w)),
                   ),
                   child: Row(

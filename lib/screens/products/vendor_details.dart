@@ -61,19 +61,22 @@ class _VendorDetailsState extends State<VendorDetails> {
 
   var rate = 0.0;
 
-  var vendorApartments;
+  RxList vendorApartments = [].obs;
 
   @override
   void initState() {
     super.initState();
     setState(() => vendor = widget.vendor);
     setState(() => storeId = widget.storeId);
-    _storeController.getStoreById(_userController.getToken(), storeId);
-    _storeController.getApartments(_userController.getToken(), storeId);
-    vendorApartments = _storeController.apartmentList
-        .where((e) => e['apartmentType'] == 'apartment')
-        .toList();
-    _productController.feedbacks.value = _productController.vendor['feedbacks'];
+   Future.delayed(Duration(milliseconds: 500), (){
+     _storeController.getStoreById(_userController.getToken(), widget.storeId);
+     _storeController.getApartments(_userController.getToken(), widget.storeId);
+     vendorApartments.value = _storeController.apartmentList
+         .where((e) => e['apartmentType'] == 'apartment')
+         .toList();
+     _productController.feedbacks.value = _productController.vendor['feedbacks'];
+
+   });
   }
 
 
@@ -169,6 +172,8 @@ class _VendorDetailsState extends State<VendorDetails> {
                             rate: rate.toInt(),
                             userId: widget.vendorId.toString(),
                           );
+                          _productController.getVendorDetails(vendor['id']);
+                          _storeController.getApartments(_userController.getToken(), storeId);
                         },
                         child: Card(
                           color: green,
@@ -331,7 +336,10 @@ class _VendorDetailsState extends State<VendorDetails> {
                               SizedBox(
                                 height: 15.w,
                               ),
-                              KText(
+                              widget.rating == "NaN" ? Text("0 feedback",
+                                style: GoogleFonts.roboto(fontSize: 12.w,
+                                  color: const Color(0xFF8F9FAE),
+                                  fontWeight: FontWeight.w500,),) :  KText(
                                 "${double.parse(widget.rating).toStringAsFixed(1)} % Positive Feedback",
                                 fontSize: 12.w,
                                 color: const Color(0xFF8F9FAE),
@@ -384,7 +392,7 @@ class _VendorDetailsState extends State<VendorDetails> {
                     Text("Seller's apartment post"),
                     tinySpace(),
                     Obx(
-                          () => _storeController.isFetchingApartments.isTrue
+                          () => _storeController.isFetchingApartments.isTrue || vendorApartments.isEmpty
                           ? const Loader()
                           : vendorApartments.isEmpty
                           ? empty(tab)
@@ -561,7 +569,7 @@ class _VendorDetailsState extends State<VendorDetails> {
                               ),
                               child: Container(
                                 height: 10,
-                                width: width() * 0.35 * (vendor['positiveRating'] / (vendor['negativeRating'] + vendor['positiveRating'])),
+                                width:vendor['positiveRating'] == 0 ? 0 : width() * 0.35 * (vendor['positiveRating'] / (vendor['negativeRating'] + vendor['positiveRating'])),
                                 decoration: BoxDecoration(
                                   color: darkgreen,
                                   border: Border.all(color: darkgreen, width: 1),
@@ -571,6 +579,7 @@ class _VendorDetailsState extends State<VendorDetails> {
                             )
                           ],
                         ),
+
 
 
                         Column(
@@ -596,7 +605,7 @@ class _VendorDetailsState extends State<VendorDetails> {
                               ),
                               child: Container(
                                 height: 10,
-                                width: width() * 0.35 * (vendor['negativeRating'] / (vendor['negativeRating'] + vendor['positiveRating'])),
+                                width: vendor['negativeRating'] == 0 ? 0 : width() * 0.35 * (vendor['negativeRating'] / (vendor['negativeRating'] + vendor['positiveRating'])),
                                 decoration: BoxDecoration(
                                   color: red,
                                   border: Border.all(color: red, width: 1),
@@ -615,7 +624,8 @@ class _VendorDetailsState extends State<VendorDetails> {
 
                     mediumSpace(),
 
-                    Obx(() => ListView.builder(
+                    Obx(() => _productController.feedbacks.isEmpty ? Text("No feedback yet",
+                    style: GoogleFonts.roboto(fontSize: 12.w),) : ListView.builder(
                       itemCount: _productController.feedbacks.length,
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
@@ -662,10 +672,10 @@ class _VendorDetailsState extends State<VendorDetails> {
                                 ),
                                 Column(
                                   children: [
-                                    int.parse(_productController.feedbacks[index]['rating']) > 2.5 ? Icon(
+                                    double.parse(_productController.feedbacks[index]['rating']) > 2.5 ? Icon(
                                       Icons.sentiment_dissatisfied,
                                       color: darkgreen,
-                                    ) : int.parse(_productController.feedbacks[index]['rating']) == 2.5 ? Icon(
+                                    ) : double.parse(_productController.feedbacks[index]['rating']) == 2.5 ? Icon(
                                       Icons.sentiment_neutral,
                                       color: Colors.yellow,
                                     ) : Icon(
